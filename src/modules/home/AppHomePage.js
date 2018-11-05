@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import  icon_group from '../../style/imgs/icon_group.png'
 import  icon_menu from '../../style/imgs/icon_menu.png'
+import { Carousel } from 'antd';
 /**
  * Created by Arison on 2018/11/1.
  */
@@ -13,6 +14,12 @@ class AppHomePage extends React.Component{
        constructor(props){
         super(props);
     }
+
+    onChange(a, b, c) {
+        console.log(a, b, c);
+    }
+
+
     render(){
         let borderLine={
             border:"1px solid #f4f4f4"};
@@ -72,36 +79,37 @@ class AppHomePage extends React.Component{
                   <div className="row">
                       <div className="col-xs-12" style={{margin:"10px"}}>家校互动</div>
                   </div>
+                <div className="row" style={borderLine}></div>
                 {/*横向图文列表*/}
                 <div className="row">
-                    <div className="col-xs-3" style={borderLine}>
+                    <div className="col-xs-3" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                         <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
                         <div style={{paddingBottom:"20px",paddingLeft:"9px"}}>  <span style={{fontSize:"12px"}}>通知公告</span></div>
                     </div>
-                    <div className="col-xs-3" style={borderLine}>
+                    <div className="col-xs-3" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                         <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
                         <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>班级交费</span></div>
                     </div>
-                    <div className="col-xs-3" style={borderLine}>
+                    <div className="col-xs-3" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                         <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
                         <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>作业发布</span></div>
                     </div>
-                    <div className="col-xs-3" style={borderLine}>
+                    <div className="col-xs-3" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                         <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
                         <div style={{paddingBottom:"20px",paddingLeft:"0px"}}>  <span style={{fontSize:"12px"}}>家长通讯录</span></div>
                     </div>
                 </div>
 
                 <div className="row">
-                    <div className="col-xs-3" style={borderLine}>
+                    <div className="col-xs-3" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                         <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
                         <div style={{paddingBottom:"20px",paddingLeft:"9px"}}>  <span style={{fontSize:"12px"}}>投票助手</span></div>
                     </div>
-                    <div className="col-xs-3" style={borderLine}>
+                    <div className="col-xs-3" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                         <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
                         <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>班级相册</span></div>
                     </div>
-                    <div className="col-xs-3" style={borderLine}>
+                    <div className="col-xs-3" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                         <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
                         <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>学生请假条</span></div>
                     </div>
@@ -118,34 +126,35 @@ class AppHomePage extends React.Component{
                 <div className="row">
                     <div className="col-xs-12" style={{margin:"10px"}}>校园服务</div>
                 </div>
+                <div className="row" style={borderLine}></div>
                 {/*横向图文列表*/}
                 <div className="row">
-                    <div className="col-xs-3" style={borderLine}>
+                    <div className="col-xs-3" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                         <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
                         <div style={{paddingBottom:"20px",paddingLeft:"9px"}}>  <span style={{fontSize:"12px"}}>会议管理</span></div>
                     </div>
-                    <div className="col-xs-3" style={borderLine}>
+                    <div className="col-xs-3" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                         <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
                         <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>请假申请</span></div>
                     </div>
-                    <div className="col-xs-3" style={borderLine}>
+                    <div className="col-xs-3" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                         <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
-                        <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>出差申请</span></div>
+                        <div style={{paddingBottom:"20px"}}>  <span style={{fontSize:"12px"}}>出差申请</span></div>
                     </div>
-                    <div className="col-xs-3" style={borderLine}>
+                    <div className="col-xs-3" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                         <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
-                        <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{margin:"5px",fontSize:"12px"}}>通讯录</span></div>
+                        <div style={{paddingBottom:"20px"}}>  <span style={{margin:"5px",fontSize:"12px"}}>通讯录</span></div>
                     </div>
                 </div>
 
                 <div className="row">
-                    <div className="col-xs-3" style={borderLine}>
+                    <div className="col-xs-3" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                         <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
-                        <div style={{paddingBottom:"20px",paddingLeft:"9px"}}>  <span style={{fontSize:"12px"}}>用品申请</span></div>
+                        <div style={{paddingBottom:"20px"}}>  <span style={{fontSize:"12px"}}>用品申请</span></div>
                     </div>
-                    <div className="col-xs-3" style={borderLine}>
+                    <div className="col-xs-3" style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
                         <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
-                        <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>校园卡充值</span></div>
+                        <div style={{paddingBottom:"20px"}}>  <span style={{fontSize:"12px"}}>校园卡充值</span></div>
                     </div>
                  {/*   <div className="col-xs-3" style={borderLine}>
                         <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
@@ -156,20 +165,70 @@ class AppHomePage extends React.Component{
                         <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>通讯录</span></div>
                     </div>*/}
                 </div>
+                <div className="row" style={{background:"#DADADA",height:"10px"}}/>
             </div>
 
             {/*班级相册*/}
             <div className="row">
+                <div className="row">
+                    <div className="col-xs-12" style={{margin:"10px"}}>班级相册</div>
+                </div>
+                <div className="row" style={borderLine}></div>
+                <div className="row">
 
+                    <div className="col-xs-12">
+                        <Carousel afterChange={this.onChange.bind(this)} >
+                            <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
+                                <img src={""} style={{margin:"20px 0px 20px 20px",display:"inline"}}  width={100} height={90} />
+                                <img src={""} style={{margin:"20px 0px 20px 20px",display:"inline"}}  width={100} height={90} />
+                                <img src={""} style={{margin:"20px 0px 20px 20px",display:"inline"}}  width={100} height={90} />
+                            </div>
+                            <div>
+                                <img src={""} style={{margin:"20px 0px 20px 20px",display:"inline"}}  width={100} height={90} />
+                                <img src={""} style={{margin:"20px 0px 20px 20px",display:"inline"}}  width={100} height={90} />
+                            </div>
+                            <div>
+                                <img src={""} style={{margin:"20px 0px 20px 20px",display:"inline"}}  width={100} height={90} />
+                            </div>
+                            <div>
+                                <img src={""} style={{margin:"20px 0px 20px 20px",display:"inline"}}  width={100} height={90} />
+                                <img src={""} style={{margin:"20px 0px 20px 20px",display:"inline"}}  width={100} height={90} />
+                                <img src={""} style={{margin:"20px 0px 20px 20px",display:"inline"}}  width={100} height={90} />
+                            </div>
+                        </Carousel>
+
+                    </div>
+                </div>
+
+
+                <div className="row" style={{background:"#DADADA",height:"10px"}}/>
             </div>
 
 
             {/*精彩瞬间*/}
             <div className="row">
+                <div className="row">
+                    <div className="col-xs-12" style={{margin:"10px"}}>精彩瞬间</div>
+                </div>
+                <div className="row" style={borderLine}></div>
 
+                <div className="row">
+                    <div className="col-xs-7" style={borderLine}>
+                        <img src={""} style={{margin:"20px 10px 3px 20px"}}  width={200} height={190} />
+                    </div>
+                    <div className="col-xs-5" style={borderLine}>
+                        <img src={""} style={{margin:"20px 0px 0px 0px"}}  width={100} height={90} />
+                        <img src={""} style={{margin:"5px 20px 0px 0px"}}  width={100} height={90} />
+                    </div>
+                </div>
+
+                <div className="row" style={{height:"200px"}}></div>
             </div>
         </div>
     }
+
+
+
 }
 
 export  default AppHomePage;

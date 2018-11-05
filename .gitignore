@@ -9,7 +9,8 @@
 # production
 /build
 
-
+# 注释多余文件
+.idea/
 /.idea/workspace.xml
 package-lock.json
 

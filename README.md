@@ -1,5 +1,10 @@
 # 开发说明文档
+
 ## 常用文档
+#### Redux开发文档
+
+> https://github.com/reduxjs/redux
+
 #### Axios网络请求框架
 
 > axios :https://github.com/axios/axios
@@ -19,6 +24,11 @@
 > 安装：npm install react-router-dom   
 开发文档：https://reacttraining.com/react-router/web/guides/quick-start
 
+## 目录划分
+
+- style：
+- modules:
+- utils:
 
 ## 优化处理
 ### Antd按需加载

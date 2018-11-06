@@ -11,8 +11,8 @@ export default class RouteConfig extends Component {
             <Router>
                 <div>
                     <Route exact path="/" component={AppHomePage}/>
-                    <Route path='/bindMenu' component={BindMenu}/>
-                    <Route path='/accountBind/:type?' component={AccountBind}/>
+                    {/*<Route path='/bindMenu' component={BindMenu}/>*/}
+                    {/*<Route path='/accountBind/:type?' component={AccountBind}/>*/}
                 </div>
             </Router>
         );

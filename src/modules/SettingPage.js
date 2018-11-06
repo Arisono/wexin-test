@@ -5,7 +5,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 /**
- * Created by Arison on 2018/11/5.
+ * Created by Arison on 2018/11/6.
  */
 class SettingPage extends React.Component{
        constructor(props){
@@ -13,7 +13,7 @@ class SettingPage extends React.Component{
     }
     render(){
         return <div>
-            
+
         </div>
     }
 }

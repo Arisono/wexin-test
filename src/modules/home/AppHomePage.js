@@ -26,58 +26,62 @@ class AppHomePage extends React.Component{
         return <div className="container-fluid">
             {/*顶部Header*/}
             <div className="row">
-                <div className="row">
-                    <div className="col-xs-8 col-sm-8" > </div>
-                    <div className="col-xs-4 col-sm-4" >
-                        <div style={{background:"#E9E9E9",marginTop:"20px",marginRight:"1px",padding:"1px"}}>
-                            <span style={{color:"#2C7CF8",margin:"1px",fontSize:"16px"}}>     宝安区十八中</span>
-                        </div>
+             <div className="col-sm-12">
+                 <div className="row">
+                     <div className="col-xs-8 col-sm-8" > </div>
+                     <div className="col-xs-4 col-sm-4" >
+                         <div style={{background:"#E9E9E9",marginTop:"20px",marginRight:"1px",padding:"1px"}}>
+                             <span style={{color:"#2C7CF8",margin:"1px",fontSize:"16px"}}>     宝安区十八中</span>
+                         </div>
 
-                    </div>
-                </div>
-                <div className="row" >
-                    <div className="col-xs-2"  style={{marginBottom:"20px",marginTop:"20px"}}>
-                        <img src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"} style={{marginRight:"10px"}}  width={70} height={70} class="img-circle" />
-                    </div>
-                    <div className="col-xs-10">
-                        <div style={{marginTop:"30px"}}><span style={{fontSize:"17px"}}>尊敬的陈小明老师</span>   <img src={icon_group} style={{marginRight:"10px"}}  width={12} height={12} /></div>
+                     </div>
+                 </div>
+                 <div className="row" >
+                     <div className="col-xs-2"  style={{marginBottom:"20px",marginTop:"20px"}}>
+                         <img src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"} style={{marginRight:"10px"}}  width={70} height={70} class="img-circle" />
+                     </div>
+                     <div className="col-xs-10">
+                         <div style={{marginTop:"30px"}}><span style={{fontSize:"17px"}}>尊敬的陈小明老师</span>   <img src={icon_group} style={{marginRight:"10px"}}  width={12} height={12} /></div>
 
-                          {/* <img src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"} style={{margin:"10px"}}  width={25} height={25} class="img-circle" />
-                            <span>王涵</span>
+                         {/* <img src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"} style={{margin:"10px"}}  width={25} height={25} class="img-circle" />
+                          <span>王涵</span>
 
-                            <img src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"} style={{margin:"10px"}}  width={25} height={25} class="img-circle" />
-                            <span>王涵</span>*/}
+                          <img src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"} style={{margin:"10px"}}  width={25} height={25} class="img-circle" />
+                          <span>王涵</span>*/}
 
 
-                    </div>
-                </div>
-                {/*个人信息*/}
-                <div className="row" style={borderLine}></div>
-                <div className="row">
-                    <div className="col-xs-4" >
-                        <div style={{display:"flex",justifyContent:"center",alignItems:"center",margin:"8px"}}>
-                            <img src={icon_group} style={{marginRight:"10px"}}  width={12} height={12} />
-                            个人信息</div>
-                        </div>
-                    <div className="col-xs-4" >
-                        <div style={{display:"flex",justifyContent:"center",alignItems:"center",margin:"8px"}}>
-                        <img src={icon_group} style={{marginRight:"10px"}}  width={12} height={12} />
-                        使用帮助</div>
-                        </div>
-                    <div className="col-xs-4" >
-                        <div style={{display:"flex",justifyContent:"center",alignItems:"center",margin:"8px"}}>
-                        <img src={icon_group} style={{marginRight:"10px"}}  width={12} height={12} />
-                        系统消息
-                        </div>
-                    </div>
-                </div>
+                     </div>
+                 </div>
+                 {/*个人信息*/}
+                 <div className="row" style={borderLine}></div>
+                 <div className="row" >
+                     <div className="col-xs-4" >
+                         <div style={{display:"flex",justifyContent:"center",alignItems:"center",margin:"8px"}}>
+                             <img src={icon_group} style={{marginRight:"10px"}}  width={12} height={12} />
+                             个人信息</div>
+                     </div>
+                     <div className="col-xs-4" >
+                         <div style={{display:"flex",justifyContent:"center",alignItems:"center",margin:"8px"}}>
+                             <img src={icon_group} style={{marginRight:"10px"}}  width={12} height={12} />
+                             使用帮助</div>
+                     </div>
+                     <div className="col-xs-4" >
+                         <div style={{display:"flex",justifyContent:"center",alignItems:"center",margin:"8px"}}>
+                             <img src={icon_group} style={{marginRight:"10px"}}  width={12} height={12} />
+                             系统消息
+                         </div>
+                     </div>
+                 </div>
+
+             </div>
             </div>
             {/*分割线*/}
             <div className="row" style={{background:"#DADADA",height:"10px"}}/>
             {/*家校互动*/}
             <div className="row">
+                <div className="col-sm-12">
                   <div className="row">
-                      <div className="col-xs-12" style={{margin:"10px"}}>家校互动</div>
+                      <div className="col-xs-12" style={{padding:"10px"}}>家校互动</div>
                   </div>
                 <div className="row" style={borderLine}></div>
                 {/*横向图文列表*/}
@@ -118,13 +122,15 @@ class AppHomePage extends React.Component{
                         <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>作业通知</span></div>
                     </div>*/}
                 </div>
+                </div>
             </div>
             {/*分割线*/}
             <div className="row" style={{background:"#DADADA",height:"10px"}}/>
             {/*校园服务*/}
             <div className="row">
+                <div className="col-sm-12">
                 <div className="row">
-                    <div className="col-xs-12" style={{margin:"10px"}}>校园服务</div>
+                    <div className="col-xs-12" style={{padding:"10px"}}>校园服务</div>
                 </div>
                 <div className="row" style={borderLine}></div>
                 {/*横向图文列表*/}
@@ -166,12 +172,14 @@ class AppHomePage extends React.Component{
                     </div>*/}
                 </div>
                 <div className="row" style={{background:"#DADADA",height:"10px"}}/>
+                </div>
             </div>
 
             {/*班级相册*/}
             <div className="row">
+                <div className="col-sm-12">
                 <div className="row">
-                    <div className="col-xs-12" style={{margin:"10px"}}>班级相册</div>
+                    <div className="col-xs-12" style={{padding:"10px"}}>班级相册</div>
                 </div>
                 <div className="row" style={borderLine}></div>
                 <div className="row">
@@ -202,27 +210,30 @@ class AppHomePage extends React.Component{
 
 
                 <div className="row" style={{background:"#DADADA",height:"10px"}}/>
+                </div>
             </div>
 
 
             {/*精彩瞬间*/}
             <div className="row">
-                <div className="row">
-                    <div className="col-xs-12" style={{margin:"10px"}}>精彩瞬间</div>
+                <div className="col-sm-12">
+                <div className="row" style={borderLine}>
+                    <div className="col-xs-3" style={{ma:"10px"}}>精彩瞬间</div>
                 </div>
                 <div className="row" style={borderLine}></div>
 
                 <div className="row">
                     <div className="col-xs-7" style={borderLine}>
-                        <img src={""} style={{margin:"20px 10px 3px 20px"}}  width={200} height={190} />
+                        <img src={""} style={{margin:"20px 0px 3px 10px"}}  width={200} height={190} />
                     </div>
                     <div className="col-xs-5" style={borderLine}>
                         <img src={""} style={{margin:"20px 0px 0px 0px"}}  width={100} height={90} />
-                        <img src={""} style={{margin:"5px 20px 0px 0px"}}  width={100} height={90} />
+                        <img src={""} style={{margin:"5px 0px 0px 0px"}}  width={100} height={90} />
                     </div>
                 </div>
 
-                <div className="row" style={{height:"200px"}}></div>
+                <div className="row" style={{height:"100px"}}></div>
+                </div>
             </div>
         </div>
     }

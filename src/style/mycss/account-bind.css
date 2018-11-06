@@ -1,10 +1,70 @@
 .bindParent {
     width: 100%;
-    height: 100%;
-    /*background-image: url("./bg_bind_phone.jpg");*/
+    height: 100vh;
+    background-image: url("../imgs/bg_bind_menu.png");
     background-size: 100% 100%;
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
-    padding: 0 40px;
+    padding: 0 30px;
+    align-items: center;
+}
+
+.ant-avatar.ant-avatar-icon {
+    margin-top: 70px;
+    margin-bottom: 22px;
+}
+
+span.ant-input-affix-wrapper {
+    width: 100%;
+    height: 36px;
+    margin-top: 14px;
+    /*padding-left: 10px;*/
+}
+
+.ant-input-affix-wrapper .ant-input {
+    font-size: 14px;
+    background: transparent;
+    color: white;
+    padding-left: 40px !important;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px white solid;
+}
+
+.ant-input-group {
+    /*border-bottom: 1px white solid;*/
+}
+
+.inputIcon1 {
+    width: 16px;
+    height: 16px;
+}
+
+.inputIcon2 {
+    width: 13px;
+    height: 19px;
+}
+
+.inputIcon3 {
+    width: 18px;
+    height: 14px;
+}
+
+button.ant-btn.ant-btn-primary.ant-btn-block {
+    height: 36px;
+}
+
+span.ant-input-group-addon {
+    background: transparent;
+    font-size: 13px;
+    color: white;
+    border: none;
+    padding-top: 14px;
+    border-bottom: 1px white solid;
+    border-radius: 0;
+}
+
+.obtainCode {
+
 }

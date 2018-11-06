@@ -1,0 +1,10 @@
+.bindParent {
+    width: 100%;
+    height: 100%;
+    /*background-image: url("./bg_bind_phone.jpg");*/
+    background-size: 100% 100%;
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    padding: 0 40px;
+}

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import HomePages from "./modules/home/HomePages";
-import RouteConfig from "./configs/router-config";
+import RouteConfig from "./configs/router.config";
 
 ReactDOM.render(<RouteConfig/>, document.getElementById('root'));
 

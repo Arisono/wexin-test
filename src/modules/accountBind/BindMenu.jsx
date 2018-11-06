@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import '../../style/mycss/account-bind.css'
-import {Avatar} from 'antd'
+import 'css/account-bind.css'
+import {Avatar, Input, Icon} from 'antd'
 
 export default class BindMenu extends Component {
 
@@ -8,12 +8,13 @@ export default class BindMenu extends Component {
         document.title = '账号绑定'
     }
 
+
     render() {
         return (
-            <div className='bindParent'>
-                <Avatar icon='user'/>
+            <div>
 
             </div>
-        );
+        )
     }
+
 }

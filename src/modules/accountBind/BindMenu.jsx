@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import 'css/account-bind.css'
+import '../../style/mycss/account-bind.css'
 import {Avatar} from 'antd'
 
 export default class BindMenu extends Component {

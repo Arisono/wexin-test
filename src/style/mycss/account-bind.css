@@ -6,7 +6,7 @@
     display: flex;
     box-sizing: border-box;
     flex-direction: column;
-    padding: 0 30px;
+    padding: 0 35px;
     align-items: center;
 }
 
@@ -65,6 +65,19 @@ span.ant-input-group-addon {
     border-radius: 0;
 }
 
-.obtainCode {
+.bindTitleLayout {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 150px;
+    margin-bottom: 40px;
+}
 
+.bindTitleText {
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #FFFFFF;
+    margin-left: 10px;
+    letter-spacing: 2px;
 }

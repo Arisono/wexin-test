@@ -9,6 +9,7 @@ import {isObjEmpty} from "../../utils/common";
 import {Icon, Button, Upload} from 'antd'
 
 export default class UploadImage extends Component {
+
     handleCancel = () => this.setState({previewVisible: false})
 
     handlePreview = (file) => {
@@ -16,6 +17,7 @@ export default class UploadImage extends Component {
             previewImage: file.url || file.thumbUrl,
             previewVisible: true,
         });
+        console.log('预览')
     }
 
     handleChange = ({fileList}) => this.setState({fileList})
@@ -67,6 +69,7 @@ export default class UploadImage extends Component {
                         action="//jsonplaceholder.typicode.com/posts/"
                         listType="picture-card"
                         fileList={fileList}
+                        multiple
                         onPreview={this.handlePreview}
                         onChange={this.handleChange}>
                         {fileList.length >= 30 ? null : uploadButton}

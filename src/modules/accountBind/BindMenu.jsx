@@ -9,6 +9,10 @@ import {Avatar, Input, Icon, Button} from 'antd'
 
 export default class BindMenu extends Component {
 
+    componentWillMount() {
+
+    }
+
     componentDidMount() {
         document.title = '账号绑定'
     }

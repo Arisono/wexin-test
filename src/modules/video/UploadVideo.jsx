@@ -70,10 +70,10 @@ export default class UploadVideo extends Component {
                     <div className='chooseText'>{isObjEmpty(classText) ? '选择班级' : classText}</div>
                     <Icon type="right" theme="outlined"/>
                 </div>
-                <div className='captionText'>视频名称</div>
+                <div className='uploadCaptionText'>视频名称</div>
                 <input className='titleInput' placeholder='请输入视频名称'
                        value={videoTitle} onChange={this.titleChange}/>
-                <div className='captionText'>视频描述</div>
+                <div className='uploadCaptionText'>视频描述</div>
                 <TextArea className='contentInput' placeholder='请输入相册描述'
                           autosize={{minRows: 8, maxRows: 16}} value={videoDescription}
                           onChange={this.descriptionChange}/>

@@ -11,6 +11,7 @@ import PictureList from "../modules/album/PictureList";
 import VideoPlayer from "../modules/video/VideoPlayer";
 import PrincipalMailbox from "../modules/principalMailbox/PrincipalMailbox";
 import MeetingSignIn from "../modules/meeting/MeetingSignIn";
+import PhonesSelect from "../modules/phonesBook/PhonesSelect";
 
 export default class RouteConfig extends Component {
 
@@ -32,6 +33,7 @@ export default class RouteConfig extends Component {
                     <Route path='/videoPlayer/:title?' component={VideoPlayer}/>
                     <Route path='/principalMailbox' component={PrincipalMailbox}/>
                     <Route path='/meetingSignIn' component={MeetingSignIn}/>
+                    <Route path='/phonesSelect' component={PhonesSelect}/>
 
                     {/*刘杰*/}
 

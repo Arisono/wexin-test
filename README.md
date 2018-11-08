@@ -24,11 +24,39 @@
 > 安装：npm install react-router-dom   
 开发文档：https://reacttraining.com/react-router/web/guides/quick-start
 
+#### react-infinite-scroller列表上拉加载框架
+
+> 安装：cnpm i react-infinite-scroller -S
+开发文档: https://www.npmjs.com/package/react-infinite-scroller
+
+#### react-lazyload 布局懒加载
+
+> 安装：cnpm i react-lazyload -S
+开发文档：https://www.npmjs.com/package/react-lazy-load
+
+#### react-player 视频播放组件
+
+> 安装： cnpm i react-player -S
+开发文档：https://www.npmjs.com/package/react-player
+
+#### react-transition-group 动画框架
+
+> 安装：cnpm i react-transition-group -S
+开发文档：https://www.npmjs.com/package/react-transition-group
+
+#### swiper布局滑动组件
+> 安装：cnpm i swiper -S
+开发文档： https://www.swiper.com.cn/api/index.html
+
+
 ## 目录划分
 
-- style：
-- modules:
-- utils:
+- style：图片及样式
+- modules:页面模块
+- utils:工具类
+- components:封装组件
+- configs:配置
+- model:实体类
 
 ## 优化处理
 ### Antd按需加载

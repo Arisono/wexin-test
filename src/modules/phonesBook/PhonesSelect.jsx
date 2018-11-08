@@ -45,8 +45,8 @@ export default class PhonesSelect extends Component {
         let parents = ['三年级(4)班', '三年级(6)班', '四年级(12)班', '三年级(4)班', '三年级(6)班', '四年级(12)班', '四年级(12)班', '三年级(4)班', '三年级(6)班', '四年级(12)班']
 
         this.setState({
-            teacherList: teacherList.concat(teachers),
-            parentList: parentList.concat(parents)
+            teacherList: teacherList.concat(teachers, teachers),
+            parentList: parentList.concat(parents, parents)
         })
     }
 

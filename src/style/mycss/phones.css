@@ -9,7 +9,7 @@
 }
 
 .swiper-slide {
-    text-align: center;
+    overflow: scroll;
 }
 
 .phone-select-root {

@@ -1,0 +1,64 @@
+#assignment_list{
+    background-color:#F3F3F3;
+    margin: 0px 0px 0px 0px;
+    height: 100%;
+
+}
+#list_item_noBorder{
+    border: 0px;
+    background-color:#ffffff;
+   margin: 20px 8px 40px 8px;
+    width: auto;
+}
+
+#row_left{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 0px 3px 15px;
+}
+
+#row_right{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 15px 3px 0px;
+}
+
+#row_center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+#padding{
+    padding: 3px;
+}
+#page_border_line{
+    border: 1px solid #F3F3F3;
+}
+#page_horizontal_line{
+    height: 1px;
+    border-top: 1px solid #F3F3F3;
+    text-align: center;
+}
+
+#span_header_left{
+    font-size: 18px;
+    font-weight:600
+}
+
+#span_header_right{
+    font-size: 15px;
+    color: red;
+}
+
+#span_normal{
+    font-size: 15px;
+}
+
+#span_display{
+    font-size: 15px;
+    color: #8F8F8F;
+}
+

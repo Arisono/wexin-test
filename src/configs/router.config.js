@@ -3,6 +3,9 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 import AppHomePage from "../modules/home/AppHomePage";
 import BindMenu from "../modules/accountBind/BindMenu";
 import AccountBind from "../modules/accountBind/AccountBind";
+import ReleaseAssignmentPage from "../modules/homework/ReleaseAssignmentPage";
+import AssignmentListPage from "../modules/homework/AssignmentListPage";
+import AssignmentDetailPage from "../modules/homework/AssignmentDetailPage";
 
 export default class RouteConfig extends Component {
 
@@ -10,7 +13,7 @@ export default class RouteConfig extends Component {
         return (
             <Router>
                 <div>
-                    <Route exact path="/" component={AppHomePage}/>
+                    <Route exact path="/" component={AssignmentDetailPage}/>
                     {/*<Route path='/bindMenu' component={BindMenu}/>*/}
                     {/*<Route path='/accountBind/:type?' component={AccountBind}/>*/}
                 </div>

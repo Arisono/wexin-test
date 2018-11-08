@@ -1,0 +1,21 @@
+#row_center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+#padding10{
+    padding: 10px;
+}
+/*公共分块*/
+#page_block_min{
+    height: 20px;
+    background-color: #F3F3F3;
+}
+/*水平分割线*/
+#page_horizontal_line{
+    height: 1px;
+    border-top: 1px solid #F3F3F3;
+    text-align: center;
+}

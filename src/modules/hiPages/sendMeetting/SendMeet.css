@@ -5,5 +5,5 @@
 .item_sty{padding:10px 15px; display: flex;fontSize:12px}
 .comBtn_sty{width:302px;height:36px;margin-top: 40px;font-size:15px}
 .textarea_sty{border:none;fontSize:15px; color:#333333;padding:10px 20px;}
-.meet_penson{padding:10px 20px; display: flex;flex-direction: row;width: 300px;}
+.meet_penson{padding:10px 20px; display: flex;flex-direction: row;flex-wrap: wrap;width: 100%;}annex_sty
 .meet_penson_img{height: 50px;width: 50px;}

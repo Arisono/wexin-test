@@ -41,17 +41,41 @@ export default class PhonesSelect extends Component {
             }
         })
 
-        let teachers = ['三年级(2)班', '三年级(1)班', '四年级(2)班', '三年级(2)班', '三年级(1)班', '四年级(2)班']
-        let parents = ['三年级(4)班', '三年级(6)班', '四年级(12)班', '三年级(4)班', '三年级(6)班', '四年级(12)班', '四年级(12)班', '三年级(4)班', '三年级(6)班', '四年级(12)班']
+        let teachers = ['三年级(2)班', '三年级(1)班', '四年级(2)班']
+        let parents = ['三年级(4)班', '三年级(6)班', '四年级(12)班', '三年级(4)班']
 
         this.setState({
-            teacherList: teacherList.concat(teachers, teachers),
-            parentList: parentList.concat(parents, parents)
+            teacherList: teacherList.concat(teachers, teachers, teachers),
+            parentList: parentList.concat(parents, parents, parents, parents, parents)
         })
     }
 
     render() {
         const {selectIndex, teacherList, parentList} = this.state
+
+        const teacherItems = <List dataSource={teacherList} renderItem={
+            (item, index) => (
+                <List.Item>
+                    <div className='phoneListItem'
+                         onClick={this.onTeacherItemClick.bind(this, index)}>
+                        <div
+                            className='phoneItemText'>{item}</div>
+                        <Icon type="right" theme="outlined"/>
+                    </div>
+                </List.Item>
+            )}/>
+
+        const parentItems = <List dataSource={parentList} renderItem={
+            (item, index) => (
+                <List.Item>
+                    <div className='phoneListItem'
+                         onClick={this.onParentItemClick.bind(this, index)}>
+                        <div
+                            className='phoneItemText'>{item}</div>
+                        <Icon type="right" theme="outlined"/>
+                    </div>
+                </List.Item>
+            )}/>
 
         return (
             <div className='phone-select-root'>
@@ -69,33 +93,25 @@ export default class PhonesSelect extends Component {
                 <div className="swiper-container">
                     <div className="swiper-wrapper">
                         <div className="swiper-slide">
-                            <List dataSource={teacherList} renderItem={
-                                item => (
-                                    <List.Item>
-                                        <div className='phoneListItem'>
-                                            <div
-                                                className='phoneItemText'>{item}</div>
-                                            <Icon type="right" theme="outlined"/>
-                                        </div>
-                                    </List.Item>
-                                )}/>
+                            {teacherItems}
                         </div>
                         <div className="swiper-slide">
-                            <List dataSource={parentList} renderItem={
-                                item => (
-                                    <List.Item>
-                                        <div className='phoneListItem'>
-                                            <div
-                                                className='phoneItemText'>{item}</div>
-                                            <Icon type="right" theme="outlined"/>
-                                        </div>
-                                    </List.Item>
-                                )}/>
+                            {parentItems}
                         </div>
                     </div>
                 </div>
             </div>
         )
+    }
+
+    onTeacherItemClick = (index) => {
+        const {teacherList} = this.state
+        this.props.history.push('/phonesList/' + teacherList[index])
+    }
+
+    onParentItemClick = (index) => {
+        const {parentList} = this.state
+        this.props.history.push('/phonesList/' + parentList[index])
     }
 
     onTeacherClick = () => {

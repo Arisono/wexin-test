@@ -40,46 +40,11 @@ export default class ClassAlbum extends Component {
                 coverImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
                 albumName: '六一儿童节',
                 quantity: 50,
-            },
-            {
-                coverImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                albumName: '六一儿童节',
-                quantity: 50,
-            },
-            {
-                coverImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                albumName: '六一儿童节',
-                quantity: 50,
-            },
-            {
-                coverImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                albumName: '六一儿童节',
-                quantity: 50,
-            },
-            {
-                coverImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                albumName: '六一儿童节',
-                quantity: 50,
-            },
-            {
-                coverImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                albumName: '六一儿童节',
-                quantity: 50,
-            },
-            {
-                coverImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                albumName: '六一儿童节',
-                quantity: 50,
-            },
-            {
-                coverImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                albumName: '六一儿童节',
-                quantity: 50,
-            },
+            }
         ]
 
         this.setState({
-            albumList: this.state.albumList.concat(albumAll)
+            albumList: this.state.albumList.concat(albumAll, albumAll, albumAll, albumAll)
         })
     }
 
@@ -107,7 +72,7 @@ export default class ClassAlbum extends Component {
     onItemClick = (index) => {
         console.log(index)
         if (index == 0) {
-            this.props.history.push('/album')
+            this.props.history.push('/newAlbum')
         } else {
             this.props.history.push('/pictureList')
         }

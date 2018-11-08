@@ -12,6 +12,7 @@ import VideoPlayer from "../modules/video/VideoPlayer";
 import PrincipalMailbox from "../modules/principalMailbox/PrincipalMailbox";
 import MeetingSignIn from "../modules/meeting/MeetingSignIn";
 import PhonesSelect from "../modules/phonesBook/PhonesSelect";
+import PhonesList from "../modules/phonesBook/PhonesList";
 
 export default class RouteConfig extends Component {
 
@@ -34,6 +35,7 @@ export default class RouteConfig extends Component {
                     <Route path='/principalMailbox' component={PrincipalMailbox}/>
                     <Route path='/meetingSignIn' component={MeetingSignIn}/>
                     <Route path='/phonesSelect' component={PhonesSelect}/>
+                    <Route path='/phonesList/:classTitle?' component={PhonesList}/>
 
                     {/*刘杰*/}
 

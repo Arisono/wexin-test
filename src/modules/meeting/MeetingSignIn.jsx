@@ -8,7 +8,7 @@ import MeetingSignItem from 'components/MeetingSignItem'
 import MeetingBean from "model/MeetingBean";
 import {isObjEmpty} from "../../utils/common";
 import InfiniteScroll from 'react-infinite-scroller'
-import {Spin} from 'antd'
+import {Spin,Icon} from 'antd'
 
 export default class MeetingSignIn extends Component {
 
@@ -23,7 +23,6 @@ export default class MeetingSignIn extends Component {
 
     componentDidMount() {
         document.title = '会议签到'
-
         this.loadMeetList()
     }
 
@@ -49,7 +48,8 @@ export default class MeetingSignIn extends Component {
                         display: 'flex', justifyContent: 'center',
                         alignItems: 'center'
                     }}>
-                        <Spin/>
+                        <Icon type="loading" theme="outlined" />
+                        <span style={{marginLeft:'10px'}}>加载更多</span>
                     </div>}>
                     {meetingItems}
                 </InfiniteScroll>
@@ -57,7 +57,7 @@ export default class MeetingSignIn extends Component {
         )
     }
 
-    loadMeetList = () => {
+    loadMeetList = (index) => {
         setTimeout(() => {
             const {meetingSignList} = this.state
             for (let i = 0; i < 8; i++) {
@@ -88,3 +88,4 @@ export default class MeetingSignIn extends Component {
         }, 2000)
     }
 }
+

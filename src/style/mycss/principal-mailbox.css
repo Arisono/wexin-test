@@ -1,0 +1,91 @@
+.pageLayout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: white;
+}
+
+.headerLayout {
+    width: 100%;
+    background: #50C661;
+    height: 46px;
+    text-align: center;
+    line-height: 46px;
+    font-family: PingFangSC-Regular;
+    font-size: 13px;
+    color: #FFFFFF;
+    letter-spacing: 1.88px;
+}
+
+.suggestInput {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #333333;
+    letter-spacing: 1.5px;
+    outline: none;
+    background: white;
+    border: none;
+    border-radius: 0;
+    padding: 8px 13px;
+}
+
+.uploadLayout {
+    width: 100%;
+    padding: 0 40px;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+.imagesLayout {
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 12px;
+    background: white;
+}
+
+.chooseLayout {
+    width: 100%;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    background: white;
+}
+
+.annexText {
+    font-family: PingFangSC-Regular;
+    font-size: 13px;
+    color: #333333;
+    letter-spacing: 1.88px;
+}
+
+.annexCount {
+    font-family: PingFangSC-Regular;
+    font-size: 13px;
+    color: #7D7D7D;
+    letter-spacing: 0;
+    margin-left: 2px;
+}
+
+.wordCount {
+    display: block;
+    width: 100%;
+    text-align: right;
+    background: white;
+    padding: 16px;
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #7D7D7D;
+    letter-spacing: 0;
+}
+
+.anonymousLayout {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #333333;
+    letter-spacing: 0;
+}

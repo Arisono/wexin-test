@@ -1,0 +1,79 @@
+#span-normal{
+   font-size: 15px;
+}
+
+#span-lager{
+    font-size: 18px;
+}
+
+#span-x-lager{
+    font-size: 20px;
+}
+
+#page_tile{
+    margin-left: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 21px;
+}
+#page_block_min{
+    height: 20px;
+    background-color: #F3F3F3;
+}
+#page_block_max{
+    height: 30px;
+    background-color: #F3F3F3;
+}
+#page_horizontal_line{
+    height: 1px;
+    border-top: 1px solid #F3F3F3;
+    text-align: center;
+}
+
+#row_padding{
+    padding: 20px 15px 20px 15px;
+}
+
+#row_padding_with{
+    padding: 0px 15px 0px 15px;
+}
+
+#row_padding_height{
+    padding: 20px 0px 20px 0px;
+}
+
+#row_center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+#row_right{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#list_data_span{
+    font-size: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#input_no_border{
+    border: 0px;
+    margin-bottom: 10px;
+    font-size: larger;
+}
+
+#bottom_height{
+    height: 30px;
+}
+
+#link_href{
+    font-size: 19px;
+    margin-top: 10px;
+    color: #0098FD;
+    text-decoration:underline;
+}

@@ -1,16 +1,64 @@
-@import "~antd/dist/antd.css";
+/*@import "~antd/dist/antd.css";*/
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+.gray-line {
+    width: 100%;
+    background: #F2F2F2;
+    height: 10px;
+}
+
+.displayNone {
+    display: none;
+}
+
+.commonButton {
+    letter-spacing: 10px;
+    border-radius: 9px;
+    font-size: 14px;
+    color: white;
+    background: #4197FC;
+}
+
+.fade-enter,
+.fade-appear {
+    opacity: 0;
+    transition: opacity 1s ease-in;
+}
+
+.fade-enter-active,
+.fade-apper-active {
+    opacity: 1;
+}
+
+.fade-enter-done {
+    opacity: 1;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit-active {
+    /*opacity: 0;*/
+    /*transition: opacity 1s ease-in;*/
+    opacity: 1;
+}
+
+.fade-exit-done {
+    /*opacity: 0;*/
+    opacity: 1;
 }

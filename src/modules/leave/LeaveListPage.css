@@ -1,0 +1,15 @@
+#button_padding{
+    margin: 8px;
+}
+
+#button_ok{
+    margin: 5px;
+    border: #f5f5f5;
+    background-color: #00E053;
+}
+
+#button_no_ok{
+    margin: 5px;
+    border: #f5f5f5;
+    background-color: #0098FD
+}

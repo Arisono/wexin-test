@@ -1,0 +1,132 @@
+.swiper-container {
+    width: 100%;
+    flex: 1;
+    background: white;
+}
+
+.swiper-wrapper {
+    /*background: red;*/
+}
+
+.swiper-slide {
+    overflow: scroll;
+}
+
+.phone-select-root {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.identity-select {
+    display: flex;
+    flex-direction: row;
+}
+
+.identity-item-normal, .identity-item-select {
+    flex: 1;
+    background: white;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    letter-spacing: 1.88px;
+    text-align: center;
+    height: 42px;
+    line-height: 42px;
+}
+
+.identity-item-normal {
+    color: #666666;
+    border-bottom: 1px solid #F3F3F3;
+}
+
+.identity-item-select {
+    color: #4197FC;
+    border-bottom: 1px solid #4197FC;
+}
+
+.phoneListItem {
+    width: 100%;
+    padding: 4px 12px 4px 0px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    background: white;
+}
+
+.phoneItemText {
+    font-family: PingFangSC-Regular;
+    font-size: 13px;
+    color: #333333;
+    letter-spacing: 1.88px;
+    flex: 1;
+    text-align: left;
+    padding-left: 20px;
+}
+
+.phones-list-header {
+    width: 100%;
+    height: 46px;
+    line-height: 46px;
+    text-align: center;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #4197FC;
+    letter-spacing: 1.88px;
+}
+
+.phones-list-layout {
+    width: 100%;
+    flex: 1;
+    background: white;
+    overflow: scroll;
+}
+
+.phones-item-root {
+    width: 100%;
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.phones-item-top {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.phones-item-name {
+    flex: 1;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #333333;
+    letter-spacing: 1.38px;
+    text-align: left;
+}
+
+.phones-item-phone {
+    width: 120px;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #666666;
+    letter-spacing: 1.38px;
+    text-align: right;
+}
+
+i.anticon.anticon-phone {
+    font-size: 14px;
+    margin-left: 4px;
+    color: #666666;
+}
+
+.phones-item-child {
+    width: 100%;
+    margin-top: 8px;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #666666;
+    letter-spacing: 1.11px;
+    text-align: left;
+}
+

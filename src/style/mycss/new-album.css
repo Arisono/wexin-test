@@ -1,0 +1,95 @@
+.pageLayout {
+    background: #F2F2F2;
+    height: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.chooseLayout {
+    width: 100%;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    background: white;
+}
+
+.chooseText {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #333333;
+    letter-spacing: 1.88px;
+    flex: 1;
+}
+
+.titleInput {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    border: none;
+    outline: none;
+    font-size: 13px;
+}
+
+.contentInput {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #333333;
+    letter-spacing: 1.5px;
+    outline: none;
+    background: white;
+    border: none;
+    border-radius: 0;
+    padding: 8px 13px;
+}
+
+.confirmLayout {
+    width: 100%;
+    padding: 0 40px;
+    position: absolute;
+    bottom: 120px;
+}
+
+.uploadLayout {
+    width: 100%;
+    padding: 0 40px;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+.imagesLayout {
+    flex: 1;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 12px;
+    background: white;
+}
+
+.uploadCaptionText {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #5B5B5B;
+    letter-spacing: 1.5px;
+    padding: 4px 0 4px 12px;
+    background: #F2F2F2;
+}
+
+.promptText {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #898989;
+    letter-spacing: 1.5px;
+    margin-left: 6px;
+}
+
+.uploadBtn {
+    background: #4197FC;
+    border-radius: 3px;
+    padding: 4px;
+}
+
+/*.ant-upload-list.ant-upload-list-text{*/
+    /*flex: 1;*/
+    /*height: 200px;*/
+/*}*/

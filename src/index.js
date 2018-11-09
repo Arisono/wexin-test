@@ -7,7 +7,7 @@ import RouteConfig from "./configs/router.config";
 
 import FieldTrip from './modules/hiPages/field-trip/FieldTrip';
 
-ReactDOM.render(<RouteConfig/>, document.getElementById('root'));
+ReactDOM.render(<FieldTrip/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

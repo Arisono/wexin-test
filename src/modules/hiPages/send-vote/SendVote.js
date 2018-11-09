@@ -7,20 +7,20 @@ import  './SendVote.css';
 import { DatePicker,Select,Switch,Upload, Icon, Modal } from 'antd';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import moment from 'moment'
-import add_annex from '../../../style/imgs/add_annex.png';
 import 'antd/dist/antd.css';
-
 const Option = Select.Option;
 
-
-function ComImg(){
+function SelectItem(){
     return(
-        <div >
-            <img className="annex_img" src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"} alt=""/>
-        </div>
+      <div >
+          {/*<textarea  onChange = {this.props.handelSItem(this.props.index,this.ref.scontent__item.value)} ref="scontent__item" rows={1} type="text" placeholder="请输入选项内容" className="select_item_sty"/>*/}
+          <textarea  rows={1} type="text" placeholder="请输入选项内容" className="select_item_sty"/>
+          <div className="comhline_sty1"></div>
+      </div>
     )
 }
 export default class SendVote extends Component{
+
     constructor(props){
         super(props);
         this.state = {
@@ -28,15 +28,20 @@ export default class SendVote extends Component{
             endValue:null,
             voteType:null,
             nonameVote:false,
-            annexNumbers:0,
+            selectContentArray: [1,2],
 
-           annexArray:[],
             previewVisible: false,
             previewImage: '',
             fileList: [],
         }
     }
+    handelSItem = (index ,data)=>{
+        console.log('index',index)
+        console.log('data',data)
+    }
     render(){
+
+        //添加附件按钮
         const uploadButton = (
             <div>
                 <Icon type="plus" />
@@ -48,10 +53,15 @@ export default class SendVote extends Component{
             <div onChange={this.handelValueCom}>
                 <textarea autoFocus="autoFocus" ref='voteTitle' className="form-control textarea_sty" rows="2" placeholder="请填写投票主题…" ></textarea>
                 <div className="comhline_sty"></div>
-                <div className="comhline_sty"></div>
 
+                <div >
+                    {this.state.selectContentArray.map((itemata,index) => <SelectItem key={index} itemata = {itemata} handelSItem={this.handelSItem}></SelectItem>)}
+                    <div onClick={this.addSelectItem} className="text-center" style={{color:"#0CE11D",fontSize:12,margin:10}}>+ <span >添加选项</span></div>
+                </div>
+
+                <div className="comhline_sty"></div>
                 <div  className="item_sty">
-                    <div style={{width:150}}>投票类型:</div>
+                    <div style={{width:150,fontSize:15,color:"#333333"}}>投票类型:</div>
                     <div className="text-right" style={{width:"100%",}}>
                         <Select defaultValue="请选择" style={{ width:100 }} onChange={this.handleSelectChange}>
                             <Option value="0">单选</Option>
@@ -63,7 +73,7 @@ export default class SendVote extends Component{
                 <div className="comhline_sty1"></div>
 
                 <div  className="item_sty">
-                    <div style={{width:150}}>结束时间:</div>
+                    <div style={{width:150,fontSize:15,color:"#333333"}}>结束时间:</div>
                     <div className="text-right" style={{width:"100%",}}>
                         <DatePicker
                             showTime
@@ -77,7 +87,7 @@ export default class SendVote extends Component{
                 <div className="comhline_sty1"></div>
 
                 <div  className="item_sty">
-                    <div style={{width:150}}>匿名投票:</div>
+                    <div style={{width:150,fontSize:15,color:"#333333"}}>匿名投票:</div>
                     <div className="text-right" style={{width:"100%",}}>
                         <Switch checkedChildren="开" unCheckedChildren="关" defaultunchecked = "false"  onChange={this.switchStatues}/>
                         <img src={nextArrowimg} className="nextarr_sty"/></div>
@@ -85,14 +95,10 @@ export default class SendVote extends Component{
                 <div className="comhline_sty1"></div>
 
                 <div  className="item_sty">
-                    <div style={{width:150}}>附件:</div>
-                    <div className="text-right" style={{width:"100%",}}>{this.state.annexNumbers}/4张</div>
+                    <div style={{width:150,fontSize:15,color:"#666666"}}>附件:</div>
+                    <div className="text-right" style={{width:"100%",}}>{this.state.fileList.length}/4张</div>
                 </div>
 
-                {/*<div className="annex_sty">*/}
-                    {/*{this.state.annexArray.map((itemata,index) => <ComImg key={index} itemata = {itemata}></ComImg>)}*/}
-                    {/*<img onClick={this.addAnnex} className="annex_img"  src={add_annex}/>*/}
-                {/*</div>*/}
 
                 <div className="clearfix" style={{margin:10}}>
                     <Upload
@@ -101,22 +107,27 @@ export default class SendVote extends Component{
                         fileList={this.state.fileList}
                         onPreview={this.handlePreview}
                         onChange={this.handleChange}
-                        multiple={true}
-                    >
-                        {this.state.fileList.length >= 4 ? null : uploadButton}
+                        multiple={true}>
+                        {this.state.fileList.length >= 9 ? null : uploadButton}
                     </Upload>
                     <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
                         <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
                     </Modal>
                 </div>
 
-                <center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSendVote}>发布</button></center>
+                <center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSaveClick}>提交</button></center>
             </div>
         )
     }
     //发布提交
     doSendVote = (event)=>{
         console.log('state',this.state)
+    }
+    addSelectItem = (event)=>{
+        let selectContentArray =  [...this.state.selectContentArray,1];
+        this.setState({
+            selectContentArray
+        })
     }
     addAnnex = (event)=>{
         console.log('addAnnex')
@@ -130,7 +141,7 @@ export default class SendVote extends Component{
     handleSelectChange =(value) =>{
         this.setState({
             voteType:value
-    })
+        })
     }
     handelValueCom = (event)=>{
         //获取用户名的值
@@ -156,6 +167,10 @@ export default class SendVote extends Component{
         });
     }
 
-    handleChange = ({ fileList }) => this.setState({ fileList })
+    handleChange = ({fileList} ) => {
+        this.setState({
+            fileList:fileList,
+        })
+    }
 
 }

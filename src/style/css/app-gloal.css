@@ -1,6 +1,30 @@
+/*全局背景*/
+#global_background{
+  background-color: #F3F3F3;
+    height: 645px;
+}
+
+#row_background{
+    background-color: #FFFFFF;
+    border: 1px solid #F3F3F3;
+}
+
 #row_center{
     display: flex;
     justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+#row_left{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+}
+#row_right{
+    display: flex;
+    justify-content: flex-end;
     align-items: center;
     padding: 10px;
 }

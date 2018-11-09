@@ -6,6 +6,7 @@ import AccountBind from "../modules/accountBind/AccountBind";
 import ReleaseAssignmentPage from "../modules/homework/ReleaseAssignmentPage";
 import AssignmentListPage from "../modules/homework/AssignmentListPage";
 import AssignmentDetailPage from "../modules/homework/AssignmentDetailPage";
+import LeaveListPage from "../modules/leave/LeaveListPage";
 
 export default class RouteConfig extends Component {
 
@@ -13,7 +14,7 @@ export default class RouteConfig extends Component {
         return (
             <Router>
                 <div>
-                    <Route exact path="/" component={AssignmentDetailPage}/>
+                    <Route exact path="/" component={LeaveListPage}/>
                     {/*<Route path='/bindMenu' component={BindMenu}/>*/}
                     {/*<Route path='/accountBind/:type?' component={AccountBind}/>*/}
                 </div>

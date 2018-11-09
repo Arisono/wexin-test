@@ -42,7 +42,7 @@ export default class NewAlbum extends Component {
                 <TextArea className='contentInput' placeholder='请输入相册描述'
                           autosize={{minRows: 8, maxRows: 16}} value={albumdescription}
                           onChange={this.descriptionChange}/>
-
+                <div style={{flex: '1'}}></div>
                 <div className='confirmLayout'>
                     <Button className='commonButton' type="primary" block
                             onClick={this.releaseEvent}>发布</Button>

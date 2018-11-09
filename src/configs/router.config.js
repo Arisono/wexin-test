@@ -30,7 +30,6 @@ export default class RouteConfig extends Component {
                     <Route path='/uploadVideo' component={UploadVideo}/>
                     <Route path='/classAlbum' component={ClassAlbum}/>
                     <Route path='/pictureList/:title?' component={PictureList}/>
-                    {/*<Redirect exact from='/pictureList' to={{pathname: '/pictureList/相册'}}/>*/}
                     <Route path='/videoPlayer/:title?' component={VideoPlayer}/>
                     <Route path='/principalMailbox' component={PrincipalMailbox}/>
                     <Route path='/meetingSignIn' component={MeetingSignIn}/>

@@ -1,0 +1,12 @@
+/*公共*/
+#page_border_line{
+    border: 1px solid #F3F3F3;
+}
+
+#layout_header{
+    background-color: #E6EEF7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}

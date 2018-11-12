@@ -13,6 +13,12 @@ import PrincipalMailbox from "../modules/principalMailbox/PrincipalMailbox";
 import MeetingSignIn from "../modules/meeting/MeetingSignIn";
 import PhonesSelect from "../modules/phonesBook/PhonesSelect";
 import PhonesList from "../modules/phonesBook/PhonesList";
+import LeaveListPage from "../modules/leave/LeaveListPage";
+import ReleaseAssignmentPage from "../modules/homework/ReleaseAssignmentPage";
+import AssignmentListPage from "../modules/homework/AssignmentListPage";
+import AssignmentDetailPage from "../modules/homework/AssignmentDetailPage";
+import LeaveApprovalPage from "../modules/leave/LeaveApprovalPage";
+import LeaveAddPage from "../modules/leave/LeaveAddPage";
 
 export default class RouteConfig extends Component {
 
@@ -38,7 +44,12 @@ export default class RouteConfig extends Component {
                     <Route path='/phonesList/:classTitle?' component={PhonesList}/>
 
                     {/*刘杰*/}
-
+                    <Route path='/leaveAddPage' component={LeaveAddPage}/>
+                    <Route path='/leaveApprovalPage' component={LeaveApprovalPage}/>
+                    <Route path='/leaveList' component={LeaveListPage}/>
+                    <Route path='/releaseAssignment' component={ReleaseAssignmentPage}/>
+                    <Route path='/assignmentList' component={AssignmentListPage}/>
+                    <Route path='/assignmentDetailP' component={AssignmentDetailPage}/>
                     {/*方龙海*/}
 
                     {/*刘金龙*/}

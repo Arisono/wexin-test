@@ -22,6 +22,7 @@ import ResApply from '../modules/hiPages/res_apply/ResApply';
 import SendVote from '../modules/hiPages/send-vote/SendVote';
 import SendMeet from '../modules/hiPages/sendMeetting/SendMeet';
 import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
+import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
 
 export default class RouteConfig extends Component {
 
@@ -29,7 +30,7 @@ export default class RouteConfig extends Component {
         return (
             <Router>
                 <div>
-                    <Route exact path="/" component={ClassSchedule}/>
+                    <Route exact path="/" component={AppHomePage}/>
 
                     {/*饶猛*/}
                     <Route path='/bindMenu' component={BindMenu}/>
@@ -56,7 +57,7 @@ export default class RouteConfig extends Component {
                     <Route path='/phonesList/send-vote' component={SendVote}/>
                     <Route path='/sendMeetting' component={SendMeet}/>
                     <Route path='/class-schedule' component={ClassSchedule}/>
-
+                    <Route path='/score-inquiry' component={ScoreInquiry}/>
                     {/*刘金龙*/}
                 </div>
             </Router>

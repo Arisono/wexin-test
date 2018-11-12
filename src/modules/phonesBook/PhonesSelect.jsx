@@ -49,7 +49,7 @@ export default class PhonesSelect extends Component {
             let phoneBean = new PhonesBean()
             phoneBean.name = '饶老师'
             phoneBean.phone = '13632423333'
-            phoneBean.gradeClass = ""
+            phoneBean.claName = ""
             phoneBean.children = [
                 '语文', '数学', '语文', '数学'
             ]

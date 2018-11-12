@@ -1,5 +1,6 @@
 export default function PhonesBean() {
-    this.gradeClass = ''
+    this.claName = ''
+    this.claId = ""
     this.name = ''
     this.phone = ''
     this.children = []

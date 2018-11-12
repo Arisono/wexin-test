@@ -35,7 +35,7 @@ export default class PhonesList extends Component {
             let phoneBean = new PhonesBean()
             phoneBean.name = '饶老师'
             phoneBean.phone = '13632423333'
-            phoneBean.gradeClass = title
+            phoneBean.claName = title
             phoneBean.children = [
                 '语文', '数学','语文', '数学'
             ]

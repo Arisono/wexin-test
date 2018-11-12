@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react'
-import {List, Icon} from 'antd'
+import {List, Icon, Skeleton} from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
 import 'css/message.css'
 import SystemMsgItem from 'components/SystemMsgItem'
@@ -16,7 +16,8 @@ export default class SystemMessage extends Component {
 
         this.state = {
             systemMsgs: [],
-            hasMoreData: true
+            hasMoreData: true,
+            isLoading: true
         }
     }
 
@@ -25,7 +26,7 @@ export default class SystemMessage extends Component {
     }
 
     render() {
-        const {systemMsgs, hasMoreData} = this.state
+        const {systemMsgs, hasMoreData, isLoading} = this.state
         return (
             <div className='message-page-layout' style={{background: '#F2F2F2'}}>
                 <InfiniteScroll
@@ -40,10 +41,12 @@ export default class SystemMessage extends Component {
                         <Icon type="loading" theme="outlined"/>
                         <span style={{marginLeft: '10px'}}>加载更多</span>
                     </div>}>
-                    <List dataSource={systemMsgs}
-                          renderItem={(item, index) => (
-                              <SystemMsgItem systemBean={item}/>
-                          )}/>
+                    <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
+                        <List dataSource={systemMsgs}
+                              renderItem={(item, index) => (
+                                  <SystemMsgItem systemBean={item}/>
+                              )}/>
+                    </Skeleton>
                 </InfiniteScroll>
 
             </div>
@@ -66,7 +69,8 @@ export default class SystemMessage extends Component {
             }
 
             this.setState({
-                systemMsgs: systemMsgs
+                systemMsgs: systemMsgs,
+                isLoading: false
             })
         }, 1500)
     }

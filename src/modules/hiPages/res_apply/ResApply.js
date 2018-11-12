@@ -6,6 +6,7 @@ import React,{Component} from 'react';
 import './ResApply.css';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import { Select,Upload,Modal,Icon } from 'antd';
+
 const Option = Select.Option;
 
 function UserItem(props){

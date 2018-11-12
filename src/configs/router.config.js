@@ -13,6 +13,8 @@ import PrincipalMailbox from "../modules/principalMailbox/PrincipalMailbox";
 import MeetingSignIn from "../modules/meeting/MeetingSignIn";
 import PhonesSelect from "../modules/phonesBook/PhonesSelect";
 import PhonesList from "../modules/phonesBook/PhonesList";
+import SystemMessage from "../modules/message/SystemMessage";
+import UseHelp from "../modules/message/UseHelp";
 
 export default class RouteConfig extends Component {
 
@@ -35,6 +37,8 @@ export default class RouteConfig extends Component {
                     <Route path='/meetingSignIn' component={MeetingSignIn}/>
                     <Route path='/phonesSelect' component={PhonesSelect}/>
                     <Route path='/phonesList/:classTitle?' component={PhonesList}/>
+                    <Route path='/systemMessage' component={SystemMessage}/>
+                    <Route path='/useHelp' component={UseHelp}/>
 
                     {/*刘杰*/}
 

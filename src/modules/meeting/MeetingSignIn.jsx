@@ -85,7 +85,7 @@ export default class MeetingSignIn extends Component {
             this.setState({
                 meetingSignList: meetingSignList
             })
-        }, 2000)
+        }, 1500)
     }
 }
 

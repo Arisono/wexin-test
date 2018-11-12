@@ -16,13 +16,20 @@ import PhonesList from "../modules/phonesBook/PhonesList";
 import SystemMessage from "../modules/message/SystemMessage";
 import UseHelp from "../modules/message/UseHelp";
 
+import AccessNotice from '../modules/hiPages/access-notice/AccessNotice';
+import FieldTrip from '../modules/hiPages/field-trip/FieldTrip';
+import ResApply from '../modules/hiPages/res_apply/ResApply';
+import SendVote from '../modules/hiPages/send-vote/SendVote';
+import SendMeet from '../modules/hiPages/sendMeetting/SendMeet';
+import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
+
 export default class RouteConfig extends Component {
 
     render() {
         return (
             <Router>
                 <div>
-                    <Route exact path="/" component={AppHomePage}/>
+                    <Route exact path="/" component={ClassSchedule}/>
 
                     {/*饶猛*/}
                     <Route path='/bindMenu' component={BindMenu}/>
@@ -43,6 +50,12 @@ export default class RouteConfig extends Component {
                     {/*刘杰*/}
 
                     {/*方龙海*/}
+                    <Route path='/access-notice' component={AccessNotice}/>
+                    <Route path='/field-trip' component={FieldTrip}/>
+                    <Route path='/res_apply' component={ResApply}/>
+                    <Route path='/phonesList/send-vote' component={SendVote}/>
+                    <Route path='/sendMeetting' component={SendMeet}/>
+                    <Route path='/class-schedule' component={ClassSchedule}/>
 
                     {/*刘金龙*/}
                 </div>

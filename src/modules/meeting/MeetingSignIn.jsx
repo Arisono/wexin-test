@@ -23,7 +23,7 @@ export default class MeetingSignIn extends Component {
 
     componentDidMount() {
         document.title = '会议签到'
-        this.loadMeetList()
+        // this.loadMeetList()
     }
 
     render() {
@@ -85,7 +85,7 @@ export default class MeetingSignIn extends Component {
             this.setState({
                 meetingSignList: meetingSignList
             })
-        }, 2000)
+        }, 1500)
     }
 }
 

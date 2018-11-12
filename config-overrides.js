@@ -27,7 +27,7 @@ module.exports = function override(config, env) {
         'modules': path.join(__dirname, './src/modules'),
         'style': path.join(__dirname, './src/style'),
         'utils': path.join(__dirname, './src/utils'),
-        'css': path.join(__dirname, './src/style/mycss'),
+        'css': path.join(__dirname, './src/style/css'),
         'imgs': path.join(__dirname, './src/style/imgs'),
     }
 

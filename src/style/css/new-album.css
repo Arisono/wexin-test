@@ -1,7 +1,7 @@
 .pageLayout {
     background: #F2F2F2;
     height: 100%;
-    min-height: 100vh;
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
 }
@@ -46,9 +46,7 @@
 
 .confirmLayout {
     width: 100%;
-    padding: 0 40px;
-    position: absolute;
-    bottom: 120px;
+    padding: 20px 40px 40px;
 }
 
 .uploadLayout {

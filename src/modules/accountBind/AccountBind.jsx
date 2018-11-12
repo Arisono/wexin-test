@@ -65,9 +65,6 @@ export default class AccountBind extends Component {
                 <Input placeholder='短信验证码' prefix={codeIcon} suffix={codeClear}
                        ref={input => this.codeInput = input} onChange={this.codeChange}
                        value={code} type='number' onKeyPress={this.phoneKeyPress}/>
-                <div>
-
-                </div>
 
                 <Button type="primary" block className='commonButton' style={{marginTop: '35px'}}>绑定</Button>
             </div>

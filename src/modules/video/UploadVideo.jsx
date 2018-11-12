@@ -74,7 +74,7 @@ export default class UploadVideo extends Component {
                 <input className='titleInput' placeholder='请输入视频名称'
                        value={videoTitle} onChange={this.titleChange}/>
                 <div className='uploadCaptionText'>视频描述</div>
-                <TextArea className='contentInput' placeholder='请输入相册描述'
+                <TextArea className='contentInput' placeholder='请输入视频描述'
                           autosize={{minRows: 8, maxRows: 16}} value={videoDescription}
                           onChange={this.descriptionChange}/>
                 <div style={{padding: '10px', marginTop: '12px'}}>

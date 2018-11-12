@@ -9,6 +9,8 @@ import 'swiper/dist/css/swiper.min.css'
 import 'css/phones.css'
 import {List, Icon} from 'antd'
 import {isObjEmpty} from "../../utils/common";
+import PhonesItem from "components/PhonesItem";
+import PhonesBean from 'model/PhonesBean'
 
 let mySwiper
 
@@ -41,11 +43,22 @@ export default class PhonesSelect extends Component {
             }
         })
 
-        let teachers = ['三年级(2)班', '三年级(1)班', '四年级(2)班']
         let parents = ['三年级(4)班', '三年级(6)班', '四年级(12)班', '三年级(4)班']
 
+        for (let i = 0; i < 20; i++) {
+            let phoneBean = new PhonesBean()
+            phoneBean.name = '饶老师'
+            phoneBean.phone = '13632423333'
+            phoneBean.claName = ""
+            phoneBean.children = [
+                '语文', '数学', '语文', '数学'
+            ]
+
+            teacherList.push(phoneBean)
+        }
+
         this.setState({
-            teacherList: teacherList.concat(teachers, teachers, teachers),
+            teacherList: teacherList,
             parentList: parentList.concat(parents, parents, parents, parents, parents)
         })
     }
@@ -53,7 +66,7 @@ export default class PhonesSelect extends Component {
     render() {
         const {selectIndex, teacherList, parentList} = this.state
 
-        const teacherItems = <List dataSource={teacherList} renderItem={
+        /*const teacherItems = <List dataSource={teacherList} renderItem={
             (item, index) => (
                 <List.Item>
                     <div className='phoneListItem'
@@ -63,7 +76,12 @@ export default class PhonesSelect extends Component {
                         <Icon type="right" theme="outlined"/>
                     </div>
                 </List.Item>
-            )}/>
+            )}/>*/
+        const teacherItems = <List className='phones-list-layout' dataSource={teacherList} renderItem={phonesBean => (
+            <List.Item>
+                <PhonesItem phonesBean={phonesBean}/>
+            </List.Item>
+        )}/>
 
         const parentItems = <List dataSource={parentList} renderItem={
             (item, index) => (

@@ -24,6 +24,9 @@
 }
 
 .titleInput {
+    font-family: PingFangSC-Regular;
+    color: #333333;
+    letter-spacing: 1.88px;
     width: 100%;
     padding: 12px;
     background: white;
@@ -88,6 +91,6 @@
 }
 
 /*.ant-upload-list.ant-upload-list-text{*/
-    /*flex: 1;*/
-    /*height: 200px;*/
+/*flex: 1;*/
+/*height: 200px;*/
 /*}*/

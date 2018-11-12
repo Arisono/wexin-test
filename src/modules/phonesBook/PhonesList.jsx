@@ -8,6 +8,7 @@ import PhonesBean from 'model/PhonesBean'
 import {List} from 'antd'
 import PhonesItem from "../../components/PhonesItem";
 import 'css/phones.css'
+import {isObjEmpty} from "../../utils/common";
 
 export default class PhonesList extends Component {
 
@@ -34,7 +35,7 @@ export default class PhonesList extends Component {
             let phoneBean = new PhonesBean()
             phoneBean.name = '饶老师'
             phoneBean.phone = '13632423333'
-            phoneBean.gradeClass = title
+            phoneBean.claName = title
             phoneBean.children = [
                 '语文', '数学','语文', '数学'
             ]
@@ -52,8 +53,8 @@ export default class PhonesList extends Component {
 
         return (
             <div className='phone-select-root'>
-                <div className='phones-list-header'>{classTitle}</div>
-                <div className='gray-line'></div>
+                <div className={isObjEmpty(classTitle)?'displayNone':'phones-list-header'}>{classTitle}</div>
+                <div className={isObjEmpty(classTitle)?'displayNone':'gray-line'}></div>
                 <List className='phones-list-layout' dataSource={phonesList} renderItem={phonesBean => (
                     <List.Item>
                         <PhonesItem phonesBean={phonesBean}/>

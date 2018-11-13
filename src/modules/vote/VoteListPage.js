@@ -39,21 +39,29 @@ class VoteListPage extends React.Component{
 
     render(){
         return <div className="container-fluid" id="global_background">
-              <List dataSource={this.state.data}
+              <List
+                    dataSource={this.state.data}
                     renderItem={item=>(
-                       <List.Item className="row" id="row_background">
-                              <div className="col-xs-12">
+                       <List.Item className="row" id="row_background"
+                                  style={{padding:"10px"}}>
+                              <div className="col-xs-12" >
                                      <div className="row">
-                                         {item.title}
-                                         <span>{item.state}</span>
+                                         <div className="col-xs-6" id="row_left"> <span id="span_18">{item.title}</span></div>
+                                         <div className="col-xs-6" id="row_right"><span>{item.state}</span></div>
+
+
                                      </div>
-                                     <div className="row">
-                                         <List dataSource={item.votes}
-                                               renderItem={item=>(
-                                                  <List.Item>
-                                                      {item}
-                                                  </List.Item>
-                                         )}/>
+                                     <div className="row" id="row_center_align">
+                                       <div className="col-xs-12" id="row_left">
+                                           <List dataSource={item.votes}
+                                                 renderItem={item=>(
+                                                     <List.Item style={{width:"180px"}}>
+                                                         {item}
+                                                     </List.Item>
+                                                 )}/>
+
+                                               <img style={{marginLeft:"30px"}} src={""}  width={80} height={80} /></div>
+
                                      </div>
                                      <div className="row">
                                           <span>截止时间：</span>

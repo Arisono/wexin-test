@@ -30,6 +30,13 @@
     padding: 10px;
 }
 
+#row_center_align{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+
 #row_left{
     display: flex;
     justify-content: flex-start;
@@ -94,4 +101,18 @@
 
 #page_border_line_red{
     border: 1px solid orangered;
+}
+
+
+
+#span_18{
+     font-size: 18px;
+ }
+
+#span_15{
+    font-size: 18px;
+}
+
+#span_13{
+    font-size: 18px;
 }

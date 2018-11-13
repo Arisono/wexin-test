@@ -54,6 +54,7 @@
 
 .uploadLayout {
     width: 100%;
+    height: max-content;
     padding: 0 40px;
     margin-bottom: 40px;
     margin-top: 20px;
@@ -90,7 +91,6 @@
     padding: 4px;
 }
 
-/*.ant-upload-list.ant-upload-list-text{*/
-/*flex: 1;*/
-/*height: 200px;*/
-/*}*/
+
+
+

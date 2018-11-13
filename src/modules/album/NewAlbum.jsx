@@ -45,7 +45,7 @@ export default class NewAlbum extends Component {
                 <div style={{flex: '1'}}></div>
                 <div className='confirmLayout'>
                     <Button className='commonButton' type="primary" block
-                            onClick={this.releaseEvent}>发布</Button>
+                            onClick={this.releaseEvent}>新建</Button>
                 </div>
             </div>
         );

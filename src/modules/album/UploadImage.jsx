@@ -7,8 +7,13 @@ import React, {Component} from 'react'
 import 'css/new-album.css'
 import {isObjEmpty} from "../../utils/common";
 import {Icon, Button, Upload} from 'antd'
+import {ImagePicker} from 'antd-mobile'
 
 export default class UploadImage extends Component {
+
+    componentDidMount() {
+        document.title = '上传图片'
+    }
 
     handleCancel = () => this.setState({previewVisible: false})
 
@@ -50,7 +55,7 @@ export default class UploadImage extends Component {
         );
         return (
             <div className='pageLayout'>
-                <div className='gray-line'></div>
+                {/*<div className='gray-line'></div>
                 <div className='chooseLayout'>
                     <div className='chooseText'>{isObjEmpty(classText) ? '选择班级' : classText}</div>
                     <Icon type="right" theme="outlined"/>
@@ -59,7 +64,7 @@ export default class UploadImage extends Component {
                 <div className='chooseLayout'>
                     <div className='chooseText'>{isObjEmpty(albumText) ? '选择相册' : albumText}</div>
                     <Icon type="right" theme="outlined"/>
-                </div>
+                </div>*/}
                 <div className='gray-line'></div>
                 <div className='chooseLayout'>
                     <div className='chooseText'>添加图片</div>
@@ -72,12 +77,21 @@ export default class UploadImage extends Component {
                         multiple
                         onPreview={this.handlePreview}
                         onChange={this.handleChange}>
-                        {fileList.length >= 30 ? null : uploadButton}
+                        {fileList.length >= 50 ? null : uploadButton}
                     </Upload>
+                    {/*<ImagePicker
+                        files={fileList}
+                        onChange={this.handleChange}
+                        onImageClick={(index, fs) => this.handlePreview.bind(this, index, fs)}
+                        selectable={fileList.length < 50}
+                        multiple
+                        length={3}
+                    />*/}
                 </div>
+
                 <div className='uploadLayout'>
                     <Button className='commonButton' type="primary" block
-                            onClick={this.releaseEvent}>发布</Button>
+                            onClick={this.releaseEvent}>上传</Button>
                 </div>
             </div>
         )

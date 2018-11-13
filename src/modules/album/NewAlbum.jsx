@@ -7,6 +7,7 @@ import React, {Component} from 'react'
 import {Icon, Input, Button} from 'antd'
 import 'css/new-album.css'
 import {isObjEmpty} from "../../utils/common";
+import {Picker} from 'antd-mobile'
 
 const {TextArea} = Input
 

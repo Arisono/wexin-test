@@ -89,6 +89,14 @@
     background: #4197FC;
     border-radius: 3px;
     padding: 4px;
+    color: white;
+}
+
+.uploadBtn-disable {
+    background: #e4e4e4;
+    border-radius: 3px;
+    padding: 4px;
+    color: gray;
 }
 
 

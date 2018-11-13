@@ -18,34 +18,7 @@ const props = {
             console.log(file, fileList);
         }
     },
-    defaultFileList: [{
-        uid: '1',
-        name: 'xxx.png',
-        status: 'done',
-        response: 'Server Error 500', // custom error message to show
-        url: 'http://www.baidu.com/xxx.png',
-        thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    }, {
-        uid: '2',
-        name: 'yyy.png',
-        status: 'done',
-        url: 'http://www.baidu.com/yyy.png',
-        thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    }, {
-        uid: '3',
-        name: 'zzz.png',
-        status: 'error',
-        response: 'Server Error 500', // custom error message to show
-        url: 'http://www.baidu.com/zzz.png',
-        thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    }, {
-        uid: '4',
-        name: 'aaa.png',
-        status: 'error',
-        response: 'Server Error 500', // custom error message to show
-        url: 'http://www.baidu.com/aaa.png',
-        thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    }],
+    defaultFileList: [],
 };
 
 export default class UploadVideo extends Component {
@@ -56,15 +29,16 @@ export default class UploadVideo extends Component {
         this.state = {
             classText: '',
             videoTitle: '',
-            videoDescription: ''
+            videoDescription: '',
+            fileList: []
         }
     }
 
 
     render() {
-        const {classText, videoTitle, videoDescription} = this.state
+        const {classText, videoTitle, videoDescription, fileList} = this.state
         return (
-            <div className='pageLayout' style={{background:'white'}}>
+            <div className='pageLayout' style={{background: 'white'}}>
                 <div className='gray-line'></div>
                 <div className='chooseLayout'>
                     <div className='chooseText'>{isObjEmpty(classText) ? '选择班级' : classText}</div>
@@ -73,16 +47,17 @@ export default class UploadVideo extends Component {
                 <div className='uploadCaptionText'>视频名称</div>
                 <input className='titleInput' placeholder='请输入视频名称'
                        value={videoTitle} onChange={this.titleChange}/>
-                <div className='uploadCaptionText'>视频描述</div>
+                {/*<div className='uploadCaptionText'>视频描述</div>
                 <TextArea className='contentInput' placeholder='请输入视频描述'
                           autosize={{minRows: 8, maxRows: 16}} value={videoDescription}
-                          onChange={this.descriptionChange}/>
-                <div style={{padding: '10px', marginTop: '12px'}}>
-                    <Upload {...props}>
+                          onChange={this.descriptionChange}/>*/}
+                <div style={{padding: '10px', marginTop: '12px',flex:'1'}}>
+                    <Upload {...props} disabled={fileList.length >= 1}
+                            onChange={this.handleChange}>
                         <div style={{display: 'flex', padding: '10px', alignItems: 'center'}}>
-                            <div className='uploadBtn'>
-                                <Icon type="upload" style={{color: 'white'}}/>
-                                <span style={{color: 'white', fontSize: '12px', marginLeft: '6px'}}>选择文件</span>
+                            <div className={fileList.length < 1 ? 'uploadBtn' : 'uploadBtn-disable'}>
+                                <Icon type="upload" style={{color: fileList.length < 1 ? 'white' : 'gray'}}/>
+                                <span style={{fontSize: '12px', marginLeft: '6px'}}>选择文件</span>
                             </div>
                             <span className='promptText'>（不能超过100MB）</span>
                         </div>
@@ -96,6 +71,8 @@ export default class UploadVideo extends Component {
             </div>
         )
     }
+
+    handleChange = ({fileList}) => this.setState({fileList})
 
     titleChange = e => {
         this.setState({

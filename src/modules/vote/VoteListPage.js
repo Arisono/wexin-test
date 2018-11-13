@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { List} from 'antd';
 import '../../style/css/app-gloal.css'
 import './VoteListPage.css'
+import { Checkbox } from 'antd';
 
 /**
  * Created by Arison on 20:14.
@@ -56,7 +57,7 @@ class VoteListPage extends React.Component{
                                            <List dataSource={item.votes}
                                                  renderItem={item=>(
                                                      <List.Item style={{width:"180px"}}>
-                                                         {item}
+                                                         <Checkbox >{item}</Checkbox>
                                                      </List.Item>
                                                  )}/>
 

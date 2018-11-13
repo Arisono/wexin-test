@@ -19,6 +19,7 @@ import AssignmentListPage from "../modules/homework/AssignmentListPage";
 import AssignmentDetailPage from "../modules/homework/AssignmentDetailPage";
 import LeaveApprovalPage from "../modules/leave/LeaveApprovalPage";
 import LeaveAddPage from "../modules/leave/LeaveAddPage";
+import VoteListPage from "../modules/vote/VoteListPage";
 
 export default class RouteConfig extends Component {
 
@@ -44,6 +45,8 @@ export default class RouteConfig extends Component {
                     <Route path='/phonesList/:classTitle?' component={PhonesList}/>
 
                     {/*刘杰*/}
+
+                    <Route path='/voteListPage' component={VoteListPage}/>
                     <Route path='/leaveAddPage' component={LeaveAddPage}/>
                     <Route path='/leaveApprovalPage' component={LeaveApprovalPage}/>
                     <Route path='/leaveList' component={LeaveListPage}/>

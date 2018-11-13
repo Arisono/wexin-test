@@ -23,6 +23,7 @@ import SendVote from '../modules/hiPages/send-vote/SendVote';
 import SendMeet from '../modules/hiPages/sendMeetting/SendMeet';
 import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
 import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
+import WonderMoment from "../modules/video/WonderMoment";
 
 export default class RouteConfig extends Component {
 
@@ -47,6 +48,7 @@ export default class RouteConfig extends Component {
                     <Route path='/phonesList/:classTitle?' component={PhonesList}/>
                     <Route path='/systemMessage' component={SystemMessage}/>
                     <Route path='/useHelp' component={UseHelp}/>
+                    <Route path='/wonderMoment' component={WonderMoment}/>
 
                     {/*刘杰*/}
 

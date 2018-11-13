@@ -6,7 +6,7 @@
 import React, {Component} from 'react'
 import 'css/new-album.css'
 import {isObjEmpty} from "../../utils/common";
-import {Icon, Button, Upload} from 'antd'
+import {Icon, Button, Upload, Modal} from 'antd'
 import {ImagePicker} from 'antd-mobile'
 
 export default class UploadImage extends Component {
@@ -22,7 +22,6 @@ export default class UploadImage extends Component {
             previewImage: file.url || file.thumbUrl,
             previewVisible: true,
         });
-        console.log('预览')
     }
 
     handleChange = ({fileList}) => this.setState({fileList})
@@ -76,9 +75,13 @@ export default class UploadImage extends Component {
                         fileList={fileList}
                         multiple
                         onPreview={this.handlePreview}
-                        onChange={this.handleChange}>
+                        onChange={this.handleChange}
+                        showUploadList={{showPreviewIcon: true, showRemoveIcon: true}}>
                         {fileList.length >= 50 ? null : uploadButton}
                     </Upload>
+                    <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                        <img alt="example" style={{width: '100%'}} src={previewImage}/>
+                    </Modal>
                     {/*<ImagePicker
                         files={fileList}
                         onChange={this.handleChange}

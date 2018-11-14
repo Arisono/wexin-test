@@ -22,6 +22,9 @@ function HSItem() {
     )
 }
 export default class ClassSchedule extends Component{
+    componentWillMount() {
+        document.title = '课程表'
+    }
     constructor(){
         super();
         this.state = {

@@ -14,7 +14,9 @@ const Option = Select.Option;
 
 
 export default class SendVote extends Component{
-
+    componentWillMount() {
+        document.title = '发起投票'
+    }
     constructor(props){
         super(props);
         this.state = {
@@ -29,15 +31,7 @@ export default class SendVote extends Component{
             fileList: [],
         }
     }
-    handelSItem = (itemdata,index)=>{
-        console.log('index',index)
-        console.log('itemdata',itemdata)
-        let voteOptionss = this.state.voteOptionss
-        voteOptionss[index] = itemdata
-       this.setState({
-           voteOptionss
-       })
-    }
+
     render(){
 
         //添加附件按钮
@@ -49,12 +43,13 @@ export default class SendVote extends Component{
         );
 
         return(
+
             <div onChange={this.handelValueCom}>
                 <textarea autoFocus="autoFocus" ref='voteTitle' className="form-control textarea_sty" rows="2" placeholder="请填写投票主题…" ></textarea>
                 <div className="comhline_sty"></div>
 
                 <div >
-                    {this.state.voteOptionss.map((itemata,index) => <SelectItem index={index} itemata = {itemata} handelSItem={this.handelSItem}></SelectItem>)}
+                    {this.state.voteOptionss.map((itemata,index) => <SelectItem index={index} itemata = {itemata} handelSItem={this.handelSItem} removeSItem ={this.removeSItem}></SelectItem>)}
                     <div onClick={this.addSelectItem} className="text-center" style={{color:"#0CE11D",fontSize:12,margin:10}}>+ <span >添加选项</span></div>
                 </div>
 
@@ -121,6 +116,23 @@ export default class SendVote extends Component{
     doSendVote = (event)=>{
         console.log('state',this.state)
     }
+    removeSItem = (index)=>{
+        let voteOptionss = this.state.voteOptionss
+        voteOptionss.splice(index,1)
+        this.setState({
+            voteOptionss
+        })
+    }
+    handelSItem = (itemdata,index)=>{
+        console.log('index',index)
+        console.log('itemdata',itemdata)
+        let voteOptionss = this.state.voteOptionss
+        voteOptionss[index] = itemdata
+        this.setState({
+            voteOptionss
+        })
+    }
+
     addSelectItem = (event)=>{
         let voteOptionss =  [...this.state.voteOptionss,null];
         this.setState({

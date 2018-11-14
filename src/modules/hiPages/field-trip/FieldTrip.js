@@ -9,6 +9,9 @@ import './FieldTrip.css';
 
 const Option = Select.Option;
 export default class FieldTrip extends Component{
+    componentWillMount() {
+        document.title = '外勤出差'
+    }
     constructor(){
         super();this.state = {
             startValue: null,

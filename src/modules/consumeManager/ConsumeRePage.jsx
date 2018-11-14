@@ -5,7 +5,7 @@ import ConsumeReItem from "../../components/ConsumeReItem";
 import 'css/consume-re.css'
 import {isObjEmpty} from "../../utils/common";
 
-export default class PhonesList extends Component {
+export default class ConsumeRePage extends Component {
 
     constructor() {
         super()

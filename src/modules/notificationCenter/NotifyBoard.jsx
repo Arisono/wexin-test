@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import NotifyBoBean from 'model/NotifyBoBean'
-import {List} from 'antd'
+import {List,Icon} from 'antd'
 import NotifyBoardItem from "../../components/NotifyBoardItem";
 import 'css/consume-re.css'
 
 
-export default class PhonesList extends Component {
+export default class NotifyBoard extends Component {
 
     constructor() {
         super()
@@ -50,9 +50,19 @@ export default class PhonesList extends Component {
             <div className='notify-bg-root'>
                 <div className='displayNone'></div>
                 <div className='displayNone'></div>
-                <List className='notifyBoBean-list-layout' split={false} dataSource={notifyList} renderItem={notifyBoBean => (
-                        <NotifyBoardItem notifyBoBean={notifyBoBean}/>
-                )}/>
+                <List className='notifyBoBean-list-layout'
+                      split={false} dataSource={notifyList}
+                      renderItem={notifyBoBean => (
+                          <NotifyBoardItem notifyBoBean={notifyBoBean}/>
+                      )}/>
+
+                <Icon type="plus-circle" theme='filled' className='common-add-icon'
+                      onClick={this.onAddNotify}/>
             </div>
         )
-    }}
+    }
+
+    onAddNotify = () => {
+        this.props.history.push('/announceRelease')
+    }
+}

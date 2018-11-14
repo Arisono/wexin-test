@@ -31,7 +31,6 @@ import SendMeet from '../modules/hiPages/sendMeetting/SendMeet';
 import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
 import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
 import WonderMoment from "../modules/video/WonderMoment";
-import ConsumeRePage from "../modules/consumeManager/ConsumeRePage";
 import NotifyBoard from "../modules/notificationCenter/NotifyBoard";
 import ConsumeRePage from '../modules/consumeManager/ConsumeRePage'
 import CampusCardRecharge from "../modules/payment/CampusCardRecharge";

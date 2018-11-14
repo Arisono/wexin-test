@@ -27,6 +27,7 @@ import WonderMoment from "../modules/video/WonderMoment";
 import ConsumeRePage from '../modules/consumeManager/ConsumeRePage'
 import CampusCardRecharge from "../modules/payment/CampusCardRecharge";
 import RechargeList from "../modules/payment/RechargeList";
+import RechargeRelease from "../modules/payment/RechargeRelease";
 
 export default class RouteConfig extends Component {
 
@@ -55,6 +56,7 @@ export default class RouteConfig extends Component {
 
                     <Route path='/campusCardRecharge' component={CampusCardRecharge}/>
                     <Route path='/rechargeList' component={RechargeList}/>
+                    <Route path='/rechargeRelease' component={RechargeRelease}/>
 
                     {/*刘杰*/}
 

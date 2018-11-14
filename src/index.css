@@ -102,3 +102,16 @@ i.anticon.anticon-delete svg {
     justify-content: center;
     align-items: center;
 }
+
+.am-list-content {
+    flex: none;
+    font-family: PingFangSC-Regular;
+    font-size: 12px !important;
+    color: #333333;
+    letter-spacing: 1.88px;
+}
+
+.am-list-extra {
+    flex: 1;
+    font-size: 13px !important;
+}

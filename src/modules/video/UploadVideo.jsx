@@ -7,7 +7,7 @@ import React, {Component} from 'react'
 import 'css/new-album.css'
 import {isObjEmpty} from "../../utils/common";
 import {Icon, Input, Button, Upload} from 'antd'
-import {Picker} from 'antd-mobile'
+import {Picker,List} from 'antd-mobile'
 
 const {TextArea} = Input
 
@@ -66,10 +66,7 @@ export default class UploadVideo extends Component {
                 <Picker data={classList} title='选择班级' extra='请选择'
                         value={classText} onChange={this.handleClassChange}
                         onOk={this.handleClassChange} cols={1}>
-                    <div className='chooseLayout'>
-                        <div className='chooseText'>{isObjEmpty(classText) ? '选择班级' : classText}</div>
-                        <Icon type="right" theme="outlined"/>
-                    </div>
+                    <List.Item arrow="horizontal">选择班级</List.Item>
                 </Picker>
                 <div className='uploadCaptionText'>视频名称</div>
                 <input className='titleInput' placeholder='请输入视频名称'

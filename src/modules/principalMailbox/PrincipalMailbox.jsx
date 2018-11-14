@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react'
-import {Icon, Input, Button, Upload, Switch, message} from 'antd'
+import {Icon, Input, Button, Upload, Switch, message, Modal} from 'antd'
 import 'css/principal-mailbox.css'
 
 const {TextArea} = Input
@@ -63,10 +63,13 @@ export default class PrincipalMailbox extends Component {
                         onChange={this.handleChange}>
                         {fileList.length >= 4 ? null : uploadButton}
                     </Upload>
+                    <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                        <img alt="example" style={{width: '100%'}} src={previewImage}/>
+                    </Modal>
                 </div>
                 <div className='anonymousLayout'>
                     <Switch size="small" checked={isAnonymous} onChange={this.switchChange}/>
-                    <span style={{marginLeft:'5px'}}>匿名</span>
+                    <span style={{marginLeft: '5px'}}>匿名</span>
                 </div>
                 <div className='uploadLayout'>
                     <Button className='commonButton' type="primary" block

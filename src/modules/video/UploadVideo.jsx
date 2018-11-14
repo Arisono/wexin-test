@@ -7,6 +7,7 @@ import React, {Component} from 'react'
 import 'css/new-album.css'
 import {isObjEmpty} from "../../utils/common";
 import {Icon, Input, Button, Upload} from 'antd'
+import {Picker} from 'antd-mobile'
 
 const {TextArea} = Input
 
@@ -18,34 +19,7 @@ const props = {
             console.log(file, fileList);
         }
     },
-    defaultFileList: [{
-        uid: '1',
-        name: 'xxx.png',
-        status: 'done',
-        response: 'Server Error 500', // custom error message to show
-        url: 'http://www.baidu.com/xxx.png',
-        thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    }, {
-        uid: '2',
-        name: 'yyy.png',
-        status: 'done',
-        url: 'http://www.baidu.com/yyy.png',
-        thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    }, {
-        uid: '3',
-        name: 'zzz.png',
-        status: 'error',
-        response: 'Server Error 500', // custom error message to show
-        url: 'http://www.baidu.com/zzz.png',
-        thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    }, {
-        uid: '4',
-        name: 'aaa.png',
-        status: 'error',
-        response: 'Server Error 500', // custom error message to show
-        url: 'http://www.baidu.com/aaa.png',
-        thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-    }],
+    defaultFileList: [],
 };
 
 export default class UploadVideo extends Component {
@@ -56,33 +30,61 @@ export default class UploadVideo extends Component {
         this.state = {
             classText: '',
             videoTitle: '',
-            videoDescription: ''
+            videoDescription: '',
+            fileList: [],
+            classList: [],
         }
     }
 
+    componentDidMount() {
+        document.title = '上传视频'
+
+        const {classList} = this.state
+
+        for (let i = 0; i < 10; i++) {
+            if (i % 2 == 0) {
+                classList.push({
+                    label: '三年级（一）班',
+                    value: '三年级（一）班'
+                })
+            } else {
+                classList.push({
+                    label: '三年级（二）班',
+                    value: '三年级（二）班'
+                })
+            }
+        }
+
+        this.setState({classList})
+    }
 
     render() {
-        const {classText, videoTitle, videoDescription} = this.state
+        const {classText, videoTitle, videoDescription, fileList, classList} = this.state
         return (
-            <div className='pageLayout' style={{background:'white'}}>
+            <div className='pageLayout' style={{background: 'white'}}>
                 <div className='gray-line'></div>
-                <div className='chooseLayout'>
-                    <div className='chooseText'>{isObjEmpty(classText) ? '选择班级' : classText}</div>
-                    <Icon type="right" theme="outlined"/>
-                </div>
+                <Picker data={classList} title='选择班级' extra='请选择'
+                        value={classText} onChange={this.handleClassChange}
+                        onOk={this.handleClassChange} cols={1}>
+                    <div className='chooseLayout'>
+                        <div className='chooseText'>{isObjEmpty(classText) ? '选择班级' : classText}</div>
+                        <Icon type="right" theme="outlined"/>
+                    </div>
+                </Picker>
                 <div className='uploadCaptionText'>视频名称</div>
                 <input className='titleInput' placeholder='请输入视频名称'
                        value={videoTitle} onChange={this.titleChange}/>
-                <div className='uploadCaptionText'>视频描述</div>
+                {/*<div className='uploadCaptionText'>视频描述</div>
                 <TextArea className='contentInput' placeholder='请输入视频描述'
                           autosize={{minRows: 8, maxRows: 16}} value={videoDescription}
-                          onChange={this.descriptionChange}/>
-                <div style={{padding: '10px', marginTop: '12px'}}>
-                    <Upload {...props}>
+                          onChange={this.descriptionChange}/>*/}
+                <div style={{padding: '10px', marginTop: '12px', flex: '1'}}>
+                    <Upload {...props} disabled={fileList.length >= 1}
+                            onChange={this.handleChange}>
                         <div style={{display: 'flex', padding: '10px', alignItems: 'center'}}>
-                            <div className='uploadBtn'>
-                                <Icon type="upload" style={{color: 'white'}}/>
-                                <span style={{color: 'white', fontSize: '12px', marginLeft: '6px'}}>选择文件</span>
+                            <div className={fileList.length < 1 ? 'uploadBtn' : 'uploadBtn-disable'}>
+                                <Icon type="upload" style={{color: fileList.length < 1 ? 'white' : 'gray'}}/>
+                                <span style={{fontSize: '12px', marginLeft: '6px'}}>选择文件</span>
                             </div>
                             <span className='promptText'>（不能超过100MB）</span>
                         </div>
@@ -97,6 +99,8 @@ export default class UploadVideo extends Component {
         )
     }
 
+    handleChange = ({fileList}) => this.setState({fileList})
+
     titleChange = e => {
         this.setState({
             videoTitle: e.target.value
@@ -107,5 +111,9 @@ export default class UploadVideo extends Component {
         this.setState({
             videoDescription: e.target.value
         })
+    }
+
+    handleClassChange = (v) => {
+        this.setState({classText: v})
     }
 }

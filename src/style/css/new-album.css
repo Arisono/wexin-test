@@ -54,6 +54,7 @@
 
 .uploadLayout {
     width: 100%;
+    height: max-content;
     padding: 0 40px;
     margin-bottom: 40px;
     margin-top: 20px;
@@ -88,9 +89,16 @@
     background: #4197FC;
     border-radius: 3px;
     padding: 4px;
+    color: white;
 }
 
-/*.ant-upload-list.ant-upload-list-text{*/
-/*flex: 1;*/
-/*height: 200px;*/
-/*}*/
+.uploadBtn-disable {
+    background: #e4e4e4;
+    border-radius: 3px;
+    padding: 4px;
+    color: gray;
+}
+
+
+
+

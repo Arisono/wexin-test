@@ -6,6 +6,7 @@
 import React, {Component} from 'react'
 import {isObjEmpty} from "../../utils/common";
 import LazyLoad from 'react-lazyload'
+import {Button} from 'antd'
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import '../../index.css'
 import 'css/album-item.css'
@@ -44,7 +45,7 @@ export default class PictureList extends Component {
         ]
 
         this.setState({
-            pictureList: this.state.pictureList.concat(pictures, pictures, pictures, pictures, pictures, pictures, pictures, pictures, pictures, pictures)
+            pictureList: this.state.pictureList.concat(pictures, pictures, pictures, pictures)
         })
     }
 
@@ -56,7 +57,7 @@ export default class PictureList extends Component {
             if (!isObjEmpty(pictureUrl)) {
                 pictureItems.push(
                     i > 20 ?
-                        <LazyLoad throttle={200} height={300} once>
+                        <LazyLoad throttle={200} height={300} once overflow>
                             <CSSTransition
                                 timeout={2000}
                                 classNames='fade'
@@ -75,11 +76,29 @@ export default class PictureList extends Component {
         }
 
         return (
-            <div style={{padding: '5px'}}>
-                <TransitionGroup>
-                    {pictureItems}
-                </TransitionGroup>
+            <div style={{display: 'flex', width: '100%', height: '100vh', flexDirection: 'column'}}>
+                <div className='album-detail-title'>摄影与2018年六月一日，老师与家长们参加儿童节活动，热情高涨！</div>
+                <div style={{flex: '1', overflow: 'scroll', padding: '5px'}}>
+                    <TransitionGroup>
+                        {pictureItems}
+                    </TransitionGroup>
+                </div>
+
+                <div className='album-detail-bottom'>
+                    <Button type='primary' className='album-detail-button'
+                            onClick={this.addPicturesClick}>新增照片</Button>
+                    <Button type='warning' className='album-detail-button'
+                            onClick={this.deletePirturesClick}>删除</Button>
+                </div>
             </div>
         )
+    }
+
+    addPicturesClick = () => {
+        this.props.history.push('/uploadImage')
+    }
+
+    deletePirturesClick = () => {
+
     }
 }

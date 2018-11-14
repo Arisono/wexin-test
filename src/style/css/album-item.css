@@ -43,6 +43,7 @@
     height: 0;
     padding-bottom: 33.3%;
     display: inline-block;
+    background: white;
 }
 
 /*.pictureItem:before {
@@ -59,3 +60,28 @@
     height: 100%;
     padding: 6px;
 }
+
+.album-detail-title {
+    width: 100%;
+    padding: 10px;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #666666;
+    letter-spacing: 0;
+    background: #F2F2F2;
+    max-height: 60px;
+}
+
+.album-detail-bottom {
+    width: 100%;
+    display: flex;
+    background: #F2F2F2;
+    padding: 0 12px;
+}
+
+.album-detail-button {
+    flex: 1;
+    margin: 10px;
+}
+
+

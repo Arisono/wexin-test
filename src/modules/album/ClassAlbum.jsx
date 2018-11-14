@@ -6,6 +6,8 @@
 import React, {Component} from 'react'
 import AlbumItem from 'components/AlbumItem'
 import {isObjEmpty} from "../../utils/common";
+import {Icon} from 'antd'
+import {Picker} from 'antd-mobile'
 
 const uploadItem = new AlbumItem()
 uploadItem.coverImg = 'upload'
@@ -20,11 +22,15 @@ export default class ClassAlbum extends Component {
         this.state = {
             albumList: [
                 uploadItem
-            ]
+            ],
+            classList: [],
+            classText: ''
         }
     }
 
     componentDidMount() {
+        const {classList, albumList} = this.state
+
         let albumAll = [
             {
                 coverImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -43,13 +49,29 @@ export default class ClassAlbum extends Component {
             }
         ]
 
+
+        for (let i = 0; i < 10; i++) {
+            if (i % 2 == 0) {
+                classList.push({
+                    label: '三年级（一）班',
+                    value: '三年级（一）班'
+                })
+            } else {
+                classList.push({
+                    label: '三年级（二）班',
+                    value: '三年级（二）班'
+                })
+            }
+        }
+
         this.setState({
-            albumList: this.state.albumList.concat(albumAll, albumAll, albumAll, albumAll)
+            albumList: albumList.concat(albumAll, albumAll, albumAll, albumAll),
+            classList
         })
     }
 
     render() {
-        const {albumList} = this.state
+        const {albumList, classList, classText} = this.state
 
         let albumItems = []
         if (!isObjEmpty(albumList)) {
@@ -63,8 +85,20 @@ export default class ClassAlbum extends Component {
             }
         }
         return (
-            <div style={{padding: '20px'}}>
-                {albumItems}
+            <div>
+                <div className='gray-line'></div>
+                <Picker data={classList} title='选择班级' extra='请选择'
+                        value={classText} onChange={this.handleClassChange}
+                        onOk={this.handleClassChange} cols={1}>
+                    <div className='chooseLayout'>
+                        <div className='chooseText'>{isObjEmpty(classText) ? '选择班级' : classText}</div>
+                        <Icon type="right" theme="outlined"/>
+                    </div>
+                </Picker>
+                <div className='gray-line'></div>
+                <div style={{padding: '20px'}}>
+                    {albumItems}
+                </div>
             </div>
         )
     }
@@ -76,5 +110,9 @@ export default class ClassAlbum extends Component {
         } else {
             this.props.history.push('/pictureList')
         }
+    }
+
+    handleClassChange = (v) => {
+        this.setState({classText: v})
     }
 }

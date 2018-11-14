@@ -1,0 +1,64 @@
+
+.announce-release-target-title {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #333333;
+    letter-spacing: 1.88px;
+    padding: 12px;
+}
+
+.announce-release-target-layout {
+    padding: 14px;
+    display: flex;
+    border-top: 1px solid #F2F2F2;
+}
+
+.announce-release-target-list {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #666666;
+    letter-spacing: 1.88px;
+    flex: 1;
+}
+
+.titleInput {
+    font-family: PingFangSC-Regular;
+    color: #333333;
+    letter-spacing: 1.88px;
+    width: 100%;
+    padding: 12px;
+    background: white;
+    border: none;
+    outline: none;
+    font-size: 13px;
+}
+
+.contentInput {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #333333;
+    letter-spacing: 1.5px;
+    outline: none;
+    background: white;
+    border: none;
+    border-radius: 0;
+    padding: 8px 13px;
+}
+
+.annex-title {
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #666666;
+    letter-spacing: 0;
+    padding: 10px;
+    margin-left: 6px;
+}
+
+.announce-release-history{
+    font-family: PingFangSC-Medium;
+    font-size: 14px;
+    color: #7EB3F1;
+    letter-spacing: 0;
+    margin: 0 auto;
+    border-bottom: 1px solid #7EB3F1;
+}

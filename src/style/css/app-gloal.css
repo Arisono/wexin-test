@@ -1,13 +1,30 @@
 /*全局背景*/
 #global_background{
-  background-color: #F3F3F3;
+    background-color: #F3F3F3;
     height: 645px;
+    margin: 0px;
+    padding: 0px;
+}
+
+#global_page_title{
+    font-size: 18px;
+    color: #323232;
+    margin: 10px 0px 10px 10px;
 }
 
 #row_background{
     background-color: #FFFFFF;
     border: 1px solid #F3F3F3;
+    margin: 10px 10px 10px 10px;
+    padding: 0px;
 }
+
+#row_margin{
+    margin: 10px;
+}
+
+
+
 
 #row_center{
     display: flex;
@@ -15,6 +32,15 @@
     align-items: center;
     padding: 10px;
 }
+
+/*居中*/
+#row_center_align{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 
 #row_left{
     display: flex;
@@ -32,14 +58,71 @@
 #padding10{
     padding: 10px;
 }
+
 /*公共分块*/
 #page_block_min{
     height: 20px;
     background-color: #F3F3F3;
 }
+
+
 /*水平分割线*/
 #page_horizontal_line{
     height: 1px;
     border-top: 1px solid #F3F3F3;
     text-align: center;
+}
+
+#page_border_line{
+    border: 1px solid #F3F3F3;
+    padding: 0px;
+    margin: 0px;
+}
+
+#global-clear{
+    padding: 0px;
+    margin: 0px;
+}
+
+#col-clear{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    margin: 0px;
+}
+
+#col-clear-start{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0px;
+    margin: 0px;
+}
+
+#col-clear-end{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+#page_border_line_red{
+    border: 1px solid orangered;
+}
+
+
+
+#span_18{
+     font-size: 18px;
+ }
+
+#span_15{
+    font-size: 18px;
+}
+
+#span_13{
+    font-size: 18px;
 }

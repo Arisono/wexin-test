@@ -111,8 +111,7 @@
 .recharge-item-line {
     width: 100%;
     display: flex;
-    padding: 6px 0;
-    margin-left: 20px;
+    padding: 6px 0 6px 20px;
     align-items: center;
     font-family: PingFangSC-Regular;
     font-size: 13px;
@@ -167,4 +166,78 @@
     font-size: 12px;
     color: #00FA55;
     letter-spacing: 0;
+}
+
+.recharge-add-icon {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    font-size: 56px;
+    color: #00E053;
+}
+
+.recharge-release-money-title {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #666666;
+    letter-spacing: 1.5px;
+    padding: 10px;
+}
+
+.recharge-release-amount-layout {
+    display: flex;
+    padding: 12px 0;
+    border-top: 1px solid #F2F2F2;
+    border-bottom: 1px solid #F2F2F2;
+    align-items: center;
+}
+
+.recharge-release-amount-caption {
+    font-family: PingFangSC-Regular;
+    font-size: 36px;
+    color: #4197FC;
+    letter-spacing: 1.88px;
+    margin: 0 10px 0 20px;
+}
+
+.recharge-release-amount-input {
+    flex: 1;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #C4C4C4;
+    letter-spacing: 1.66px;
+}
+
+.remarks-input {
+    padding: 10px 16px;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #A0A0A0;
+    letter-spacing: 1.5px;
+    outline: none;
+    background: white;
+    border: none;
+    border-radius: 0;
+}
+
+.recharge-release-target-title {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #333333;
+    letter-spacing: 1.88px;
+    padding: 16px 0 6px 12px;
+}
+
+.recharge-release-target-layout {
+    padding: 14px;
+    display: flex;
+    border-top: 1px solid #F2F2F2;
+}
+
+.recharge-release-target-list {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #666666;
+    letter-spacing: 1.88px;
+    flex: 1;
 }

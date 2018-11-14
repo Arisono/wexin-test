@@ -7,7 +7,7 @@ import React, {Component} from 'react'
 import AlbumItem from 'components/AlbumItem'
 import {isObjEmpty} from "../../utils/common";
 import {Icon} from 'antd'
-import {Picker} from 'antd-mobile'
+import {Picker,List} from 'antd-mobile'
 
 const uploadItem = new AlbumItem()
 uploadItem.coverImg = 'upload'
@@ -90,10 +90,7 @@ export default class ClassAlbum extends Component {
                 <Picker data={classList} title='选择班级' extra='请选择'
                         value={classText} onChange={this.handleClassChange}
                         onOk={this.handleClassChange} cols={1}>
-                    <div className='chooseLayout'>
-                        <div className='chooseText'>{isObjEmpty(classText) ? '选择班级' : classText}</div>
-                        <Icon type="right" theme="outlined"/>
-                    </div>
+                    <List.Item arrow="horizontal">选择班级</List.Item>
                 </Picker>
                 <div className='gray-line'></div>
                 <div style={{padding: '20px'}}>

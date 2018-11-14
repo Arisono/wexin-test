@@ -8,17 +8,11 @@ import { DatePicker,Select,Switch,Upload, Icon, Modal } from 'antd';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import moment from 'moment'
 import 'antd/dist/antd.css';
+import SelectItem from './SelectItem';
+
 const Option = Select.Option;
 
-function SelectItem(){
-    return(
-      <div >
-          {/*<textarea  onChange = {this.props.handelSItem(this.props.index,this.ref.scontent__item.value)} ref="scontent__item" rows={1} type="text" placeholder="请输入选项内容" className="select_item_sty"/>*/}
-          <textarea  rows={1} type="text" placeholder="请输入选项内容" className="select_item_sty"/>
-          <div className="comhline_sty1"></div>
-      </div>
-    )
-}
+
 export default class SendVote extends Component{
 
     constructor(props){
@@ -28,16 +22,21 @@ export default class SendVote extends Component{
             endValue:null,
             voteType:null,
             nonameVote:false,
-            selectContentArray: [1,2],
+            voteOptionss: [null,null],
 
             previewVisible: false,
             previewImage: '',
             fileList: [],
         }
     }
-    handelSItem = (index ,data)=>{
+    handelSItem = (itemdata,index)=>{
         console.log('index',index)
-        console.log('data',data)
+        console.log('itemdata',itemdata)
+        let voteOptionss = this.state.voteOptionss
+        voteOptionss[index] = itemdata
+       this.setState({
+           voteOptionss
+       })
     }
     render(){
 
@@ -55,7 +54,7 @@ export default class SendVote extends Component{
                 <div className="comhline_sty"></div>
 
                 <div >
-                    {this.state.selectContentArray.map((itemata,index) => <SelectItem key={index} itemata = {itemata} handelSItem={this.handelSItem}></SelectItem>)}
+                    {this.state.voteOptionss.map((itemata,index) => <SelectItem index={index} itemata = {itemata} handelSItem={this.handelSItem}></SelectItem>)}
                     <div onClick={this.addSelectItem} className="text-center" style={{color:"#0CE11D",fontSize:12,margin:10}}>+ <span >添加选项</span></div>
                 </div>
 
@@ -104,8 +103,7 @@ export default class SendVote extends Component{
                     <Upload
                         action="//jsonplaceholder.typicode.com/posts/"
                         listType="picture-card"
-                        fileList={this.state.fileList}
-                        onPreview={this.handlePreview}
+                        fileList={this.state.fileList}                        onPreview={this.handlePreview}
                         onChange={this.handleChange}
                         multiple={true}>
                         {this.state.fileList.length >= 9 ? null : uploadButton}
@@ -115,7 +113,7 @@ export default class SendVote extends Component{
                     </Modal>
                 </div>
 
-                <center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSaveClick}>提交</button></center>
+                <center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSendVote}>提交</button></center>
             </div>
         )
     }
@@ -124,9 +122,9 @@ export default class SendVote extends Component{
         console.log('state',this.state)
     }
     addSelectItem = (event)=>{
-        let selectContentArray =  [...this.state.selectContentArray,1];
+        let voteOptionss =  [...this.state.voteOptionss,null];
         this.setState({
-            selectContentArray
+            voteOptionss
         })
     }
     addAnnex = (event)=>{

@@ -6,7 +6,7 @@
 import React, {Component} from 'react'
 import {isObjEmpty} from "../../utils/common"
 import {Icon, List} from 'antd'
-import {Picker} from 'antd-mobile'
+import {Picker, List as Mlist} from 'antd-mobile'
 import ReactPlayer from 'react-player'
 import VideoItem from 'components/VideoItem'
 
@@ -59,10 +59,7 @@ export default class WonderMoment extends Component {
                 <Picker data={classList} title='选择班级' extra='请选择'
                         value={classText} onChange={this.handleClassChange}
                         onOk={this.handleClassChange} cols={1}>
-                    <div className='chooseLayout'>
-                        <div className='chooseText'>{isObjEmpty(classText) ? '选择班级' : classText}</div>
-                        <Icon type="right" theme="outlined"/>
-                    </div>
+                    <Mlist.Item arrow="horizontal">选择班级</Mlist.Item>
                 </Picker>
                 <div className='gray-line'></div>
                 <div style={{flex: '1', overflow: 'scroll'}}>
@@ -85,5 +82,9 @@ export default class WonderMoment extends Component {
 
     onAddVideo = () => {
         this.props.history.push('/uploadVideo')
+    }
+
+    handleClassChange = (v) => {
+        this.setState({classText: v})
     }
 }

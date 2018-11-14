@@ -1,0 +1,11 @@
+#btn_ok{
+    background-color: #0098FD;
+    margin: 10px 0px 10px 0px;
+    color: white;
+}
+
+#btn_no_ok{
+    background-color: #00E053;
+    margin: 0px 0px 10px 0px;
+    color: white;
+}

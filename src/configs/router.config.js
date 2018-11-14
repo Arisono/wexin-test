@@ -37,6 +37,7 @@ import CampusCardRecharge from "../modules/payment/CampusCardRecharge";
 import RechargeList from "../modules/payment/RechargeList";
 import RechargeRelease from "../modules/payment/RechargeRelease";
 import AnnounceRelease from "../modules/announce/AnnounceRelease";
+import PrincipalHistory from "../modules/principalMailbox/PrincipalHistory";
 
 export default class RouteConfig extends Component {
 
@@ -62,6 +63,7 @@ export default class RouteConfig extends Component {
                     <Route path='/systemMessage' component={SystemMessage}/>
                     <Route path='/useHelp' component={UseHelp}/>
                     <Route path='/wonderMoment' component={WonderMoment}/>
+                    <Route path='/principalHistory' component={PrincipalHistory}/>
 
                     <Route path='/campusCardRecharge' component={CampusCardRecharge}/>
                     <Route path='/rechargeList' component={RechargeList}/>

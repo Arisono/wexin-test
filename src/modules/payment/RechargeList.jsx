@@ -33,7 +33,7 @@ export default class RechargeList extends Component {
         const {rechargeList, hasMoreData, isLoading} = this.state
 
         return (
-            <div className='recharge-page-layout' style={{background: '#F2F2F2',padding:'0 10px'}}>
+            <div className='recharge-page-layout' style={{background: '#F2F2F2', padding: '0 10px'}}>
                 <InfiniteScroll
                     pageStart={0}
                     loadMore={this.loadRechargeList}
@@ -46,6 +46,9 @@ export default class RechargeList extends Component {
                               )}/>
                     </Skeleton>
                 </InfiniteScroll>
+
+                <Icon type="plus-circle" theme='filled' className='recharge-add-icon'
+                      onClick={this.onAddRecharge}/>
             </div>
         )
     }
@@ -79,5 +82,9 @@ export default class RechargeList extends Component {
                 isLoading: false
             })
         }, 1500)
+    }
+
+    onAddRecharge = () => {
+        this.props.history.push('/rechargeRelease')
     }
 }

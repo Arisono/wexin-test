@@ -23,6 +23,9 @@
     margin: 10px;
 }
 
+
+
+
 #row_center{
     display: flex;
     justify-content: center;
@@ -30,10 +33,12 @@
     padding: 10px;
 }
 
+/*居中*/
 #row_center_align{
     display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: 10px;
+    justify-content: center;
 }
 
 
@@ -70,6 +75,11 @@
 
 #page_border_line{
     border: 1px solid #F3F3F3;
+    padding: 0px;
+    margin: 0px;
+}
+
+#global-clear{
     padding: 0px;
     margin: 0px;
 }

@@ -50,9 +50,10 @@ export default class RouteConfig extends Component {
                     <Route path='/leaveAddPage' component={LeaveAddPage}/>
                     <Route path='/leaveApprovalPage' component={LeaveApprovalPage}/>
                     <Route path='/leaveList' component={LeaveListPage}/>
+
                     <Route path='/releaseAssignment' component={ReleaseAssignmentPage}/>
                     <Route path='/assignmentList' component={AssignmentListPage}/>
-                    <Route path='/assignmentDetailP' component={AssignmentDetailPage}/>
+                    <Route path='/assignmentDetail' component={AssignmentDetailPage}/>
                     {/*方龙海*/}
 
                     {/*刘金龙*/}

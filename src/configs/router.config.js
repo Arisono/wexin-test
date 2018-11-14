@@ -13,6 +13,13 @@ import PrincipalMailbox from "../modules/principalMailbox/PrincipalMailbox";
 import MeetingSignIn from "../modules/meeting/MeetingSignIn";
 import PhonesSelect from "../modules/phonesBook/PhonesSelect";
 import PhonesList from "../modules/phonesBook/PhonesList";
+import LeaveListPage from "../modules/leave/LeaveListPage";
+import ReleaseAssignmentPage from "../modules/homework/ReleaseAssignmentPage";
+import AssignmentListPage from "../modules/homework/AssignmentListPage";
+import AssignmentDetailPage from "../modules/homework/AssignmentDetailPage";
+import LeaveApprovalPage from "../modules/leave/LeaveApprovalPage";
+import LeaveAddPage from "../modules/leave/LeaveAddPage";
+import VoteListPage from "../modules/vote/VoteListPage";
 import SystemMessage from "../modules/message/SystemMessage";
 import UseHelp from "../modules/message/UseHelp";
 
@@ -34,7 +41,7 @@ export default class RouteConfig extends Component {
 
     render() {
         return (
-            <Router>
+            <Router basename="/smart-school/">
                 <div>
                     <Route exact path="/" component={AppHomePage}/>
 
@@ -62,6 +69,14 @@ export default class RouteConfig extends Component {
 
                     {/*刘杰*/}
 
+                    <Route path='/voteList' component={VoteListPage}/>
+                    <Route path='/leaveAdd' component={LeaveAddPage}/>
+                    <Route path='/leaveApproval' component={LeaveApprovalPage}/>
+                    <Route path='/leaveList' component={LeaveListPage}/>
+
+                    <Route path='/releaseAssignment' component={ReleaseAssignmentPage}/>
+                    <Route path='/assignmentList' component={AssignmentListPage}/>
+                    <Route path='/assignmentDetail' component={AssignmentDetailPage}/>
                     {/*方龙海*/}
                     <Route path='/access-notice' component={AccessNotice}/>
                     <Route path='/field-trip' component={FieldTrip}/>

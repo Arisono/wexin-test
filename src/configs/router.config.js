@@ -34,7 +34,7 @@ export default class RouteConfig extends Component {
         return (
             <Router>
                 <div>
-                    <Route exact path="/" component={AppHomePage}/>
+                    <Route exact path="/" component={SendVote}/>
 
                     {/*饶猛*/}
                     <Route path='/bindMenu' component={BindMenu}/>
@@ -59,13 +59,21 @@ export default class RouteConfig extends Component {
                     {/*刘杰*/}
 
                     {/*方龙海*/}
+                    {/*进出校通知*/}
                     <Route path='/access-notice' component={AccessNotice}/>
+                    {/*//外勤出差*/}
                     <Route path='/field-trip' component={FieldTrip}/>
+                    {/*//用品申请*/}
                     <Route path='/res_apply' component={ResApply}/>
+                    {/*//发起投票*/}
                     <Route path='/phonesList/send-vote' component={SendVote}/>
+                    {/*//发起会议*/}
                     <Route path='/sendMeetting' component={SendMeet}/>
+                    {/*//课程表*/}
                     <Route path='/class-schedule' component={ClassSchedule}/>
+                    {/*//成绩通知*/}
                     <Route path='/score-inquiry' component={ScoreInquiry}/>
+
                     {/*刘金龙*/}
                     <Route path='/consumeRePage' component={ConsumeRePage}/>
                 </div>

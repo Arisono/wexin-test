@@ -239,6 +239,8 @@ function TeacherMenu() {
     let borderLine = {
         border: "1px solid #f4f4f4"
     };
+
+
     return <div>
         {/*分割线*/}
         <div className="row" style={{background: "#DADADA", height: "10px"}}/>
@@ -280,8 +282,11 @@ function TeacherMenu() {
                     }}>
                         <div><img src={icon_home_menu_3} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
                         </div>
-                        <div style={{paddingBottom: "20px", paddingLeft: "8px"}}><span
-                            style={{fontSize: "12px"}}>作业发布</span></div>
+                        <div style={{paddingBottom: "20px", paddingLeft: "8px"}}>
+                            <span style={{fontSize: "12px"}}>
+                                  <Link to="/assignmentList">作业发布</Link>
+                            </span>
+                        </div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -292,7 +297,9 @@ function TeacherMenu() {
                         <div><img src={icon_home_menu_4} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
-                            style={{fontSize: "12px"}}>家长通讯录</span></div>
+                            style={{fontSize: "12px"}}>
+                            <Link to="/phonesSelect">  家长通讯录</Link>
+                        </span></div>
                     </div>
                 </div>
 
@@ -306,7 +313,9 @@ function TeacherMenu() {
                         <div><img src={icon_home_menu_5} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "9px"}}><span
-                            style={{fontSize: "12px"}}>投票助手</span></div>
+                            style={{fontSize: "12px"}}>
+                             <Link to="/voteList"> 投票助手</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -317,7 +326,9 @@ function TeacherMenu() {
                         <div><img src={icon_home_menu_6} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "8px"}}><span
-                            style={{fontSize: "12px"}}>班级相册</span></div>
+                            style={{fontSize: "12px"}}>
+                            <Link to="/classAlbum">班级相册</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -327,7 +338,10 @@ function TeacherMenu() {
                     }}>
                         <div><img src={icon_home_menu_7} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
                         </div>
-                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>学生请假条</span></div>
+                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
+
+                            <Link to="/leaveList"> 学生请假条 </Link>
+                        </span></div>
                     </div>
                     {/* <div className="col-xs-3" style={borderLine}>
                      <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
@@ -356,7 +370,10 @@ function TeacherMenu() {
                         <div><img src={icon_home_menu_9} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "9px"}}><span
-                            style={{fontSize: "12px"}}>会议管理</span></div>
+                            style={{fontSize: "12px"}}>
+
+                            <Link to="/meetingSignIn">会议管理</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -387,7 +404,10 @@ function TeacherMenu() {
                     }}>
                         <div><img src={icon_home_menu_12} style={{margin: "20px 20px 8px 20px"}} width={30}
                                   height={30}/></div>
-                        <div style={{paddingBottom: "20px"}}><span style={{margin: "5px", fontSize: "12px"}}>通讯录</span>
+                        <div style={{paddingBottom: "20px"}}><span style={{margin: "5px", fontSize: "12px"}}>
+
+                            <Link to="/phonesSelect">  通讯录 </Link>
+                        </span>
                         </div>
                     </div>
                 </div>
@@ -411,7 +431,10 @@ function TeacherMenu() {
                     }}>
                         <div><img src={icon_home_menu_14} style={{margin: "20px 20px 8px 20px"}} width={30}
                                   height={30}/></div>
-                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>校园卡充值</span></div>
+                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
+
+                            <Link to="/campusCardRecharge">校园卡充值</Link>
+                        </span></div>
                     </div>
                     {/*   <div className="col-xs-3" style={borderLine}>
                      <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
@@ -506,7 +529,9 @@ function ParentMenu() {
                         <div><img src={icon_home_menu_6} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
-                            style={{fontSize: "12px"}}>学生请假条</span></div>
+                            style={{fontSize: "12px"}}>
+                            <Link to="/leaveList">学生请假条</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -516,12 +541,18 @@ function ParentMenu() {
                     }}>
                         <div><img src={icon_home_menu_7} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
                         </div>
-                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>投票助手</span></div>
+                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
+
+                            <Link to="/voteList"> 投票助手</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" id="row_center_align">
                         <div><img src={icon_menu} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/></div>
                         <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
-                            style={{fontSize: "12px"}}>老师通讯录</span></div>
+                            style={{fontSize: "12px"}}>
+
+                            <Link to="/phonesSelect">老师通讯录</Link>
+                        </span></div>
                     </div>
                 </div>
             </div>
@@ -546,7 +577,10 @@ function ParentMenu() {
                         <div><img src={icon_home_menu_9} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "9px"}}><span
-                            style={{fontSize: "12px"}}>充值缴费</span></div>
+                            style={{fontSize: "12px"}}>
+
+                            <Link to="/rechargeList">充值缴费</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -591,7 +625,10 @@ function ParentMenu() {
                     }}>
                         <div><img src={icon_home_menu_13} style={{margin: "20px 20px 8px 20px"}} width={30}
                                   height={30}/></div>
-                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>班级相册</span></div>
+                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
+
+                            <Link to="/classAlbum">  班级相册</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -601,7 +638,10 @@ function ParentMenu() {
                     }}>
                         <div><img src={icon_home_menu_14} style={{margin: "20px 20px 8px 20px"}} width={30}
                                   height={30}/></div>
-                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>校长信箱</span></div>
+                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
+
+                            <Link to="/principalMailbox">校长信箱</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" id="row_center_align">
                         <div><img src={icon_menu} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/></div>

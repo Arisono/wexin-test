@@ -46,9 +46,9 @@ export default class RouteConfig extends Component {
 
                     {/*刘杰*/}
 
-                    <Route path='/voteListPage' component={VoteListPage}/>
-                    <Route path='/leaveAddPage' component={LeaveAddPage}/>
-                    <Route path='/leaveApprovalPage' component={LeaveApprovalPage}/>
+                    <Route path='/voteList' component={VoteListPage}/>
+                    <Route path='/leaveAdd' component={LeaveAddPage}/>
+                    <Route path='/leaveApproval' component={LeaveApprovalPage}/>
                     <Route path='/leaveList' component={LeaveListPage}/>
 
                     <Route path='/releaseAssignment' component={ReleaseAssignmentPage}/>

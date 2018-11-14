@@ -24,7 +24,8 @@ import SendMeet from '../modules/hiPages/sendMeetting/SendMeet';
 import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
 import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
 import WonderMoment from "../modules/video/WonderMoment";
-import ConsumeRePage from '../modules/consumeManager/ConsumeRePage'
+import ConsumeRePage from "../modules/consumeManager/ConsumeRePage";
+import NotifyBoard from "../modules/notificationCenter/NotifyBoard";
 
 export default class RouteConfig extends Component {
 
@@ -63,6 +64,7 @@ export default class RouteConfig extends Component {
                     <Route path='/score-inquiry' component={ScoreInquiry}/>
                     {/*刘金龙*/}
                     <Route path='/consumeRePage' component={ConsumeRePage}/>
+                    <Route path='/notifyBoPage' component={NotifyBoard}/>
                 </div>
             </Router>
         );

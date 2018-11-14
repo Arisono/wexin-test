@@ -21,9 +21,9 @@ export default class PhonesList extends Component {
 
         for (let i = 0; i < 20; i++) {
             let consumeBean = new ConsumeBean()
-            consumeBean.chargeName = '线上充值'
-            consumeBean.chargeTime = '2018-08-01 12:20:23'
-            consumeBean.chargeAmount = '+200000'
+            consumeBean.chargeName = '线上充值'+i
+            consumeBean.chargeTime = '2018-08-01 12:20:23'+i*i
+            consumeBean.chargeAmount = '+200000'+i
 
             this.state.consumeList.push(consumeBean)
         }
@@ -38,8 +38,8 @@ export default class PhonesList extends Component {
 
         return (
             <div className='consume-select-root'>
-                <div className={isObjEmpty(typeTitle)?'displayNone':'consume-list-header'}>{typeTitle}</div>
-                <div className={isObjEmpty(typeTitle)?'displayNone':'gray-line'}></div>
+                <div className={isObjEmpty(typeTitle) ? 'displayNone' : 'consume-list-header'}>{typeTitle}</div>
+                <div className={isObjEmpty(typeTitle) ? 'displayNone' : 'gray-line'}></div>
                 <List className='phones-list-layout' dataSource={consumeList} renderItem={consumeBean => (
                     <List.Item>
                         <ConsumeReItem consumeBean={consumeBean}/>
@@ -47,5 +47,4 @@ export default class PhonesList extends Component {
                 )}/>
             </div>
         )
-    }
-}
+    }}

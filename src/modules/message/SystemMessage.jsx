@@ -8,6 +8,8 @@ import {List, Icon, Skeleton} from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
 import 'css/message.css'
 import SystemMsgItem from 'components/SystemMsgItem'
+import {Toast} from 'antd-mobile'
+import LoadingMore from 'components/LoadingMore'
 
 export default class SystemMessage extends Component {
 
@@ -23,6 +25,8 @@ export default class SystemMessage extends Component {
 
     componentDidMount() {
         document.title = '系统消息'
+
+        Toast.loading('努力加载中...', 0)
     }
 
     render() {
@@ -33,14 +37,7 @@ export default class SystemMessage extends Component {
                     pageStart={0}
                     loadMore={this.loadSystemList}
                     hasMore={hasMoreData}
-                    loader={<div style={{
-                        width: '100%', height: '50px',
-                        display: 'flex', justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                        <Icon type="loading" theme="outlined"/>
-                        <span style={{marginLeft: '10px'}}>加载更多</span>
-                    </div>}>
+                    loader={<LoadingMore/>}>
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
                         <List dataSource={systemMsgs}
                               renderItem={(item, index) => (
@@ -55,6 +52,7 @@ export default class SystemMessage extends Component {
 
     loadSystemList = () => {
         setTimeout(() => {
+            Toast.hide()
             const {systemMsgs} = this.state
             for (let i = 0; i < 10; i++) {
                 let systemBean = {}
@@ -69,7 +67,7 @@ export default class SystemMessage extends Component {
             }
 
             this.setState({
-                systemMsgs: systemMsgs,
+                systemMsgs,
                 isLoading: false
             })
         }, 1500)

@@ -1,0 +1,170 @@
+.campus-card-root {
+    width: 100%;
+    height: 100vh;
+    background: white;
+    padding: 0px 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.campus-card-img {
+    width: 100%;
+    height: 190px;
+    margin: 18px 0;
+}
+
+.campus-card-student {
+    width: 100%;
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #333333;
+    letter-spacing: 2px;
+    text-align: right;
+    padding-right: 10px;
+    margin: 0 0 18px;
+}
+
+.campus-card-line {
+    display: flex;
+    align-items: center;
+    padding: 6px 0;
+}
+
+.campus-card-caption {
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #333333;
+    letter-spacing: 0;
+    width: 60px;
+}
+
+.campus-card-num {
+    flex: 1;
+    font-family: PingFangSC-Regular;
+    font-size: 24px;
+    color: #666666;
+    letter-spacing: 2px;
+}
+
+.campus-card-balance {
+    flex: 1;
+    font-family: PingFangSC-Regular;
+    font-size: 18px;
+    color: #C90000;
+    letter-spacing: 2px;
+}
+
+.campus-card-record {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #8D8D8D;
+    letter-spacing: 0;
+}
+
+.campus-card-btn {
+    width: 100%;
+    font-family: PingFangSC-Medium;
+    font-size: 15px;
+    color: #FFFFFF;
+    letter-spacing: 10px;
+    background: #4197FC;
+    border-radius: 25px;
+    margin: 16px 0;
+}
+
+.campus-card-pay-record {
+    margin: 40px auto 0;
+    font-family: PingFangSC-Medium;
+    font-size: 15px;
+    color: #7EB3F1;
+    letter-spacing: 0;
+    border-bottom: 1px solid #4197FC;
+}
+
+.recharge-page-layout {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.recharge-item-root {
+    width: 100%;
+    background: white;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin: 20px 0;
+}
+
+.recharge-item-type {
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #0067E1;
+    letter-spacing: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+}
+
+.recharge-item-line {
+    width: 100%;
+    display: flex;
+    padding: 6px 0;
+    margin-left: 20px;
+    align-items: center;
+    font-family: PingFangSC-Regular;
+    font-size: 13px;
+    letter-spacing: 0;
+}
+
+.recharge-item-caption {
+    width: 85px;
+    color: #333333;
+}
+
+.recharge-item-value {
+    flex: 1;
+    color: #666666;
+}
+
+.recharge-item-bottom {
+    width: 100%;
+    display: flex;
+    padding: 16px;
+    align-items: center;
+}
+
+.recharge-item-amount-todo, .recharge-item-amount-done {
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    letter-spacing: 0;
+    flex: 1;
+}
+
+.recharge-item-amount-todo {
+    color: #E80808;
+}
+
+.recharge-item-amount-done {
+    color: #717171;
+}
+
+.recharge-item-btn-todo {
+    background: #E60000;
+    border: 1px solid #F90000;
+    border-radius: 6px;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    padding: 2px 4px;
+}
+
+.recharge-item-btn-done {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #00FA55;
+    letter-spacing: 0;
+}

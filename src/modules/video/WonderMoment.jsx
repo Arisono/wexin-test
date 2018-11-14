@@ -86,4 +86,8 @@ export default class WonderMoment extends Component {
     onAddVideo = () => {
         this.props.history.push('/uploadVideo')
     }
+
+    handleClassChange = (v) => {
+        this.setState({classText: v})
+    }
 }

@@ -94,3 +94,11 @@ i.anticon.anticon-delete svg {
     height: 20px;
     padding: 4px;
 }
+
+.common-load-more {
+    width: 100%;
+    height: 54px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

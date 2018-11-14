@@ -24,6 +24,8 @@ import SendMeet from '../modules/hiPages/sendMeetting/SendMeet';
 import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
 import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
 import WonderMoment from "../modules/video/WonderMoment";
+import CampusCardRecharge from "../modules/payment/CampusCardRecharge";
+import RechargeList from "../modules/payment/RechargeList";
 
 export default class RouteConfig extends Component {
 
@@ -49,6 +51,9 @@ export default class RouteConfig extends Component {
                     <Route path='/systemMessage' component={SystemMessage}/>
                     <Route path='/useHelp' component={UseHelp}/>
                     <Route path='/wonderMoment' component={WonderMoment}/>
+
+                    <Route path='/campusCardRecharge' component={CampusCardRecharge}/>
+                    <Route path='/rechargeList' component={RechargeList}/>
 
                     {/*刘杰*/}
 

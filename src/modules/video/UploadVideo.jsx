@@ -7,6 +7,7 @@ import React, {Component} from 'react'
 import 'css/new-album.css'
 import {isObjEmpty} from "../../utils/common";
 import {Icon, Input, Button, Upload} from 'antd'
+import {Picker} from 'antd-mobile'
 
 const {TextArea} = Input
 
@@ -30,20 +31,46 @@ export default class UploadVideo extends Component {
             classText: '',
             videoTitle: '',
             videoDescription: '',
-            fileList: []
+            fileList: [],
+            classList: [],
         }
     }
 
+    componentDidMount() {
+        document.title = '上传视频'
+
+        const {classList} = this.state
+
+        for (let i = 0; i < 10; i++) {
+            if (i % 2 == 0) {
+                classList.push({
+                    label: '三年级（一）班',
+                    value: '三年级（一）班'
+                })
+            } else {
+                classList.push({
+                    label: '三年级（二）班',
+                    value: '三年级（二）班'
+                })
+            }
+        }
+
+        this.setState({classList})
+    }
 
     render() {
-        const {classText, videoTitle, videoDescription, fileList} = this.state
+        const {classText, videoTitle, videoDescription, fileList, classList} = this.state
         return (
             <div className='pageLayout' style={{background: 'white'}}>
                 <div className='gray-line'></div>
-                <div className='chooseLayout'>
-                    <div className='chooseText'>{isObjEmpty(classText) ? '选择班级' : classText}</div>
-                    <Icon type="right" theme="outlined"/>
-                </div>
+                <Picker data={classList} title='选择班级' extra='请选择'
+                        value={classText} onChange={this.handleClassChange}
+                        onOk={this.handleClassChange} cols={1}>
+                    <div className='chooseLayout'>
+                        <div className='chooseText'>{isObjEmpty(classText) ? '选择班级' : classText}</div>
+                        <Icon type="right" theme="outlined"/>
+                    </div>
+                </Picker>
                 <div className='uploadCaptionText'>视频名称</div>
                 <input className='titleInput' placeholder='请输入视频名称'
                        value={videoTitle} onChange={this.titleChange}/>
@@ -51,7 +78,7 @@ export default class UploadVideo extends Component {
                 <TextArea className='contentInput' placeholder='请输入视频描述'
                           autosize={{minRows: 8, maxRows: 16}} value={videoDescription}
                           onChange={this.descriptionChange}/>*/}
-                <div style={{padding: '10px', marginTop: '12px',flex:'1'}}>
+                <div style={{padding: '10px', marginTop: '12px', flex: '1'}}>
                     <Upload {...props} disabled={fileList.length >= 1}
                             onChange={this.handleChange}>
                         <div style={{display: 'flex', padding: '10px', alignItems: 'center'}}>
@@ -84,5 +111,9 @@ export default class UploadVideo extends Component {
         this.setState({
             videoDescription: e.target.value
         })
+    }
+
+    handleClassChange = (v) => {
+        this.setState({classText: v})
     }
 }

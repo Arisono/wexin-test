@@ -1,0 +1,9 @@
+.this_contaior{background-color: #F2F2F2;height: 100%;}
+.header_select_sty{display: flex;flex-direction: row;text-align: center;position: fixed;top: 0;background-color: #F2F2F2;width: 100%;}
+.title_sty{font-size: 15px;color: #0067E1;text-align: center;width: 100%;padding: 10px; }
+.score_data_sty{margin: 20px 15px 10px 15px;border-radius: 2%;background-color: #FFF;height: auto;}
+.comhline_sty {background-color:#F2F2F2;width:100%;height:10px}
+.comhline_sty1{background-color:#F2F2F2;width:100%;height:1px;}
+.left_sty{font-size: 15px;color: #333333;margin: 10px;}
+.right_sty{color: #666666;margin-left: 20px;}
+.left_sty1{display: flex;flex-direction: row;text-align: left;}

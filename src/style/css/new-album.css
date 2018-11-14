@@ -1,7 +1,7 @@
 .pageLayout {
     background: #F2F2F2;
     height: 100%;
-    min-height: 100vh;
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
 }
@@ -24,6 +24,9 @@
 }
 
 .titleInput {
+    font-family: PingFangSC-Regular;
+    color: #333333;
+    letter-spacing: 1.88px;
     width: 100%;
     padding: 12px;
     background: white;
@@ -46,13 +49,12 @@
 
 .confirmLayout {
     width: 100%;
-    padding: 0 40px;
-    position: absolute;
-    bottom: 120px;
+    padding: 20px 40px 40px;
 }
 
 .uploadLayout {
     width: 100%;
+    height: max-content;
     padding: 0 40px;
     margin-bottom: 40px;
     margin-top: 20px;
@@ -87,9 +89,16 @@
     background: #4197FC;
     border-radius: 3px;
     padding: 4px;
+    color: white;
 }
 
-/*.ant-upload-list.ant-upload-list-text{*/
-    /*flex: 1;*/
-    /*height: 200px;*/
-/*}*/
+.uploadBtn-disable {
+    background: #e4e4e4;
+    border-radius: 3px;
+    padding: 4px;
+    color: gray;
+}
+
+
+
+

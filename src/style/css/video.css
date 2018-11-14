@@ -1,0 +1,35 @@
+.videoPlayer {
+    width: 100%;
+    height: max-content;
+}
+
+.video-item-root {
+    width: 100%;
+    padding: 10px 5px;
+    background: white;
+}
+
+.video-item-head {
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+}
+
+.video-item-title {
+    flex: 1;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #575757;
+    letter-spacing: 0;
+    text-align: center;
+}
+
+.video-add-icon{
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    font-size: 56px;
+    color: #00E053;
+}
+

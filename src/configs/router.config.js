@@ -20,6 +20,20 @@ import AssignmentDetailPage from "../modules/homework/AssignmentDetailPage";
 import LeaveApprovalPage from "../modules/leave/LeaveApprovalPage";
 import LeaveAddPage from "../modules/leave/LeaveAddPage";
 import VoteListPage from "../modules/vote/VoteListPage";
+import SystemMessage from "../modules/message/SystemMessage";
+import UseHelp from "../modules/message/UseHelp";
+
+import AccessNotice from '../modules/hiPages/access-notice/AccessNotice';
+import FieldTrip from '../modules/hiPages/field-trip/FieldTrip';
+import ResApply from '../modules/hiPages/res_apply/ResApply';
+import SendVote from '../modules/hiPages/send-vote/SendVote';
+import SendMeet from '../modules/hiPages/sendMeetting/SendMeet';
+import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
+import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
+import WonderMoment from "../modules/video/WonderMoment";
+import ConsumeRePage from '../modules/consumeManager/ConsumeRePage'
+import CampusCardRecharge from "../modules/payment/CampusCardRecharge";
+import RechargeList from "../modules/payment/RechargeList";
 
 export default class RouteConfig extends Component {
 
@@ -37,12 +51,17 @@ export default class RouteConfig extends Component {
                     <Route path='/uploadVideo' component={UploadVideo}/>
                     <Route path='/classAlbum' component={ClassAlbum}/>
                     <Route path='/pictureList/:title?' component={PictureList}/>
-                    {/*<Redirect exact from='/pictureList' to={{pathname: '/pictureList/相册'}}/>*/}
                     <Route path='/videoPlayer/:title?' component={VideoPlayer}/>
                     <Route path='/principalMailbox' component={PrincipalMailbox}/>
                     <Route path='/meetingSignIn' component={MeetingSignIn}/>
                     <Route path='/phonesSelect' component={PhonesSelect}/>
                     <Route path='/phonesList/:classTitle?' component={PhonesList}/>
+                    <Route path='/systemMessage' component={SystemMessage}/>
+                    <Route path='/useHelp' component={UseHelp}/>
+                    <Route path='/wonderMoment' component={WonderMoment}/>
+
+                    <Route path='/campusCardRecharge' component={CampusCardRecharge}/>
+                    <Route path='/rechargeList' component={RechargeList}/>
 
                     {/*刘杰*/}
 
@@ -55,8 +74,15 @@ export default class RouteConfig extends Component {
                     <Route path='/assignmentList' component={AssignmentListPage}/>
                     <Route path='/assignmentDetail' component={AssignmentDetailPage}/>
                     {/*方龙海*/}
-
+                    <Route path='/access-notice' component={AccessNotice}/>
+                    <Route path='/field-trip' component={FieldTrip}/>
+                    <Route path='/res_apply' component={ResApply}/>
+                    <Route path='/phonesList/send-vote' component={SendVote}/>
+                    <Route path='/sendMeetting' component={SendMeet}/>
+                    <Route path='/class-schedule' component={ClassSchedule}/>
+                    <Route path='/score-inquiry' component={ScoreInquiry}/>
                     {/*刘金龙*/}
+                    <Route path='/consumeRePage' component={ConsumeRePage}/>
                 </div>
             </Router>
         );

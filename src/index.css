@@ -115,3 +115,12 @@ i.anticon.anticon-delete svg {
     flex: 1;
     font-size: 13px !important;
 }
+
+.common-column-layout {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    overflow-y: scroll;
+}

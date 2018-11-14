@@ -4,7 +4,6 @@
  */
 
 import React, {Component} from 'react'
-import {isObjEmpty} from "../../utils/common";
 import {Icon, Input, Button} from 'antd'
 import {Picker, InputItem, DatePicker, List} from 'antd-mobile'
 import 'css/payment.css'

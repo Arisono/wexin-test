@@ -31,6 +31,7 @@ import SendMeet from '../modules/hiPages/sendMeetting/SendMeet';
 import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
 import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
 import WonderMoment from "../modules/video/WonderMoment";
+import NotifyBoard from "../modules/notificationCenter/NotifyBoard";
 import ConsumeRePage from '../modules/consumeManager/ConsumeRePage'
 import CampusCardRecharge from "../modules/payment/CampusCardRecharge";
 import RechargeList from "../modules/payment/RechargeList";
@@ -78,15 +79,24 @@ export default class RouteConfig extends Component {
                     <Route path='/assignmentList' component={AssignmentListPage}/>
                     <Route path='/assignmentDetail' component={AssignmentDetailPage}/>
                     {/*方龙海*/}
+                    {/*进出校通知*/}
                     <Route path='/access-notice' component={AccessNotice}/>
+                    {/*//外勤出差*/}
                     <Route path='/field-trip' component={FieldTrip}/>
+                    {/*//用品申请*/}
                     <Route path='/res_apply' component={ResApply}/>
+                    {/*//发起投票*/}
                     <Route path='/phonesList/send-vote' component={SendVote}/>
+                    {/*//发起会议*/}
                     <Route path='/sendMeetting' component={SendMeet}/>
+                    {/*//课程表*/}
                     <Route path='/class-schedule' component={ClassSchedule}/>
+                    {/*//成绩通知*/}
                     <Route path='/score-inquiry' component={ScoreInquiry}/>
+
                     {/*刘金龙*/}
                     <Route path='/consumeRePage' component={ConsumeRePage}/>
+                    <Route path='/notifyBoPage' component={NotifyBoard}/>
                 </div>
             </Router>
         );

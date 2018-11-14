@@ -48,10 +48,10 @@ export default class CampusCardRecharge extends Component {
     }
 
     expensesRecord = () => {
-
+        this.props.history.push('/consumeRePage')
     }
 
     rechargeRecord = () => {
-
+        this.props.history.push('/consumeRePage')
     }
 }

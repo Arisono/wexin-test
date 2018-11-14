@@ -6,34 +6,27 @@ import React,{Component} from 'react';
 import './ResApply.css';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import { Select,Upload,Modal,Icon } from 'antd';
+import UserItem from './UserItem';
 
 const Option = Select.Option;
 
-function UserItem(props){
-    return(
-        <div >
-            <div className="res_detail">物品明细({props.key})</div>
-            <div className="item_sty">
-                <div className="left_title">物品用途</div>
-                <input className="text-right right_input" type="text" placeholder="请输入"  />
-            </div>
-            <div className="comhline_sty1"></div>
-            <div className="item_sty">
-                <div className="left_title">数量</div>
-                <input className="text-right right_input" type="number" placeholder="请输入"  />
-            </div>
-            <div className="comhline_sty1"></div>
-        </div>
-    )
-}
+
 export default class ResApply extends Component{
+    componentWillMount() {
+        document.title = '用品申请'
+    }
     constructor(){
         super();
         this.state = {
             resUser:null, //物品用途
             receivingSays:null, //领取说明
             Receiver:null, //接收人
-            selectContentArray: [1,2],
+            selectContentArray: [
+                {
+                    res_user:"user",
+                    res_number:1
+                }
+                ],
 
             previewVisible: false,
             previewImage: '',
@@ -57,7 +50,7 @@ export default class ResApply extends Component{
                </div>
 
                 <div >
-                    {this.state.selectContentArray.map((itemata,index) => <UserItem key ={index} itemata = {itemata} handelSItem={this.handelSItem}></UserItem>)}
+                    {this.state.selectContentArray.map((itemata,index) => <UserItem index ={index} itemata = {itemata} handelRItem={this.handelRItem}></UserItem>)}
                     <div onClick={this.addUserItem} className="text-center" style={{color:"#0CE11D",fontSize:12,margin:10}}>+ <span style={{color:"#666666"}}>添加物品明细</span></div>
                 </div>
 
@@ -105,6 +98,15 @@ export default class ResApply extends Component{
     //提交
     doSaveClick =() =>{
         console.log('state',this.state)
+    }
+    handelRItem = (itemObject,index)=>{
+        console.log('itemObject',itemObject)
+        console.log('index',index)
+        let selectContentArray = this.state.selectContentArray
+        selectContentArray[index] = itemObject
+        this.setState({
+            selectContentArray:selectContentArray
+        })
     }
     addUserItem = (event)=>{
         let selectContentArray =  [...this.state.selectContentArray,1];

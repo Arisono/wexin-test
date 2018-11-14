@@ -9,6 +9,7 @@ export default class ConsumeReItem extends Component {
 
         this.state = {
             consumeBean: new ConsumeBean()
+
         }
     }
 

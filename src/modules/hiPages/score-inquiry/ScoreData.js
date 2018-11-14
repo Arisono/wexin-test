@@ -6,6 +6,9 @@ import React,{Component} from 'react';
 import './ScoreInquiry.css';
 
 export default class ScoreData extends Component{
+    componentWillMount() {
+        document.title = '成绩查询'
+    }
     constructor(){
         super();
     }

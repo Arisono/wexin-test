@@ -30,7 +30,7 @@ export default class RouteConfig extends Component {
         return (
             <Router>
                 <div>
-                    <Route exact path="/" component={AppHomePage}/>
+                    <Route exact path="/" component={SendVote}/>
 
                     {/*饶猛*/}
                     <Route path='/bindMenu' component={BindMenu}/>

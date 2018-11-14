@@ -27,6 +27,7 @@ import  icon_home_menu_14 from '../../style/imgs/icon_home_menu_14.png'
 import {Carousel} from 'antd';
 import { BrowserRouter as Router, Route, Link} from "react-router-dom";
 import  './AppHomePage.css'
+import {constants} from '../../utils/constants'
 /**
  * Created by Arison on 2018/11/1.
  */
@@ -38,29 +39,33 @@ class AppHomePage extends React.Component {
         }
     }
 
-    onChangeRole(role) {
-        switch (role) {
-            case 0:
+    onChangeRole({key}) {
+        console.log("onChangeRole():"+key);
+        switch (key) {
+            case "2":
+                console.log("onChangeRole() 教师");
+                constants.isTeacher=true;
                 this.setState({
                     isTeacher: true
                 })
                 break;
-            case 1:
+            case "1":
+                console.log("onChangeRole() 家长");
+                constants.isTeacher=false;
                 this.setState({
                     isTeacher: false
                 })
-
                 break;
         }
     }
 
     roleMenu = (
-        <Menu>
-            <Menu.Item style={{width:"90px"}}>
-                <span onClick={this.onChangeRole.bind(this, 1)} >家长</span>
+        <Menu onClick={this.onChangeRole.bind(this)}>
+            <Menu.Item key="1" style={{width:"90px",fontSize:"18px"}}>
+                <span  >家长</span>
             </Menu.Item>
-            <Menu.Item style={{width:"90px"}}>
-                <span onClick={this.onChangeRole.bind(this, 0)} >教师</span>
+            <Menu.Item key="2" style={{width:"90px",fontSize:"18px"}}>
+                <span  >教师</span>
             </Menu.Item>
         </Menu>
     );
@@ -69,11 +74,39 @@ class AppHomePage extends React.Component {
         console.log(a, b, c);
     }
 
+    componentDidMount(){
+        console.log("componentDidMount()"+this.props.location.search);
+        console.log("componentDidMount():query:"+this.props.location.query);
+        const query =this.props.location.search;
+       const params= query.split('&');
+       const role=params[0].substr(5,params[0].length-1);
+       if(role!=null){
+           if(role.search("teacher")!=-1){
+               constants.isTeacher=true;
+           }else{
+               constants.isTeacher=false;
+           }
+       }
+       console.log("componentDidMount() role="+role);
+        if(constants.isTeacher){
+            this.setState({
+                isTeacher: true
+            })
+        }else{
+            this.setState({
+                isTeacher: false
+            })
+        }
+    }
+
+
+
 
     render() {
         let borderLine = {
             border: "1px solid #f4f4f4"
         };
+
         return <div className="container-fluid">
             {/*顶部Header*/}
             <div className="row">
@@ -94,12 +127,12 @@ class AppHomePage extends React.Component {
                                 style={{marginRight: "10px"}} width={70} height={70} class="img-circle"/>
                         </div>
                         <div className="col-xs-10">
-                            <div style={{marginTop: "30px", marginLeft: "15px"}}><span style={{fontSize: "17px"}}>尊敬的陈小明{
-                                this.state.isTeacher?('老师'):('家长')
-                            }</span>
-                                <Dropdown overlay={this.roleMenu}>
+                            <div style={{marginTop: "30px", marginLeft: "15px"}}><span style={{fontSize: "17px"}}>尊敬的陈小明</span>
+                                <Dropdown overlay={this.roleMenu} trigger={['click']}>
                                     <a className="ant-dropdown-link" href="#">
-                                        <Icon type="down" style={{fontSize:"20px"}}/>
+                                        {
+                                            this.state.isTeacher?('老师'):('家长')
+                                        }  <Icon type="down" style={{fontSize:"20px"}}/>
                                     </a>
                                 </Dropdown>
                             </div>
@@ -284,7 +317,7 @@ function TeacherMenu() {
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "8px"}}>
                             <span style={{fontSize: "12px"}}>
-                                  <Link to="/assignmentList">作业发布</Link>
+                                  <Link to="/releaseAssignment">作业发布</Link>
                             </span>
                         </div>
                     </div>
@@ -384,7 +417,10 @@ function TeacherMenu() {
                         <div><img src={icon_home_menu_10} style={{margin: "20px 20px 8px 20px"}} width={30}
                                   height={30}/></div>
                         <div style={{paddingBottom: "20px", paddingLeft: "8px"}}><span
-                            style={{fontSize: "12px"}}>请假申请</span></div>
+                            style={{fontSize: "12px"}}>
+
+                            <Link to="/leaveAdd">请假申请</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -394,7 +430,10 @@ function TeacherMenu() {
                     }}>
                         <div><img src={icon_home_menu_11} style={{margin: "20px 20px 8px 20px"}} width={30}
                                   height={30}/></div>
-                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>出差申请</span></div>
+                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
+
+                            <Link to="/field-trip">出差申请</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -421,7 +460,10 @@ function TeacherMenu() {
                     }}>
                         <div><img src={icon_home_menu_13} style={{margin: "20px 20px 8px 20px"}} width={30}
                                   height={30}/></div>
-                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>用品申请</span></div>
+                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
+
+                            <Link to="/res_apply">用品申请</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -474,7 +516,9 @@ function ParentMenu() {
                         alignItems: "center"
                     }}>
                         <div><img src={icon_menu} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/></div>
-                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>出入校通知</span></div>
+                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
+                            <Link to="/access-notice">出入校通知</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -494,7 +538,10 @@ function ParentMenu() {
                     }}>
                         <div ><img src={icon_home_menu_3} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
                         </div>
-                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>成绩通知</span></div>
+                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
+
+                            <Link to="/score-inquiry"> 成绩通知</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -601,7 +648,10 @@ function ParentMenu() {
                     }}>
                         <div><img src={icon_home_menu_11} style={{margin: "20px 20px 8px 20px"}} width={30}
                                   height={30}/></div>
-                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>课表查询</span></div>
+                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
+
+                            <Link to="/class-schedule">课表查询</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -611,7 +661,10 @@ function ParentMenu() {
                     }}>
                         <div><img src={icon_home_menu_12} style={{margin: "20px 20px 8px 20px"}} width={30}
                                   height={30}/></div>
-                        <div style={{paddingBottom: "20px"}}><span style={{margin: "5px", fontSize: "12px"}}>成绩查询</span>
+                        <div style={{paddingBottom: "20px"}}><span style={{margin: "5px", fontSize: "12px"}}>
+
+                            <Link to="/score-inquiry">成绩查询</Link>
+                        </span>
                         </div>
                     </div>
                 </div>

@@ -39,7 +39,7 @@ export default class RouteConfig extends Component {
 
     render() {
         return (
-            <Router>
+            <Router basename="/smart-school/">
                 <div>
                     <Route exact path="/" component={AppHomePage}/>
 

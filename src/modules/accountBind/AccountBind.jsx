@@ -66,7 +66,8 @@ export default class AccountBind extends Component {
                        ref={input => this.codeInput = input} onChange={this.codeChange}
                        value={code} type='number' onKeyPress={this.phoneKeyPress}/>
 
-                <Button type="primary" block className='commonButton' style={{marginTop: '35px'}}>绑定</Button>
+                <Button type="primary" block className='commonButton' style={{marginTop: '35px'}}
+                        onClick={this.bindEvent}>绑定</Button>
             </div>
         );
     }
@@ -139,5 +140,13 @@ export default class AccountBind extends Component {
                 })
             }
         }, 1000)
+    }
+
+    bindEvent = () => {
+        if (mType == 'parents') {
+            this.props.history.push('/?role=parent')
+        } else if (mType == 'teacher') {
+            this.props.history.push('/?role=teacher')
+        }
     }
 }

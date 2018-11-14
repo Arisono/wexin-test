@@ -7,8 +7,9 @@
 }
 
 #global_page_title{
-    font-size: 18px;
+    font-size: 16px;
     color: #323232;
+    font-weight: 700;
     margin: 10px 0px 10px 10px;
 }
 
@@ -22,9 +23,6 @@
 #row_margin{
     margin: 10px;
 }
-
-
-
 
 #row_center{
     display: flex;
@@ -40,7 +38,6 @@
     align-items: center;
     justify-content: center;
 }
-
 
 #row_left{
     display: flex;
@@ -112,8 +109,6 @@
 #page_border_line_red{
     border: 1px solid orangered;
 }
-
-
 
 #span_18{
      font-size: 18px;

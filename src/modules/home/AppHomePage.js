@@ -23,10 +23,13 @@ import  icon_home_menu_12 from '../../style/imgs/icon_home_menu_12.png'
 import  icon_home_menu_13 from '../../style/imgs/icon_home_menu_13.png'
 import  icon_home_menu_14 from '../../style/imgs/icon_home_menu_14.png'
 
+import  icon_home_help from '../../style/imgs/icon_home_help.png'
+import  icon_home_message from '../../style/imgs/icon_home_message.png'
 
 import {Carousel} from 'antd';
 import { BrowserRouter as Router, Route, Link} from "react-router-dom";
 import  './AppHomePage.css'
+import '../../style/css/app-gloal.css'
 import {constants} from '../../utils/constants'
 /**
  * Created by Arison on 2018/11/1.
@@ -167,7 +170,7 @@ class AppHomePage extends React.Component {
                                 alignItems: "center",
                                 margin: "8px"
                             }}>
-                                <img src={icon_group} style={{marginRight: "10px"}} width={12} height={12}/>
+                                <img src={icon_home_help} style={{marginRight: "10px"}} width={12} height={12}/>
                                 使用帮助
                             </div>
                         </div>
@@ -178,7 +181,7 @@ class AppHomePage extends React.Component {
                                 alignItems: "center",
                                 margin: "8px"
                             }}>
-                                <img src={icon_group} style={{marginRight: "10px"}} width={12} height={12}/>
+                                <img src={icon_home_message} style={{marginRight: "10px"}} width={12} height={12}/>
                                 系统消息
                             </div>
                         </div>
@@ -202,30 +205,36 @@ class AppHomePage extends React.Component {
                             <div className="col-xs-12" style={{margin: "0px", padding: "0px"}}>
                                 <Carousel afterChange={this.onChange.bind(this)}>
                                     <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                                        <img src={""} style={{margin: "10px 0px 15px 10px", display: "inline"}}
-                                             width={100} height={90}/>
-                                        <img src={""} style={{margin: "10px 0px 15px 10px", display: "inline"}}
-                                             width={100} height={90}/>
-                                        <img src={""} style={{margin: "10px 0px 15px 10px", display: "inline"}}
-                                             width={100} height={90}/>
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "10px 0px 15px 5px", display: "inline"}}
+                                             width={105} height={90}/>
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "10px 0px 15px 10px", display: "inline"}}
+                                             width={105} height={90}/>
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "10px 0px 15px 10px", display: "inline"}}
+                                             width={105} height={90}/>
                                     </div>
-                                    <div>
-                                        <img src={""} style={{margin: "10px 0px 20px 20px", display: "inline"}}
-                                             width={100} height={90}/>
-                                        <img src={""} style={{margin: "10px 0px 20px 20px", display: "inline"}}
-                                             width={100} height={90}/>
+                                    <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "10px 0px 15px 10px", display: "inline"}}
+                                             width={105} height={90}/>
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "10px 0px 15px 10px", display: "inline"}}
+                                             width={105} height={90}/>
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "10px 0px 15px 10px", display: "inline"}}
+                                             width={105} height={90}/>
                                     </div>
-                                    <div>
-                                        <img src={""} style={{margin: "10px 0px 20px 20px", display: "inline"}}
-                                             width={100} height={90}/>
+                                    <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "10px 0px 15px 10px", display: "inline"}}
+                                             width={105} height={90}/>
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "10px 0px 15px 10px", display: "inline"}}
+                                             width={105} height={90}/>
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "10px 0px 15px 10px", display: "inline"}}
+                                             width={105} height={90}/>
                                     </div>
-                                    <div>
-                                        <img src={""} style={{margin: "10px 0px 20px 20px", display: "inline"}}
-                                             width={100} height={90}/>
-                                        <img src={""} style={{margin: "10px 0px 20px 20px", display: "inline"}}
-                                             width={100} height={90}/>
-                                        <img src={""} style={{margin: "10px 0px 20px 20px", display: "inline"}}
-                                             width={100} height={90}/>
+                                    <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "10px 0px 15px 10px", display: "inline"}}
+                                             width={105} height={90}/>
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "10px 0px 15px 10px", display: "inline"}}
+                                             width={105} height={90}/>
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "10px 0px 15px 10px", display: "inline"}}
+                                             width={105} height={90}/>
                                     </div>
                                 </Carousel>
 
@@ -248,11 +257,11 @@ class AppHomePage extends React.Component {
 
                         <div className="row">
                             <div className="col-xs-7">
-                                <img src={""} style={{margin: "20px 0px 3px 10px"}} width={180} height={190}/>
+                                <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "20px 0px 3px 10px"}} width={180} height={190}/>
                             </div>
                             <div className="col-xs-5">
-                                <img src={""} style={{margin: "20px 0px 0px 0px"}} width={100} height={90}/>
-                                <img src={""} style={{margin: "5px 0px 0px 0px"}} width={100} height={90}/>
+                                <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "20px 0px 0px 0px"}} width={100} height={90}/>
+                                <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 0px 0px"}} width={100} height={90}/>
                             </div>
                         </div>
 
@@ -280,8 +289,10 @@ function TeacherMenu() {
         {/*家校互动*/}
         <div className="row">
             <div className="col-sm-12">
-                <div className="row">
-                    <div className="col-xs-12" style={{padding: "10px"}}>家校互动</div>
+                <div className="row" >
+                    <div  id="global_page_title">
+                       家校互动
+                    </div>
                 </div>
                 <div className="row" style={borderLine}></div>
                 {/*横向图文列表*/}
@@ -292,9 +303,12 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_menu} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/></div>
+                        <div><img src={icon_menu} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/></div>
                         <div style={{paddingBottom: "20px", paddingLeft: "9px"}}><span
-                            style={{fontSize: "12px"}}>通知公告</span></div>
+                            style={{fontSize: "12px"}}>
+
+                            <Link to="/notifyBoPage">通知公告</Link>
+                        </span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -302,7 +316,7 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_2} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
+                        <div><img src={icon_home_menu_2} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "8px"}}><span
                             style={{fontSize: "12px"}}>班级交费</span></div>
@@ -313,7 +327,7 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_3} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
+                        <div><img src={icon_home_menu_3} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "8px"}}>
                             <span style={{fontSize: "12px"}}>
@@ -327,7 +341,7 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_4} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
+                        <div><img src={icon_home_menu_4} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
                             style={{fontSize: "12px"}}>
@@ -343,7 +357,7 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_5} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
+                        <div><img src={icon_home_menu_5} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "9px"}}><span
                             style={{fontSize: "12px"}}>
@@ -356,7 +370,7 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_6} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
+                        <div><img src={icon_home_menu_6} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "8px"}}><span
                             style={{fontSize: "12px"}}>
@@ -369,7 +383,7 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_7} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
+                        <div><img src={icon_home_menu_7} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
 
@@ -377,7 +391,7 @@ function TeacherMenu() {
                         </span></div>
                     </div>
                     {/* <div className="col-xs-3" style={borderLine}>
-                     <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
+                     <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={20} height={20} /></div>
                      <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>作业通知</span></div>
                      </div>*/}
                 </div>
@@ -400,7 +414,7 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_9} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
+                        <div><img src={icon_home_menu_9} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "9px"}}><span
                             style={{fontSize: "12px"}}>
@@ -414,8 +428,8 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_10} style={{margin: "20px 20px 8px 20px"}} width={30}
-                                  height={30}/></div>
+                        <div><img src={icon_home_menu_10} style={{margin: "20px 20px 8px 20px"}} width={20}
+                                  height={20}/></div>
                         <div style={{paddingBottom: "20px", paddingLeft: "8px"}}><span
                             style={{fontSize: "12px"}}>
 
@@ -428,8 +442,8 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_11} style={{margin: "20px 20px 8px 20px"}} width={30}
-                                  height={30}/></div>
+                        <div><img src={icon_home_menu_11} style={{margin: "20px 20px 8px 20px"}} width={20}
+                                  height={20}/></div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
 
                             <Link to="/field-trip">出差申请</Link>
@@ -441,8 +455,8 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_12} style={{margin: "20px 20px 8px 20px"}} width={30}
-                                  height={30}/></div>
+                        <div><img src={icon_home_menu_12} style={{margin: "20px 20px 8px 20px"}} width={20}
+                                  height={20}/></div>
                         <div style={{paddingBottom: "20px"}}><span style={{margin: "5px", fontSize: "12px"}}>
 
                             <Link to="/phonesSelect">  通讯录 </Link>
@@ -458,8 +472,8 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_13} style={{margin: "20px 20px 8px 20px"}} width={30}
-                                  height={30}/></div>
+                        <div><img src={icon_home_menu_13} style={{margin: "20px 20px 8px 20px"}} width={20}
+                                  height={20}/></div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
 
                             <Link to="/res_apply">用品申请</Link>
@@ -471,19 +485,19 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_14} style={{margin: "20px 20px 8px 20px"}} width={30}
-                                  height={30}/></div>
+                        <div><img src={icon_home_menu_14} style={{margin: "20px 20px 8px 20px"}} width={20}
+                                  height={20}/></div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
 
                             <Link to="/campusCardRecharge">校园卡充值</Link>
                         </span></div>
                     </div>
                     {/*   <div className="col-xs-3" style={borderLine}>
-                     <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
+                     <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={20} height={20} /></div>
                      <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>出差申请</span></div>
                      </div>
                      <div className="col-xs-3" style={borderLine}>
-                     <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
+                     <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={20} height={20} /></div>
                      <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>通讯录</span></div>
                      </div>*/}
                 </div>
@@ -515,7 +529,7 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_menu} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/></div>
+                        <div><img src={icon_menu} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/></div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
                             <Link to="/access-notice">出入校通知</Link>
                         </span></div>
@@ -526,9 +540,11 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_2} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
+                        <div><img src={icon_home_menu_2} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
-                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>通知公告</span></div>
+                        <div style={{paddingBottom: "20px"}}>
+                            <Link to="/notifyBoPage">通知公告</Link>
+                        </div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -536,7 +552,7 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div ><img src={icon_home_menu_3} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
+                        <div ><img src={icon_home_menu_3} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
 
@@ -549,7 +565,7 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_4} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
+                        <div><img src={icon_home_menu_4} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>作业通知</span></div>
                     </div>
@@ -562,7 +578,7 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_5} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
+                        <div><img src={icon_home_menu_5} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
                             style={{fontSize: "12px"}}>收费通知</span></div>
@@ -573,7 +589,7 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_6} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
+                        <div><img src={icon_home_menu_6} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
                             style={{fontSize: "12px"}}>
@@ -586,7 +602,7 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_7} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
+                        <div><img src={icon_home_menu_7} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
 
@@ -594,7 +610,7 @@ function ParentMenu() {
                         </span></div>
                     </div>
                     <div className="col-xs-3" id="row_center_align">
-                        <div><img src={icon_menu} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/></div>
+                        <div><img src={icon_menu} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/></div>
                         <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
                             style={{fontSize: "12px"}}>
 
@@ -621,7 +637,7 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_9} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/>
+                        <div><img src={icon_home_menu_9} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "9px"}}><span
                             style={{fontSize: "12px"}}>
@@ -635,8 +651,8 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_10} style={{margin: "20px 20px 8px 20px"}} width={30}
-                                  height={30}/></div>
+                        <div><img src={icon_home_menu_10} style={{margin: "20px 20px 8px 20px"}} width={20}
+                                  height={20}/></div>
                         <div style={{paddingBottom: "20px", paddingLeft: "8px"}}><span
                             style={{fontSize: "12px"}}>入校登记</span></div>
                     </div>
@@ -646,8 +662,8 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_11} style={{margin: "20px 20px 8px 20px"}} width={30}
-                                  height={30}/></div>
+                        <div><img src={icon_home_menu_11} style={{margin: "20px 20px 8px 20px"}} width={20}
+                                  height={20}/></div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
 
                             <Link to="/class-schedule">课表查询</Link>
@@ -659,8 +675,8 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_12} style={{margin: "20px 20px 8px 20px"}} width={30}
-                                  height={30}/></div>
+                        <div><img src={icon_home_menu_12} style={{margin: "20px 20px 8px 20px"}} width={20}
+                                  height={20}/></div>
                         <div style={{paddingBottom: "20px"}}><span style={{margin: "5px", fontSize: "12px"}}>
 
                             <Link to="/score-inquiry">成绩查询</Link>
@@ -676,8 +692,8 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_13} style={{margin: "20px 20px 8px 20px"}} width={30}
-                                  height={30}/></div>
+                        <div><img src={icon_home_menu_13} style={{margin: "20px 20px 8px 20px"}} width={20}
+                                  height={20}/></div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
 
                             <Link to="/classAlbum">  班级相册</Link>
@@ -689,15 +705,15 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <div><img src={icon_home_menu_14} style={{margin: "20px 20px 8px 20px"}} width={30}
-                                  height={30}/></div>
+                        <div><img src={icon_home_menu_14} style={{margin: "20px 20px 8px 20px"}} width={20}
+                                  height={20}/></div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
 
                             <Link to="/principalMailbox">校长信箱</Link>
                         </span></div>
                     </div>
                     <div className="col-xs-3" id="row_center_align">
-                        <div><img src={icon_menu} style={{margin: "20px 20px 8px 20px"}} width={30} height={30}/></div>
+                        <div><img src={icon_menu} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/></div>
                         <div style={{paddingBottom: "20px", paddingLeft: "8px"}}><span
                             style={{fontSize: "12px"}}>问卷调查</span></div>
                     </div>

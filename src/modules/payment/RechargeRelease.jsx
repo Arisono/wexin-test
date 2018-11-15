@@ -71,7 +71,8 @@ export default class RechargeRelease extends Component {
             classText: '',
             remarks: '',
             endTime: now,
-            date: now
+            date: now,
+            targetList: ['1-1'],
         }
     }
 

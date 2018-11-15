@@ -4,7 +4,7 @@
 
 import React,{Component} from 'react';
 import  './SendVote.css';
-import { DatePicker,Select,Switch,Upload, Icon, Modal } from 'antd';
+import { DatePicker,Select,Switch,Upload, Icon, Modal,TreeSelect} from 'antd';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import moment from 'moment'
 import 'antd/dist/antd.css';
@@ -29,11 +29,53 @@ export default class SendVote extends Component{
             previewVisible: false,
             previewImage: '',
             fileList: [],
+           votePerson:['0-0-0']
         }
     }
 
     render(){
+        const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 
+        const treeData = [
+            {
+                title: 'Node1',
+                value: '0-0',
+                key: '0-0',
+                children: [{
+                    title: 'Child Node1',
+                    value: '0-0-0',
+                    key: '0-0-0',
+                }],
+            }, {
+                title: 'Node2',
+                value: '0-1',
+                key: '0-1',
+                children: [{
+                    title: 'Child Node3',
+                    value: '0-1-0',
+                    key: '0-1-0',
+                }, {
+                    title: 'Child Node4',
+                    value: '0-1-1',
+                    key: '0-1-1',
+                }, {
+                    title: 'Child Node5',
+                    value: '0-1-2',
+                    key: '0-1-2',
+                }],
+            }];
+        const tProps = {
+            treeData,
+            value: this.state.votePerson,
+            onChange: this.selectPersononChange,
+            treeCheckable: true,
+            showCheckedStrategy: SHOW_PARENT,
+            searchPlaceholder: 'Please select',
+            allowClear:true,
+            style: {
+                width: '100%',
+            },
+        };
         //添加附件按钮
         const uploadButton = (
             <div>
@@ -45,6 +87,8 @@ export default class SendVote extends Component{
         return(
 
             <div onChange={this.handelValueCom}>
+                <TreeSelect {...tProps} />
+                <div className="comhline_sty"></div>
                 <textarea autoFocus="autoFocus" ref='voteTitle' className="form-control textarea_sty" rows="2" placeholder="请填写投票主题…" ></textarea>
                 <div className="comhline_sty"></div>
 
@@ -115,6 +159,10 @@ export default class SendVote extends Component{
     //发布提交
     doSendVote = (event)=>{
         console.log('state',this.state)
+    }
+    selectPersononChange = (value) => {
+        console.log('selectPersononChange ', value);
+        this.setState({votePerson:value });
     }
     removeSItem = (index)=>{
         let voteOptionss = this.state.voteOptionss

@@ -44,7 +44,7 @@ export default class RouteConfig extends Component {
         return (
             <Router basename="/smart-school/">
                 <div>
-                    <Route exact path="/" component={AppHomePage}/>
+                    <Route exact path="/" component={SendMeet}/>
 
                     {/*饶猛*/}
                     <Route path='/bindMenu' component={BindMenu}/>

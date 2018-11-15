@@ -37,7 +37,7 @@ export default class PhonesList extends Component {
             phoneBean.phone = '13632423333'
             phoneBean.claName = title
             phoneBean.children = [
-                '语文', '数学','语文', '数学'
+                '语文', '数学', '语文', '数学'
             ]
 
             this.state.phonesList.push(phoneBean)
@@ -53,13 +53,15 @@ export default class PhonesList extends Component {
 
         return (
             <div className='phone-select-root'>
-                <div className={isObjEmpty(classTitle)?'displayNone':'phones-list-header'}>{classTitle}</div>
-                <div className={isObjEmpty(classTitle)?'displayNone':'gray-line'}></div>
-                <List className='phones-list-layout' dataSource={phonesList} renderItem={phonesBean => (
-                    <List.Item>
-                        <PhonesItem phonesBean={phonesBean}/>
-                    </List.Item>
-                )}/>
+                <div className={isObjEmpty(classTitle) ? 'displayNone' : 'phones-list-header'}>{classTitle}</div>
+                <div className={isObjEmpty(classTitle) ? 'displayNone' : 'gray-line'}></div>
+                <List className='phones-list-layout'
+                      dataSource={phonesList}
+                      renderItem={phonesBean => (
+                          <List.Item>
+                              <PhonesItem phonesBean={phonesBean}/>
+                          </List.Item>
+                      )}/>
             </div>
         )
     }

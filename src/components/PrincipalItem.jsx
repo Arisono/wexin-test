@@ -35,7 +35,8 @@ export default class PrincipalItem extends Component {
 
                     <div className='principal-item-content'>{principalBean.suggest}</div>
                     <div style={{textAlign: 'right'}}>
-                        <span className='principal-item-delete' onClick={this.onDeleteEvent}>删除</span>
+                        <span className='principal-item-delete'
+                              onClick={this.onDeleteEvent}>删除</span>
                     </div>
                 </div>
             </div>

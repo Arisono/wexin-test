@@ -59,10 +59,6 @@ export default class NewAlbum extends Component {
                         children={List.Item} cols={1}>
                     <List.Item arrow="horizontal">选择班级</List.Item>
                 </Picker>
-                {/*<div className='chooseLayout'>*/}
-                {/*<div className='chooseText'>{isObjEmpty(classText) ? '选择班级' : classText}</div>*/}
-                {/*<Icon type="right" theme="outlined"/>*/}
-                {/*</div>*/}
                 <div className='gray-line'></div>
                 <input className='titleInput' placeholder='请输入相册标题'
                        value={albumTitle} onChange={this.titleChange}/>

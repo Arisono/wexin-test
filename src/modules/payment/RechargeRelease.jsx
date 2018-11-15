@@ -143,8 +143,6 @@ export default class RechargeRelease extends Component {
                 <div className='gray-line'></div>
                 <div className='recharge-release-target-title'>收款对象</div>
                 <div className='recharge-release-target-layout'>
-                    {/*<div className='recharge-release-target-list'>王芷含 王芷含 王芷含 王芷含 王芷含</div>
-                    <Icon type="plus-circle" style={{color: '#4197FC', fontSize: '22px'}}/>*/}
                     <TreeSelect {...targetProps} />
                 </div>
 

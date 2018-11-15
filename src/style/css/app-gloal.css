@@ -7,9 +7,9 @@
 }
 
 #global_page_title{
-    font-size: 16px;
-    color: #323232;
-    font-weight: 700;
+    font-size: 14px;
+
+    font-weight: 600;
     margin: 10px 0px 10px 10px;
 }
 
@@ -45,6 +45,13 @@
     align-items: center;
     padding: 10px;
 }
+
+#global_row_right{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
 #row_right{
     display: flex;
     justify-content: flex-end;

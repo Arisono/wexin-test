@@ -30,7 +30,6 @@ import SendVote from '../modules/hiPages/send-vote/SendVote';
 import SendMeet from '../modules/hiPages/sendMeetting/SendMeet';
 import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
 import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
-
 import WonderMoment from "../modules/video/WonderMoment";
 import NotifyBoard from "../modules/notificationCenter/NotifyBoard";
 import ConsumeRePage from '../modules/consumeManager/ConsumeRePage'
@@ -38,17 +37,14 @@ import CampusCardRecharge from "../modules/payment/CampusCardRecharge";
 import RechargeList from "../modules/payment/RechargeList";
 import RechargeRelease from "../modules/payment/RechargeRelease";
 import AnnounceRelease from "../modules/announce/AnnounceRelease";
-import PrincipalHistory from "../modules/principalMailbox/PrincipalHistory";
 
 export default class RouteConfig extends Component {
 
     render() {
         return (
-            <Router basename="/smart-school">
+            <Router basename="/smart-school/">
                 <div>
-                    <Route exact path='/' render={() => (
-                        <Redirect to='/bindMenu'/>
-                    )}/>
+                    <Route exact path="/" component={AppHomePage}/>
 
                     {/*饶猛*/}
                     <Route path='/bindMenu' component={BindMenu}/>
@@ -66,7 +62,6 @@ export default class RouteConfig extends Component {
                     <Route path='/systemMessage' component={SystemMessage}/>
                     <Route path='/useHelp' component={UseHelp}/>
                     <Route path='/wonderMoment' component={WonderMoment}/>
-                    <Route path='/principalHistory' component={PrincipalHistory}/>
 
                     <Route path='/campusCardRecharge' component={CampusCardRecharge}/>
                     <Route path='/rechargeList' component={RechargeList}/>
@@ -74,7 +69,7 @@ export default class RouteConfig extends Component {
                     <Route path='/announceRelease' component={AnnounceRelease}/>
 
                     {/*刘杰*/}
-                    <Route path="/homePage" component={AppHomePage}/>
+
                     <Route path='/voteList' component={VoteListPage}/>
                     <Route path='/leaveAdd' component={LeaveAddPage}/>
                     <Route path='/leaveApproval' component={LeaveApprovalPage}/>
@@ -83,7 +78,6 @@ export default class RouteConfig extends Component {
                     <Route path='/releaseAssignment' component={ReleaseAssignmentPage}/>
                     <Route path='/assignmentList' component={AssignmentListPage}/>
                     <Route path='/assignmentDetail' component={AssignmentDetailPage}/>
-
                     {/*方龙海*/}
                     {/*进出校通知*/}
                     <Route path='/access-notice' component={AccessNotice}/>
@@ -92,7 +86,7 @@ export default class RouteConfig extends Component {
                     {/*//用品申请*/}
                     <Route path='/res_apply' component={ResApply}/>
                     {/*//发起投票*/}
-                    <Route path='/send-vote' component={SendVote}/>
+                    <Route path='/phonesList/send-vote' component={SendVote}/>
                     {/*//发起会议*/}
                     <Route path='/sendMeetting' component={SendMeet}/>
                     {/*//课程表*/}

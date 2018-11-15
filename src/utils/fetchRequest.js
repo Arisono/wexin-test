@@ -127,9 +127,6 @@ export function fetchGetNoSession(url, params, header) {
         headers: new Headers({
             'Accept': 'application/json',
             "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
-            // "Access-Control-Allow-Origin": "*",
-            // "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS",
-            // "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers"
             ...header
         })
     }).then(response => {

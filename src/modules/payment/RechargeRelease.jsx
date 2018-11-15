@@ -117,19 +117,21 @@ export default class RechargeRelease extends Component {
         return (
             <div className='common-column-layout'>
                 <div className='gray-line'></div>
-                <Picker data={classList} title='选择班级' extra='请选择'
-                        value={classText} onChange={this.handleClassChange}
-                        onOk={this.handleClassChange} cols={1}>
+                <Picker
+                    data={classList} title='选择班级' extra='请选择'
+                    value={classText} onChange={this.handleClassChange}
+                    onOk={this.handleClassChange} cols={1}>
                     <List.Item arrow="horizontal">选择班级</List.Item>
                 </Picker>
                 <div className='gray-line'></div>
                 <div className='recharge-release-money-title'>人均收款金额</div>
                 <div className='recharge-release-amount-layout'>
                     <div className='recharge-release-amount-caption'>￥</div>
-                    <InputItem className='recharge-release-amount-input'
-                               type='money' clear
-                               moneyKeyboardAlign='left'
-                               placeholder='请输入金额'></InputItem>
+                    <InputItem
+                        className='recharge-release-amount-input'
+                        type='money' clear
+                        moneyKeyboardAlign='left'
+                        placeholder='请输入金额'/>
                 </div>
                 <TextArea className='remarks-input' placeholder='请输入备注'
                           autosize={{minRows: 4, maxRows: 8}} value={remarks}
@@ -146,7 +148,9 @@ export default class RechargeRelease extends Component {
                     <TreeSelect {...targetProps} />
                 </div>
 
-                <Button type='primary' style={{margin: '35px'}} className='commonButton'>发起收款</Button>
+                <Button type='primary'
+                        style={{margin: '35px'}}
+                        className='commonButton'>发起收款</Button>
             </div>
         )
     }
@@ -172,10 +176,4 @@ export default class RechargeRelease extends Component {
         })
     }
 
-    formatDate = (date) => {
-        const pad = n => n < 10 ? `0${n}` : n;
-        const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-        const timeStr = `${pad(date.getHours())}:${pad(date.getMinutes())}`;
-        return `${dateStr} ${timeStr}`;
-    }
 }

@@ -37,15 +37,15 @@ export default class AccountBind extends Component {
     render() {
         const {account, phone, code, obtainText} = this.state
 
-        const idClear = account ? <Icon type="close-circle"
-                                        onClick={this.accountEmpty}
-                                        style={{color: 'white'}}/> : null;
-        const phoneClear = phone ? <Icon type="close-circle"
-                                         onClick={this.phoneEmpty}
-                                         style={{color: 'white'}}/> : null;
-        const codeClear = code ? <Icon type="close-circle"
-                                       onClick={this.codeEmpty}
-                                       style={{color: 'white'}}/> : null;
+        const idClear = account ?
+            <Icon type="close-circle" onClick={this.accountEmpty} style={{color: 'white'}}/>
+            : null;
+        const phoneClear = phone ?
+            <Icon type="close-circle" onClick={this.phoneEmpty} style={{color: 'white'}}/>
+            : null;
+        const codeClear = code ?
+            <Icon type="close-circle" onClick={this.codeEmpty} style={{color: 'white'}}/>
+            : null;
         const idIcon = <img src={require('imgs/ic_account_input.png')} className='inputIcon1'/>
         const phoneIcon = <img src={require('imgs/ic_phone_input.png')} className='inputIcon2'/>
         const codeIcon = <img src={require('imgs/ic_code_input.png')} className='inputIcon3'/>
@@ -55,7 +55,8 @@ export default class AccountBind extends Component {
         return (
             <div className='bindParent'>
                 <Avatar icon='user' size={65}/>
-                <Input placeholder={mType == 'parents' ? '学号' : '工号'} prefix={idIcon} suffix={idClear}
+                <Input placeholder={mType == 'parents' ? '学号' : '工号'}
+                       prefix={idIcon} suffix={idClear}
                        ref={input => this.accountInput = input} onChange={this.accountChange}
                        value={account} type='number' onKeyPress={this.phoneKeyPress}/>
                 <Input placeholder='手机号' prefix={phoneIcon} suffix={phoneClear}

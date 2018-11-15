@@ -42,13 +42,14 @@ export default class PrincipalHistory extends Component {
                     hasMore={hasMoreData}
                     loader={<LoadingMore/>}>
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
-                        <List dataSource={principalList}
-                              renderItem={(item, index) => (
-                                  <PrincipalItem
-                                      principalBean={item}
-                                      deleteItem={this.onDeleteItem}
-                                      index={index}/>
-                              )}/>
+                        <List
+                            dataSource={principalList}
+                            renderItem={(item, index) => (
+                                <PrincipalItem
+                                    principalBean={item}
+                                    deleteItem={this.onDeleteItem}
+                                    index={index}/>
+                            )}/>
                     </Skeleton>
                 </InfiniteScroll>
             </div>
@@ -84,6 +85,6 @@ export default class PrincipalHistory extends Component {
         const {principalList} = this.state
         principalList.splice(index, 1)
         this.setState({principalList})
-        Toast.success('删除成功',1.5)
+        Toast.success('删除成功', 1.5)
     }
 }

@@ -65,7 +65,9 @@ export default class WonderMoment extends Component {
                 <div style={{flex: '1', overflow: 'scroll'}}>
                     <List dataSource={videoList} renderItem={
                         (item, index) => (
-                            <VideoItem videoInfo={item} index={index} deleteEvent={this.onDeleteVideo.bind(this)}/>
+                            <VideoItem
+                                videoInfo={item} index={index}
+                                deleteEvent={this.onDeleteVideo.bind(this)}/>
                         )
                     }/>
                 </div>

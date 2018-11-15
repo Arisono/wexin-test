@@ -122,8 +122,7 @@ export default class AnnounceRelease extends Component {
                 <div className='gray-line'></div>
                 <div className='announce-release-target-title'>发布对象</div>
                 <div className='announce-release-target-layout'>
-                    {/*<Icon type="plus-circle" style={{color: '#4197FC', fontSize: '22px'}}/>*/}
-                    <TreeSelect {...targetProps} suffixIcon={{type: "plus-circle"}}/>
+                    <TreeSelect {...targetProps}/>
                 </div>
                 <div className='gray-line'></div>
                 <input className='titleInput' placeholder='请输入通知标题'

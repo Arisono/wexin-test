@@ -29,6 +29,8 @@ export default class ClassAlbum extends Component {
     }
 
     componentDidMount() {
+        document.title = '班级相册'
+
         this.node.scrollIntoView();
         const {classList, albumList} = this.state
 

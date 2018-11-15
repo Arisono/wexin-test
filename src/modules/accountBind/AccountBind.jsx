@@ -144,9 +144,9 @@ export default class AccountBind extends Component {
 
     bindEvent = () => {
         if (mType == 'parents') {
-            this.props.history.push('/?role=parent')
+            this.props.history.push('/homePage?role=parent')
         } else if (mType == 'teacher') {
-            this.props.history.push('/?role=teacher')
+            this.props.history.push('/homePage?role=teacher')
         }
     }
 }

@@ -4,11 +4,58 @@
  */
 
 import React, {Component} from 'react'
-import {Icon, Input, Button, Upload, Modal} from 'antd'
-import {Picker, InputItem, DatePicker, List} from 'antd-mobile'
+import {Icon, Input, Button, Upload, Modal, TreeSelect} from 'antd'
 import 'css/announce.css'
 
 const {TextArea} = Input
+
+const SHOW_PARENT = TreeSelect.SHOW_PARENT
+const teacherData = []
+const parentData = []
+
+for (let i = 1; i < 6; i++) {
+    parentData.push({
+        title: `三年级${i}班`,
+        value: `0-${i}`,
+        key: `0-${i}`,
+        children: [{
+            title: `饶猛`,
+            value: `0-${i}-0`,
+            key: `0-${i}-0`
+        }, {
+            title: `李泞`,
+            value: `0-${i}-1`,
+            key: `0-${i}-1`,
+        }, {
+            title: `章晨望`,
+            value: `0-${i}-2`,
+            key: `0-${i}-2`,
+        }],
+    })
+}
+
+for (let i = 1; i < 10; i++) {
+    teacherData.push({
+        title: `老师${i}`,
+        value: `1-${i}`,
+        key: `1-${i}`,
+    })
+}
+
+const targetData = [
+    {
+        title: `全体家长`,
+        value: `0`,
+        key: `0`,
+        children: parentData,
+    },
+    {
+        title: `全体老师`,
+        value: `1`,
+        key: `1`,
+        children: teacherData,
+    }
+]
 
 export default class AnnounceRelease extends Component {
 
@@ -27,11 +74,13 @@ export default class AnnounceRelease extends Component {
                 status: 'done',
                 url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
             }],
+            targetList: ['1-1'],
         }
     }
 
     componentDidMount() {
         document.title = '发布通知公告'
+
     }
 
     componentWillUnmount() {
@@ -47,13 +96,34 @@ export default class AnnounceRelease extends Component {
                 <div className="ant-upload-text">Upload</div>
             </div>
         );
+        const uploadProps = {
+            action: "//jsonplaceholder.typicode.com/posts/",
+            listType: "picture-card",
+            fileList: fileList,
+            multiple: false,
+            onPreview: this.handlePreview,
+            onChange: this.handleChange,
+            showUploadList: {showPreviewIcon: true, showRemoveIcon: true}
+        }
+        const targetProps = {
+            treeData: targetData,
+            value: this.state.targetList,
+            onChange: this.onTargetChange,
+            treeCheckable: true,
+            showCheckedStrategy: SHOW_PARENT,
+            searchPlaceholder: '请选择发布对象',
+            style: {
+                width: '100%',
+            },
+            allowClear: true,
+        }
         return (
             <div className='common-column-layout'>
                 <div className='gray-line'></div>
                 <div className='announce-release-target-title'>发布对象</div>
                 <div className='announce-release-target-layout'>
-                    <div className='announce-release-target-list'>王芷含 王芷含 王芷含 王芷含 王芷含</div>
-                    <Icon type="plus-circle" style={{color: '#4197FC', fontSize: '22px'}}/>
+                    {/*<Icon type="plus-circle" style={{color: '#4197FC', fontSize: '22px'}}/>*/}
+                    <TreeSelect {...targetProps} suffixIcon={{type: "plus-circle"}}/>
                 </div>
                 <div className='gray-line'></div>
                 <input className='titleInput' placeholder='请输入通知标题'
@@ -65,14 +135,7 @@ export default class AnnounceRelease extends Component {
                 <div className='gray-line'></div>
                 <div className='annex-title'>附件</div>
                 <div style={{padding: '12px 16px'}}>
-                    <Upload
-                        action="//jsonplaceholder.typicode.com/posts/"
-                        listType="picture-card"
-                        fileList={fileList}
-                        multiple
-                        onPreview={this.handlePreview}
-                        onChange={this.handleChange}
-                        showUploadList={{showPreviewIcon: true, showRemoveIcon: true}}>
+                    <Upload {...uploadProps}>
                         {fileList.length >= 1 ? null : uploadButton}
                     </Upload>
                     <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
@@ -87,6 +150,10 @@ export default class AnnounceRelease extends Component {
         )
     }
 
+    onTargetChange = (value, label, extra) => {
+        console.log('onChange ', value + '/' + label);
+        this.setState({targetList: value});
+    }
 
     titleChange = e => {
         this.setState({
@@ -99,7 +166,6 @@ export default class AnnounceRelease extends Component {
             announceContent: e.target.value
         })
     }
-
 
     handleCancel = () => this.setState({previewVisible: false})
 

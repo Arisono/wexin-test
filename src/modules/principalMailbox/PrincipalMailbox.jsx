@@ -71,10 +71,12 @@ export default class PrincipalMailbox extends Component {
                     <Switch size="small" checked={isAnonymous} onChange={this.switchChange}/>
                     <span style={{marginLeft: '5px'}}>匿名</span>
                 </div>
-                <div className='uploadLayout'>
+                <div className='principal-uploadLayout'>
                     <Button className='commonButton' type="primary" block
                             onClick={this.releaseEvent}>提交</Button>
                 </div>
+
+                <span className='common-record-text' onClick={this.principalRecord}>历史投递</span>
             </div>
         )
     }
@@ -107,4 +109,8 @@ export default class PrincipalMailbox extends Component {
     }
 
     handleChange = ({fileList}) => this.setState({fileList})
+
+    principalRecord = () => {
+        this.props.history.push('/principalHistory')
+    }
 }

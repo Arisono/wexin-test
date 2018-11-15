@@ -125,10 +125,19 @@ i.anticon.anticon-delete svg {
     overflow-y: scroll;
 }
 
-.common-add-icon{
+.common-add-icon {
     position: fixed;
     bottom: 25px;
     right: 25px;
     font-size: 56px;
     color: #00E053;
+}
+
+.common-record-text {
+    margin: 30px auto 0;
+    font-family: PingFangSC-Medium;
+    font-size: 15px;
+    color: #4197FC;
+    letter-spacing: 0;
+    border-bottom: 1px solid #4197FC;
 }

@@ -2,7 +2,7 @@
  *   Created by FANGlh on 2018/11/6 15:47.
  */
 
-import React,{Component} from 'react';
+import React,{Component,Icon} from 'react';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import './SendMeet.css';
 import 'antd/dist/antd.css';
@@ -138,6 +138,7 @@ export default class SendMeet extends Component{
                     <TreeSelect {...tProps} />
                     <center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSaveClick}>创建</button></center>
                 </div >
+                <Icon type="pic-left" />
             </div>
         )
     }

@@ -30,6 +30,7 @@ import SendVote from '../modules/hiPages/send-vote/SendVote';
 import SendMeet from '../modules/hiPages/sendMeetting/SendMeet';
 import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
 import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
+
 import WonderMoment from "../modules/video/WonderMoment";
 import NotifyBoard from "../modules/notificationCenter/NotifyBoard";
 import ConsumeRePage from '../modules/consumeManager/ConsumeRePage'
@@ -91,7 +92,7 @@ export default class RouteConfig extends Component {
                     {/*//用品申请*/}
                     <Route path='/res_apply' component={ResApply}/>
                     {/*//发起投票*/}
-                    <Route path='/phonesList/send-vote' component={SendVote}/>
+                    <Route path='/send-vote' component={SendVote}/>
                     {/*//发起会议*/}
                     <Route path='/sendMeetting' component={SendMeet}/>
                     {/*//课程表*/}

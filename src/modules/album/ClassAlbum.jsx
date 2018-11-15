@@ -7,7 +7,7 @@ import React, {Component} from 'react'
 import AlbumItem from 'components/AlbumItem'
 import {isObjEmpty} from "../../utils/common";
 import {Icon} from 'antd'
-import {Picker,List} from 'antd-mobile'
+import {Picker, List} from 'antd-mobile'
 
 const uploadItem = new AlbumItem()
 uploadItem.coverImg = 'upload'
@@ -29,6 +29,7 @@ export default class ClassAlbum extends Component {
     }
 
     componentDidMount() {
+        this.node.scrollIntoView();
         const {classList, albumList} = this.state
 
         let albumAll = [
@@ -85,7 +86,7 @@ export default class ClassAlbum extends Component {
             }
         }
         return (
-            <div>
+            <div ref={node => this.node = node}>
                 <div className='gray-line'></div>
                 <Picker data={classList} title='选择班级' extra='请选择'
                         value={classText} onChange={this.handleClassChange}

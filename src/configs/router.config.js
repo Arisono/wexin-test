@@ -36,6 +36,7 @@ import CampusCardRecharge from "../modules/payment/CampusCardRecharge";
 import RechargeList from "../modules/payment/RechargeList";
 import RechargeRelease from "../modules/payment/RechargeRelease";
 import AnnounceRelease from "../modules/announce/AnnounceRelease";
+import PrincipalHistory from "../modules/principalMailbox/PrincipalHistory";
 
 export default class RouteConfig extends Component {
 
@@ -61,6 +62,7 @@ export default class RouteConfig extends Component {
                     <Route path='/systemMessage' component={SystemMessage}/>
                     <Route path='/useHelp' component={UseHelp}/>
                     <Route path='/wonderMoment' component={WonderMoment}/>
+                    <Route path='/principalHistory' component={PrincipalHistory}/>
 
                     <Route path='/campusCardRecharge' component={CampusCardRecharge}/>
                     <Route path='/rechargeList' component={RechargeList}/>
@@ -78,13 +80,21 @@ export default class RouteConfig extends Component {
                     <Route path='/assignmentList' component={AssignmentListPage}/>
                     <Route path='/assignmentDetail' component={AssignmentDetailPage}/>
                     {/*方龙海*/}
+                    {/*进出校通知*/}
                     <Route path='/access-notice' component={AccessNotice}/>
+                    {/*//外勤出差*/}
                     <Route path='/field-trip' component={FieldTrip}/>
+                    {/*//用品申请*/}
                     <Route path='/res_apply' component={ResApply}/>
+                    {/*//发起投票*/}
                     <Route path='/phonesList/send-vote' component={SendVote}/>
+                    {/*//发起会议*/}
                     <Route path='/sendMeetting' component={SendMeet}/>
+                    {/*//课程表*/}
                     <Route path='/class-schedule' component={ClassSchedule}/>
+                    {/*//成绩通知*/}
                     <Route path='/score-inquiry' component={ScoreInquiry}/>
+
                     {/*刘金龙*/}
                     <Route path='/consumeRePage' component={ConsumeRePage}/>
                     <Route path='/notifyBoPage' component={NotifyBoard}/>

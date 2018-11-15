@@ -42,16 +42,16 @@ export default class CampusCardRecharge extends Component {
                     <Icon type="right" style={{color: '#C1C1C1'}}/>
                 </div>
                 <Button type="primary" className='campus-card-btn'>去充值</Button>
-                <span className='campus-card-pay-record' onClick={this.rechargeRecord}>充值记录</span>
+                <span className='common-record-text' onClick={this.rechargeRecord}>充值记录</span>
             </div>
         )
     }
 
     expensesRecord = () => {
-
+        this.props.history.push('/consumeRePage')
     }
 
     rechargeRecord = () => {
-
+        this.props.history.push('/consumeRePage')
     }
 }

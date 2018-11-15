@@ -19,6 +19,9 @@ function Test(){
     )
 }
 export default class SendMeet extends Component{
+    componentWillMount() {
+        document.title = '发起投票'
+    }
     constructor(){
         super();
         this.state = {

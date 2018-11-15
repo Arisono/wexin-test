@@ -42,10 +42,7 @@ export default class RechargeList extends Component {
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
                         <List dataSource={rechargeList}
                               renderItem={(item, index) => (
-                                  <div>
-                                      <RechargeItem rechargeBean={item}/>
-                                  </div>
-
+                                  <RechargeItem rechargeBean={item}/>
                               )}/>
                     </Skeleton>
                 </InfiniteScroll>

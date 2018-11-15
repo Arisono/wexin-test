@@ -29,10 +29,9 @@
     padding: 8px 13px;
 }
 
-.uploadLayout {
+.principal-uploadLayout {
     width: 100%;
     padding: 0 40px;
-    margin-bottom: 40px;
     margin-top: 20px;
 }
 
@@ -88,4 +87,60 @@
     font-size: 14px;
     color: #333333;
     letter-spacing: 0;
+}
+
+.principal-item-root {
+    width: 100%;
+    padding: 0 15px 15px;
+    background: white;
+    border-radius: 6px;
+}
+
+.principal-item-top {
+    width: 100%;
+    display: flex;
+    height: 45px;
+    align-items: center;
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.principal-item-time {
+    flex: 1;
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #303030;
+    letter-spacing: 2px;;
+}
+
+.principal-item-status-todo, .principal-item-status-done {
+    font-family: PingFangSC-Regular;
+    font-size: 13px;
+    letter-spacing: 1.62px;
+}
+
+.principal-item-status-todo {
+    color: #CE1212;
+}
+
+.principal-item-status-done {
+    color: #5D5D5D;
+}
+
+.principal-item-content {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #333333;
+    letter-spacing: 1.5px;
+    margin: 10px 0;
+}
+
+.principal-item-delete {
+    background: #4197FC;
+    border-radius: 2px;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    padding: 3px 9px;
+    width: max-content;
 }

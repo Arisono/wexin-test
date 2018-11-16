@@ -74,7 +74,7 @@ export default class AnnounceRelease extends Component {
                 status: 'done',
                 url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
             }],
-            targetList: ['0-1-0'],
+            targetList: ['1-1'],
         }
     }
 
@@ -96,6 +96,15 @@ export default class AnnounceRelease extends Component {
                 <div className="ant-upload-text">Upload</div>
             </div>
         );
+        const uploadProps = {
+            action: "//jsonplaceholder.typicode.com/posts/",
+            listType: "picture-card",
+            fileList: fileList,
+            multiple: false,
+            onPreview: this.handlePreview,
+            onChange: this.handleChange,
+            showUploadList: {showPreviewIcon: true, showRemoveIcon: true}
+        }
         const targetProps = {
             treeData: targetData,
             value: this.state.targetList,
@@ -113,9 +122,7 @@ export default class AnnounceRelease extends Component {
                 <div className='gray-line'></div>
                 <div className='announce-release-target-title'>发布对象</div>
                 <div className='announce-release-target-layout'>
-                    {/*<div className='announce-release-target-list'>王芷含 王芷含 王芷含 王芷含 王芷含</div>
-                    <Icon type="plus-circle" style={{color: '#4197FC', fontSize: '22px'}}/>*/}
-                    <TreeSelect {...targetProps} />
+                    <TreeSelect {...targetProps}/>
                 </div>
                 <div className='gray-line'></div>
                 <input className='titleInput' placeholder='请输入通知标题'
@@ -127,14 +134,7 @@ export default class AnnounceRelease extends Component {
                 <div className='gray-line'></div>
                 <div className='annex-title'>附件</div>
                 <div style={{padding: '12px 16px'}}>
-                    <Upload
-                        action="//jsonplaceholder.typicode.com/posts/"
-                        listType="picture-card"
-                        fileList={fileList}
-                        multiple
-                        onPreview={this.handlePreview}
-                        onChange={this.handleChange}
-                        showUploadList={{showPreviewIcon: true, showRemoveIcon: true}}>
+                    <Upload {...uploadProps}>
                         {fileList.length >= 1 ? null : uploadButton}
                     </Upload>
                     <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
@@ -149,8 +149,8 @@ export default class AnnounceRelease extends Component {
         )
     }
 
-    onTargetChange = (value) => {
-        console.log('onChange ', value);
+    onTargetChange = (value, label, extra) => {
+        console.log('onChange ', value + '/' + label);
         this.setState({targetList: value});
     }
 

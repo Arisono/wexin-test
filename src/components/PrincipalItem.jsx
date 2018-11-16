@@ -4,6 +4,9 @@
  */
 
 import React, {Component} from 'react'
+import {Modal} from 'antd-mobile'
+
+const {alert} = Modal
 
 export default class PrincipalItem extends Component {
 
@@ -32,10 +35,25 @@ export default class PrincipalItem extends Component {
 
                     <div className='principal-item-content'>{principalBean.suggest}</div>
                     <div style={{textAlign: 'right'}}>
-                        <span className='principal-item-delete'>删除</span>
+                        <span className='principal-item-delete'
+                              onClick={this.onDeleteEvent}>删除</span>
                     </div>
                 </div>
             </div>
         )
+    }
+
+    onDeleteEvent = () => {
+        alert('提示', '确定删除该条记录吗？', [
+            {
+                text: '取消', onPress: () => {
+                }
+            },
+            {
+                text: '确定', onPress: () => {
+                    this.props.deleteItem(this.props.index)
+                }
+            }
+        ])
     }
 }

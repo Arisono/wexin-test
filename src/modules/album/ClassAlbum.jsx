@@ -81,9 +81,12 @@ export default class ClassAlbum extends Component {
             for (let i = 0; i < albumList.length; i++) {
                 const albumBean = albumList[i]
                 if (!isObjEmpty(albumBean)) {
-                    albumItems.push(<AlbumItem albumBean={albumBean}
-                                               itemClick={this.onItemClick.bind(this)}
-                                               index={i}/>)
+                    albumItems.push(
+                        <AlbumItem
+                            albumBean={albumBean}
+                            itemClick={this.onItemClick.bind(this)}
+                            index={i}/>
+                    )
                 }
             }
         }

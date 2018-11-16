@@ -8,7 +8,7 @@ import MeetingSignItem from 'components/MeetingSignItem'
 import MeetingBean from "model/MeetingBean";
 import {isObjEmpty} from "../../utils/common";
 import InfiniteScroll from 'react-infinite-scroller'
-import {Spin,Icon} from 'antd'
+import LoadingMore from 'components/LoadingMore'
 
 export default class MeetingSignIn extends Component {
 
@@ -23,7 +23,6 @@ export default class MeetingSignIn extends Component {
 
     componentDidMount() {
         document.title = '会议签到'
-        // this.loadMeetList()
     }
 
     render() {
@@ -43,14 +42,7 @@ export default class MeetingSignIn extends Component {
                     pageStart={0}
                     loadMore={this.loadMeetList}
                     hasMore={hasMoreData}
-                    loader={<div style={{
-                        width: '100%', height: '50px',
-                        display: 'flex', justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                        <Icon type="loading" theme="outlined" />
-                        <span style={{marginLeft:'10px'}}>加载更多</span>
-                    </div>}>
+                    loader={<LoadingMore/>}>
                     {meetingItems}
                 </InfiniteScroll>
             </div>

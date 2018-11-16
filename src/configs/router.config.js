@@ -22,7 +22,6 @@ import LeaveAddPage from "../modules/leave/LeaveAddPage";
 import VoteListPage from "../modules/vote/VoteListPage";
 import SystemMessage from "../modules/message/SystemMessage";
 import UseHelp from "../modules/message/UseHelp";
-
 import AccessNotice from '../modules/hiPages/access-notice/AccessNotice';
 import FieldTrip from '../modules/hiPages/field-trip/FieldTrip';
 import ResApply from '../modules/hiPages/res_apply/ResApply';
@@ -91,7 +90,7 @@ export default class RouteConfig extends Component {
                     {/*//用品申请*/}
                     <Route path='/res_apply' component={ResApply}/>
                     {/*//发起投票*/}
-                    <Route path='/phonesList/send-vote' component={SendVote}/>
+                    <Route path='/send-vote' component={SendVote}/>
                     {/*//发起会议*/}
                     <Route path='/sendMeetting' component={SendMeet}/>
                     {/*//课程表*/}

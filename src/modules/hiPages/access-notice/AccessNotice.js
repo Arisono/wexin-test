@@ -7,6 +7,8 @@ import './AccessNotice.css';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import arrowLeft from '../../../style/imgs/arrow_left.png';
 import line_img from '../../../style/imgs/line_img.png';
+import enter_img from '../../../style/imgs/ic_enter.png';
+import exit_img from '../../../style/imgs/ic_exit.png';
 
 import httpRuquest from  '../../../utils/fetchRequest';
 
@@ -15,7 +17,7 @@ function ItemComp() {
         <div>
             <img className="lineimg_sty" src={line_img} alt=""/>
             <div className="timeList_sty">
-                <img className="img-circle out_in" src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"} alt=""/>
+                <img className="img-circle out_in" src={enter_img} alt=""/>
                 <div style={{marginLeft:30}}>
                     <div style={{color:"#666666",fontSize:12}}>2018-10-21 星期天</div>
                     <div style={{color:"#3333",fontSize:12,marginTop:5}}>17:01:34</div>
@@ -35,7 +37,7 @@ export default class AccessNotice extends Component{
         this.state = {
             studentName:'吴彦祖',
             studentGrade:'三年八班',
-            out_inData:[1,2,3,4,5]
+            out_inData:[1,2,3,4,5,1,2,3,4,5]
         }
     }
     render(){

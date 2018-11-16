@@ -128,3 +128,10 @@
 #span_13{
     font-size: 18px;
 }
+
+
+#list_noBorder{
+    background-color: #FFFFFF;
+    border: 1px solid #F3F3F3;
+    padding: 0px;
+}

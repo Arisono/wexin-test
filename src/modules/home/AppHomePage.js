@@ -177,7 +177,7 @@ class AppHomePage extends React.Component {
                                 margin: "8px"
                             }}>
                                 <img src={icon_home_help} style={{marginRight: "10px"}} width={12} height={12}/>
-                                <span id="span_12">使用帮助</span>
+                                <Link to="/useHelp" id="menu_span_normal">   <span id="span_12">使用帮助</span></Link>
                             </div>
                         </div>
                         <div className="col-xs-4">
@@ -188,7 +188,7 @@ class AppHomePage extends React.Component {
                                 margin: "8px"
                             }}>
                                 <img src={icon_home_message} style={{marginRight: "10px"}} width={12} height={12}/>
-                                <span id="span_12">系统消息</span>
+                                 <Link to="/systemMessage" id="menu_span_normal"><span id="span_12">系统消息</span></Link>
                             </div>
                         </div>
                     </div>

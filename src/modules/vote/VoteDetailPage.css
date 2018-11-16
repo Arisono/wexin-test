@@ -1,0 +1,33 @@
+#pager_header{
+
+    background-color: #E6EEF7;
+
+}
+.ant-checkbox-inner{
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #d9d9d9;
+    border-radius: 16px;
+    background-color: #fff;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    border-collapse: separate;
+}
+
+
+/*   border: 1px solid red;*/
+#flex_row{
+    border: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#row_vote{
+    padding:30px 20px 20px 30px;
+}
+

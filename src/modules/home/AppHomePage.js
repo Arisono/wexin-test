@@ -104,7 +104,6 @@ class AppHomePage extends React.Component {
 
 
 
-
     render() {
         let borderLine = {
             border: "1px solid #f4f4f4"

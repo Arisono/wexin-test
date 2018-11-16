@@ -77,11 +77,12 @@ export default class PhonesSelect extends Component {
                     </div>
                 </List.Item>
             )}/>*/
-        const teacherItems = <List className='phones-list-layout' dataSource={teacherList} renderItem={phonesBean => (
-            <List.Item>
-                <PhonesItem phonesBean={phonesBean}/>
-            </List.Item>
-        )}/>
+        const teacherItems = <List className='phones-list-layout' dataSource={teacherList}
+                                   renderItem={phonesBean => (
+                                       <List.Item>
+                                           <PhonesItem phonesBean={phonesBean}/>
+                                       </List.Item>
+                                   )}/>
 
         const parentItems = <List dataSource={parentList} renderItem={
             (item, index) => (

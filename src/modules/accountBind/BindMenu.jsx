@@ -9,14 +9,9 @@ import {Avatar, Input, Icon, Button} from 'antd'
 
 export default class BindMenu extends Component {
 
-    componentWillMount() {
-
-    }
-
     componentDidMount() {
         document.title = '账号绑定'
     }
-
 
     render() {
         return (
@@ -34,7 +29,8 @@ export default class BindMenu extends Component {
                 <Button type="primary" block
                         style={{
                             marginTop: '20px', letterSpacing: '10px',
-                            background: '#05DC40', borderRadius: '9px', fontSize: '14px'
+                            background: '#05DC40', borderRadius: '9px',
+                            fontSize: '14px'
                         }}
                         onClick={this.teacherBind}>我是老师</Button>
             </div>

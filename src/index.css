@@ -15,24 +15,6 @@ code {
     monospace;
 }
 
-.gray-line {
-    width: 100%;
-    background: #F2F2F2;
-    height: 10px;
-}
-
-.displayNone {
-    display: none;
-}
-
-.commonButton {
-    letter-spacing: 10px;
-    border-radius: 9px;
-    font-size: 14px;
-    color: white;
-    background: #4197FC;
-}
-
 .fade-enter,
 .fade-appear {
     opacity: 0;
@@ -62,6 +44,8 @@ code {
     /*opacity: 0;*/
     opacity: 1;
 }
+
+/***************************antd样式****************************************/
 
 span.ant-upload-list-item-actions {
     width: 100%;
@@ -95,14 +79,6 @@ i.anticon.anticon-delete svg {
     padding: 4px;
 }
 
-.common-load-more {
-    width: 100%;
-    height: 54px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .am-list-content {
     flex: none;
     font-family: PingFangSC-Regular;
@@ -116,9 +92,27 @@ i.anticon.anticon-delete svg {
     font-size: 13px !important;
 }
 
+.ant-select-dropdown.ant-select-tree-dropdown.ant-select-dropdown--multiple.ant-select-dropdown-placement-bottomLeft {
+    max-height: 260px !important;
+}
+
+.ant-select-dropdown.ant-select-tree-dropdown.ant-select-dropdown--multiple.ant-select-dropdown-placement-topLeft {
+    max-height: 260px !important;
+}
+
+.ant-select-selection--multiple {
+    max-height: 100px;
+    overflow-y: scroll;
+}
+
+span.ant-select-selection.ant-select-selection--multiple {
+    border: none;
+}
+
+/***************************公共样式****************************************/
 .common-column-layout {
     width: 100%;
-    height: 100vh;
+    /*height: 100vh;*/
     display: flex;
     flex-direction: column;
     background: white;
@@ -141,3 +135,30 @@ i.anticon.anticon-delete svg {
     letter-spacing: 0;
     border-bottom: 1px solid #4197FC;
 }
+
+.common-load-more {
+    width: 100%;
+    height: 54px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gray-line {
+    width: 100%;
+    background: #F2F2F2;
+    height: 10px;
+}
+
+.displayNone {
+    display: none;
+}
+
+.commonButton {
+    letter-spacing: 10px;
+    border-radius: 9px;
+    font-size: 14px;
+    color: white;
+    background: #4197FC;
+}
+

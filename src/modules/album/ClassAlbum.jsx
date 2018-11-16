@@ -29,6 +29,8 @@ export default class ClassAlbum extends Component {
     }
 
     componentDidMount() {
+        document.title = '班级相册'
+
         this.node.scrollIntoView();
         const {classList, albumList} = this.state
 
@@ -79,9 +81,12 @@ export default class ClassAlbum extends Component {
             for (let i = 0; i < albumList.length; i++) {
                 const albumBean = albumList[i]
                 if (!isObjEmpty(albumBean)) {
-                    albumItems.push(<AlbumItem albumBean={albumBean}
-                                               itemClick={this.onItemClick.bind(this)}
-                                               index={i}/>)
+                    albumItems.push(
+                        <AlbumItem
+                            albumBean={albumBean}
+                            itemClick={this.onItemClick.bind(this)}
+                            index={i}/>
+                    )
                 }
             }
         }

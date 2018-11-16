@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import NotifyBoBean from 'model/NotifyBoBean'
 import 'css/consume-re.css'
 
-export default class ConsumeReItem extends Component {
+export default class NotifyBoardItem extends Component {
 
     constructor() {
         super()

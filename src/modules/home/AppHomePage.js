@@ -392,10 +392,12 @@ function TeacherMenu() {
                             <Link to="/leaveList"  id="menu_span_normal"> 学生请假条 </Link>
                         </span></div>
                     </div>
-                    {/* <div className="col-xs-3" style={borderLine}>
+                     <div className="col-xs-3" style={borderLine}>
                      <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={20} height={20} /></div>
-                     <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>作业通知</span></div>
-                     </div>*/}
+                     <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>
+                      <Link to="/wonderMoment" id="menu_span_normal">精彩瞬间</Link>
+                     </span></div>
+                     </div>
                 </div>
             </div>
         </div>
@@ -700,6 +702,12 @@ function ParentMenu() {
 
                             <Link to="/classAlbum" id="menu_span_normal">  班级相册</Link>
                         </span></div>
+                    </div>
+
+                    <div className="col-xs-3" id="row_center_align">
+                        <div><img src={icon_menu} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/></div>
+                        <div style={{paddingBottom: "20px", paddingLeft: "8px"}}><span
+                            style={{fontSize: "12px"}} >  <Link to="/wonderMoment" id="menu_span_normal">精彩瞬间</Link></span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",

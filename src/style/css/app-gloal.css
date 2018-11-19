@@ -24,6 +24,18 @@
     margin: 10px;
 }
 
+#margin_top_bottom_20{
+     margin: 20px 0px 20px 0px;
+ }
+
+#margin_top_bottom_15{
+    margin: 15px 0px 15px 0px;
+}
+
+#margin_top_bottom_10{
+    margin: 10px 0px 10px 0px;
+}
+
 #row_center{
     display: flex;
     justify-content: center;
@@ -77,12 +89,6 @@
     text-align: center;
 }
 
-#page_border_line{
-    border: 1px solid #F3F3F3;
-    padding: 0px;
-    margin: 0px;
-}
-
 #global-clear{
     padding: 0px;
     margin: 0px;
@@ -113,8 +119,22 @@
 }
 
 
+#page_border_lightGreen{
+    border: 1px solid lightgreen;
+    padding: 0px;
+    margin: 0px;
+}
+
 #page_border_line_red{
     border: 1px solid orangered;
+    padding: 0px;
+    margin: 0px;
+}
+
+#page_border_line{
+    border: 1px solid #F3F3F3;
+    padding: 0px;
+    margin: 0px;
 }
 
 #span_18{
@@ -134,4 +154,96 @@
     background-color: #FFFFFF;
     border: 1px solid #F3F3F3;
     padding: 0px;
+}
+
+.span_15{
+    font-size: 15px;
+}
+.span_16{
+    font-size: 16px;
+}
+.span_17{
+    font-size: 17px;
+}
+
+.span_18{
+    font-size: 18px;
+}
+.span_19{
+    font-size: 19px;
+}
+.span_20{
+    font-size: 20px;
+}
+.color_black{
+    color:black ;
+}
+
+.text_bold{
+    font-weight: 600;
+}
+
+.flex{
+    display: flex;
+}
+.flex_row{
+    display: flex;
+    flex-direction: row;
+}
+.flex_column{
+    display: flex;
+    flex-direction: column;
+}
+
+.flex_row_center{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex_column_center{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex_center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.padding_10{
+    padding: 10px;
+}
+
+.padding_15{
+    padding: 15px;
+}
+
+.padding_20{
+    padding: 20px;
+}
+
+.border_normal{
+    border: 1px solid #f3f3f3;
+}
+
+.border_red{
+   border: 1px solid red;
+}
+
+.border_lightGreen{
+     border: 1px solid lightgreen;
+ }
+
+.clear_margin{
+    margin: 0px;
+    padding: 0px;
+}
+
+.no-border{
+    border: 0px;
 }

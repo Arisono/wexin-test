@@ -179,10 +179,15 @@
     color:black ;
 }
 
+.text_underline{
+    color: #0098FD;
+    text-decoration: underline;
+}
+
 .text_bold{
     font-weight: 600;
 }
-
+/* flex相关全局设置*/
 .flex{
     display: flex;
 }
@@ -202,6 +207,13 @@
     align-items: center;
 }
 
+.flex_row_right{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
 .flex_column_center{
     display: flex;
     flex-direction: column;
@@ -215,6 +227,17 @@
     align-items: center;
 }
 
+.flex_center_vertical{
+    display: flex;
+    align-items: center;
+}
+
+.item_flex{
+    flex: 1 0 auto;
+}
+
+
+/*全局边距设置*/
 .padding_10{
     padding: 10px;
 }
@@ -246,4 +269,28 @@
 
 .no-border{
     border: 0px;
+}
+/*左右边距*/
+.margin_left_right_20{
+    margin: 0px 20px 0px 20px;
+}
+
+.margin_left_right_15{
+    margin: 0px 15px 0px 15px;
+}
+
+.margin_left_right_10{
+    margin: 0px 10px 0px 10px;
+}
+
+.margin_top_20{
+    margin: 20px 0px 0px 0px;
+}
+
+.margin_top_15{
+    margin: 15px 0px 0px 0px;
+}
+
+.margin_top_10{
+    margin: 10px 0px 0px 0px;
 }

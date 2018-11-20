@@ -1,8 +1,20 @@
 .leave-input .ant-input{
-    width: 220px;
-
+    width:100%;
 }
+
 
 .no-border{
     border: 0px;
+}
+
+.leave-history{
+    margin: 10px;
+}
+
+button.ant-btn.ant-btn-primary.ant-btn-block{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    width: 90%;
 }

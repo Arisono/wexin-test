@@ -571,7 +571,10 @@ function ParentMenu() {
                     }}>
                         <div><img src={icon_home_menu_4} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
-                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>作业通知</span></div>
+                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
+
+                            <Link to="/assignmentList" id="menu_span_normal">作业通知</Link>
+                        </span></div>
                     </div>
                 </div>
 
@@ -722,11 +725,11 @@ function ParentMenu() {
                             <Link to="/principalMailbox" id="menu_span_normal">校长信箱</Link>
                         </span></div>
                     </div>
-                    <div className="col-xs-3" id="row_center_align">
+                  {/*  <div className="col-xs-3" id="row_center_align">
                         <div><img src={icon_menu} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/></div>
                         <div style={{paddingBottom: "20px", paddingLeft: "8px"}}><span
                             style={{fontSize: "12px"}} id="menu_span_normal">问卷调查</span></div>
-                    </div>
+                    </div>*/}
                     {/*   <div className="col-xs-3" style={borderLine}>
                      <div> <img src={icon_menu} style={{margin:"20px 20px 8px 20px"}}  width={30} height={30} /></div>
                      <div style={{paddingBottom:"20px",paddingLeft:"8px"}}>  <span style={{fontSize:"12px"}}>通讯录</span></div>

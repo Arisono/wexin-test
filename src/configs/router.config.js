@@ -37,6 +37,7 @@ import RechargeList from "../modules/payment/RechargeList";
 import RechargeRelease from "../modules/payment/RechargeRelease";
 import AnnounceRelease from "../modules/announce/AnnounceRelease";
 import PrincipalHistory from "../modules/principalMailbox/PrincipalHistory";
+import VoteDetailPage from "../modules/vote/VoteDetailPage";
 
 export default class RouteConfig extends Component {
 
@@ -72,6 +73,7 @@ export default class RouteConfig extends Component {
                     <Route path='/announceRelease' component={AnnounceRelease}/>
 
                     {/*刘杰*/}
+                    <Route path="/voteDetail" component={VoteDetailPage}/>
                     <Route path="/homePage" component={AppHomePage}/>
                     <Route path='/voteList' component={VoteListPage}/>
                     <Route path='/leaveAdd' component={LeaveAddPage}/>

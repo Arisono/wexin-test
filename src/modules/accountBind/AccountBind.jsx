@@ -8,7 +8,7 @@ import 'css/account-bind.css'
 import {Avatar, Input, Icon, Button} from 'antd'
 
 let mType = 'parents'
-let mSeconds = 10
+let mSeconds = 0
 
 export default class AccountBind extends Component {
 
@@ -120,6 +120,10 @@ export default class AccountBind extends Component {
     }
 
     obtainCode = () => {
+        if (mSeconds !== 0) {
+            return
+        }
+        mSeconds = 10
         this.setState({
             obtainText: '剩余' + mSeconds + '秒'
         })
@@ -135,7 +139,6 @@ export default class AccountBind extends Component {
                 })
                 this.countdown()
             } else {
-                mSeconds = 60
                 this.setState({
                     obtainText: '获取验证码'
                 })

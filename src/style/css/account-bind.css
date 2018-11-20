@@ -22,7 +22,7 @@ span.ant-input-affix-wrapper {
     /*padding-left: 10px;*/
 }
 
-.ant-input-affix-wrapper .ant-input {
+.bindParent .ant-input-affix-wrapper .ant-input {
     font-size: 14px;
     background: transparent;
     color: white;
@@ -32,8 +32,15 @@ span.ant-input-affix-wrapper {
     border-bottom: 1px white solid;
 }
 
-.ant-input-group {
-    /*border-bottom: 1px white solid;*/
+.bindParent .ant-input-affix-wrapper .ant-input:focus {
+    border: none;
+    border-bottom: 1px solid white !important;
+    box-shadow: none;
+}
+
+.bindParent .ant-input-affix-wrapper .ant-input:hover {
+    border: none;
+    border-bottom: 1px solid white !important;
 }
 
 .inputIcon1 {

@@ -1,8 +1,10 @@
 /*@import "~antd/dist/antd.css";*/
 
-body {
+body, html {
     margin: 0;
     padding: 0;
+    width: 100%;
+    min-height: 100%;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -103,6 +105,7 @@ i.anticon.anticon-delete svg {
 .ant-select-selection--multiple {
     max-height: 100px;
     overflow-y: scroll;
+    -webkit-overflow-scrolling:touch;
 }
 
 span.ant-select-selection.ant-select-selection--multiple {
@@ -117,6 +120,7 @@ span.ant-select-selection.ant-select-selection--multiple {
     flex-direction: column;
     background: white;
     overflow-y: scroll;
+    -webkit-overflow-scrolling:touch;
 }
 
 .common-add-icon {

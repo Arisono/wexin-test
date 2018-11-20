@@ -13,6 +13,7 @@ let mSeconds = 0
 export default class AccountBind extends Component {
 
     componentWillMount() {
+        this.bodyHeight = document.documentElement.clientHeight
         if (this.props.match.params.type) {
             mType = this.props.match.params.type
         }
@@ -53,7 +54,7 @@ export default class AccountBind extends Component {
         const obtainCode = <div onClick={this.obtainCode}>{obtainText}</div>
 
         return (
-            <div className='bindParent'>
+            <div className='bindParent' style={{height: this.bodyHeight + 'px'}}>
                 <Avatar icon='user' size={65}/>
                 <Input placeholder={mType == 'parents' ? '学号' : '工号'}
                        prefix={idIcon} suffix={idClear}

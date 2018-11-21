@@ -38,6 +38,7 @@ import RechargeRelease from "../modules/payment/RechargeRelease";
 import AnnounceRelease from "../modules/announce/AnnounceRelease";
 import PrincipalHistory from "../modules/principalMailbox/PrincipalHistory";
 import VoteDetailPage from "../modules/vote/VoteDetailPage";
+import UserInfo from "../modules/user/UserInfo";
 
 export default class RouteConfig extends Component {
 
@@ -103,6 +104,8 @@ export default class RouteConfig extends Component {
                     {/*刘金龙*/}
                     <Route path='/consumeRePage' component={ConsumeRePage}/>
                     <Route path='/notifyBoPage' component={NotifyBoard}/>
+                    {/*龚鹏明*/}
+                    <Route path='/userInfoPage' component={UserInfo}/>
                 </div>
             </Router>
         );

@@ -8,11 +8,12 @@ import 'css/account-bind.css'
 import {Avatar, Input, Icon, Button} from 'antd'
 
 let mType = 'parents'
-let mSeconds = 10
+let mSeconds = 0
 
 export default class AccountBind extends Component {
 
     componentWillMount() {
+        this.bodyHeight = document.documentElement.clientHeight
         if (this.props.match.params.type) {
             mType = this.props.match.params.type
         }
@@ -53,7 +54,7 @@ export default class AccountBind extends Component {
         const obtainCode = <div onClick={this.obtainCode}>{obtainText}</div>
 
         return (
-            <div className='bindParent'>
+            <div className='bindParent' style={{height: this.bodyHeight + 'px'}}>
                 <Avatar icon='user' size={65}/>
                 <Input placeholder={mType == 'parents' ? '学号' : '工号'}
                        prefix={idIcon} suffix={idClear}
@@ -120,6 +121,10 @@ export default class AccountBind extends Component {
     }
 
     obtainCode = () => {
+        if (mSeconds !== 0) {
+            return
+        }
+        mSeconds = 10
         this.setState({
             obtainText: '剩余' + mSeconds + '秒'
         })
@@ -135,7 +140,6 @@ export default class AccountBind extends Component {
                 })
                 this.countdown()
             } else {
-                mSeconds = 60
                 this.setState({
                     obtainText: '获取验证码'
                 })

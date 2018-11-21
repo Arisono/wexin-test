@@ -5,6 +5,7 @@
 
 import React, {Component} from 'react'
 import {Icon, Input, Button, Upload, Modal, TreeSelect} from 'antd'
+import {getCheckedNodes} from "../../utils/common";
 import 'css/announce.css'
 
 const {TextArea} = Input
@@ -75,6 +76,7 @@ export default class AnnounceRelease extends Component {
                 url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
             }],
             targetList: ['1-1'],
+            targetCount: 1
         }
     }
 
@@ -89,7 +91,7 @@ export default class AnnounceRelease extends Component {
 
     render() {
         const {previewVisible, previewImage, fileList} = this.state;
-        const {announceTitle, announceContent} = this.state
+        const {announceTitle, announceContent, targetCount} = this.state
         const uploadButton = (
             <div>
                 <Icon type="plus"/>
@@ -120,7 +122,10 @@ export default class AnnounceRelease extends Component {
         return (
             <div className='common-column-layout'>
                 <div className='gray-line'></div>
-                <div className='announce-release-target-title'>发布对象</div>
+                <div style={{padding: '12px'}}>
+                    <span className='announce-release-target-title'>发布对象</span>
+                    <span className='announce-release-target-count'>(共{targetCount}人)</span>
+                </div>
                 <div className='announce-release-target-layout'>
                     <TreeSelect {...targetProps}/>
                 </div>
@@ -150,8 +155,12 @@ export default class AnnounceRelease extends Component {
     }
 
     onTargetChange = (value, label, extra) => {
-        console.log('onChange ', value + '/' + label);
-        this.setState({targetList: value});
+        let count = getCheckedNodes(extra).count
+
+        this.setState({
+            targetList: value,
+            targetCount: count
+        });
     }
 
     titleChange = e => {

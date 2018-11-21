@@ -78,7 +78,7 @@ export default class PictureList extends Component {
         return (
             <div style={{display: 'flex', width: '100%', height: '100vh', flexDirection: 'column'}}>
                 <div className='album-detail-title'>摄影与2018年六月一日，老师与家长们参加儿童节活动，热情高涨！</div>
-                <div style={{flex: '1', overflow: 'scroll', padding: '5px'}}>
+                <div style={{flex: '1', overflow: 'scroll', padding: '5px', webkitOverflowScrolling: 'touch'}}>
                     <TransitionGroup>
                         {pictureItems}
                     </TransitionGroup>

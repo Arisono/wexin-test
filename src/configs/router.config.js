@@ -22,7 +22,6 @@ import LeaveAddPage from "../modules/leave/LeaveAddPage";
 import VoteListPage from "../modules/vote/VoteListPage";
 import SystemMessage from "../modules/message/SystemMessage";
 import UseHelp from "../modules/message/UseHelp";
-
 import AccessNotice from '../modules/hiPages/access-notice/AccessNotice';
 import FieldTrip from '../modules/hiPages/field-trip/FieldTrip';
 import ResApply from '../modules/hiPages/res_apply/ResApply';
@@ -38,6 +37,7 @@ import RechargeList from "../modules/payment/RechargeList";
 import RechargeRelease from "../modules/payment/RechargeRelease";
 import AnnounceRelease from "../modules/announce/AnnounceRelease";
 import PrincipalHistory from "../modules/principalMailbox/PrincipalHistory";
+import VoteDetailPage from "../modules/vote/VoteDetailPage";
 
 export default class RouteConfig extends Component {
 
@@ -73,6 +73,7 @@ export default class RouteConfig extends Component {
                     <Route path='/announceRelease' component={AnnounceRelease}/>
 
                     {/*刘杰*/}
+                    <Route path="/voteDetail" component={VoteDetailPage}/>
                     <Route path="/homePage" component={AppHomePage}/>
                     <Route path='/voteList' component={VoteListPage}/>
                     <Route path='/leaveAdd' component={LeaveAddPage}/>

@@ -8,6 +8,7 @@ import './LeaveListPage.css'
 import '../../style/css/app-gloal.css'
 import { List} from 'antd';
 import { Button } from 'antd';
+import {setTitle} from "../../utils/constants";
 
 /**
  * Created by Arison on 11:22.
@@ -34,7 +35,7 @@ class LeaveListPage extends React.Component{
     
     
     componentDidMount(){
-        
+
     }
    
     render(){

@@ -1,3 +1,24 @@
+#header{
+    background: url("../../style/imgs/icon_home_header.png");
+    background-size:cover;
+}
+#span_12{
+    font-size: 12px;
+}
+#span_13{
+    font-size: 13px;
+}
+#span_14{
+    font-size: 14px;
+}
+#span_15{
+    font-size: 15px;
+}
+#menu_span_normal{
+    color: grey;
+    font-size: 12px;
+}
+/*antd 轮播图*/
 .ant-carousel .slick-slide {
     text-align: center;
     height: 160px;
@@ -5,6 +26,7 @@
     line-height: 160px;
     background: #DDEBF9;
     overflow: hidden;
+    -webkit-overflow-scrolling:touch;
 }
 
 .ant-carousel .slick-slide h3 {

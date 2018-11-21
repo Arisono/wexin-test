@@ -7,3 +7,6 @@ export const constants = {
     version:'0.1',
     isTeacher: true
 };
+
+
+export const setTitle = title => () => document.title = title;

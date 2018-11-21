@@ -19,7 +19,7 @@
 .consume-item-name{
 
     width: 150px;
-    padding: 10px 10px 10px 20px;
+    padding: 0px 10px 10px 10px;
     font-size: 15px;
     font-family: PingFangSC-Regular;
     color: #323232;
@@ -29,7 +29,7 @@
 .consume-item-time{
 
     width: 100%;
-    padding: 10px 10px 10px 10px;
+    padding: 0px 0px 0px 10px;
     font-size: 12px;
     font-family: PingFangSC-Regular;
     color: #666666;

@@ -8,6 +8,7 @@ import {Icon, Input, Button, TreeSelect} from 'antd'
 import {Picker, InputItem, DatePicker, List} from 'antd-mobile'
 import 'css/payment.css'
 import {getCheckedNodes} from "../../utils/common";
+import {URL_CONSUME_RECODE} from 'api'
 
 const {TextArea} = Input
 
@@ -80,7 +81,7 @@ export default class RechargeRelease extends Component {
 
     componentDidMount() {
         document.title = '缴费发布'
-
+        console.log('api', URL_CONSUME_RECODE)
 
         const {classList} = this.state
 

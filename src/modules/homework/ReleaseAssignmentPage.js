@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import  './ReleaseAssignmentPage.css'
 import { Input,Button , DatePicker } from 'antd';
+import PicturesWallItem from "../../components/upload/PicturesWallItem";
+import {Icon} from "antd";
 const { TextArea } = Input;
 /**
  * 发布作业
@@ -19,6 +21,9 @@ class ReleaseAssignmentPage extends React.Component{
         };
     }
 
+    callback(msg){
+        console.log("leaveAddPage:callback："+JSON.stringify(msg));
+    }
 
     componentDidMount(){
 
@@ -33,7 +38,7 @@ class ReleaseAssignmentPage extends React.Component{
                         <div className="col-xs-6" id="page_tile"><span>发布对象</span><span>(共15人)</span></div>
                     </div>
                     <div className="row" id="page_horizontal_line"></div>
-                    <div className="row" id="row_center">
+                    <div className="row flex_center" id="row_center">
                         <div className="col-xs-11" id="row_padding">
                             <span id="list_data_span">王二</span>
                             <span id="list_data_span">王二</span>
@@ -42,8 +47,8 @@ class ReleaseAssignmentPage extends React.Component{
                             <span id="list_data_span">王二</span>
                             <span id="list_data_span">王二</span>
                         </div>
-                        <div className="col-xs-1" id="row_right">
-                            <img src={""}  width={40} height={40} />
+                        <div className="col-xs-1 flex_center">
+                            <Icon  type="plus-circle" style={{color:'#4FB2FE',fontSize:"25px"}}/>
                         </div>
                     </div>
                 </div>
@@ -51,15 +56,15 @@ class ReleaseAssignmentPage extends React.Component{
             <div className="row" id="page_block_max"></div>
             <div className="row">
                 <div className="col-xs-12">
-                    <div className="row" id="row_center">
-                        <div className="col-xs-5" id="row_padding"><span   id="page_tile">截止时间</span></div>
-                        <div className="col-xs-7"  id="row_right">
+                    <div className="row  flex_center" >
+                        <div className="col-xs-4 flex_center"><span   id="page_tile">截止时间</span></div>
+                        <div className="col-xs-8  flex_center margin_top_bottom_10"  >
                             <span id="span-lager">
                                 <DatePicker
                                 showTime
                                 format="YYYY-MM-DD HH:mm:ss"
-                                placeholder="Select Time"
-                                size="large"
+                                placeholder=""
+
                             /></span>
 
                         </div>
@@ -70,7 +75,7 @@ class ReleaseAssignmentPage extends React.Component{
             <div className="row" id="row_padding_height">
                 <div className="col-xs-12">
                     <div className="row">
-                    <Input placeholder="请输入作业名称" style={{paddingLeft:"28px",fontSize:"20px"}}  id="input_no_border"/>
+                    <Input placeholder="请输入作业名称" style={{paddingLeft:"28px",fontSize:"18px"}}  id="input_no_border"/>
                     </div>
                     <div className="row">
                         <div  id="page_horizontal_line"></div>
@@ -84,15 +89,15 @@ class ReleaseAssignmentPage extends React.Component{
             <div className="row">
                     <div className="col-xs-12">
                         <div className="row"><div className="col-xs-6" id="page_tile">附件</div></div>
-                        <div className="row" id="row_padding_with" style={{marginBottom:"10px"}}>
-                             <img style={{marginLeft:"10px"}} src={""}  width={80} height={80} />
+                        <div className="row" id="row_padding_with" >
+                            <PicturesWallItem action={'url路径'} number={1} callback = { this.callback.bind(this)}></PicturesWallItem>
 
                         </div>
-                        <div className="row" id="row_padding">
+                        <div className="row flex_row flex_center margin_top_20" >
                             <Button type="primary" size="large"  block><span id="span-lager">发 布 作 业</span></Button>
-                            <div id="row_center"><span id="link_href" >历史发布</span></div>
-                            <div id="bottom_height"></div>
                         </div>
+                        <div id="row_center"><span id="link_href" >历史发布</span></div>
+                        <div id="bottom_height"></div>
                     </div>
             </div>
             <div className="row">

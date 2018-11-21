@@ -117,7 +117,7 @@
     width: 260px;
     height: 26px;
     text-align: left;
-    margin: 10px 10px 10px 10px;
+    margin: 10px 10px 0px 10px;
     font-size: 15px;
     color: #333333;
 
@@ -126,7 +126,7 @@
 
     width: 100%;
     text-align: right;
-    margin: 0px 10px 10px 10px;
+    margin: 0px 10px 0px 10px;
     color: #878787;
 
 }
@@ -135,16 +135,15 @@
 
     width: 100%;
     text-align: right;
-    margin: 0px 10px 10px 10px;
+    margin: 0px 10px 0px 10px;
     color: #C70404;
 
 }
 
 .notify-item-line{
 
-    width: 90%;
     margin-top: 1px;
-    margin-left: 20px;
+    margin-left: 0px;
     margin-right: 20px;
     height: 1px;
     background-color: #F2F2F2;
@@ -161,9 +160,8 @@
 
 .notify-item-issuer{
 
-    width: 99%;
     text-align: right;
-    margin-right: 20px;
+    margin-right: 16px;
     color: #666666;
     font-size: 12px;
     font-family: PingFangSC-Regular;
@@ -172,9 +170,8 @@
 }
 .notify-item-time{
 
-    width: 99%;
     text-align: right;
-    margin-right: 20px;
+    margin-right: 16px;
     margin-bottom: 0px;
     color: #666666;
     font-size: 12px;

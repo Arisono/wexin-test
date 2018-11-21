@@ -9,6 +9,7 @@ import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import moment from 'moment'
 import 'antd/dist/antd.css';
 import SelectItem from './SelectItem';
+import fRequest from '../../../utils/fetchRequest';
 
 const Option = Select.Option;
 
@@ -16,6 +17,9 @@ const Option = Select.Option;
 export default class SendVote extends Component{
     componentWillMount() {
         document.title = '发起投票'
+    }
+     componentDidMount() {
+        console.log('Component DID MOUNT!')
     }
     constructor(props){
         super(props);

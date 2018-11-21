@@ -26,7 +26,7 @@ export default class NotifyBoardItem extends Component {
                 <div className='notify-item-bg'>
                 <div className = 'notify-item-top'>
                 <div className='notify-item-title'>{notifyBoBean.noTitle}</div>
-                    <div className='notify-item-statu'>{notifyBoBean.noStatu}</div>
+                    <div className={notifyBoBean.noStatu=='已读' ? 'notify-item-statuAl':'notify-item-statuNo'}>{notifyBoBean.noStatu}</div>
                 </div>
                     <div className='notify-item-line'></div>
                     <div className='notify-item-content'>{notifyBoBean.noContent}</div>

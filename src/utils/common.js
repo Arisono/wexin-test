@@ -265,3 +265,49 @@ export function getDirFiles(directory, useSubdirectories, regExp) {
 
     return context.keys().map(context)
 }
+
+export const getCheckedNodes = (extra) => {
+    let cache = []
+    let checkedNodes = JSON.stringify(extra.allCheckedNodes, function (key, value) {
+        if (typeof value === 'object' && value !== null) {
+            if (cache.indexOf(value) !== -1) {
+                return;
+            }
+            cache.push(value);
+        }
+        return value;
+    })
+    cache = null
+
+    let count = getCheckedCount(checkedNodes)
+
+    if (isObjEmpty(checkedNodes)) {
+        checkedNodes = []
+    }
+
+    return {checkedNodes, count}
+}
+
+export const getCheckedCount = (checkedNodes) => {
+    if (!isObjEmpty(checkedNodes)) {
+        try {
+            checkedNodes = JSON.parse(checkedNodes)
+        } catch (e) {
+
+        }
+        let quantity = 0
+        for (let i = 0; i < checkedNodes.length; i++) {
+            let checkedNode = checkedNodes[i]
+            if (checkedNode.children) {
+                checkedNode = checkedNode.children
+                quantity = quantity + getCheckedCount(checkedNode)
+            } else {
+                quantity = quantity + 1
+                continue
+            }
+        }
+        return quantity
+    } else {
+        return 0
+    }
+}

@@ -7,6 +7,7 @@ import React, {Component} from 'react'
 import {Icon, Input, Button, TreeSelect} from 'antd'
 import {Picker, InputItem, DatePicker, List} from 'antd-mobile'
 import 'css/payment.css'
+import {getCheckedNodes} from "../../utils/common";
 
 const {TextArea} = Input
 
@@ -73,6 +74,7 @@ export default class RechargeRelease extends Component {
             endTime: now,
             date: now,
             targetList: ['1-1'],
+            targetCount: 1
         }
     }
 
@@ -100,7 +102,7 @@ export default class RechargeRelease extends Component {
     }
 
     render() {
-        const {classList, classText, remarks, endTime, date} = this.state
+        const {classList, classText, remarks, endTime, date, targetCount} = this.state
         const targetProps = {
             treeData: targetData,
             value: this.state.targetList,
@@ -116,6 +118,14 @@ export default class RechargeRelease extends Component {
 
         return (
             <div className='common-column-layout'>
+                <div className='gray-line'></div>
+                <div style={{padding: '12px'}}>
+                    <span className='announce-release-target-title'>收款对象</span>
+                    <span className='announce-release-target-count'>(共{targetCount}人)</span>
+                </div>
+                <div className='recharge-release-target-layout'>
+                    <TreeSelect {...targetProps} />
+                </div>
                 <div className='gray-line'></div>
                 <Picker
                     data={classList} title='选择班级' extra='请选择'
@@ -142,11 +152,6 @@ export default class RechargeRelease extends Component {
                     onChange={date => this.setState({date})}>
                     <List.Item arrow="horizontal">截止时间</List.Item>
                 </DatePicker>
-                <div className='gray-line'></div>
-                <div className='recharge-release-target-title'>收款对象</div>
-                <div className='recharge-release-target-layout'>
-                    <TreeSelect {...targetProps} />
-                </div>
 
                 <Button type='primary'
                         style={{margin: '35px'}}
@@ -155,9 +160,13 @@ export default class RechargeRelease extends Component {
         )
     }
 
-    onTargetChange = (value) => {
-        console.log('onChange ', value);
-        this.setState({targetList: value});
+    onTargetChange = (value, label, extra) => {
+        let count = getCheckedNodes(extra).count
+
+        this.setState({
+            targetList: value,
+            targetCount: count
+        });
     }
 
     handleClassChange = (v) => {
@@ -175,5 +184,4 @@ export default class RechargeRelease extends Component {
             endTime: date
         })
     }
-
 }

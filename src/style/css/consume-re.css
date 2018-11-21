@@ -122,7 +122,16 @@
     color: #333333;
 
 }
-.notify-item-statu{
+.notify-item-statuAl{
+
+    width: 100%;
+    text-align: right;
+    margin: 0px 10px 10px 10px;
+    color: #878787;
+
+}
+
+.notify-item-statuNo{
 
     width: 100%;
     text-align: right;

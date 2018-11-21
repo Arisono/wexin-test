@@ -268,6 +268,7 @@ export function getDirFiles(directory, useSubdirectories, regExp) {
 
 export const getCheckedNodes = (extra) => {
     let cache = []
+    //这里只是为了方便查看extra的数据，可以省略这步
     let checkedNodes = JSON.stringify(extra.allCheckedNodes, function (key, value) {
         if (typeof value === 'object' && value !== null) {
             if (cache.indexOf(value) !== -1) {

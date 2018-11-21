@@ -99,6 +99,6 @@ export default class PictureList extends Component {
     }
 
     deletePirturesClick = () => {
-
+        this.props.history.push('/uploadImage')
     }
 }

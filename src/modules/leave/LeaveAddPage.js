@@ -10,6 +10,7 @@ import  './LeaveAddPage.css'
 import { Input,Button } from 'antd';
 import { Upload, Icon, message } from 'antd';
 import { DatePicker } from 'antd';
+import PicturesWallItem from "../../components/upload/PicturesWallItem";
 const { TextArea } = Input;
 /**
  * Created by Arison on 14:39.
@@ -22,14 +23,22 @@ class LeaveAddPage extends React.Component{
         };
     }
 
+    clickLeaveList(){
+         this.props.history.push("/leaveList")
+    }
 
     componentDidMount(){
 
     }
 
+
+    callback(msg){
+        console.log("leaveAddPage:callback："+JSON.stringify(msg));
+    }
+
     render(){
-        return <div className="container-fluid clear_margin">
-              <div className="row">
+        return <div className="container-fluid ">
+              <div className="row ">
                   <div className="col-xs-12">
                       <div  id="padding10">
                           <img class="img-circle" id="margin_top_bottom_20" src={"http://img5.imgtn.bdimg.com/it/u=1494163297,265276102&fm=26&gp=0.jpg"}  width={60} height={60} />
@@ -45,7 +54,7 @@ class LeaveAddPage extends React.Component{
                                       placeholder="请选择开始时间"/>
                           </div>
                       </div>
-                      <div id="page_horizontal_line"></div>
+                      <div className="" id="page_horizontal_line"></div>
                       <div className="row"
                            class="leave-input flex_row padding_10
                            flex_center_vertical">
@@ -72,16 +81,15 @@ class LeaveAddPage extends React.Component{
                       </div>
                       <div className="row" id="page_block_min"></div>
                       <div className=" padding_10 span_18 ">
-                          <div className="padding_10">  <span >附件</span></div>
+                          <div className="">  <span >附件</span></div>
                           <div>
-
-
+                              <PicturesWallItem action={'url路径'} number={1} callback = { this.callback.bind(this)}></PicturesWallItem>
                           </div>
                           <div className="flex_center margin_top_20">
                               <Button   type={'primary'}  block> 提交</Button>
                           </div>
 
-                          <div className="leave-history flex_center text_underline">请假记录</div>
+                          <div   onClick={this.clickLeaveList.bind(this)} className="leave-history flex_center text_underline">请假记录</div>
                       </div>
                   </div>
               </div>

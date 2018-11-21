@@ -2,13 +2,10 @@
 #global_background{
     background-color: #F3F3F3;
     height: 645px;
-    margin: 0px;
-    padding: 0px;
 }
 
 #global_page_title{
     font-size: 14px;
-
     font-weight: 600;
     margin: 10px 0px 10px 10px;
 }
@@ -283,6 +280,17 @@
     margin: 0px 10px 0px 10px;
 }
 
+.margin_top_bottom_10{
+    margin: 10px 0px 10px 0px;
+}
+.margin_top_bottom_15{
+    margin: 15px 0px 15px 0px;
+}
+
+.margin_top_bottom_20{
+    margin: 20px 0px 20px 0px;
+}
+
 .margin_top_20{
     margin: 20px 0px 0px 0px;
 }
@@ -294,3 +302,18 @@
 .margin_top_10{
     margin: 10px 0px 0px 0px;
 }
+
+.margin_bottom_10{
+    margin: 0px 0px 10px 0px;
+}
+
+.margin_bottom_15{
+    margin: 0px 0px 15px 0px;
+}
+
+.margin_bottom_10{
+    margin: 0px 0px 20px 0px;
+}
+
+
+

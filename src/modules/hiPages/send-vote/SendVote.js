@@ -29,7 +29,8 @@ export default class SendVote extends Component{
             previewVisible: false,
             previewImage: '',
             fileList: [],
-           votePerson:['0-0-0']
+            votePerson:['0-0-0'],
+            voteMembers:18
         }
     }
 
@@ -87,6 +88,9 @@ export default class SendVote extends Component{
         return(
 
             <div onChange={this.handelValueCom}>
+                <div style={{color:"#333333",fontSize:15,margin:10}}>投票对象 <span style={{color:"#666666"}}>(共{this.state.voteMembers}人)</span>  </div>
+                <div className="comhline_sty1"></div>
+
                 <TreeSelect {...tProps} />
                 <div className="comhline_sty"></div>
                 <textarea autoFocus="autoFocus" ref='voteTitle' className="form-control textarea_sty" rows="2" placeholder="请填写投票主题…" ></textarea>

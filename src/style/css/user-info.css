@@ -4,12 +4,12 @@
     background: #DADADA;
 
 }
-.column {
+.user-column {
     background: white;
     display: flex;
     flex-direction: column;
 }
-.row {
+.user-row {
     margin-left: 20px;
     margin-top: 10px;
     display: flex;

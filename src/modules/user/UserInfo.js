@@ -24,7 +24,7 @@ export default class UserInfo extends Component {
     }
 
     render() {
-        return <div className={'column'}>
+        return <div className={'user-column'}>
             {this.showUserInfo()}
             <span className={'lineMax'} style={{marginTop: 10}}/>
             {this.showLocation()}
@@ -40,7 +40,7 @@ export default class UserInfo extends Component {
 
     //显示顶部个人信息
     showUserInfo() {
-        return <div className='row'>
+        return <div className='user-row'>
             <img style={{borderRadius: 360}} width={50} height={50} onClick={this.onAvatarClick}
                  src={'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'}/>
             <span style={{marginLeft: 10}}>{this.state.userName}</span>
@@ -49,7 +49,7 @@ export default class UserInfo extends Component {
 
     //显示个人位置信息
     showLocation() {
-        return <div className={'column'}>
+        return <div className={'user-column'}>
             <div style={{padding: 10}} className='phones-item-top'>
                 <text className='phones-item-name'>工号ID</text>
                 <text className='phones-item-phone'>{this.state.id}</text>
@@ -63,7 +63,7 @@ export default class UserInfo extends Component {
 
     //显示个人联系方式
     showUserContact() {
-        return <div className={'column'}>
+        return <div className={'user-column'}>
             <div style={{padding: 10}} className='phones-item-top'>
                 <text className='phones-item-name'>手机号码</text>
                 <a href={'tel:' + this.state.phone} style={{display: 'flex', alignItems: 'center'}}>

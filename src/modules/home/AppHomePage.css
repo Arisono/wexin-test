@@ -26,7 +26,6 @@
     line-height: 160px;
     background: #DDEBF9;
     overflow: hidden;
-    -webkit-overflow-scrolling:touch;
 }
 
 .ant-carousel .slick-slide h3 {

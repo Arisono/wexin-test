@@ -106,7 +106,6 @@ export default class AnnounceRelease extends Component {
             showUploadList: {showPreviewIcon: true, showRemoveIcon: true}
         }
         const targetProps = {
-            placeholder: '请选择发布对象',
             targetData: targetData,
             targetValues: targetList,
             title: '发布对象',

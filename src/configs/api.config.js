@@ -1,3 +1,8 @@
+/**
+ * Created by RaoMeng on 2018/11/21
+ * Desc: 项目接口
+ */
+
 export const _baseURL = 'http://192.168.253.130:8099'
 
 //获取验证码

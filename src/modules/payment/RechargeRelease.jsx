@@ -106,7 +106,6 @@ export default class RechargeRelease extends Component {
         const {classList, classText, remarks, targetCount, targetList} = this.state
 
         const targetProps = {
-            placeholder: '请选择收款对象',
             targetData: targetData,
             targetValues: targetList,
             title: '收款对象',

@@ -4,7 +4,13 @@
     font-size: 14px;
     color: #333333;
     letter-spacing: 1.88px;
-    padding: 12px;
+}
+
+.announce-release-target-count {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #666666;
+    letter-spacing: 1.88px;
 }
 
 .announce-release-target-layout {

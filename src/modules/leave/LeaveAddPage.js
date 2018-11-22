@@ -41,14 +41,14 @@ class LeaveAddPage extends React.Component{
               <div className="row ">
                   <div className="col-xs-12">
                       <div  id="padding10">
-                          <img class="img-circle" id="margin_top_bottom_20" src={"http://img5.imgtn.bdimg.com/it/u=1494163297,265276102&fm=26&gp=0.jpg"}  width={60} height={60} />
-                          <span class="span_19 text_bold " id="row_margin">陈小韩的请假条</span>
+                          <img class="img-circle" id="margin_top_bottom_15" src={"http://img5.imgtn.bdimg.com/it/u=1494163297,265276102&fm=26&gp=0.jpg"}  width={60} height={60} />
+                          <span class="span_17 text_bold " id="row_margin">陈小韩的请假条</span>
                       </div>
                       <div className="row" id="page_block_min"></div>
                       <div className="row"
                            class="leave-input flex_row padding_10
                            flex_center_vertical">
-                          <span>请假开始时间：</span>
+                          <span>开始时间：</span>
                           <div class="item_flex  flex_row_right">
                           <DatePicker style={{width:"100%"}} showTime format="YYYY-MM-DD HH:mm:ss"
                                       placeholder="请选择开始时间"/>
@@ -58,7 +58,7 @@ class LeaveAddPage extends React.Component{
                       <div className="row"
                            class="leave-input flex_row padding_10
                            flex_center_vertical">
-                          <span>请假结束时间：</span>
+                          <span>结束时间：</span>
                           <div class="item_flex  flex_row_right">
                               <DatePicker
                                            style={{width:"100%"}}
@@ -76,7 +76,10 @@ class LeaveAddPage extends React.Component{
                            class="leave-input flex_row padding_10
                            flex_center_vertical">
                            <span>        抄送对象：</span>
-                           <div className="item_flex"></div>
+                           <div className="item_flex">
+
+
+                           </div>
                          <Icon type="right"/>
                       </div>
                       <div className="row" id="page_block_min"></div>

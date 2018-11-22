@@ -287,7 +287,7 @@ class AppHomePage extends React.Component {
                 {/*精彩瞬间*/}
                 <div className="row">
                     <div className="col-sm-12">
-                        <div className="row" style={borderLine}>
+                        <div className="row" >
                             <div className="col-xs-3" style={{padding: "10px"}}>精彩瞬间</div>
                         </div>
                         <div className="row"></div>
@@ -437,7 +437,7 @@ function TeacherMenu() {
                         </span></div>
                         </Link>
                     </div>
-                     <div className="col-xs-3" style={borderLine}>
+                     <div className="col-xs-3" >
                          <Link className="flex_column flex_center" to="/wonderMoment" id="menu_span_normal">
                      <div> <img src={icon_home_menu_8} style={{margin:"20px 20px 8px 20px"}}  width={20} height={20} /></div>
                      <div style={{paddingBottom:"20px",paddingLeft:"0px"}}>  <span style={{fontSize:"12px"}}>
@@ -555,7 +555,7 @@ function TeacherMenu() {
                         </span></div>
                         </Link>
                     </div>
-                       <div className="col-xs-3 flex_center flex_column" style={borderLine}>
+                       <div className="col-xs-3 flex_center flex_column" >
                      <div> <img src={icon_home_menu_15} style={{margin:"20px 20px 8px 20px"}}  width={20} height={20} /></div>
                      <div style={{paddingBottom:"20px",paddingLeft:"0px"}}>  <span style={{fontSize:"12px"}}>课表查询</span></div>
                      </div>

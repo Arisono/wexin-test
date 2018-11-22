@@ -146,7 +146,8 @@ export default class AccountBind extends Component {
             userPhone: phone
         }).then(response => {
             Toast.hide()
-            mSeconds = 10
+            Toast.success('验证码已发送，请注意查收', 2)
+            mSeconds = 60
             this.setState({
                 obtainText: '剩余' + mSeconds + '秒'
             })
@@ -156,7 +157,7 @@ export default class AccountBind extends Component {
             this.setState({
                 obtainText: '获取验证码'
             })
-            Toast.fail(error || '获取验证码失败', 1500)
+            Toast.fail(error || '获取验证码失败', 2)
         })
     }
 
@@ -189,8 +190,10 @@ export default class AccountBind extends Component {
                 vcode: code,
                 openid: ''
             }).then(response => {
+                console.log(response)
                 this.props.history.push('/homePage?role=parent')
             }).catch(error => {
+                console.log(error)
                 Toast.fail(error || '绑定学号失败')
             })
         } else if (mType == 'teacher') {

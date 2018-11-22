@@ -63,49 +63,58 @@ export function fetchGet(url, params, header) {
 }
 
 function fetchResult(request) {
-    return request.then(response => {
-        if (response.status == 200) {
-            return response;
-        } else {
-            throw response
-        }
-    }).catch(error => {
-        return error.json()
-    }).then(result => {
-        if (result.status == 200) {
-            let resultJson = result.json();
-            return resultJson;
-        } else {
-            if (result.exceptionInfo) {
-                if (result.exceptionInfo.length > 30) {
-                    throw '接口请求异常'
-                } else {
-                    throw result.exceptionInfo
-                }
+    try {
+        return request.then(response => {
+            if (response.status == 200) {
+                return response;
             } else {
-                throw result
+                throw response
             }
-        }
-    }).then(result => {
-        console.log(result)
-        if (result.success) {
-            return result
-        } else {
-            if (result.exceptionInfo) {
-                if (result.exceptionInfo.length > 30) {
-                    throw '接口请求异常'
-                } else {
-                    throw result.exceptionInfo
-                }
-            } else if (result.message) {
-                if (result.message.length > 30) {
-                    throw '接口请求异常'
-                } else {
-                    throw result.message
-                }
+        }).catch(error => {
+            if (error.json) {
+                return error.json()
             } else {
-                throw result
+                return Promise.reject('请求异常')
             }
-        }
-    })
+        }).then(result => {
+            if (result.status == 200) {
+                let resultJson = result.json();
+                return resultJson;
+            } else {
+                if (result.exceptionInfo) {
+                    if (result.exceptionInfo.length > 30) {
+                        throw '接口请求异常'
+                    } else {
+                        throw result.exceptionInfo
+                    }
+                } else {
+                    throw result
+                }
+            }
+        }).then(result => {
+            console.log(result)
+            if (result.success) {
+                return result
+            } else {
+                if (result.exceptionInfo) {
+                    if (result.exceptionInfo.length > 30) {
+                        throw '接口请求异常'
+                    } else {
+                        throw result.exceptionInfo
+                    }
+                } else if (result.message) {
+                    if (result.message.length > 30) {
+                        throw '接口请求异常'
+                    } else {
+                        throw result.message
+                    }
+                } else {
+                    throw result
+                }
+            }
+        })
+    } catch (e) {
+        return Promise.reject('请求异常')
+    }
+
 }

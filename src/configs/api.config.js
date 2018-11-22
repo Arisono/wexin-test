@@ -14,6 +14,8 @@ export const API = {
     BIND_STUDENTID: _baseURL + '/user/bindStudentId',
     //绑定工号
     BIND_TEACHERID: _baseURL + '/user/bindTeacherId',
+    //
+    GET_MEETING_LIST: _baseURL + '/notify/getMeetingList',
     //消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
 }

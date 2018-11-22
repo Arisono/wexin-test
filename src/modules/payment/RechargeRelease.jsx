@@ -81,7 +81,7 @@ export default class RechargeRelease extends Component {
 
     componentDidMount() {
         document.title = '缴费发布'
-        console.log('api', API.URL_CONSUME_RECODE)
+        console.log('api', API.CONSUME_RECODE)
 
         const {classList} = this.state
 

@@ -5,15 +5,22 @@ export function fetchPost(url, params, header) {
         header = {}
     }
 
+    let formData = new FormData()
+    if (params) {
+        for (let key in params) {
+            formData.append(key, encodeURI(params[key].toString()))
+        }
+    }
+
     return fetch(url, {
         method: 'POST',
-        body: JSON.stringify(params),
+        body: formData,
         mode: 'cors',
         credentials: 'include',
         // cache: "force-cache",
         headers: new Headers({
             'Accept': 'application/json',
-            "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+            // "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
             ...header
         })
     }).then(response => {

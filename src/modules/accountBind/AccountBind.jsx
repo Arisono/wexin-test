@@ -6,7 +6,7 @@
 import React, {Component} from 'react'
 import 'css/account-bind.css'
 import {Avatar, Input, Icon, Button} from 'antd'
-import {fetchGet} from "../../utils/fetchRequest";
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {isObjEmpty} from "../../utils/common";
 import {Toast} from 'antd-mobile'
@@ -142,7 +142,7 @@ export default class AccountBind extends Component {
         this.setState({
             obtainText: '获取中'
         })
-        fetchGet(API.URL_SEND_CODE, {
+        fetchGet(API.SEND_CODE, {
             userPhone: phone
         }).then(response => {
             Toast.hide()
@@ -157,7 +157,7 @@ export default class AccountBind extends Component {
             this.setState({
                 obtainText: '获取验证码'
             })
-            console.log(error)
+            Toast.fail(error.message || '获取验证码失败', 1500)
         })
     }
 
@@ -178,13 +178,38 @@ export default class AccountBind extends Component {
     }
 
     bindEvent = () => {
+        const {account, phone, code} = this.state
+        console.log(account + '/' + phone + '/' + code)
+        if (isObjEmpty(account, phone, code)) {
+            Toast.fail('请完善所有输入项！')
+            return
+        }
         if (mType == 'parents') {
-            // fetchGet(API.URL_GET_OPENID,{
-            //
-            // })
-            this.props.history.push('/homePage?role=parent')
+            fetchPost(API.BIND_STUDENTID, {
+                stuId: account,
+                userPhone: phone,
+                vcode: code,
+                openid: ''
+            }).then(response => {
+                console.log(response)
+                this.props.history.push('/homePage?role=parent')
+            }).catch(error => {
+                console.log(error)
+                Toast.fail(error.message || '绑定学号失败')
+            })
         } else if (mType == 'teacher') {
-            this.props.history.push('/homePage?role=teacher')
+            fetchPost(API.BIND_TEACHERID, {
+                userId: account,
+                userPhone: phone,
+                vcode: code,
+                openid: ''
+            }).then(response => {
+                console.log(response)
+                this.props.history.push('/homePage?role=teacher')
+            }).catch(error => {
+                console.log(error)
+                Toast.fail(error.message || '绑定工号失败')
+            })
         }
     }
 }

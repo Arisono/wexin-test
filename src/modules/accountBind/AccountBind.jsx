@@ -181,7 +181,7 @@ export default class AccountBind extends Component {
         const {account, phone, code} = this.state
         if (isObjEmpty(account, phone, code)) {
             Toast.fail('请完善所有输入项！')
-            return
+            // return
         }
         if (mType == 'parents') {
             fetchPost(API.BIND_STUDENTID, {
@@ -193,6 +193,7 @@ export default class AccountBind extends Component {
                 console.log(response)
                 this.props.history.push('/homePage?role=parent')
             }).catch(error => {
+                this.props.history.push('/homePage?role=parent')
                 console.log(error)
                 Toast.fail(error || '绑定学号失败')
             })
@@ -205,6 +206,7 @@ export default class AccountBind extends Component {
             }).then(response => {
                 this.props.history.push('/homePage?role=teacher')
             }).catch(error => {
+                this.props.history.push('/homePage?role=teacher')
                 Toast.fail(error || '绑定工号失败')
             })
         }

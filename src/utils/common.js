@@ -12,8 +12,19 @@ export function isObjNull(obj) {
  * @param obj
  * @returns {boolean}
  */
-export function isObjEmpty(obj) {
-    return isObjNull(obj) || obj.length == 0
+export function isObjEmpty() {
+    let args = arguments
+    if (isObjNull(args) || args.length == 0) {
+        return true
+    } else {
+        for (let i = 0; i < args.length; i++) {
+            let arg = args[i]
+            if (isObjNull(arg) || arg.length == 0) {
+                return true
+            }
+        }
+        return false
+    }
 }
 
 /**

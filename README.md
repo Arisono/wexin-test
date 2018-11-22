@@ -47,7 +47,13 @@
 #### swiper布局滑动组件
 > 安装：cnpm i swiper -S
 开发文档： https://www.swiper.com.cn/api/index.html
+## 公共组件
 
+### 附件上传
+> 三个参数  action  number callback
+```
+ <PicturesWallItem action={'url路径'} number={1} callback = { this.callback.bind(this)}></PicturesWallItem>
+```
 
 ## 目录划分
 

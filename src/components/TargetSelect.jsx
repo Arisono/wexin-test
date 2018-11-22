@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react'
-import {TreeSelect} from 'antd'
+import {TreeSelect, Icon} from 'antd'
 import {getCheckedNodes} from "../utils/common";
 
 const SHOW_PARENT = TreeSelect.SHOW_PARENT
@@ -24,9 +24,10 @@ export default class TargetSelect extends Component {
 
     render() {
         const {
-            placeholder, targetData,
-            targetValues,
-            title, targetCount
+            targetData, //数据源
+            targetValues,//被选中的数据
+            title,//标题
+            targetCount //被选中的数量
         } = this.props
 
         const targetProps = {
@@ -35,11 +36,12 @@ export default class TargetSelect extends Component {
             onChange: this.onTargetChange,
             treeCheckable: true,
             showCheckedStrategy: SHOW_PARENT,
-            searchPlaceholder: placeholder,
+            searchPlaceholder: `请选择${title}`,
             style: {
                 width: '100%',
             },
             allowClear: true,
+            suffixIcon: (<Icon type="plus-circle" style={{color: '#4197FC', fontSize: '20px'}}/>)
         }
         return (
             <div>

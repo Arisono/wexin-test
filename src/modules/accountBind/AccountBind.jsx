@@ -7,7 +7,7 @@ import React, {Component} from 'react'
 import 'css/account-bind.css'
 import {Avatar, Input, Icon, Button} from 'antd'
 import {fetchGet} from "../../utils/fetchRequest";
-import {URL_SEND_CODE} from "api";
+import {API} from "../../configs/api.config";
 import {isObjEmpty} from "../../utils/common";
 import {Toast} from 'antd-mobile'
 import {regExpConfig} from "../../configs/regexp.config";
@@ -142,7 +142,7 @@ export default class AccountBind extends Component {
         this.setState({
             obtainText: '获取中'
         })
-        fetchGet(URL_SEND_CODE, {
+        fetchGet(API.URL_SEND_CODE, {
             userPhone: phone
         }).then(response => {
             Toast.hide()
@@ -154,6 +154,9 @@ export default class AccountBind extends Component {
             this.countdown()
         }).catch(error => {
             Toast.hide()
+            this.setState({
+                obtainText: '获取验证码'
+            })
             console.log(error)
         })
     }
@@ -176,6 +179,9 @@ export default class AccountBind extends Component {
 
     bindEvent = () => {
         if (mType == 'parents') {
+            // fetchGet(API.URL_GET_OPENID,{
+            //
+            // })
             this.props.history.push('/homePage?role=parent')
         } else if (mType == 'teacher') {
             this.props.history.push('/homePage?role=teacher')

@@ -24,8 +24,10 @@ export default class TargetSelect extends Component {
 
     render() {
         const {
-            targetData, targetValues,
-            title, targetCount
+            targetData, //数据源
+            targetValues,//被选中的数据
+            title,//标题
+            targetCount //被选中的数量
         } = this.props
 
         const targetProps = {

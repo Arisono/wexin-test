@@ -5,8 +5,17 @@
 
 export const _baseURL = 'http://192.168.253.130:8099'
 
-//获取验证码
-export const URL_SEND_CODE = _baseURL+'/user/sendCode'
-//消费记录/充值记录
-export const URL_CONSUME_RECODE = _baseURL + '/payRank/consumeRecode'
+export const API = {
+    //获取验证码
+    URL_SEND_CODE: _baseURL + '/user/sendCode',
+    //获取openId
+    URL_GET_OPENID: _baseURL + '/wxPay/getOpenid',
+    //绑定学号
+    URL_BIND_STUDENTID: _baseURL + '/user/bindStudentId',
+    //绑定工号
+    URL_BIND_TEACHERID: _baseURL + '/user//user/bindTeacherId',
+    //消费记录/充值记录
+    URL_CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
+}
+
 

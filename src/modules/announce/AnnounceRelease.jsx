@@ -136,7 +136,7 @@ export default class AnnounceRelease extends Component {
 
                 <Button className='commonButton' type='primary' style={{margin: '35px'}}>发布</Button>
 
-                <span className='announce-release-history'>历史发布</span>
+                {/*<span className='announce-release-history'>历史发布</span>*/}
             </div>
         )
     }

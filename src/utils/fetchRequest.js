@@ -12,7 +12,7 @@ export function fetchPost(url, params, header) {
         }
     }
 
-    return fetch(url, {
+    const request = fetch(url, {
         method: 'POST',
         body: formData,
         mode: 'cors',
@@ -23,31 +23,9 @@ export function fetchPost(url, params, header) {
             // "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
             ...header
         })
-    }).then(response => {
-        if (response.status == 200) {
-            return response;
-        } else {
-            throw response
-        }
-    }).catch(error => {
-        return error.json()
-    }).then(result => {
-        if (result.status == 200) {
-            let resultJson = result.json();
-            console.log('response', resultJson)
-            return resultJson;
-        } else {
-            if (result.exceptionInfo) {
-                if (result.exceptionInfo.length > 30) {
-                    throw '接口请求异常'
-                } else {
-                    throw result.exceptionInfo
-                }
-            } else {
-                throw result
-            }
-        }
     })
+
+    return fetchResult(request)
 }
 
 export function fetchGet(url, params, header) {
@@ -69,7 +47,7 @@ export function fetchGet(url, params, header) {
         }
     }
 
-    return fetch(url, {
+    const request = fetch(url, {
         method: 'GET',
         mode: 'cors',
         credentials: 'include',
@@ -79,7 +57,13 @@ export function fetchGet(url, params, header) {
             "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
             ...header
         })
-    }).then(response => {
+    })
+
+    return fetchResult(request)
+}
+
+function fetchResult(request) {
+    return request.then(response => {
         if (response.status == 200) {
             return response;
         } else {
@@ -90,7 +74,6 @@ export function fetchGet(url, params, header) {
     }).then(result => {
         if (result.status == 200) {
             let resultJson = result.json();
-            console.log('response', resultJson)
             return resultJson;
         } else {
             if (result.exceptionInfo) {
@@ -103,56 +86,22 @@ export function fetchGet(url, params, header) {
                 throw result
             }
         }
-    })
-}
-
-
-export function fetchGetNoSession(url, params, header) {
-    if (isObjNull(header)) {
-        header = {}
-    }
-
-    if (params) {
-        let paramsArray = [];
-        //拼接参数
-        Object.keys(params).forEach(key => paramsArray.push(key + '=' + encodeURI(params[key].toString())))
-
-        if (paramsArray.length > 0) {
-            if (url.search(/\?/) === -1) {
-                url += '?' + paramsArray.join('&')
-            } else {
-                url += '&' + paramsArray.join('&')
-            }
-        }
-    }
-
-    return fetch(url, {
-        method: 'GET',
-        mode: 'cors',
-        credentials: 'include',
-        // cache: "force-cache",
-        headers: new Headers({
-            'Accept': 'application/json',
-            "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
-            ...header
-        })
-    }).then(response => {
-        if (response.status == 200) {
-            return response;
-        } else {
-            throw response
-        }
-    }).catch(error => {
-        return error.json()
     }).then(result => {
-        if (result.status == 200) {
-            return result.json();
+        console.log(result)
+        if (result.success) {
+            return result
         } else {
             if (result.exceptionInfo) {
                 if (result.exceptionInfo.length > 30) {
                     throw '接口请求异常'
                 } else {
                     throw result.exceptionInfo
+                }
+            } else if (result.message) {
+                if (result.message.length > 30) {
+                    throw '接口请求异常'
+                } else {
+                    throw result.message
                 }
             } else {
                 throw result

@@ -146,7 +146,6 @@ export default class AccountBind extends Component {
             userPhone: phone
         }).then(response => {
             Toast.hide()
-            console.log(response)
             mSeconds = 10
             this.setState({
                 obtainText: '剩余' + mSeconds + '秒'
@@ -157,7 +156,7 @@ export default class AccountBind extends Component {
             this.setState({
                 obtainText: '获取验证码'
             })
-            Toast.fail(error.message || '获取验证码失败', 1500)
+            Toast.fail(error || '获取验证码失败', 1500)
         })
     }
 
@@ -179,7 +178,6 @@ export default class AccountBind extends Component {
 
     bindEvent = () => {
         const {account, phone, code} = this.state
-        console.log(account + '/' + phone + '/' + code)
         if (isObjEmpty(account, phone, code)) {
             Toast.fail('请完善所有输入项！')
             return
@@ -191,11 +189,9 @@ export default class AccountBind extends Component {
                 vcode: code,
                 openid: ''
             }).then(response => {
-                console.log(response)
                 this.props.history.push('/homePage?role=parent')
             }).catch(error => {
-                console.log(error)
-                Toast.fail(error.message || '绑定学号失败')
+                Toast.fail(error || '绑定学号失败')
             })
         } else if (mType == 'teacher') {
             fetchPost(API.BIND_TEACHERID, {
@@ -204,11 +200,9 @@ export default class AccountBind extends Component {
                 vcode: code,
                 openid: ''
             }).then(response => {
-                console.log(response)
                 this.props.history.push('/homePage?role=teacher')
             }).catch(error => {
-                console.log(error)
-                Toast.fail(error.message || '绑定工号失败')
+                Toast.fail(error || '绑定工号失败')
             })
         }
     }

@@ -82,7 +82,7 @@ export default class SystemMessage extends Component {
             }).then(response => {
 
             }).catch(error => {
-
+                Toast.fail(error, 2)
             })
         }, 1500)
     }

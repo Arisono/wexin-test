@@ -76,7 +76,7 @@ export default class UseHelp extends Component {
             }).then(response => {
 
             }).catch(error => {
-
+                Toast.fail(error, 2)
             })
         }, 1500)
     }

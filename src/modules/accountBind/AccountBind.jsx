@@ -190,11 +190,9 @@ export default class AccountBind extends Component {
                 vcode: code,
                 openid: ''
             }).then(response => {
-                console.log(response)
                 this.props.history.push('/homePage?role=parent')
             }).catch(error => {
                 this.props.history.push('/homePage?role=parent')
-                console.log(error)
                 Toast.fail(error || '绑定学号失败')
             })
         } else if (mType == 'teacher') {

@@ -7,10 +7,12 @@ import React, {Component} from 'react'
 import {Icon, Input, Button, TreeSelect} from 'antd'
 import {Picker, InputItem, DatePicker, List} from 'antd-mobile'
 import 'css/payment.css'
+import {getCheckedNodes} from "../../utils/common";
+import {URL_CONSUME_RECODE} from 'api'
+import TargetSelect from 'components/TargetSelect'
 
 const {TextArea} = Input
 
-const SHOW_PARENT = TreeSelect.SHOW_PARENT
 const teacherData = []
 const parentData = []
 
@@ -73,12 +75,13 @@ export default class RechargeRelease extends Component {
             endTime: now,
             date: now,
             targetList: ['1-1'],
+            targetCount: 1
         }
     }
 
     componentDidMount() {
         document.title = '缴费发布'
-
+        console.log('api', URL_CONSUME_RECODE)
 
         const {classList} = this.state
 
@@ -100,22 +103,21 @@ export default class RechargeRelease extends Component {
     }
 
     render() {
-        const {classList, classText, remarks, endTime, date} = this.state
+        const {classList, classText, remarks, targetCount, targetList} = this.state
+
         const targetProps = {
-            treeData: targetData,
-            value: this.state.targetList,
-            onChange: this.onTargetChange,
-            treeCheckable: true,
-            showCheckedStrategy: SHOW_PARENT,
-            searchPlaceholder: '请选择发布对象',
-            style: {
-                width: '100%',
-            },
-            allowClear: true,
+            placeholder: '请选择收款对象',
+            targetData: targetData,
+            targetValues: targetList,
+            title: '收款对象',
+            targetCount: targetCount,
+            onTargetChange: this.onTargetChange.bind(this)
         }
 
         return (
             <div className='common-column-layout'>
+                <div className='gray-line'></div>
+                <TargetSelect {...targetProps}/>
                 <div className='gray-line'></div>
                 <Picker
                     data={classList} title='选择班级' extra='请选择'
@@ -142,11 +144,6 @@ export default class RechargeRelease extends Component {
                     onChange={date => this.setState({date})}>
                     <List.Item arrow="horizontal">截止时间</List.Item>
                 </DatePicker>
-                <div className='gray-line'></div>
-                <div className='recharge-release-target-title'>收款对象</div>
-                <div className='recharge-release-target-layout'>
-                    <TreeSelect {...targetProps} />
-                </div>
 
                 <Button type='primary'
                         style={{margin: '35px'}}
@@ -155,9 +152,11 @@ export default class RechargeRelease extends Component {
         )
     }
 
-    onTargetChange = (value) => {
-        console.log('onChange ', value);
-        this.setState({targetList: value});
+    onTargetChange = (value, label, checkNodes, count) => {
+        this.setState({
+            targetList: value,
+            targetCount: count
+        });
     }
 
     handleClassChange = (v) => {
@@ -177,3 +176,4 @@ export default class RechargeRelease extends Component {
     }
 
 }
+

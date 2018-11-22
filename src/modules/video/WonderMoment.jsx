@@ -62,7 +62,7 @@ export default class WonderMoment extends Component {
                     <Mlist.Item arrow="horizontal">选择班级</Mlist.Item>
                 </Picker>
                 <div className='gray-line'></div>
-                <div style={{flex: '1', overflow: 'scroll'}}>
+                <div style={{flex: '1', overflow: 'scroll', webkitOverflowScrolling: 'touch'}}>
                     <List dataSource={videoList} renderItem={
                         (item, index) => (
                             <VideoItem
@@ -72,7 +72,7 @@ export default class WonderMoment extends Component {
                     }/>
                 </div>
 
-                <Icon type="plus-circle" theme='filled' className='video-add-icon'
+                <Icon type="plus-circle" theme='filled' className='common-add-icon'
                       onClick={this.onAddVideo}/>
             </div>
         )

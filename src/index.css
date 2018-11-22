@@ -103,6 +103,7 @@ i.anticon.anticon-delete svg {
 .ant-select-selection--multiple {
     max-height: 100px;
     overflow-y: scroll;
+    -webkit-overflow-scrolling:touch;
 }
 
 span.ant-select-selection.ant-select-selection--multiple {
@@ -117,6 +118,7 @@ span.ant-select-selection.ant-select-selection--multiple {
     flex-direction: column;
     background: white;
     overflow-y: scroll;
+    -webkit-overflow-scrolling:touch;
 }
 
 .common-add-icon {
@@ -124,7 +126,7 @@ span.ant-select-selection.ant-select-selection--multiple {
     bottom: 25px;
     right: 25px;
     font-size: 56px;
-    color: #00E053;
+    color: #3264A3;
 }
 
 .common-record-text {

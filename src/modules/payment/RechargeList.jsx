@@ -47,7 +47,7 @@ export default class RechargeList extends Component {
                     </Skeleton>
                 </InfiniteScroll>
 
-                <Icon type="plus-circle" theme='filled' className='recharge-add-icon'
+                <Icon type="plus-circle" theme='filled' className='common-add-icon'
                       onClick={this.onAddRecharge}/>
             </div>
         )

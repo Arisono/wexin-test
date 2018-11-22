@@ -9,13 +9,25 @@ import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import moment from 'moment'
 import 'antd/dist/antd.css';
 import SelectItem from './SelectItem';
-
+// import Url_config from '../../../configs/api.config';
+import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
+import {URL_CONSUME_SVOTE} from '../../../configs/api.config';
 const Option = Select.Option;
 
 
 export default class SendVote extends Component{
     componentWillMount() {
         document.title = '发起投票'
+    }
+     componentDidMount() {
+        console.log('Component DID MOUNT!')
+        fetchGet('https://ss.ceduizixun.com/integral/inte/ad/getAd/',{},{})
+            .then((response)=>{
+            console.log('response',response)
+        })
+            .catch((error) =>{
+                console.log('error',error)
+            })
     }
     constructor(props){
         super(props);
@@ -29,7 +41,8 @@ export default class SendVote extends Component{
             previewVisible: false,
             previewImage: '',
             fileList: [],
-           votePerson:['0-0-0']
+            votePerson:['0-0-0'],
+            voteMembers:18
         }
     }
 
@@ -87,6 +100,10 @@ export default class SendVote extends Component{
         return(
 
             <div onChange={this.handelValueCom}>
+
+                <div style={{color:"#333333",fontSize:15,margin:10}}>投票对象 <span style={{color:"#666666"}}>(共{this.state.voteMembers}人)</span>  </div>
+                <div className="comhline_sty1"></div>
+
                 <TreeSelect {...tProps} />
                 <div className="comhline_sty"></div>
                 <textarea autoFocus="autoFocus" ref='voteTitle' className="form-control textarea_sty" rows="2" placeholder="请填写投票主题…" ></textarea>
@@ -142,7 +159,8 @@ export default class SendVote extends Component{
                     <Upload
                         action="//jsonplaceholder.typicode.com/posts/"
                         listType="picture-card"
-                        fileList={this.state.fileList}                        onPreview={this.handlePreview}
+                        fileList={this.state.fileList}                        o
+                        nPreview={this.handlePreview}
                         onChange={this.handleChange}
                         multiple={true}>
                         {this.state.fileList.length >= 9 ? null : uploadButton}

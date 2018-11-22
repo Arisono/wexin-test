@@ -65,6 +65,7 @@
     overflow-x: hidden;
     overflow-y: scroll;
     padding: 12px;
+    -webkit-overflow-scrolling:touch;
     background: white;
 }
 

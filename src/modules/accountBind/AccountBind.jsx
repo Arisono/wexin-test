@@ -6,13 +6,19 @@
 import React, {Component} from 'react'
 import 'css/account-bind.css'
 import {Avatar, Input, Icon, Button} from 'antd'
+import {fetchGet} from "../../utils/fetchRequest";
+import {URL_SEND_CODE} from "api";
+import {isObjEmpty} from "../../utils/common";
+import {Toast} from 'antd-mobile'
+import {regExpConfig} from "../../configs/regexp.config";
 
 let mType = 'parents'
-let mSeconds = 10
+let mSeconds = 0
 
 export default class AccountBind extends Component {
 
     componentWillMount() {
+        this.bodyHeight = document.documentElement.clientHeight
         if (this.props.match.params.type) {
             mType = this.props.match.params.type
         }
@@ -53,7 +59,7 @@ export default class AccountBind extends Component {
         const obtainCode = <div onClick={this.obtainCode}>{obtainText}</div>
 
         return (
-            <div className='bindParent'>
+            <div className='bindParent' style={{height: this.bodyHeight + 'px'}}>
                 <Avatar icon='user' size={65}/>
                 <Input placeholder={mType == 'parents' ? '学号' : '工号'}
                        prefix={idIcon} suffix={idClear}
@@ -120,10 +126,36 @@ export default class AccountBind extends Component {
     }
 
     obtainCode = () => {
+        if (mSeconds !== 0) {
+            return
+        }
+        const {phone} = this.state
+        if (isObjEmpty(phone)) {
+            Toast.info('请输入手机号码!', 2, null, false)
+            return
+        }
+        if (!regExpConfig.mobile.test(phone)) {
+            Toast.fail('请输入正确的手机号码!', 2, null, false)
+            return
+        }
+        Toast.loading('验证码获取中...', 0)
         this.setState({
-            obtainText: '剩余' + mSeconds + '秒'
+            obtainText: '获取中'
         })
-        this.countdown()
+        fetchGet(URL_SEND_CODE, {
+            userPhone: phone
+        }).then(response => {
+            Toast.hide()
+            console.log(response)
+            mSeconds = 10
+            this.setState({
+                obtainText: '剩余' + mSeconds + '秒'
+            })
+            this.countdown()
+        }).catch(error => {
+            Toast.hide()
+            console.log(error)
+        })
     }
 
     countdown = () => {
@@ -135,7 +167,6 @@ export default class AccountBind extends Component {
                 })
                 this.countdown()
             } else {
-                mSeconds = 60
                 this.setState({
                     obtainText: '获取验证码'
                 })

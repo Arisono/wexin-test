@@ -10,6 +10,7 @@
 
 .swiper-slide {
     overflow: scroll;
+    -webkit-overflow-scrolling:touch;
 }
 
 .phone-select-root {
@@ -80,6 +81,7 @@
     flex: 1;
     background: white;
     overflow: scroll;
+    -webkit-overflow-scrolling:touch;
 }
 
 .phones-item-root {

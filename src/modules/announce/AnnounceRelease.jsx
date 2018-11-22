@@ -4,13 +4,11 @@
  */
 
 import React, {Component} from 'react'
-import {Icon, Input, Button, Upload, Modal, TreeSelect} from 'antd'
-import {getCheckedNodes} from "../../utils/common";
+import {Icon, Input, Button, Upload, Modal} from 'antd'
 import 'css/announce.css'
+import TargetSelect from 'components/TargetSelect'
 
 const {TextArea} = Input
-
-const SHOW_PARENT = TreeSelect.SHOW_PARENT
 const teacherData = []
 const parentData = []
 
@@ -91,7 +89,7 @@ export default class AnnounceRelease extends Component {
 
     render() {
         const {previewVisible, previewImage, fileList} = this.state;
-        const {announceTitle, announceContent, targetCount} = this.state
+        const {announceTitle, announceContent, targetCount, targetList} = this.state
         const uploadButton = (
             <div>
                 <Icon type="plus"/>
@@ -108,27 +106,17 @@ export default class AnnounceRelease extends Component {
             showUploadList: {showPreviewIcon: true, showRemoveIcon: true}
         }
         const targetProps = {
-            treeData: targetData,
-            value: this.state.targetList,
-            onChange: this.onTargetChange,
-            treeCheckable: true,
-            showCheckedStrategy: SHOW_PARENT,
-            searchPlaceholder: '请选择发布对象',
-            style: {
-                width: '100%',
-            },
-            allowClear: true,
+            placeholder: '请选择发布对象',
+            targetData: targetData,
+            targetValues: targetList,
+            title: '发布对象',
+            targetCount: targetCount,
+            onTargetChange: this.onTargetChange.bind(this)
         }
         return (
             <div className='common-column-layout'>
                 <div className='gray-line'></div>
-                <div style={{padding: '12px'}}>
-                    <span className='announce-release-target-title'>发布对象</span>
-                    <span className='announce-release-target-count'>(共{targetCount}人)</span>
-                </div>
-                <div className='announce-release-target-layout'>
-                    <TreeSelect {...targetProps}/>
-                </div>
+                <TargetSelect {...targetProps}/>
                 <div className='gray-line'></div>
                 <input className='titleInput' placeholder='请输入通知标题'
                        value={announceTitle} onChange={this.titleChange}/>
@@ -154,9 +142,7 @@ export default class AnnounceRelease extends Component {
         )
     }
 
-    onTargetChange = (value, label, extra) => {
-        let count = getCheckedNodes(extra).count
-
+    onTargetChange = (value, label, checkNodes, count) => {
         this.setState({
             targetList: value,
             targetCount: count

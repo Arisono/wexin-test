@@ -48,7 +48,7 @@
 .system-msg-item-content-text {
     flex: 1;
     background: #FFFFFF;
-    border-radius: 0 10px 0 10px;
+    border-radius: 0 10px 10px 10px;
     background: white;
     font-family: PingFangSC-Regular;
     font-size: 14px;

@@ -40,6 +40,7 @@ import PrincipalHistory from "../modules/principalMailbox/PrincipalHistory";
 import VoteDetailPage from "../modules/vote/VoteDetailPage";
 import UserInfo from "../modules/user/UserInfo";
 import PicturesWallItem from "../components/upload/PicturesWallItem";
+import LeaveAddCPage from "../modules/leave/LeaveAddCPage";
 
 export default class RouteConfig extends Component {
 
@@ -79,6 +80,7 @@ export default class RouteConfig extends Component {
                     <Route path="/voteDetail" component={VoteDetailPage}/>
                     <Route path="/homePage" component={AppHomePage}/>
                     <Route path='/voteList' component={VoteListPage}/>
+                    <Route path='/leaveAddC' component={LeaveAddCPage}/>
                     <Route path='/leaveAdd' component={LeaveAddPage}/>
                     <Route path='/leaveApproval' component={LeaveApprovalPage}/>
                     <Route path='/leaveList' component={LeaveListPage}/>

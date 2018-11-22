@@ -11,7 +11,56 @@ import { Input,Button } from 'antd';
 import { Upload, Icon, message } from 'antd';
 import { DatePicker } from 'antd';
 import PicturesWallItem from "../../components/upload/PicturesWallItem";
+import TargetSelect from "../../components/TargetSelect";
 const { TextArea } = Input;
+
+const teacherData = []
+const parentData = []
+
+for (let i = 1; i < 6; i++) {
+    parentData.push({
+        title: `三年级${i}班`,
+        value: `0-${i}`,
+        key: `0-${i}`,
+        children: [{
+            title: `饶猛`,
+            value: `0-${i}-0`,
+            key: `0-${i}-0`
+        }, {
+            title: `李泞`,
+            value: `0-${i}-1`,
+            key: `0-${i}-1`,
+        }, {
+            title: `章晨望`,
+            value: `0-${i}-2`,
+            key: `0-${i}-2`,
+        }],
+    })
+}
+
+for (let i = 1; i < 10; i++) {
+    teacherData.push({
+        title: `老师${i}`,
+        value: `1-${i}`,
+        key: `1-${i}`,
+    })
+}
+
+
+const targetData = [
+    {
+        title: `全体家长`,
+        value: `0`,
+        key: `0`,
+        children: parentData,
+    },
+    {
+        title: `全体老师`,
+        value: `1`,
+        key: `1`,
+        children: teacherData,
+    }
+]
 /**
  * Created by Arison on 14:39.
  */
@@ -19,7 +68,9 @@ class LeaveAddPage extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            name:'LeaveAddPage'
+            name:'LeaveAddPage',
+            targetList: ['1-1'],
+            targetCount: 1
         };
     }
 
@@ -36,7 +87,23 @@ class LeaveAddPage extends React.Component{
         console.log("leaveAddPage:callback："+JSON.stringify(msg));
     }
 
+    onTargetChange = (value, label, checkNodes, count) => {
+        this.setState({
+            targetList: value,
+            targetCount: count
+        });
+    }
+
     render(){
+        const { targetCount, targetList} = this.state
+        const targetProps = {
+            placeholder: '请选择抄送对象',
+            targetData: targetData,
+            targetValues: targetList,
+            title: '抄送对象',
+            targetCount: targetCount,
+            onTargetChange: this.onTargetChange.bind(this)
+        }
         return <div className="container-fluid ">
               <div className="row">
                   <div className="col-xs-12">
@@ -70,14 +137,15 @@ class LeaveAddPage extends React.Component{
                           <TextArea id="input_no_border" rows={4} placeholder="请填写请假理由"></TextArea>
                       </div>
                       <div  className="row"  id="page_horizontal_line"></div>
-                      <div className="row leave-input flex_row padding_10
-                           flex_center_vertical">
-                           <span>        抄送对象：</span>
+                      <div className="row leave-input flex_row
+                           flex_center">
+                         {/*  <span>        抄送对象：</span>*/}
                            <div className="item_flex">
 
+                               <TargetSelect className="flex_row flex_center" style={{width:"310px"}} {...targetProps}></TargetSelect>
 
                            </div>
-                         <Icon type="right"/>
+                       {/*  <Icon type="right"/>*/}
                       </div>
                       <div className="row" id="page_block_min"></div>
                       <div className="row padding_10 span_15 ">

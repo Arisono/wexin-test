@@ -26,7 +26,8 @@ export default class TargetSelect extends Component {
         const {
             placeholder, targetData,
             targetValues,
-            title, targetCount
+            title, targetCount,
+            style
         } = this.props
 
         const targetProps = {
@@ -36,9 +37,7 @@ export default class TargetSelect extends Component {
             treeCheckable: true,
             showCheckedStrategy: SHOW_PARENT,
             searchPlaceholder: placeholder,
-            style: {
-                width: '100%',
-            },
+            style:style,
             allowClear: true,
         }
         return (

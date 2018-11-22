@@ -8,7 +8,7 @@ import { List} from 'antd';
 import '../../style/css/app-gloal.css'
 import './VoteListPage.css'
 import { Checkbox } from 'antd';
-
+import icon_vote_items  from "../../style/imgs/icon_vote_items.png";
 /**
  * Created by Arison on 20:14.
  */
@@ -40,37 +40,44 @@ class VoteListPage extends React.Component{
 
     render(){
         return <div className="container-fluid" id="global_background">
-              <List
-                    dataSource={this.state.data}
-                    renderItem={item=>(
-                       <List.Item className="row" id="row_background"
-                                  style={{padding:"10px"}}>
-                              <div className="col-xs-12" >
-                                     <div className="row">
-                                         <div className="col-xs-6" id="row_left"> <span id="span_18">{item.title}</span></div>
-                                         <div className="col-xs-6" id="row_right"><span>{item.state}</span></div>
+            <div className="row">
+              <div className="col-xs-12 clear_margin">
+                  <List
+
+                      dataSource={this.state.data}
+                      renderItem={item=>(
+                          <List.Item className="row " id="row_background"
+                                     style={{padding:"10px"}}>
+                              <div className="col-xs-12 " >
+                                  <div className="row">
+                                      <div className="col-xs-6" id="row_left"> <span id="span_18">{item.title}</span></div>
+                                      <div className="col-xs-6" id="row_right"><span>{item.state}</span></div>
 
 
-                                     </div>
-                                     <div className="row" id="row_center_align">
-                                       <div className="col-xs-12" id="row_left">
-                                           <List dataSource={item.votes}
-                                                 renderItem={item=>(
-                                                     <List.Item style={{width:"180px"}}>
-                                                         <Checkbox >{item}</Checkbox>
-                                                     </List.Item>
-                                                 )}/>
+                                  </div>
+                                  <div className="row" id="row_center_align">
+                                      <div className="col-xs-12 flex_row flex_center_vertical" >
+                                          <List dataSource={item.votes}
+                                                renderItem={item=>(
+                                                    <List.Item style={{width:"120px"}}>
+                                                        <Checkbox >{item}</Checkbox>
+                                                    </List.Item>
+                                                )}/>
+                                          <div className="flex_center item_flex">
+                                              <img  style={{marginLeft:"30px"}} src={icon_vote_items}  width={60} height={60} /></div>
+                                      </div>
 
-                                               <img style={{marginLeft:"30px"}} src={""}  width={80} height={80} /></div>
 
-                                     </div>
-                                     <div className="row">
-                                          <span>截止时间：</span>
-                                          <span>{item.endTime}</span>
-                                     </div>
+                                  </div>
+                                  <div className="row">
+                                      <span>截止时间：</span>
+                                      <span>{item.endTime}</span>
+                                  </div>
                               </div>
-                       </List.Item>
-              )}/>
+                          </List.Item>
+                      )}/>
+              </div>
+            </div>
         </div>
     }
 }

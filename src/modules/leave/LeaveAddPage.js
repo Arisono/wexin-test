@@ -38,15 +38,14 @@ class LeaveAddPage extends React.Component{
 
     render(){
         return <div className="container-fluid ">
-              <div className="row ">
+              <div className="row">
                   <div className="col-xs-12">
                       <div  id="padding10">
                           <img class="img-circle" id="margin_top_bottom_15" src={"http://img5.imgtn.bdimg.com/it/u=1494163297,265276102&fm=26&gp=0.jpg"}  width={60} height={60} />
                           <span class="span_17 text_bold " id="row_margin">陈小韩的请假条</span>
                       </div>
                       <div className="row" id="page_block_min"></div>
-                      <div className="row"
-                           class="leave-input flex_row padding_10
+                      <div className="row leave-input  flex_row padding_10
                            flex_center_vertical">
                           <span>开始时间：</span>
                           <div class="item_flex  flex_row_right">
@@ -54,9 +53,8 @@ class LeaveAddPage extends React.Component{
                                       placeholder="请选择开始时间"/>
                           </div>
                       </div>
-                      <div className="" id="page_horizontal_line"></div>
-                      <div className="row"
-                           class="leave-input flex_row padding_10
+                      <div className="row" id="page_horizontal_line"></div>
+                      <div className="row leave-input flex_row padding_10
                            flex_center_vertical">
                           <span>结束时间：</span>
                           <div class="item_flex  flex_row_right">
@@ -68,12 +66,11 @@ class LeaveAddPage extends React.Component{
 
                       </div>
                       <div id="page_horizontal_line"></div>
-                      <div >
+                      <div className="row" >
                           <TextArea id="input_no_border" rows={4} placeholder="请填写请假理由"></TextArea>
                       </div>
-                      <div id="page_horizontal_line"></div>
-                      <div className="row"
-                           class="leave-input flex_row padding_10
+                      <div  className="row"  id="page_horizontal_line"></div>
+                      <div className="row leave-input flex_row padding_10
                            flex_center_vertical">
                            <span>        抄送对象：</span>
                            <div className="item_flex">
@@ -83,8 +80,8 @@ class LeaveAddPage extends React.Component{
                          <Icon type="right"/>
                       </div>
                       <div className="row" id="page_block_min"></div>
-                      <div className=" padding_10 span_18 ">
-                          <div className="">  <span >附件</span></div>
+                      <div className="row padding_10 span_15 ">
+                          <div>  <span >附件</span></div>
                           <div>
                               <PicturesWallItem action={'url路径'} number={1} callback = { this.callback.bind(this)}></PicturesWallItem>
                           </div>

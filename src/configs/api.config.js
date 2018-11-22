@@ -14,8 +14,10 @@ export const API = {
     BIND_STUDENTID: _baseURL + '/user/bindStudentId',
     //绑定工号
     BIND_TEACHERID: _baseURL + '/user/bindTeacherId',
-    //
+    //3作业发布 4通知公告 5 校长信箱 6会议
     GET_MEETING_LIST: _baseURL + '/notify/getMeetingList',
+    //1系统信息 2使用帮助
+    SYSTEM_MESSAGE:_baseURL+'/notify/systemMessage',
     //消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
 }

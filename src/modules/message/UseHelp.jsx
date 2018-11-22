@@ -7,7 +7,7 @@ import React, {Component} from 'react'
 import {Skeleton, List} from 'antd'
 import {Toast} from 'antd-mobile'
 import UseHelpItem from 'components/UseHelpItem'
-import {fetchPost} from "../../utils/fetchRequest";
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import InfiniteScroll from 'react-infinite-scroller'
 import LoadingMore from 'components/LoadingMore'
@@ -55,16 +55,6 @@ export default class UseHelp extends Component {
     }
 
     loadHelpList = () => {
-        fetchPost(API.GET_MEETING_LIST, {
-            userId: 10000,
-            notifyType: 2,
-            pageIndex: mPageIndex,
-            pageSize: mPageSize
-        }).then(response => {
-        }).catch(error => {
-        })
-
-
         const {helpList} = this.state
         setTimeout(() => {
             Toast.hide()
@@ -78,6 +68,16 @@ export default class UseHelp extends Component {
                 helpList: helpList,
                 isLoading: false
             })
-        }, 2000)
+
+            fetchGet(API.SYSTEM_MESSAGE, {
+                notifyType: 2,
+                pageIndex: mPageIndex,
+                pageSize: mPageSize
+            }).then(response => {
+
+            }).catch(error => {
+
+            })
+        }, 1500)
     }
 }

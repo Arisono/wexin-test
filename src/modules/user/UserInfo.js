@@ -4,15 +4,6 @@ import 'css/phones.css'
 import {Icon, Modal, Upload} from "antd";
 
 export default class UserInfo extends Component {
-    componentWillMount() {
-        console.log("到这里了")
-        if (this.props.match.params.type) {
-            let type = this.props.match.params.type
-            console.log("type=" + type)
-            this.state.type = type;
-        }
-        document.title = '个人信息'
-    }
 
     static defaultProps = {
         type: 1,
@@ -41,6 +32,13 @@ export default class UserInfo extends Component {
             }],
             sex: '男'
         }
+    }
+    componentWillMount() {
+        if (this.props.match.params.type) {
+            let type = this.props.match.params.type
+            this.state.type = type;
+        }
+        document.title = '个人信息'
     }
 
     render() {

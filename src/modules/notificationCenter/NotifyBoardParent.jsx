@@ -8,7 +8,7 @@ import 'css/consume-re.css'
 import {Toast} from "antd-mobile";
 
 
-export default class NotifyBoard extends Component {
+export default class NotifyBoardParent extends Component {
 
     constructor() {
         super()
@@ -33,16 +33,13 @@ export default class NotifyBoard extends Component {
 
         return (
             <div className='notify-bg-root'>
-                <div className='displayNone'></div>
-                <div className='displayNone'></div>
                 <InfiniteScroll
                     pageStart={0}
                     loadMore={this.loadRechargeList}
                     hasMore={hasMoreData}
                     loader={<LoadingMore/>}>
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
-                        <List className='notifyBoBean-list-layout'
-                              split={false} dataSource={notifyList}
+                        <List split={false} dataSource={notifyList}
                               renderItem={notifyBoBean => (
                                   <NotifyBoardItem notifyBoBean={notifyBoBean}/>
                               )}/>
@@ -71,7 +68,7 @@ export default class NotifyBoard extends Component {
 
                 notifyBoBean.noIssue = '周老师'
 
-                notifyBoBean.noTime = '2019-20-20 28:00'
+                notifyBoBean.noTime = '2019-03-20 18:00'
 
                 notifyList.push(notifyBoBean)
             }
@@ -82,7 +79,6 @@ export default class NotifyBoard extends Component {
             })
         }, 1500)
     }
-
 
     onAddNotify = () => {
         this.props.history.push('/announceRelease')

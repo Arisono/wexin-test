@@ -240,3 +240,120 @@
     letter-spacing: 1.88px;
     flex: 1;
 }
+
+.class-page-layout {
+    width: 100%;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.class-recharge-detail-header {
+    width: 100%;
+    padding: 10px 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.class-recharge-detail-title {
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #4875AB;
+    letter-spacing: 0;
+}
+
+.class-recharge-detail-person {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #919191;
+    letter-spacing: 0;
+    margin-left: 6px;
+}
+
+.class-recharge-detail-status-todo ,.class-recharge-detail-status-done{
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    letter-spacing: 0;
+}
+
+.class-recharge-detail-status-todo {
+    color: #FA5200;
+}
+
+.class-recharge-detail-status-done {
+    color: #4d4d4d;
+}
+
+.class-recharge-detail-content {
+    width: 100%;
+    padding: 10px 16px;
+}
+
+.class-recharge-detail-line {
+    width: 100%;
+    padding: 4px 0;
+    display: flex;
+}
+
+.class-recharge-detail-caption {
+    width: 75px;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #666666;
+    letter-spacing: 0;
+}
+
+.class-recharge-detail-value {
+    flex: 1;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #333333;
+    letter-spacing: 0;
+}
+
+.class-recharge-detail-menu{
+    width:100%;
+    padding: 5px 16px 20px;
+    display: flex;
+}
+
+.class-recharge-detail-money{
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #FD2A2A;
+    letter-spacing: 0;
+    flex: 1;
+}
+
+.class-recharge-detail-stop{
+    background: #4197FC;
+    border-radius: 2px;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+    padding: 3px 6px;
+}
+
+.class-recharge-detail-not{
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #2084F9;
+    letter-spacing: 2.4px;
+    padding: 10px;
+}
+
+.no-list-layout {
+    width: 100%;
+    background: white;
+    overflow: scroll;
+    -webkit-overflow-scrolling:touch;
+}
+
+.class-recharge-item-root{
+    width:100%;
+    margin: 15px 0;
+    background:white;
+    border-radius: 6px;
+}

@@ -41,6 +41,8 @@ import VoteDetailPage from "../modules/vote/VoteDetailPage";
 import UserInfo from "../modules/user/UserInfo";
 import PicturesWallItem from "../components/upload/PicturesWallItem";
 import NotifyBoardTeacher from "../modules/notificationCenter/NotifyBoardTeacher";
+import ClassRechargeList from "../modules/payment/ClassRechargeList";
+import ClassRechargeDetail from "../modules/payment/ClassRechargeDetail";
 import LeaveAddCPage from "../modules/leave/LeaveAddCPage";
 
 export default class RouteConfig extends Component {
@@ -75,6 +77,8 @@ export default class RouteConfig extends Component {
                     <Route path='/rechargeList' component={RechargeList}/>
                     <Route path='/rechargeRelease' component={RechargeRelease}/>
                     <Route path='/announceRelease' component={AnnounceRelease}/>
+                    <Route path='/classRechargeList' component={ClassRechargeList}/>
+                    <Route path='/classRechargeDetail' component={ClassRechargeDetail}/>
 
                     {/*刘杰*/}
                     <Route path={'/picturesWall'} component={PicturesWallItem}/>
@@ -111,7 +115,8 @@ export default class RouteConfig extends Component {
                     <Route path='/notifyBoard/parent' component={NotifyBoardParent}/>
                     <Route path='/notifyBoard/teacher' component={NotifyBoardTeacher}/>
                     {/*龚鹏明*/}
-                    <Route path='/userInfoPage' component={UserInfo}/>
+                    {/*type  1:老师  2.家长*/}
+                    <Route path='/userInfoPage/:type?' component={UserInfo}/>
                 </div>
             </Router>
         );

@@ -6,6 +6,11 @@
 import React, {Component} from 'react'
 import 'css/account-bind.css'
 import {Avatar, Input, Icon, Button} from 'antd'
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
+import {API} from "../../configs/api.config";
+import {isObjEmpty} from "../../utils/common";
+import {Toast} from 'antd-mobile'
+import {regExpConfig} from "../../configs/regexp.config";
 
 let mType = 'parents'
 let mSeconds = 0
@@ -124,11 +129,36 @@ export default class AccountBind extends Component {
         if (mSeconds !== 0) {
             return
         }
-        mSeconds = 10
+        const {phone} = this.state
+        if (isObjEmpty(phone)) {
+            Toast.info('请输入手机号码!', 2, null, false)
+            return
+        }
+        if (!regExpConfig.mobile.test(phone)) {
+            Toast.fail('请输入正确的手机号码!', 2, null, false)
+            return
+        }
+        Toast.loading('验证码获取中...', 0)
         this.setState({
-            obtainText: '剩余' + mSeconds + '秒'
+            obtainText: '获取中'
         })
-        this.countdown()
+        fetchGet(API.SEND_CODE, {
+            userPhone: phone
+        }).then(response => {
+            Toast.hide()
+            Toast.success('验证码已发送，请注意查收', 2)
+            mSeconds = 60
+            this.setState({
+                obtainText: '剩余' + mSeconds + '秒'
+            })
+            this.countdown()
+        }).catch(error => {
+            Toast.hide()
+            this.setState({
+                obtainText: '获取验证码'
+            })
+            Toast.fail(error || '获取验证码失败', 2)
+        })
     }
 
     countdown = () => {
@@ -148,10 +178,35 @@ export default class AccountBind extends Component {
     }
 
     bindEvent = () => {
+        const {account, phone, code} = this.state
+        if (isObjEmpty(account, phone, code)) {
+            Toast.fail('请完善所有输入项！')
+            // return
+        }
         if (mType == 'parents') {
-            this.props.history.push('/homePage?role=parent')
+            fetchPost(API.BIND_STUDENTID, {
+                stuId: account,
+                userPhone: phone,
+                vcode: code,
+                openid: ''
+            }).then(response => {
+                this.props.history.push('/homePage?role=parent')
+            }).catch(error => {
+                this.props.history.push('/homePage?role=parent')
+                Toast.fail(error || '绑定学号失败')
+            })
         } else if (mType == 'teacher') {
-            this.props.history.push('/homePage?role=teacher')
+            fetchPost(API.BIND_TEACHERID, {
+                userId: account,
+                userPhone: phone,
+                vcode: code,
+                openid: ''
+            }).then(response => {
+                this.props.history.push('/homePage?role=teacher')
+            }).catch(error => {
+                this.props.history.push('/homePage?role=teacher')
+                Toast.fail(error || '绑定工号失败')
+            })
         }
     }
 }

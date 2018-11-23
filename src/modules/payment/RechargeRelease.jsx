@@ -8,11 +8,11 @@ import {Icon, Input, Button, TreeSelect} from 'antd'
 import {Picker, InputItem, DatePicker, List} from 'antd-mobile'
 import 'css/payment.css'
 import {getCheckedNodes} from "../../utils/common";
-import {URL_CONSUME_RECODE} from 'api'
+import {API} from 'api'
+import TargetSelect from 'components/TargetSelect'
 
 const {TextArea} = Input
 
-const SHOW_PARENT = TreeSelect.SHOW_PARENT
 const teacherData = []
 const parentData = []
 
@@ -81,7 +81,7 @@ export default class RechargeRelease extends Component {
 
     componentDidMount() {
         document.title = '缴费发布'
-        console.log('api', URL_CONSUME_RECODE)
+        console.log('api', API.CONSUME_RECODE)
 
         const {classList} = this.state
 
@@ -103,30 +103,20 @@ export default class RechargeRelease extends Component {
     }
 
     render() {
-        const {classList, classText, remarks, endTime, date, targetCount} = this.state
+        const {classList, classText, remarks, targetCount, targetList} = this.state
+
         const targetProps = {
-            treeData: targetData,
-            value: this.state.targetList,
-            onChange: this.onTargetChange,
-            treeCheckable: true,
-            showCheckedStrategy: SHOW_PARENT,
-            searchPlaceholder: '请选择发布对象',
-            style: {
-                width: '100%',
-            },
-            allowClear: true,
+            targetData: targetData,
+            targetValues: targetList,
+            title: '收款对象',
+            targetCount: targetCount,
+            onTargetChange: this.onTargetChange.bind(this)
         }
 
         return (
             <div className='common-column-layout'>
                 <div className='gray-line'></div>
-                <div style={{padding: '12px'}}>
-                    <span className='announce-release-target-title'>收款对象</span>
-                    <span className='announce-release-target-count'>(共{targetCount}人)</span>
-                </div>
-                <div className='recharge-release-target-layout'>
-                    <TreeSelect {...targetProps} />
-                </div>
+                <TargetSelect {...targetProps}/>
                 <div className='gray-line'></div>
                 <Picker
                     data={classList} title='选择班级' extra='请选择'
@@ -161,9 +151,7 @@ export default class RechargeRelease extends Component {
         )
     }
 
-    onTargetChange = (value, label, extra) => {
-        let count = getCheckedNodes(extra).count
-
+    onTargetChange = (value, label, checkNodes, count) => {
         this.setState({
             targetList: value,
             targetCount: count

@@ -24,15 +24,30 @@ export default class NotifyBoardItem extends Component {
         return (
             <div className='notify-item-root'>
                 <div className='notify-item-bg'>
-                <div className = 'notify-item-top'>
-                <div className='notify-item-title'>{notifyBoBean.noTitle}</div>
-                    <div className={notifyBoBean.noStatu=='已读' ? 'notify-item-statuAl':'notify-item-statuNo'}>{notifyBoBean.noStatu}</div>
-                </div>
+                    <div className='notify-item-top'>
+                        <div className='notify-item-title'>{notifyBoBean.noTitle}</div>
+                        <div
+                            className={notifyBoBean.noStatu == '已读' ? 'notify-item-statuAl' : 'notify-item-statuNo'}>{notifyBoBean.noStatu}</div>
+                    </div>
+                    <div></div>
                     <div className='notify-item-line'></div>
-                    <div className='notify-item-content'>{notifyBoBean.noContent}</div>
-                    <div className='notify-item-issuer'>{notifyBoBean.noIssue}</div>
-                    <div className='notify-item-time'>{notifyBoBean.noTime}</div>
-            </div>
+                    <div className="notify-item-isserLine">
+                        <div className='notify-item-caption'>通知人：</div>
+                        <div className='notify-item-value'>{notifyBoBean.noIssue}</div>
+
+                    </div>
+
+                    <div className="notify-item-timeLine">
+                        <div className='notify-item-caption'>通知时间：</div>
+                        <div className='notify-item-value'>{notifyBoBean.noTime}</div>
+                    </div>
+                    <div className='notify-item-lineBottem'></div>
+                    <div className="notify-item-detailLine">
+                        <div className="notify-item-detail">详情</div>
+                        <img className='notify-item-detailIcon' src={require('imgs/next_arrow.png')}/>
+                    </div>
+
+                </div>
             </div>
         )
     }

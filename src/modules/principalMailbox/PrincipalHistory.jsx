@@ -9,7 +9,11 @@ import {List, Icon, Skeleton} from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
 import LoadingMore from 'components/LoadingMore'
 import PrincipalItem from 'components/PrincipalItem'
+import {fetchPost} from "../../utils/fetchRequest";
+import {API} from "../../configs/api.config";
 
+const mPageSize = 10
+let mPageIndex = 1
 export default class PrincipalHistory extends Component {
 
     constructor() {
@@ -77,6 +81,17 @@ export default class PrincipalHistory extends Component {
             this.setState({
                 principalList,
                 isLoading: false
+            })
+
+            fetchPost(API.GET_MEETING_LIST, {
+                userId: 10000,
+                notifyType: 5,
+                pageIndex: mPageIndex,
+                pageSize: mPageSize
+            }).then(response => {
+
+            }).catch(error => {
+                Toast.fail(error, 2)
             })
         }, 1500)
     }

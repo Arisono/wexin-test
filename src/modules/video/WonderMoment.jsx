@@ -72,7 +72,7 @@ export default class WonderMoment extends Component {
                     }/>
                 </div>
 
-                <Icon type="plus-circle" theme='filled' className='video-add-icon'
+                <Icon type="plus-circle" theme='filled' className='common-add-icon'
                       onClick={this.onAddVideo}/>
             </div>
         )

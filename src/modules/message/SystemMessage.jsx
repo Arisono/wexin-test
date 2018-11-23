@@ -10,7 +10,11 @@ import 'css/message.css'
 import SystemMsgItem from 'components/SystemMsgItem'
 import {Toast} from 'antd-mobile'
 import LoadingMore from 'components/LoadingMore'
+import {fetchGet} from "../../utils/fetchRequest";
+import {API} from "../../configs/api.config";
 
+const mPageSize = 10
+let mPageIndex = 1
 export default class SystemMessage extends Component {
 
     constructor() {
@@ -69,6 +73,16 @@ export default class SystemMessage extends Component {
             this.setState({
                 systemMsgs,
                 isLoading: false
+            })
+
+            fetchGet(API.SYSTEM_MESSAGE, {
+                notifyType: 1,
+                pageIndex: mPageIndex,
+                pageSize: mPageSize
+            }).then(response => {
+
+            }).catch(error => {
+                Toast.fail(error, 2)
             })
         }, 1500)
     }

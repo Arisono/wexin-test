@@ -9,7 +9,12 @@ import MeetingBean from "model/MeetingBean";
 import {isObjEmpty} from "../../utils/common";
 import InfiniteScroll from 'react-infinite-scroller'
 import LoadingMore from 'components/LoadingMore'
+import {fetchPost} from "../../utils/fetchRequest";
+import {API} from "../../configs/api.config";
+import {Toast} from 'antd-mobile'
 
+const mPageSize = 10
+let mPageIndex = 1
 export default class MeetingSignIn extends Component {
 
     constructor() {
@@ -76,6 +81,17 @@ export default class MeetingSignIn extends Component {
 
             this.setState({
                 meetingSignList: meetingSignList
+            })
+
+            fetchPost(API.GET_MEETING_LIST, {
+                userId: 10000,
+                notifyType: 6,
+                pageIndex: mPageIndex,
+                pageSize: mPageSize
+            }).then(response => {
+
+            }).catch(error => {
+                Toast.fail(error, 2)
             })
         }, 1500)
     }

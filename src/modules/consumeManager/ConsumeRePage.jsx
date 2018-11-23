@@ -46,7 +46,7 @@ export default class ConsumeRePage extends Component {
                 <div className={isObjEmpty(typeTitle) ? 'displayNone' : 'gray-line'}></div>
                 <InfiniteScroll
                     pageStart={0}
-                    loadMore={this.loadRechargeList}
+                    loadMore={this.loadReleaseList}
                     hasMore={hasMoreData}
                     loader={<LoadingMore/>}>
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>

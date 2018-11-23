@@ -54,11 +54,11 @@ export default class UseHelp extends Component {
         )
     }
 
-    loadHelpList = () => {
+    loadHelpList = (index) => {
         const {helpList} = this.state
         setTimeout(() => {
             Toast.hide()
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 10; i++) {
                 helpList.push({
                     title: '如何开通智慧校园？',
                     content: '如果您是孩子家长，请向您孩子老师开通开通账号。如果您是任课老师，请向智慧校园系统管理员咨询开通'

@@ -30,7 +30,7 @@ import SendMeet from '../modules/hiPages/sendMeetting/SendMeet';
 import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
 import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
 import WonderMoment from "../modules/video/WonderMoment";
-import NotifyBoard from "../modules/notificationCenter/NotifyBoard";
+import NotifyBoardParent from "../modules/notificationCenter/NotifyBoardParent";
 import ConsumeRePage from '../modules/consumeManager/ConsumeRePage'
 import CampusCardRecharge from "../modules/payment/CampusCardRecharge";
 import RechargeList from "../modules/payment/RechargeList";
@@ -40,6 +40,7 @@ import PrincipalHistory from "../modules/principalMailbox/PrincipalHistory";
 import VoteDetailPage from "../modules/vote/VoteDetailPage";
 import UserInfo from "../modules/user/UserInfo";
 import PicturesWallItem from "../components/upload/PicturesWallItem";
+import NotifyBoardTeacher from "../modules/notificationCenter/NotifyBoardTeacher";
 
 export default class RouteConfig extends Component {
 
@@ -105,7 +106,8 @@ export default class RouteConfig extends Component {
 
                     {/*刘金龙*/}
                     <Route path='/consumeRePage' component={ConsumeRePage}/>
-                    <Route path='/notifyBoPage' component={NotifyBoard}/>
+                    <Route path='/notifyBoard/parent' component={NotifyBoardParent}/>
+                    <Route path='/notifyBoard/teacher' component={NotifyBoardTeacher}/>
                     {/*龚鹏明*/}
                     <Route path='/userInfoPage' component={UserInfo}/>
                 </div>

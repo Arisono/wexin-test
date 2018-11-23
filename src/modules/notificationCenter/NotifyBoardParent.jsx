@@ -45,8 +45,8 @@ export default class NotifyBoardParent extends Component {
                               )}/>
                     </Skeleton>
                 </InfiniteScroll>
-                <Icon type="plus-circle" theme='filled' className='common-add-icon'
-                      onClick={this.onAddNotify}/>
+                {/*<Icon type="plus-circle" theme='filled' className='common-add-icon'*/}
+                      {/*onClick={this.onAddNotify}/>*/}
             </div>
         )
     }

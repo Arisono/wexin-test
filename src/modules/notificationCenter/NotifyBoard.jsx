@@ -41,11 +41,11 @@ export default class NotifyBoard extends Component {
                     hasMore={hasMoreData}
                     loader={<LoadingMore/>}>
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
-                <List className='notifyBoBean-list-layout'
-                      split={false} dataSource={notifyList}
-                      renderItem={notifyBoBean => (
-                          <NotifyBoardItem notifyBoBean={notifyBoBean}/>
-                      )}/>
+                        <List className='notifyBoBean-list-layout'
+                              split={false} dataSource={notifyList}
+                              renderItem={notifyBoBean => (
+                                  <NotifyBoardItem notifyBoBean={notifyBoBean}/>
+                              )}/>
                     </Skeleton>
                 </InfiniteScroll>
                 <Icon type="plus-circle" theme='filled' className='common-add-icon'

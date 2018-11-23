@@ -24,6 +24,7 @@
     font-family: PingFangSC-Regular;
     color: #323232;
 
+
 }
 
 .consume-item-time{
@@ -126,7 +127,7 @@
 
     width: 100%;
     text-align: right;
-    margin: 0px 10px 0px 10px;
+    margin: 4px 10px 0px 10px;
     color: #878787;
 
 }
@@ -158,23 +159,95 @@
 
 }
 
+.notify-item-isserLine{
+
+    display: flex;
+    align-items: center;
+    margin:10px 5px 0px 0px ;
+
+}
+
 .notify-item-issuer{
 
-    text-align: right;
+    width: 60px;
+    text-align: left;
+    margin-left: 10px;
     margin-right: 16px;
     color: #666666;
     font-size: 12px;
     font-family: PingFangSC-Regular;
 
+}
+.notify-item-issuerName{
+
+    text-align: left;
+    margin-right: 16px;
+    color: #333333;
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
 
 }
+
+.notify-item-timeLine {
+
+    display: flex;
+    align-items: center;
+    margin: 5px 15px 10px 0px;
+
+}
+
 .notify-item-time{
 
-    text-align: right;
+    width: 60px;
+    text-align: left;
+    margin-left: 10px;
     margin-right: 16px;
     margin-bottom: 0px;
     color: #666666;
     font-size: 12px;
     font-family: PingFangSC-Regular;
+
+}
+.notify-item-timeDetail{
+
+    text-align: left;
+    margin-right: 16px;
+    color: #333333;
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
+
+}
+
+.notify-item-lineBottem{
+
+    margin: 16px 10px 0px 0px;
+    height: 1px;
+    background-color: #F2F2F2;
+}
+
+.notify-item-detailLine{
+
+    display: flex;
+    align-items: center;
+    margin: 0px 10px 0px 0px;
+
+
+}
+.notify-item-detail{
+
+    text-align: left;
+    width: 80%;
+    margin: 10px 36px 10px 12px;
+    color: #666666;
+    font-size: 12px;
+    font-family: PingFangSC-Regular;
+
+}
+
+.notify-item-detailIcon{
+
+    width: 12px;
+    height: 18px;
+    margin: 0px 6px 6px 6px;
 
 }

@@ -337,7 +337,7 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <Link  className="flex_column flex_center" to="/notifyBoPage">
+                        <Link  className="flex_column flex_center" to="/notifyBoard/teacher">
                         <div><img src={icon_menu} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/></div>
                         <div style={{paddingBottom: "20px", paddingLeft: "0px"}}>
                             <span
@@ -365,10 +365,12 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
+                        <Link  className="flex_center flex_column" to="/classRechargeList" id="menu_span_normal">
                         <div><img src={icon_home_menu_2} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px"}}><span
                             style={{fontSize: "12px"}}>班级交费</span></div>
+                        </Link>
                     </div>
 
                     <div className="col-xs-3" style={{
@@ -597,7 +599,7 @@ function ParentMenu() {
                         flexDirection: "column",
                         justifyContent: "center",
                         alignItems: "center"
-                    }}> <Link className="flex_column flex_center" to="/notifyBoPage"  id="menu_span_normal">
+                    }}> <Link className="flex_column flex_center" to="/notifyBoard/parent"  id="menu_span_normal">
                         <div><img src={icon_home_menu_22} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px"}}>
@@ -639,10 +641,12 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
+                        <Link className="flex_column flex_center" to="/rechargeList" id="menu_span_normal">
                         <div><img src={icon_home_menu_25} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
-                        <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
+                        <div  style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
                             style={{fontSize: "12px"}}>收费通知</span></div>
+                        </Link>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",
@@ -693,7 +697,8 @@ function ParentMenu() {
                 <div className="row" style={borderLine}></div>
                 {/*横向图文列表*/}
                 <div className="row">
-                    <div className="col-xs-3" style={{
+
+              {/*      <div className="col-xs-3" style={{
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "center",
@@ -708,7 +713,7 @@ function ParentMenu() {
                            充值缴费
                         </span></div>
                         </Link>
-                    </div>
+                    </div>*/}
                     <div className="col-xs-3" style={{
                         display: "flex",
                         flexDirection: "column",
@@ -747,9 +752,6 @@ function ParentMenu() {
                         </span>
                         </div></Link>
                     </div>
-                </div>
-
-                <div className="row">
                     <div className="col-xs-3" style={{
                         display: "flex",
                         flexDirection: "column",
@@ -763,6 +765,10 @@ function ParentMenu() {
                              班级相册
                         </span></div></Link>
                     </div>
+                </div>
+
+                <div className="row">
+
 
                     <div className="col-xs-3" id="row_center_align">
                         <div><img src={icon_home_menu_34} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/></div>

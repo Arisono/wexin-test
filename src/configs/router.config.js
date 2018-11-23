@@ -29,6 +29,7 @@ import SendVote from '../modules/hiPages/send-vote/SendVote';
 import SendMeet from '../modules/hiPages/sendMeetting/SendMeet';
 import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
 import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
+import Approvel from '../modules/hiPages/approvel/Approvel';
 import WonderMoment from "../modules/video/WonderMoment";
 import NotifyBoardParent from "../modules/notificationCenter/NotifyBoardParent";
 import ConsumeRePage from '../modules/consumeManager/ConsumeRePage'
@@ -41,6 +42,7 @@ import VoteDetailPage from "../modules/vote/VoteDetailPage";
 import UserInfo from "../modules/user/UserInfo";
 import PicturesWallItem from "../components/upload/PicturesWallItem";
 import NotifyBoardTeacher from "../modules/notificationCenter/NotifyBoardTeacher";
+
 
 export default class RouteConfig extends Component {
 
@@ -103,6 +105,8 @@ export default class RouteConfig extends Component {
                     <Route path='/class-schedule' component={ClassSchedule}/>
                     {/*//成绩通知*/}
                     <Route path='/score-inquiry' component={ScoreInquiry}/>
+                    {/*审批*/}
+                    <Route path='/approvel' component={Approvel}/>
 
                     {/*刘金龙*/}
                     <Route path='/consumeRePage' component={ConsumeRePage}/>

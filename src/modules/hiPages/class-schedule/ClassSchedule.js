@@ -5,6 +5,8 @@
 import React,{Component} from 'react';
 import  './ClassSchedule.css';
 import line_img from '../../../style/imgs/line_img.png';
+import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
+import {API} from '../../../configs/api.config';
 
 function HSItem() {
     return(
@@ -24,6 +26,19 @@ function HSItem() {
 export default class ClassSchedule extends Component{
     componentWillMount() {
         document.title = '课程表'
+    }
+    componentDidMount() {
+        // console.log('Component DID MOUNT!',API.RecordOutgoingList)
+        fetchGet(API.curriculumListByStuId,{
+            stuId:10000,
+            curStatus:1
+        },{})
+            .then((response)=>{
+                console.log('response',response)
+            })
+            .catch((error) =>{
+                console.log('error',error)
+            })
     }
     constructor(){
         super();

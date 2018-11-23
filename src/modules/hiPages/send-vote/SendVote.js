@@ -9,9 +9,9 @@ import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import moment from 'moment'
 import 'antd/dist/antd.css';
 import SelectItem from './SelectItem';
-// import Url_config from '../../../configs/api.config';
+
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
-import {URL_CONSUME_SVOTE} from '../../../configs/api.config';
+import {API} from '../../../configs/api.config';
 const Option = Select.Option;
 
 
@@ -21,13 +21,8 @@ export default class SendVote extends Component{
     }
      componentDidMount() {
         console.log('Component DID MOUNT!')
-        fetchGet('https://ss.ceduizixun.com/integral/inte/ad/getAd/',{},{})
-            .then((response)=>{
-            console.log('response',response)
-        })
-            .catch((error) =>{
-                console.log('error',error)
-            })
+
+
     }
     constructor(props){
         super(props);
@@ -177,6 +172,16 @@ export default class SendVote extends Component{
     //发布提交
     doSendVote = (event)=>{
         console.log('state',this.state)
+
+        fetchPost(API.voteCreate,{
+
+        },{})
+            .then((response)=>{
+                console.log('response',response)
+            })
+            .catch((error) =>{
+                console.log('error',error)
+            })
     }
     selectPersononChange = (value) => {
         console.log('selectPersononChange ', value);

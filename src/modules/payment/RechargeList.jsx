@@ -1,6 +1,6 @@
 /**
  * Created by RaoMeng on 2018/11/14
- * Desc: 充值缴费
+ * Desc: 充值交费
  */
 
 import React, {Component} from 'react'
@@ -24,7 +24,7 @@ export default class RechargeList extends Component {
     }
 
     componentDidMount() {
-        document.title = '充值缴费'
+        document.title = '收费通知'
 
         Toast.loading('努力加载中...', 0)
     }

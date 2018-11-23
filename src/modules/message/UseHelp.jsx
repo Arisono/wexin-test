@@ -59,10 +59,17 @@ export default class UseHelp extends Component {
         setTimeout(() => {
             Toast.hide()
             for (let i = 0; i < 10; i++) {
-                helpList.push({
-                    title: '如何开通智慧校园？',
-                    content: '如果您是孩子家长，请向您孩子老师开通开通账号。如果您是任课老师，请向智慧校园系统管理员咨询开通'
-                })
+                if (i % 2 == 0) {
+                    helpList.push({
+                        title: '如何开通智慧校园？',
+                        content: '如果您是孩子家长，请向您孩子老师开通开通账号。如果您是任课老师，请向智慧校园系统管理员咨询开通'
+                    })
+                }else {
+                    helpList.push({
+                        title: '我想绑定多个孩子账号怎么办？',
+                        content: '如果您的孩子在同一所学校，你需要对每个孩子进行验证绑定，并确保手机号为同一个号码。绑定多个家长身份后，可以在首页点击头像右侧按钮进行切换对应的绑定学生角色。'
+                    })
+                }
             }
             this.setState({
                 helpList: helpList,

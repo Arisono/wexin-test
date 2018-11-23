@@ -140,7 +140,7 @@ class LeaveAddPage extends React.Component{
                       <div className="row leave-input flex_row
                            flex_center">
                          {/*  <span>        抄送对象：</span>*/}
-                           <div className="item_flex">
+                           <div style={{width:"100%"}}>
 
                                <TargetSelect className="flex_row flex_center" style={{width:"310px"}} {...targetProps}></TargetSelect>
 

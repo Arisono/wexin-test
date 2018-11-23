@@ -377,7 +377,7 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <Link  className="flex_column flex_center" to="/phonesSelect"  id="menu_span_normal">
+                        <Link  className="flex_column flex_center" to="/phonesList"  id="menu_span_normal">
                         <div><img src={icon_home_menu_4} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "0px"}}>

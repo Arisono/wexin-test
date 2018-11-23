@@ -40,7 +40,6 @@ import PrincipalHistory from "../modules/principalMailbox/PrincipalHistory";
 import VoteDetailPage from "../modules/vote/VoteDetailPage";
 import UserInfo from "../modules/user/UserInfo";
 import PicturesWallItem from "../components/upload/PicturesWallItem";
-import PicturesWallItem from "../components/upload/PicturesWallItem";
 import LeaveAddCPage from "../modules/leave/LeaveAddCPage";
 
 export default class RouteConfig extends Component {

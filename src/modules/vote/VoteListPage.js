@@ -43,7 +43,6 @@ class VoteListPage extends React.Component{
             <div className="row">
               <div className="col-xs-12 clear_margin">
                   <List
-
                       dataSource={this.state.data}
                       renderItem={item=>(
                           <List.Item className="row " id="row_background"

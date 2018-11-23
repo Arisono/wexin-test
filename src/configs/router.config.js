@@ -109,7 +109,8 @@ export default class RouteConfig extends Component {
                     <Route path='/notifyBoard/parent' component={NotifyBoardParent}/>
                     <Route path='/notifyBoard/teacher' component={NotifyBoardTeacher}/>
                     {/*龚鹏明*/}
-                    <Route path='/userInfoPage' component={UserInfo}/>
+                    {/*type  1:老师  2.家长*/}
+                    <Route path='/userInfoPage/:type?' component={UserInfo}/>
                 </div>
             </Router>
         );

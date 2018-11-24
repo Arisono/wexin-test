@@ -5,6 +5,8 @@
 
 import React, {Component} from 'react'
 import {Modal} from 'antd-mobile'
+import {isObjEmpty} from "../utils/common";
+import 'css/principal-mailbox.css'
 
 const {alert} = Modal
 
@@ -23,6 +25,15 @@ export default class PrincipalItem extends Component {
     render() {
         const {principalBean} = this.props
 
+        let enclosureItem = <div></div>
+        if (!isObjEmpty(principalBean.enclosure) && principalBean.enclosure != '[]') {
+            enclosureItem =
+                <div className='principal-enclosure-layout'>
+                    <img src={principalBean.enclosure[0]} className='principal-enclosure-img'/>
+                    <span className='principal-enclosure-count'>({principalBean.enclosure.length}张)</span>
+                </div>
+        }
+
         return (
             <div style={{padding: '10px'}}>
                 <div className='principal-item-root'>
@@ -32,9 +43,9 @@ export default class PrincipalItem extends Component {
                             'principal-item-status-done' :
                             'principal-item-status-todo'}>{principalBean.status}</span>
                     </div>
-
                     <div className='principal-item-content'>{principalBean.suggest}</div>
-                    <div style={{textAlign: 'right'}}>
+                    {enclosureItem}
+                    <div style={{textAlign: 'right',marginTop:'10px'}}>
                         <span className='principal-item-delete'
                               onClick={this.onDeleteEvent}>删除</span>
                     </div>

@@ -5,7 +5,13 @@
 
 import React, {Component} from 'react'
 import {Icon, Button} from 'antd'
+import {Modal, Grid, InputItem} from 'antd-mobile'
 import 'css/payment.css'
+import {isObjEmpty} from "../../utils/common";
+
+const moneyList = [
+    '50元', '100元', '150元', '200元', '300元'
+]
 
 export default class CampusCardRecharge extends Component {
 
@@ -15,7 +21,10 @@ export default class CampusCardRecharge extends Component {
         this.state = {
             student: '饶猛',
             cardNum: '20193839839',
-            balance: '38.00'
+            balance: '38.00',
+            rechargeVisible: false,
+            moneySelect: 0,
+            money: ''
         }
     }
 
@@ -25,6 +34,7 @@ export default class CampusCardRecharge extends Component {
 
     render() {
         const {student, cardNum, balance} = this.state
+        const rechargeModal = this.getRechargeModal()
 
         return (
             <div className='campus-card-root'>
@@ -41,10 +51,72 @@ export default class CampusCardRecharge extends Component {
                     <span className='campus-card-record' onClick={this.expensesRecord}>消费记录</span>
                     <Icon type="right" style={{color: '#C1C1C1'}}/>
                 </div>
-                <Button type="primary" className='campus-card-btn'>去充值</Button>
+                <Button type="primary" className='campus-card-btn' onClick={this.onRechargeClick}>去充值</Button>
                 <span className='common-record-text' onClick={this.rechargeRecord}>充值记录</span>
+                {rechargeModal}
             </div>
         )
+    }
+
+    getRechargeModal = () => {
+        const {moneySelect, money} = this.state
+        return (
+            <Modal
+                popup
+                visible={this.state.rechargeVisible}
+                onClose={this.onModalClose}
+                animationType="slide-up">
+                <div className='recharge-modal-layout'>
+                    <div className='recharge-modal-title'>校园卡在线充值</div>
+                    <div style={{margin: '10px 0'}}>
+                        <Grid data={moneyList}
+                              columnNum={3}
+                              square={false}
+                              hasLine={false}
+                              activeStyle={false}
+                              onClick={this.onMoneyItemClick}
+                              renderItem={(dataItem, index) => (
+                                  <div
+                                      className={moneySelect == index ?
+                                          'recharge-modal-amount-select' :
+                                          'recharge-modal-amount-normal'}>
+                                      {dataItem}
+                                  </div>
+                              )}
+                        />
+                    </div>
+                    <div className='recharge-modal-amount-layout'>
+                        <div className='recharge-modal-title-text'>自定义金额：</div>
+                        <InputItem
+                            className='recharge-modal-amount-input'
+                            type='money' clear
+                            moneyKeyboardAlign='left'
+                            extra='元'
+                            // onFocus={}
+                            value={money}
+                            onChange={this.onMoneyChange}
+                            placeholder='请输入金额'/>
+                    </div>
+                    <div style={{padding: '60px 24px'}}>
+                        <Button type="primary" className='commonButton' style={{width: '100%'}}>确认充值</Button>
+                    </div>
+                </div>
+            </Modal>
+        )
+    }
+
+    onMoneyChange = (value) => {
+        this.setState({
+            money: value,
+            moneySelect: -1
+        })
+    }
+
+    onMoneyItemClick = (el, index) => {
+        this.setState({
+            moneySelect: index,
+            money: ''
+        })
     }
 
     expensesRecord = () => {
@@ -53,5 +125,17 @@ export default class CampusCardRecharge extends Component {
 
     rechargeRecord = () => {
         this.props.history.push('/consumeRePage')
+    }
+
+    onRechargeClick = () => {
+        this.setState({
+            rechargeVisible: true
+        })
+    }
+
+    onModalClose = () => {
+        this.setState({
+            rechargeVisible: false
+        })
     }
 }

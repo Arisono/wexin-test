@@ -78,7 +78,7 @@ export default class UploadImage extends Component {
                         {fileList.length >= 50 ? null : uploadButton}
                     </Upload>
                     <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                        <img alt="example" style={{width: '100%'}} src={previewImage}/>
+                        <img alt="图片" style={{width: '100%'}} src={previewImage}/>
                     </Modal>
                 </div>
 

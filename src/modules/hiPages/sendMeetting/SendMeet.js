@@ -2,11 +2,11 @@
  *   Created by FANGlh on 2018/11/6 15:47.
  */
 
-import React,{Component,Icon} from 'react';
+import React,{Component} from 'react';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import './SendMeet.css';
 import 'antd/dist/antd.css';
-import { DatePicker,Select, TreeSelect } from 'antd';
+import { DatePicker,Select, TreeSelect,Icon } from 'antd';
 import moment from 'moment'
 import add_newimg from '../../../style/imgs/add_new.png';
 const Option = Select.Option;

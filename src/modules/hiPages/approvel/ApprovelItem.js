@@ -5,7 +5,6 @@
 
 import React,{Component} from 'react';
 import './Approvel.css';
-import icon_out from '../../../style/imgs/out_img.png';
 export default class ApprovelItem extends Component{
     constructor(props){
         super(props);

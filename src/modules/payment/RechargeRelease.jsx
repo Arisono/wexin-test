@@ -69,7 +69,7 @@ export default class RechargeRelease extends Component {
         super()
 
         this.state = {
-            classList: [],
+            typeList: [],
             classText: '',
             remarks: '',
             endTime: now,
@@ -81,29 +81,31 @@ export default class RechargeRelease extends Component {
 
     componentDidMount() {
         document.title = '缴费发布'
-        console.log('api', API.CONSUME_RECODE)
 
-        const {classList} = this.state
+        const {typeList} = this.state
 
-        for (let i = 0; i < 10; i++) {
-            if (i % 2 == 0) {
-                classList.push({
-                    label: '三年级（一）班',
-                    value: '三年级（一）班'
-                })
-            } else {
-                classList.push({
-                    label: '三年级（二）班',
-                    value: '三年级（二）班'
-                })
-            }
-        }
+        typeList.push({
+            label: '学校收费',
+            value: '学校收费'
+        })
+        typeList.push({
+            label: '班级收费',
+            value: '班级收费'
+        })
+        typeList.push({
+            label: '学杂费',
+            value: '学杂费'
+        })
+        typeList.push({
+            label: '书本费',
+            value: '书本费'
+        })
 
-        this.setState({classList})
+        this.setState({typeList: typeList})
     }
 
     render() {
-        const {classList, classText, remarks, targetCount, targetList} = this.state
+        const {typeList, classText, remarks, targetCount, targetList} = this.state
 
         const targetProps = {
             targetData: targetData,
@@ -119,10 +121,10 @@ export default class RechargeRelease extends Component {
                 <TargetSelect {...targetProps}/>
                 <div className='gray-line'></div>
                 <Picker
-                    data={classList} title='选择班级' extra='请选择'
+                    data={typeList} title='收款类型' extra='请选择'
                     value={classText} onChange={this.handleClassChange}
                     onOk={this.handleClassChange} cols={1}>
-                    <List.Item arrow="horizontal">选择班级</List.Item>
+                    <List.Item arrow="horizontal">收款类型</List.Item>
                 </Picker>
                 <div className='gray-line'></div>
                 <div className='recharge-release-money-title'>人均收款金额</div>
@@ -143,6 +145,7 @@ export default class RechargeRelease extends Component {
                     onChange={date => this.setState({date})}>
                     <List.Item arrow="horizontal">截止时间</List.Item>
                 </DatePicker>
+                <div className='gray-line'></div>
 
                 <Button type='primary'
                         style={{margin: '35px'}}

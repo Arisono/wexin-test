@@ -42,7 +42,7 @@ export default class NotifyBoardItem extends Component {
                         <div className='notify-item-value'>{notifyBoBean.noTime}</div>
                     </div>
                     <div className='notify-item-lineBottem'></div>
-                    <div className="notify-item-detailLine">
+                    <div className="notify-item-detailLine" onClick={this.onDetailClick}>
                         <div className="notify-item-detail">详情</div>
                         <img className='notify-item-detailIcon' src={require('imgs/next_arrow.png')}/>
                     </div>
@@ -50,5 +50,9 @@ export default class NotifyBoardItem extends Component {
                 </div>
             </div>
         )
+    }
+
+    onDetailClick = () => {
+        this.props.onDetailClick(this.props.index, this.props.type)
     }
 }

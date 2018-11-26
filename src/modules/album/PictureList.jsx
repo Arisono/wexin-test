@@ -6,7 +6,7 @@
 import React, {Component} from 'react'
 import {isObjEmpty} from "../../utils/common";
 import LazyLoad from 'react-lazyload'
-import {Button} from 'antd'
+import {Button, Modal} from 'antd'
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import '../../index.css'
 import 'css/album-item.css'
@@ -17,7 +17,9 @@ export default class PictureList extends Component {
         super()
 
         this.state = {
-            pictureList: []
+            pictureList: [],
+            previewVisible: false,
+            previewImage: '',
         }
     }
 
@@ -50,7 +52,7 @@ export default class PictureList extends Component {
     }
 
     render() {
-        const {pictureList} = this.state
+        const {pictureList, previewVisible, previewImage} = this.state
         let pictureItems = []
         for (let i = 0; i < pictureList.length; i++) {
             const pictureUrl = pictureList[i]
@@ -64,12 +66,12 @@ export default class PictureList extends Component {
                                 appear={true}
                                 key={i}>
                                 <div className='pictureItem'>
-                                    <img src={pictureUrl}/>
+                                    <img src={pictureUrl} onClick={this.handlePreview.bind(this, pictureUrl)}/>
                                 </div>
                             </CSSTransition>
                         </LazyLoad> :
                         <div className='pictureItem'>
-                            <img src={pictureUrl}/>
+                            <img src={pictureUrl} onClick={this.handlePreview.bind(this, pictureUrl)}/>
                         </div>
                 )
             }
@@ -83,6 +85,10 @@ export default class PictureList extends Component {
                         {pictureItems}
                     </TransitionGroup>
                 </div>
+
+                <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                    <img alt="图片" style={{width: '100%'}} src={previewImage}/>
+                </Modal>
 
                 <div className='album-detail-bottom'>
                     <Button type='primary' className='album-detail-button'
@@ -101,4 +107,14 @@ export default class PictureList extends Component {
     deletePirturesClick = () => {
         this.props.history.push('/uploadImage')
     }
+
+
+    handlePreview = (url) => {
+        this.setState({
+            previewImage: url,
+            previewVisible: true,
+        });
+    }
+
+    handleCancel = () => this.setState({previewVisible: false})
 }

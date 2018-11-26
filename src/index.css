@@ -103,11 +103,15 @@ i.anticon.anticon-delete svg {
 .ant-select-selection--multiple {
     max-height: 100px;
     overflow-y: scroll;
-    -webkit-overflow-scrolling:touch;
+    -webkit-overflow-scrolling: touch;
 }
 
 span.ant-select-selection.ant-select-selection--multiple {
     border: none;
+}
+
+.am-modal-content {
+    background: transparent !important;
 }
 
 /***************************公共样式****************************************/
@@ -118,7 +122,7 @@ span.ant-select-selection.ant-select-selection--multiple {
     flex-direction: column;
     background: white;
     overflow-y: scroll;
-    -webkit-overflow-scrolling:touch;
+    -webkit-overflow-scrolling: touch;
 }
 
 .common-add-icon {
@@ -127,6 +131,7 @@ span.ant-select-selection.ant-select-selection--multiple {
     right: 25px;
     font-size: 56px;
     color: #3db1af;
+    z-index: 10;
 }
 
 .common-record-text {
@@ -175,8 +180,8 @@ span.ant-select-selection.ant-select-selection--multiple {
 }
 
 .swiper-slide {
-    overflow: scroll;
-    -webkit-overflow-scrolling:touch;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
 }
 
 .phone-select-root {
@@ -210,5 +215,18 @@ span.ant-select-selection.ant-select-selection--multiple {
 .identity-item-select {
     color: #4197FC;
     border-bottom: 1px solid #4197FC;
+}
+
+.common-flex-row-10 {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    align-items: center;
+}
+
+.common-font-family {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    letter-spacing: 0;
 }
 

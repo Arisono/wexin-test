@@ -271,7 +271,7 @@
     margin-left: 6px;
 }
 
-.class-recharge-detail-status-todo ,.class-recharge-detail-status-done{
+.class-recharge-detail-status-todo, .class-recharge-detail-status-done {
     font-family: PingFangSC-Regular;
     font-size: 12px;
     letter-spacing: 0;
@@ -312,13 +312,13 @@
     letter-spacing: 0;
 }
 
-.class-recharge-detail-menu{
-    width:100%;
+.class-recharge-detail-menu {
+    width: 100%;
     padding: 5px 16px 20px;
     display: flex;
 }
 
-.class-recharge-detail-money{
+.class-recharge-detail-money {
     font-family: PingFangSC-Regular;
     font-size: 15px;
     color: #FD2A2A;
@@ -326,7 +326,7 @@
     flex: 1;
 }
 
-.class-recharge-detail-stop{
+.class-recharge-detail-stop {
     background: #4197FC;
     border-radius: 2px;
     font-family: PingFangSC-Regular;
@@ -336,7 +336,7 @@
     padding: 3px 6px;
 }
 
-.class-recharge-detail-not{
+.class-recharge-detail-not {
     font-family: PingFangSC-Regular;
     font-size: 14px;
     color: #2084F9;
@@ -348,12 +348,118 @@
     width: 100%;
     background: white;
     overflow: scroll;
-    -webkit-overflow-scrolling:touch;
+    -webkit-overflow-scrolling: touch;
 }
 
-.class-recharge-item-root{
-    width:100%;
+.class-recharge-item-root {
+    width: 100%;
     margin: 15px 0;
-    background:white;
+    background: white;
     border-radius: 6px;
+}
+
+.recharge-modal-layout {
+    padding: 0 10px;
+    background: white;
+}
+
+.recharge-modal-layout .am-grid-item-content {
+    padding: 5px !important;
+}
+
+/*.recharge-modal-layout .am-flexbox-item.am-grid-item {
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+    margin: 10px 20px
+}*/
+
+.recharge-modal-amount-normal, .recharge-modal-amount-select {
+    border-radius: 4px;
+    margin: 8px 12px;
+    padding: 5px;
+    position: relative;
+}
+
+.recharge-modal-amount-normal {
+    border: 1px solid #D7D7D7;
+    color: #333333;
+}
+
+.recharge-modal-amount-select {
+    border: 1.4px solid #4197FC;
+    color: #4197FC;
+}
+
+.recharge-modal-money-mark {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 14px solid #4197FC;
+    border-left: 15px solid transparent;
+}
+
+.recharge-modal-money-mark-layout {
+    position: absolute;
+    right: -3px;
+    bottom: -5px;
+    background: transparent;
+}
+
+.recharge-modal-money-mark-text {
+    color: white;
+    transform: scale(0.5,0.4);
+    margin: 0;
+    padding: 0;
+}
+
+.recharge-modal-layout .am-flexbox-item.am-grid-item.am-grid-null-item {
+    border: none;
+    border-radius: 0;
+}
+
+.recharge-modal-title {
+    font-family: PingFangSC-Regular;
+    font-size: 17px;
+    color: #1B1B1B;
+    letter-spacing: 1px;
+    text-align: left;
+    padding: 10px 20px;
+}
+
+.recharge-modal-title-text {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #5B5B5B;
+}
+
+.recharge-modal-amount-layout {
+    display: flex;
+    text-align: left;
+    padding: 10px 20px;
+    align-items: center;
+}
+
+.recharge-modal-amount-layout .am-list-item.am-input-item.am-list-item-middle {
+    min-height: 32px !important;
+}
+
+.recharge-modal-amount-layout .am-list-item.am-input-item.am-list-item-middle.recharge-modal-amount-input {
+    height: 32px;
+}
+
+.recharge-modal-amount-layout .am-input-control {
+    font-size: 14px;
+}
+
+.recharge-modal-amount-input {
+    flex: 1;
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #333333;
+    letter-spacing: 0.88px;
+    margin-left: 10px;
 }

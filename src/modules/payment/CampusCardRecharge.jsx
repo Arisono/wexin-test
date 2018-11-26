@@ -82,6 +82,14 @@ export default class CampusCardRecharge extends Component {
                                           'recharge-modal-amount-select' :
                                           'recharge-modal-amount-normal'}>
                                       {dataItem}
+                                      <div
+                                          className={moneySelect == index ? 'recharge-modal-money-mark' : 'displayNone'}>
+                                      </div>
+                                      <div
+                                          className={moneySelect == index ? 'recharge-modal-money-mark-layout' : 'displayNone'}>
+                                          <div className='recharge-modal-money-mark-text'>√</div>
+                                      </div>
+
                                   </div>
                               )}
                         />

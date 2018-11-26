@@ -360,6 +360,7 @@
 
 .recharge-modal-layout {
     padding: 0 10px;
+    background: white;
 }
 
 .recharge-modal-layout .am-grid-item-content {
@@ -376,14 +377,41 @@
     border-radius: 4px;
     margin: 8px 12px;
     padding: 5px;
+    position: relative;
 }
 
 .recharge-modal-amount-normal {
     border: 1px solid #D7D7D7;
+    color: #333333;
 }
 
 .recharge-modal-amount-select {
     border: 1.4px solid #4197FC;
+    color: #4197FC;
+}
+
+.recharge-modal-money-mark {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 14px solid #4197FC;
+    border-left: 15px solid transparent;
+}
+
+.recharge-modal-money-mark-layout {
+    position: absolute;
+    right: -3px;
+    bottom: -5px;
+    background: transparent;
+}
+
+.recharge-modal-money-mark-text {
+    color: white;
+    transform: scale(0.5,0.4);
+    margin: 0;
+    padding: 0;
 }
 
 .recharge-modal-layout .am-flexbox-item.am-grid-item.am-grid-null-item {

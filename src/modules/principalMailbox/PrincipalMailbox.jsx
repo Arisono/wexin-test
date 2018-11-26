@@ -6,6 +6,8 @@
 import React, {Component} from 'react'
 import {Icon, Input, Button, Upload, Switch, message, Modal} from 'antd'
 import 'css/principal-mailbox.css'
+import WxImageViewer from 'react-wx-images-viewer'
+import {isObjEmpty} from "../../utils/common";
 
 const {TextArea} = Input
 
@@ -19,12 +21,26 @@ export default class PrincipalMailbox extends Component {
             previewVisible: false,
             previewImage: '',
             fileList: [{
+                index: 0,
                 uid: '-1',
                 name: 'xxx.png',
                 status: 'done',
                 url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+            }, {
+                index: 1,
+                uid: '-1',
+                name: 'xxx.png',
+                status: 'done',
+                url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543039474667&di=32c37088ba29d428392cee485ce29995&imgtype=0&src=http%3A%2F%2Fpic153.nipic.com%2Ffile%2F20171226%2F26515894_231421032000_2.jpg',
+            }, {
+                index: 2,
+                uid: '-1',
+                name: 'xxx.png',
+                status: 'done',
+                url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543039450432&di=c4e6d3b8039a4b2b2713a8fa278a54cc&imgtype=0&src=http%3A%2F%2Ffx120.120askimages.com%2F120ask_news%2F2017%2F0706%2F201707061499322886181789.jpg',
             }],
-            isAnonymous: false
+            isAnonymous: false,
+            previewIndex: 0
         }
     }
 
@@ -34,6 +50,12 @@ export default class PrincipalMailbox extends Component {
 
     render() {
         const {previewVisible, previewImage, fileList, suggest, isAnonymous} = this.state;
+        const imgs = []
+        if (!isObjEmpty(fileList) && fileList !== '[]') {
+            for (let i = 0; i < fileList.length; i++) {
+                imgs.push(fileList[i].url)
+            }
+        }
 
         const uploadButton = (
             <div>
@@ -63,9 +85,11 @@ export default class PrincipalMailbox extends Component {
                         onChange={this.handleChange}>
                         {fileList.length >= 4 ? null : uploadButton}
                     </Upload>
-                    <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                    {/*<Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                         <img alt="example" style={{width: '100%'}} src={previewImage}/>
-                    </Modal>
+                    </Modal>*/}
+                    {previewVisible ?
+                        <WxImageViewer onClose={this.handleCancel} urls={imgs} index={this.state.previewIndex}/> : ""}
                 </div>
                 <div className='anonymousLayout'>
                     <Switch size="small" checked={isAnonymous} onChange={this.switchChange}/>
@@ -100,12 +124,13 @@ export default class PrincipalMailbox extends Component {
 
     handleCancel = () => this.setState({previewVisible: false})
 
-    handlePreview = (file) => {
+    handlePreview = (file, index) => {
         this.setState({
             previewImage: file.url || file.thumbUrl,
             previewVisible: true,
+            previewIndex: file.index || 0
         });
-        console.log('预览')
+        console.log('预览' + index)
     }
 
     handleChange = ({fileList}) => this.setState({fileList})

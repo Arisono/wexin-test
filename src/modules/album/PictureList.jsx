@@ -10,6 +10,7 @@ import {Button, Modal} from 'antd'
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import '../../index.css'
 import 'css/album-item.css'
+import WxImageViewer from 'react-wx-images-viewer'
 
 export default class PictureList extends Component {
 
@@ -66,12 +67,12 @@ export default class PictureList extends Component {
                                 appear={true}
                                 key={i}>
                                 <div className='pictureItem'>
-                                    <img src={pictureUrl} onClick={this.handlePreview.bind(this, pictureUrl)}/>
+                                    <img src={pictureUrl} onClick={this.handlePreview.bind(this, pictureUrl, i)}/>
                                 </div>
                             </CSSTransition>
                         </LazyLoad> :
                         <div className='pictureItem'>
-                            <img src={pictureUrl} onClick={this.handlePreview.bind(this, pictureUrl)}/>
+                            <img src={pictureUrl} onClick={this.handlePreview.bind(this, pictureUrl, i)}/>
                         </div>
                 )
             }
@@ -86,9 +87,13 @@ export default class PictureList extends Component {
                     </TransitionGroup>
                 </div>
 
-                <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                {/*<Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                     <img alt="图片" style={{width: '100%'}} src={previewImage}/>
-                </Modal>
+                </Modal>*/}
+
+                {previewVisible ?
+                    <WxImageViewer onClose={this.handleCancel} urls={pictureList}
+                                   index={this.state.previewIndex}/> : ""}
 
                 <div className='album-detail-bottom'>
                     <Button type='primary' className='album-detail-button'
@@ -109,10 +114,11 @@ export default class PictureList extends Component {
     }
 
 
-    handlePreview = (url) => {
+    handlePreview = (url, index) => {
         this.setState({
             previewImage: url,
             previewVisible: true,
+            previewIndex: index
         });
     }
 

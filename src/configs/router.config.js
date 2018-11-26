@@ -44,6 +44,7 @@ import NotifyBoardTeacher from "../modules/notificationCenter/NotifyBoardTeacher
 import ClassRechargeList from "../modules/payment/ClassRechargeList";
 import ClassRechargeDetail from "../modules/payment/ClassRechargeDetail";
 import LeaveAddCPage from "../modules/leave/LeaveAddCPage";
+import VoteListTabPage from "../modules/vote/VoteListTabPage";
 
 export default class RouteConfig extends Component {
 
@@ -85,6 +86,7 @@ export default class RouteConfig extends Component {
                     <Route path="/voteDetail" component={VoteDetailPage}/>
                     <Route path="/homePage" component={AppHomePage}/>
                     <Route path='/voteList' component={VoteListPage}/>
+                    <Route path='/voteListTab' component={VoteListTabPage}/>
                     <Route path='/leaveAddC' component={LeaveAddCPage}/>
                     <Route path='/leaveAdd' component={LeaveAddPage}/>
                     <Route path='/leaveApproval' component={LeaveApprovalPage}/>

@@ -127,6 +127,7 @@ span.ant-select-selection.ant-select-selection--multiple {
     right: 25px;
     font-size: 56px;
     color: #3db1af;
+    z-index: 10;
 }
 
 .common-record-text {
@@ -175,7 +176,7 @@ span.ant-select-selection.ant-select-selection--multiple {
 }
 
 .swiper-slide {
-    overflow: scroll;
+    overflow-y: scroll;
     -webkit-overflow-scrolling:touch;
 }
 

@@ -11,7 +11,7 @@ import {List, Icon} from 'antd'
 import icon_out from '../../../style/imgs/out_img.png';
 import icon_res from '../../../style/imgs/res_img.png';
 import icon_trip from '../../../style/imgs/trip_img.png';
-import ApprovelItem from './Approvel';
+import ApprovelItem from './ApprovelItem';
 
 let mySwiper
 
@@ -26,7 +26,6 @@ export default class Approvel extends Component{
         }
     }
     componentWillMount() {
-        console.log('Component WILL MOUNT!')
     }
     componentDidMount() {
         document.title = '审批'
@@ -44,39 +43,65 @@ export default class Approvel extends Component{
                 }
             }
         })
-        let  applyListDataapplyListData = [
+        let approvelListData  = [
             {
                 img:icon_trip,
                 title:'出差申请',
-                date:new Date().toLocaleString(),
-                status:'待处理'
+                date:'2018/11/22   14:00',
+                status:'待处理',
+                statustype:1
             },{
                 img:icon_res,
                 title:'用品申请',
-                date:new Date().toLocaleString(),
-                status:'已处理'
+                date:'2018/11/22   14:00',
+                status:'已处理',
+                statustype:2
             },{
                 img:icon_out,
                 title:'外出申请',
-                date:new Date().toLocaleString(),
-                status:'待处理'
+                date:'2018/11/22   14:00',
+                status:'已处理',
+                statustype:2
             }
         ]
+        let applyListData  = [
+            {
+                img:icon_res,
+                title:'用品申请',
+                date:'2018/11/22   14:00',
+                status:'已审批',
+                statustype:2
+            },{
+                img:icon_out,
+                title:'外出申请',
+                date:'2018/11/22   14:00',
+                status:'待审批',
+                statustype:1
+            },
+            {
+                img:icon_trip,
+                title:'出差申请',
+                date:'2018/11/22   14:00',
+                status:'待审批',
+                statustype:1
+            }
+        ]
+
+        this.setState({
+            applyList:applyListData,
+            approvelList:approvelListData
+        })
     }
     componentWillReceiveProps(newProps) {
-        console.log('Component WILL RECEIVE PROPS!')
     }
     shouldComponentUpdate(newProps, newState) {
         return true;
     }
     componentWillUpdate(nextProps, nextState) {
-        console.log('Component WILL UPDATE!');
     }
     componentDidUpdate(prevProps, prevState) {
-        console.log('Component DID UPDATE!')
     }
     componentWillUnmount() {
-        console.log('Component WILL UNMOUNT!')
     }
     render(){
         const {selectIndex, applyList, approvelList} = this.state
@@ -96,21 +121,21 @@ export default class Approvel extends Component{
                 <div className="swiper-container" style={{backgroundColor:"#F2F2F2",height:"100vh"}}>
                     <div className="swiper-wrapper">
                         <div className="swiper-slide">
-                            {this.state.applyList.map((itemata,index) => <ApprovelItem index={index} itemata = {itemata} onClick ={this.clickApplyItem(this,index)} ></ApprovelItem>)}
+                            {this.state.applyList.map((itemdata,index) => <ApprovelItem type={1} index={index} itemata = {itemdata} clickApplyItem ={this.clickApplyItem} ></ApprovelItem>)}
                         </div>
                         <div className="swiper-slide">
-                            {this.state.approvelList.map((itemata,index) => <ApprovelItem index={index} itemata = {itemata} onClick ={this.clickApprovelItem(this,index)} ></ApprovelItem>)}
+                            {this.state.approvelList.map((itemdata,index) => <ApprovelItem type={2} index={index} itemata = {itemdata} clickApprovelItem ={this.clickApprovelItem} ></ApprovelItem>)}
                         </div>
                     </div>
                 </div>
             </div>
         )
     }
-    clickApplyItem = (index) =>{
-
+    clickApplyItem = (itemdata) =>{
+        console.log('clickApplyItem',itemdata)
     }
-    clickApprovelItem = (index) =>{
-
+    clickApprovelItem = (itemdata) =>{
+        console.log('clickApprovelItem',itemdata)
     }
     onMyApplyClick = () => {
         this.setState({

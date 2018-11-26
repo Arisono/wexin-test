@@ -2,5 +2,14 @@
     margin: 10px;background-color: #FFFFFF;height: 76px;border-radius: 6px;display: flex;flex-direction: row;
 }
 .img_sty{
-    height:45px;width: 45px;
+    height:45px;width: 45px;margin: 15px 10px;
+}
+.img_circle{
+    height:45px;width: 45px;margin: 15px 10px; border-radius: 29px;
+}
+.doing{
+    color: #C70404 ;
+}
+.done{
+    color: #666666;
 }

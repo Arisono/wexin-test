@@ -5,41 +5,38 @@
 
 import React,{Component} from 'react';
 import './Approvel.css';
-
+import icon_out from '../../../style/imgs/out_img.png';
 export default class ApprovelItem extends Component{
     constructor(props){
         super(props);
-    }
-    componentWillMount() {
-        console.log('Component WILL MOUNT!')
-    }
-    componentDidMount() {
-        console.log('Component DID MOUNT!')
-    }
-    componentWillReceiveProps(newProps) {
-        console.log('Component WILL RECEIVE PROPS!')
-    }
-    shouldComponentUpdate(newProps, newState) {
-        return true;
-    }
-    componentWillUpdate(nextProps, nextState) {
-        console.log('Component WILL UPDATE!');
-    }
-    componentDidUpdate(prevProps, prevState) {
-        console.log('Component DID UPDATE!')
-    }
-    componentWillUnmount() {
-        console.log('Component WILL UNMOUNT!')
+        this.state={
+            itemData:{},
+            type:this.props.type
+        }
     }
     render(){
+
         return(
-            <div className="item-Style">
+            <div className="item-Style" onClick={this.ItemClick.bind(this,this.state.type,this.props.itemata)}>
                 <div style={{width:76,height:'100%'}}>
-                    <img src={this.props.itemata.img} className="img_sty"/>
+                    <img src={this.props.itemata.img} className={this.state.type==1?'img_sty':"img_circle"}/>
                 </div>
-                <div></div>
-                <div></div>
+                <div style={{width:'65%'}}>
+                    <div style={{color:"#333333",fontSize:15,marginTop:10}}>{this.props.itemata.title}</div>
+                    <div style={{color:"#666666",fontSize:12,marginTop:15}}>{this.props.itemata.date}</div>
+                </div>
+                <div className={this.props.itemata.statustype==1?'doing':'done'} style={{textAlign:'left',marginTop:10,fontSize:12}}>
+                    {this.props.itemata.status}
+                </div>
             </div>
         )
+    }
+    ItemClick =(type,data)=>{
+        // console.log('type,data',type+'--'+data);
+        if(type == 1){
+            this.props.clickApplyItem(data)
+        } else {
+            this.props.clickApprovelItem(data)
+        }
     }
 }

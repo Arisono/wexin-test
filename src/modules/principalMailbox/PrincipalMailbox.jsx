@@ -8,6 +8,7 @@ import {Icon, Input, Button, Upload, Switch, message, Modal} from 'antd'
 import 'css/principal-mailbox.css'
 import WxImageViewer from 'react-wx-images-viewer'
 import {isObjEmpty} from "../../utils/common";
+import UploadImages from 'components/UploadImages'
 
 const {TextArea} = Input
 
@@ -71,7 +72,7 @@ export default class PrincipalMailbox extends Component {
                           onChange={this.suggestChange}/>
                 <span className='wordCount'>{suggest.length + '/500'}</span>
                 <div className='gray-line'></div>
-                <div className='chooseLayout'>
+                {/*<div className='chooseLayout'>
                     <span className='annexText'>附件</span>
                     <span className='annexCount'>{'（' + fileList.length + '/4张）'}</span>
                 </div>
@@ -85,12 +86,23 @@ export default class PrincipalMailbox extends Component {
                         onChange={this.handleChange}>
                         {fileList.length >= 4 ? null : uploadButton}
                     </Upload>
-                    {/*<Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                    <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                         <img alt="example" style={{width: '100%'}} src={previewImage}/>
-                    </Modal>*/}
+                    </Modal>
                     {previewVisible ?
                         <WxImageViewer onClose={this.handleCancel} urls={imgs} index={this.state.previewIndex}/> : ""}
-                </div>
+                </div>*/}
+
+                <UploadImages
+                    action="//jsonplaceholder.typicode.com/posts/"
+                    listType="picture-card"
+                    fileList={fileList}
+                    count={4}
+                    multiple={true}
+                    title='附件'
+                    beforeUpload={this.beforeUpload}
+                    handleChange={this.handleChange}
+                />
                 <div className='anonymousLayout'>
                     <Switch size="small" checked={isAnonymous} onChange={this.switchChange}/>
                     <span style={{marginLeft: '5px'}}>匿名</span>
@@ -120,6 +132,10 @@ export default class PrincipalMailbox extends Component {
         this.setState({
             isAnonymous: checked
         })
+    }
+
+    beforeUpload = (file, fileList) => {
+
     }
 
     handleCancel = () => this.setState({previewVisible: false})

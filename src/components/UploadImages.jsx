@@ -6,6 +6,7 @@
 import React, {Component} from 'react'
 import {Upload, Icon} from 'antd'
 import WxImageViewer from 'react-wx-images-viewer'
+import {isObjEmpty} from "../utils/common";
 
 export default class UploadImages extends Component {
 
@@ -14,17 +15,27 @@ export default class UploadImages extends Component {
 
         this.state = {
             previewVisible: false,
-            previewIndex: 0
+            previewIndex: 0,
+            fileList: []
         }
     }
 
     componentDidMount() {
-
+        this.setState({
+            fileList: this.props.fileList
+        })
     }
 
     render() {
-        const {action, listType, fileList, count, multiple, title} = this.props
+        const {fileList} = this.state
+        const {action, listType, count, multiple, title} = this.props
 
+        const imgs = []
+        if (!isObjEmpty(fileList) && fileList !== '[]') {
+            for (let i = 0; i < fileList.length; i++) {
+                imgs.push(fileList[i].url)
+            }
+        }
         const uploadButton = (
             <div>
                 <Icon type="plus"/>
@@ -36,7 +47,7 @@ export default class UploadImages extends Component {
             <div>
                 <div className='chooseLayout'>
                     <span className='annexText'>{title}</span>
-                    <span className='annexCount'>（{fileList.length}/{count}张</span>
+                    <span className='annexCount'>（{fileList.length}/{count}）张</span>
                 </div>
                 <div className='imagesLayout'>
                     <Upload
@@ -70,6 +81,7 @@ export default class UploadImages extends Component {
     }
 
     handleChange = ({fileList}) => {
+        this.setState({fileList})
         this.props.handleChange(fileList)
     }
 }

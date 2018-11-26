@@ -32,20 +32,19 @@ export default class NotifyBoardItem extends Component {
                     <div></div>
                     <div className='notify-item-line'></div>
                     <div className="notify-item-isserLine">
-                        <div className='notify-item-issuer'>通知人：</div>
-                        <div className='notify-item-issuerName'>{notifyBoBean.noIssue}</div>
+                        <div className='notify-item-caption'>通知人：</div>
+                        <div className='notify-item-value'>{notifyBoBean.noIssue}</div>
 
                     </div>
 
                     <div className="notify-item-timeLine">
-                        <div className='notify-item-time'>通知时间：</div>
-                        <div className='notify-item-timeDetail'>{notifyBoBean.noTime}</div>
+                        <div className='notify-item-caption'>通知时间：</div>
+                        <div className='notify-item-value'>{notifyBoBean.noTime}</div>
                     </div>
                     <div className='notify-item-lineBottem'></div>
                     <div className="notify-item-detailLine">
                         <div className="notify-item-detail">详情</div>
                         <img className='notify-item-detailIcon' src={require('imgs/next_arrow.png')}/>
-                        {/*<img className='notify-item-detailIcon' src={require('imgs/next_arrow.png')} />*/}
                     </div>
 
                 </div>

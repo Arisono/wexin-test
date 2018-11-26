@@ -10,6 +10,8 @@ import line_img from '../../../style/imgs/line_img.png';
 import enter_img from '../../../style/imgs/ic_enter.png';
 import exit_img from '../../../style/imgs/ic_exit.png';
 import httpRuquest from  '../../../utils/fetchRequest';
+import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
+import {API} from '../../../configs/api.config';
 
 function ItemComp() {
     return(
@@ -30,7 +32,20 @@ export default class AccessNotice extends Component{
     componentWillMount() {
         document.title = '进出校通知'
     }
-
+    componentDidMount() {
+        // console.log('Component DID MOUNT!',API.RecordOutgoingList)
+        fetchGet(API.RecordOutgoingList,{
+            stuId:10000,
+            pageIndex:1,
+            pageSize:10
+        },{})
+            .then((response)=>{
+                console.log('response',response)
+            })
+            .catch((error) =>{
+                console.log('error',error)
+            })
+    }
     constructor(){
         super();
         this.state = {

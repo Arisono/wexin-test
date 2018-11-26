@@ -15,7 +15,7 @@ export default class UserItem extends Component{
             <div onChange={this.handelValueCom}>
                 <div className="res_detail">物品明细({this.props.index+1})</div>
                 <div className="item_sty">
-                    <div className="left_title">物品用途</div>
+                    <div className="left_title">物品名称</div>
                     <input  ref='itemuser'  className="text-right right_input" type="text" placeholder="请输入"  value={this.props.itemata.res_user} />
                 </div>
                 <div className="comhline_sty1"></div>

@@ -39,7 +39,7 @@
     flex: 1;
     overflow-x: hidden;
     overflow-y: scroll;
-    -webkit-overflow-scrolling:touch;
+    -webkit-overflow-scrolling: touch;
     padding: 12px;
     background: white;
 }
@@ -144,4 +144,26 @@
     letter-spacing: 0;
     padding: 3px 9px;
     width: max-content;
+}
+
+.principal-enclosure-layout {
+    width: 100%;
+    position: relative;
+}
+
+.principal-enclosure-img {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.principal-enclosure-count {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #666666;
+    letter-spacing: 2px;
+    position: absolute;
+    bottom: 2px;
+    left: 120px;
 }

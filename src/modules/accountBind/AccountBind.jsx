@@ -184,7 +184,8 @@ export default class AccountBind extends Component {
             // return
         }
         if (mType == 'parents') {
-            fetchPost(API.BIND_STUDENTID, {
+            this.props.history.push('/homePage?role=parent')
+            /*fetchPost(API.BIND_STUDENTID, {
                 stuId: account,
                 userPhone: phone,
                 vcode: code,
@@ -194,9 +195,10 @@ export default class AccountBind extends Component {
             }).catch(error => {
                 this.props.history.push('/homePage?role=parent')
                 Toast.fail(error || '绑定学号失败')
-            })
+            })*/
         } else if (mType == 'teacher') {
-            fetchPost(API.BIND_TEACHERID, {
+            this.props.history.push('/homePage?role=teacher')
+            /*fetchPost(API.BIND_TEACHERID, {
                 userId: account,
                 userPhone: phone,
                 vcode: code,
@@ -206,7 +208,7 @@ export default class AccountBind extends Component {
             }).catch(error => {
                 this.props.history.push('/homePage?role=teacher')
                 Toast.fail(error || '绑定工号失败')
-            })
+            })*/
         }
     }
 }

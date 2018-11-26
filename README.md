@@ -55,6 +55,12 @@
  <PicturesWallItem action={'url路径'} number={1} callback = { this.callback.bind(this)}></PicturesWallItem>
 ```
 
+### 选择对象
+
+```
+
+```
+
 ## 目录划分
 
 - style：图片及样式

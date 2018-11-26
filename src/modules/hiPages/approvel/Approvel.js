@@ -7,80 +7,149 @@ import React,{Component} from 'react';
 import './Approvel.css';
 import Swiper from 'swiper/dist/js/swiper';
 import 'swiper/dist/css/swiper.min.css';
+import {List, Icon} from 'antd'
+import icon_out from '../../../style/imgs/out_img.png';
+import icon_res from '../../../style/imgs/res_img.png';
+import icon_trip from '../../../style/imgs/trip_img.png';
+import ApprovelItem from './ApprovelItem';
+
+let mySwiper
+
 
 export default class Approvel extends Component{
     constructor(){
         super();
         this.state = {
             selectIndex: 0,
-            teacherList: [],
-            parentList: []
+            applyList: [1,2,3],
+            approvelList: []
         }
     }
     componentWillMount() {
-        console.log('Component WILL MOUNT!')
     }
     componentDidMount() {
         document.title = '审批'
+        const that = this
+        const {selectIndex, applyList, approvelList} = this.state
+
+        mySwiper = new Swiper('.swiper-container', {
+            autoplay: false,
+            loop: false,
+            on: {
+                slideChangeTransitionEnd: function () {
+                    that.setState({
+                        selectIndex: this.activeIndex
+                    })
+                }
+            }
+        })
+        let approvelListData  = [
+            {
+                img:icon_trip,
+                title:'出差申请',
+                date:'2018/11/22   14:00',
+                status:'待处理',
+                statustype:1
+            },{
+                img:icon_res,
+                title:'用品申请',
+                date:'2018/11/22   14:00',
+                status:'已处理',
+                statustype:2
+            },{
+                img:icon_out,
+                title:'外出申请',
+                date:'2018/11/22   14:00',
+                status:'已处理',
+                statustype:2
+            }
+        ]
+        let applyListData  = [
+            {
+                img:icon_res,
+                title:'用品申请',
+                date:'2018/11/22   14:00',
+                status:'已审批',
+                statustype:2
+            },{
+                img:icon_out,
+                title:'外出申请',
+                date:'2018/11/22   14:00',
+                status:'待审批',
+                statustype:1
+            },
+            {
+                img:icon_trip,
+                title:'出差申请',
+                date:'2018/11/22   14:00',
+                status:'待审批',
+                statustype:1
+            }
+        ]
+
+        this.setState({
+            applyList:applyListData,
+            approvelList:approvelListData
+        })
     }
     componentWillReceiveProps(newProps) {
-        console.log('Component WILL RECEIVE PROPS!')
     }
     shouldComponentUpdate(newProps, newState) {
         return true;
     }
     componentWillUpdate(nextProps, nextState) {
-        console.log('Component WILL UPDATE!');
     }
     componentDidUpdate(prevProps, prevState) {
-        console.log('Component DID UPDATE!')
     }
     componentWillUnmount() {
-        console.log('Component WILL UNMOUNT!')
     }
     render(){
-        const {selectIndex, teacherList, parentList} = this.state
-
+        const {selectIndex, applyList, approvelList} = this.state
         return(
             <div className='phone-select-root'>
                 <div className='gray-line'></div>
                 <div className='identity-select'>
                     <div className={selectIndex == 0 ?
                         'identity-item-select' : 'identity-item-normal'}
-                         onClick={this.onTeacherClick}>我的申请
+                         onClick={this.onMyApplyClick}>我的申请
                     </div>
                     <div className={selectIndex == 1 ?
                         'identity-item-select' : 'identity-item-normal'}
-                         onClick={this.onParentClick}>我的审批
+                         onClick={this.onMyApprovelClick}>我的审批
+                   </div>
+                </div>
+                <div className="swiper-container" style={{backgroundColor:"#F2F2F2",height:"100vh"}}>
+                    <div className="swiper-wrapper">
+                        <div className="swiper-slide">
+                            {this.state.applyList.map((itemdata,index) => <ApprovelItem type={1} index={index} itemata = {itemdata} clickApplyItem ={this.clickApplyItem} ></ApprovelItem>)}
+                        </div>
+                        <div className="swiper-slide">
+                            {this.state.approvelList.map((itemdata,index) => <ApprovelItem type={2} index={index} itemata = {itemdata} clickApprovelItem ={this.clickApprovelItem} ></ApprovelItem>)}
+                        </div>
                     </div>
                 </div>
-                {/*<div className="swiper-container">*/}
-                    {/*<div className="swiper-wrapper">*/}
-                        {/*<div className="swiper-slide">*/}
-                            {/*{teacherItems}*/}
-                        {/*</div>*/}
-                        {/*<div className="swiper-slide">*/}
-                            {/*{parentItems}*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
-                {/*</div>*/}
             </div>
         )
     }
-
-    onTeacherClick = () => {
+    clickApplyItem = (itemdata) =>{
+        console.log('clickApplyItem',itemdata)
+    }
+    clickApprovelItem = (itemdata) =>{
+        console.log('clickApprovelItem',itemdata)
+    }
+    onMyApplyClick = () => {
         this.setState({
             selectIndex: 0
         }, () => {
-            // mySwiper.slideTo(this.state.selectIndex, 300, false)
+            mySwiper.slideTo(this.state.selectIndex, 300, false)
         })
     }
 
-    onParentClick = () => {
+    onMyApprovelClick = () => {
         this.setState({
             selectIndex: 1
         }, () => {
-            // mySwiper.slideTo(this.state.selectIndex, 300, false)
+            mySwiper.slideTo(this.state.selectIndex, 300, false)
         })
     }
 }

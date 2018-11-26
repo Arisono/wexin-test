@@ -40,15 +40,19 @@ export default class NotifyBoardParent extends Component {
                     loader={<LoadingMore/>}>
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
                         <List split={false} dataSource={notifyList}
-                              renderItem={notifyBoBean => (
-                                  <NotifyBoardItem notifyBoBean={notifyBoBean}/>
+                              renderItem={(notifyBoBean, index) => (
+                                  <NotifyBoardItem notifyBoBean={notifyBoBean}
+                                                   onDetailClick={this.onDetailClick.bind(this)}
+                                                   index={index}/>
                               )}/>
                     </Skeleton>
                 </InfiniteScroll>
-                {/*<Icon type="plus-circle" theme='filled' className='common-add-icon'*/}
-                      {/*onClick={this.onAddNotify}/>*/}
             </div>
         )
+    }
+
+    onDetailClick = (index) => {
+        console.log(index)
     }
 
     loadRechargeList = () => {
@@ -80,7 +84,4 @@ export default class NotifyBoardParent extends Component {
         }, 1500)
     }
 
-    onAddNotify = () => {
-        this.props.history.push('/announceRelease')
-    }
 }

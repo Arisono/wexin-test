@@ -9,6 +9,7 @@ import 'swiper/dist/css/swiper.min.css'
 import 'css/consume-re.css'
 import NotifyBoBean from 'model/NotifyBoBean'
 import {List, Icon, Skeleton} from 'antd'
+import {Modal, PullToRefresh} from 'antd-mobile'
 import InfiniteScroll from 'react-infinite-scroller'
 import LoadingMore from 'components/LoadingMore'
 import NotifyBoardItem from "../../components/NotifyBoardItem";
@@ -25,7 +26,8 @@ export default class NotifyBoardTeacher extends Component {
             isReleaseLoading: true,
             isReceiveLoading: true,
             hasMoreRelease: true,
-            hasMoreReceive: true
+            hasMoreReceive: true,
+            detailVisible: false
         }
     }
 
@@ -33,7 +35,6 @@ export default class NotifyBoardTeacher extends Component {
         document.title = '通知公告'
 
         const that = this
-        const {selectIndex, releaseList, receiveList} = this.state
 
         this.mySwiper = new Swiper('.swiper-container', {
             autoplay: false,
@@ -46,6 +47,9 @@ export default class NotifyBoardTeacher extends Component {
                 }
             }
         })
+
+        this.loadReceiveList()
+        this.loadReleaseList()
     }
 
     componentWillUnmount() {
@@ -53,9 +57,10 @@ export default class NotifyBoardTeacher extends Component {
     }
 
     render() {
-        const {selectIndex, releaseList, receiveList} = this.state
+        const {selectIndex} = this.state
         const releaseItems = this.getReleaseItems()
         const receiveItems = this.getReceiveItems()
+        const detailModal = this.getDetailModal()
 
         return (
             <div className='phone-select-root'>
@@ -80,8 +85,35 @@ export default class NotifyBoardTeacher extends Component {
                         </div>
                     </div>
                 </div>
+
+                <Icon type="plus-circle" theme='filled' className='common-add-icon'
+                      onClick={this.onAddNotify}/>
+                {detailModal}
+
+                <Icon type="plus-circle" theme='filled' className='common-add-icon'
+                      onClick={this.onAddNotify}/>
             </div>
         )
+    }
+
+    getDetailModal = () => {
+        return (
+            <Modal
+                popup
+                visible={this.state.detailVisible}
+                onClose={this.onModalClose}
+                animationType="slide-up">
+                <div style={{height:'100px'}}>
+                    {this.selectType === 'release' ? '我发布的' : '我接收的'}通知公告第{this.selectIndex}条详情
+                </div>
+            </Modal>
+        )
+    }
+
+    onModalClose = () => {
+        this.setState({
+            detailVisible: false
+        })
     }
 
     getReleaseItems = () => (
@@ -89,37 +121,59 @@ export default class NotifyBoardTeacher extends Component {
             <InfiniteScroll
                 pageStart={0}
                 loadMore={this.loadReleaseList}
+                initialLoad={false}
                 hasMore={this.state.hasMoreRelease}
                 loader={<LoadingMore/>}>
                 <Skeleton loading={this.state.isReleaseLoading} active paragraph={{rows: 3}}>
                     <List split={false} dataSource={this.state.releaseList}
-                          renderItem={notifyBoBean => (
-                              <NotifyBoardItem notifyBoBean={notifyBoBean}/>
+                          renderItem={(notifyBoBean, index) => (
+                              <NotifyBoardItem notifyBoBean={notifyBoBean}
+                                               onDetailClick={this.onDetailClick.bind(this)}
+                                               index={index}
+                                               type='release'/>
                           )}/>
                 </Skeleton>
             </InfiniteScroll>
         </div>
     )
+
+    scrollParentRef = (e) => {
+        console.log('scroll', e)
+    }
 
     getReceiveItems = () => (
         <div className='notify-bg-root'>
             <InfiniteScroll
                 pageStart={0}
+                initialLoad={false}
                 loadMore={this.loadReceiveList}
                 hasMore={this.state.hasMoreReceive}
                 loader={<LoadingMore/>}>
                 <Skeleton loading={this.state.isReceiveLoading} active paragraph={{rows: 3}}>
                     <List split={false} dataSource={this.state.receiveList}
-                          renderItem={notifyBoBean => (
-                              <NotifyBoardItem notifyBoBean={notifyBoBean}/>
+                          renderItem={(notifyBoBean, index) => (
+                              <NotifyBoardItem notifyBoBean={notifyBoBean}
+                                               onDetailClick={this.onDetailClick.bind(this)}
+                                               index={index}
+                                               type='receive'/>
                           )}/>
                 </Skeleton>
             </InfiniteScroll>
         </div>
     )
 
+    onDetailClick = (index, type) => {
+        console.log(type, index)
+        this.selectIndex = index
+        this.selectType = type
+        this.setState({
+            detailVisible: true
+        })
+    }
+
     loadReleaseList = () => {
         setTimeout(() => {
+            console.log('loadReleaseList')
             const {releaseList} = this.state
             for (let i = 0; i < 20; i++) {
                 let notifyBoBean = new NotifyBoBean()
@@ -145,6 +199,7 @@ export default class NotifyBoardTeacher extends Component {
 
     loadReceiveList = () => {
         setTimeout(() => {
+            console.log('loadReceiveList')
             const {receiveList} = this.state
             for (let i = 0; i < 20; i++) {
                 let notifyBoBean = new NotifyBoBean()
@@ -182,5 +237,9 @@ export default class NotifyBoardTeacher extends Component {
         }, () => {
             this.mySwiper.slideTo(this.state.selectIndex, 300, false)
         })
+    }
+
+    onAddNotify=()=>{
+        this.props.history.push('/announceRelease')
     }
 }

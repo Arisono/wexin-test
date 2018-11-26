@@ -20,6 +20,14 @@ export const API = {
     SYSTEM_MESSAGE:_baseURL+'/notify/systemMessage',
     //消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
+
+   //根据学号取课程表
+    curriculumListByStuId:_baseURL + '/curriculum/curriculumListByStuId',
+    //查询学生出入校记录
+    RecordOutgoingList:_baseURL + '/recordOutgoing/RecordOutgoingList',
+    //创建投票单
+    voteCreate:_baseURL + '/vote/voteCreate',
+
 }
 
 

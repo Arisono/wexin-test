@@ -219,6 +219,10 @@
     overflow-y: scroll;
 }
 
+.notify-detail-modal-content-layout::-webkit-scrollbar{
+    display: none;
+}
+
 .notify-detail-modal-content-header {
     width: 100%;
     padding: 12px 16px;

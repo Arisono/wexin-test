@@ -24,7 +24,8 @@ export default class CampusCardRecharge extends Component {
             balance: '38.00',
             rechargeVisible: false,
             moneySelect: 0,
-            money: ''
+            money: '',
+            moneyFocus: false
         }
     }
 
@@ -59,7 +60,7 @@ export default class CampusCardRecharge extends Component {
     }
 
     getRechargeModal = () => {
-        const {moneySelect, money} = this.state
+        const {moneySelect, money, moneyFocus} = this.state
         return (
             <Modal
                 popup
@@ -92,17 +93,30 @@ export default class CampusCardRecharge extends Component {
                             type='money' clear
                             moneyKeyboardAlign='left'
                             extra='元'
-                            // onFocus={}
+                            onFocus={this.onMoneyFocus}
+                            onBlur={this.onMoneyBlur}
                             value={money}
                             onChange={this.onMoneyChange}
                             placeholder='请输入金额'/>
                     </div>
-                    <div style={{padding: '60px 24px'}}>
+                    <div style={{padding: moneyFocus ? '50px 24px 120px' : '50px 24px'}}>
                         <Button type="primary" className='commonButton' style={{width: '100%'}}>确认充值</Button>
                     </div>
                 </div>
             </Modal>
         )
+    }
+
+    onMoneyBlur = () => {
+        this.setState({
+            moneyFocus: false
+        })
+    }
+
+    onMoneyFocus = () => {
+        this.setState({
+            moneyFocus: true
+        })
     }
 
     onMoneyChange = (value) => {

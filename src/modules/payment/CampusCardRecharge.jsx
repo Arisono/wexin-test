@@ -5,7 +5,7 @@
 
 import React, {Component} from 'react'
 import {Icon, Button} from 'antd'
-import {Modal, Grid, InputItem} from 'antd-mobile'
+import {Modal, Grid, InputItem, List} from 'antd-mobile'
 import 'css/payment.css'
 import {isObjEmpty} from "../../utils/common";
 

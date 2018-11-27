@@ -11,7 +11,6 @@ import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import '../../index.css'
 import 'css/album-item.css'
 import WxImageViewer from 'react-wx-images-viewer'
-
 export default class PictureList extends Component {
 
     constructor() {

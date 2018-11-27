@@ -7,6 +7,8 @@ import {isObjEmpty} from "../../utils/common";
 import {Toast} from "antd-mobile";
 import InfiniteScroll from "react-infinite-scroller";
 import LoadingMore from 'components/LoadingMore'
+import {fetchGet} from "../../utils/fetchRequest";
+import {API} from "../../configs/api.config";
 export default class ConsumeRePage extends Component {
 
     constructor() {
@@ -33,9 +35,11 @@ export default class ConsumeRePage extends Component {
     }
 
     loadReleaseList= () => {
+
+
         setTimeout(() => {
-            Toast.hide()
-            const {consumeList} = this.state
+            Toast.hide();
+            const {consumeList} = this.state;
             for (let i = 0; i < 20; i++) {
                 let consumeBean = new ConsumeBean()
                 consumeBean.chargeName = '线上充值'+i
@@ -46,13 +50,11 @@ export default class ConsumeRePage extends Component {
             }
 
             this.setState({
-                consumeList: this.state.consumeList
-            })
-
-            this.setState({
                 consumeList,
                 isLoading: false
             })
+
+
         }, 1500)
     }
 

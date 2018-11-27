@@ -5,7 +5,8 @@
 
 import React, {Component} from 'react'
 import {Upload, Icon} from 'antd'
-import {isObjEmpty} from "../utils/common";
+import {Toast} from 'antd-mobile'
+import {isObjEmpty, isObjNull} from "../utils/common";
 import ImagesViewer from '../components/imagesVIewer/index'
 
 export default class UploadEnclosure extends Component {
@@ -16,7 +17,7 @@ export default class UploadEnclosure extends Component {
         this.state = {
             previewVisible: false,
             previewIndex: 0,
-            fileList: []
+            fileList: [],
         }
     }
 
@@ -44,7 +45,7 @@ export default class UploadEnclosure extends Component {
         );
 
         return (
-            <div>
+            <div style={{width: '100%'}}>
                 <div className='chooseLayout'>
                     <span className='annexText'>{title}</span>
                     <span className='annexCount'>（{fileList.length}/{count}）张</span>
@@ -68,7 +69,13 @@ export default class UploadEnclosure extends Component {
     }
 
     beforeUpload = (file, fileList) => {
-        this.props.beforeUpload(file, fileList)
+        const {count} = this.props
+        if (this.state.fileList.length + fileList.length > count) {
+            Toast.fail(`上传失败，附件数量不能超过${count}张`)
+            return false
+        } else {
+            return this.props.beforeUpload(file, fileList)
+        }
     }
 
     handleCancel = () => this.setState({previewVisible: false})
@@ -81,7 +88,9 @@ export default class UploadEnclosure extends Component {
     }
 
     handleChange = ({fileList}) => {
-        this.setState({fileList})
-        this.props.handleChange(fileList)
+        if (fileList.length <= this.props.count) {
+            this.setState({fileList})
+            this.props.handleChange(fileList)
+        }
     }
 }

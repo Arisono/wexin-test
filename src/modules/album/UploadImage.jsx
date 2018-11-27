@@ -72,6 +72,7 @@ export default class UploadImage extends Component {
                         listType="picture-card"
                         fileList={fileList}
                         multiple
+                        beforeUpload={this.handleBefore}
                         onPreview={this.handlePreview}
                         onChange={this.handleChange}
                         showUploadList={{showPreviewIcon: true, showRemoveIcon: true}}>
@@ -88,5 +89,9 @@ export default class UploadImage extends Component {
                 </div>
             </div>
         )
+    }
+
+    handleBefore = (file, fileList) => {
+        return false
     }
 }

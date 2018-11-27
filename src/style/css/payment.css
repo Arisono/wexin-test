@@ -361,6 +361,8 @@
 .recharge-modal-layout {
     padding: 0 10px;
     background: white;
+    overflow-y: scroll;
+    max-height: 90vh;
 }
 
 .recharge-modal-layout .am-grid-item-content {
@@ -405,6 +407,8 @@
     right: -3px;
     bottom: -5px;
     background: transparent;
+    font-weight: bold;
+    font-style: italic;
 }
 
 .recharge-modal-money-mark-text {

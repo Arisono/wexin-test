@@ -221,7 +221,6 @@ export default class SendVote extends Component{
             voteFile[i] = this.state.fileList[i].thumbUrl
         }
         var params = {
-            voteString:{
                 creator: 10004,
                 voteStatus: 1,
                 voteRemarks: "这是一个调查",
@@ -238,12 +237,18 @@ export default class SendVote extends Component{
                         options: options
                     }
                 ]
-            }
         }
-        console.log('params',JSON.stringify(params))
-        fetchPost(API.voteCreate,JSON.stringify(params),{})
+        console.log('params',{
+            voteString:JSON.stringify(params)
+        })
+        fetchPost(API.voteCreate,{
+            voteString:JSON.stringify(params)
+        },{})
             .then((response)=>{
                 console.log('response',response)
+                if(response.success){
+                    Toast.show('提交成功',1)
+                }
             })
             .catch((error) =>{
                 console.log('error',error)

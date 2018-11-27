@@ -93,7 +93,8 @@ export default class PictureList extends Component {
 
                 {previewVisible ?
                     <ImagesViewer onClose={this.handleCancel} urls={pictureList}
-                                   index={this.state.previewIndex}/> : ""}
+                                  index={this.state.previewIndex}
+                                  needPoint={pictureList.length <= 9}/> : ""}
 
                 <div className='album-detail-bottom'>
                     <Button type='primary' className='album-detail-button'

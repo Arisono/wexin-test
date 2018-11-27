@@ -208,6 +208,8 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+    margin: 0px;
+    padding: 0px;
 }
 
 .flex_column_center{

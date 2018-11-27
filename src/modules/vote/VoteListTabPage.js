@@ -120,7 +120,7 @@ class VoteListTabPage extends React.Component{
         },1500);
     }
 
-    loadMoreRightAction(){
+    loadMoreRightAction=()=>{
         console.log("loadMoreRightAction()");
         setTimeout(()=>{
             for (let i = 0; i < 2; i++) {
@@ -148,7 +148,7 @@ class VoteListTabPage extends React.Component{
          const created= <List
                 dataSource={this.state.data}
                 renderItem={item=>(
-                    <Link to="/voteDetail" id="menu_span_normal">
+                    <Link to={"/voteDetail/"+(item.state=='进行中'?true:false)} id="menu_span_normal">
                         <List.Item className="row " id="row_background"
                                    style={{padding:"10px"}}>
                             <div className="col-xs-12 ">
@@ -185,7 +185,7 @@ class VoteListTabPage extends React.Component{
              <List
                  dataSource={this.state.dataRight}
                  renderItem={item=>(
-                     <Link to="/voteDetail" id="menu_span_normal">
+                     <Link to={"/voteDetail/"+(item.state=='进行中'?true:false)} id="menu_span_normal">
                          <List.Item className="row " id="row_background"
                                     style={{padding:"10px"}}>
                              <div className="col-xs-12 ">
@@ -193,7 +193,6 @@ class VoteListTabPage extends React.Component{
                                      <div className="col-xs-6" id="row_left"> <span id="span_18">{item.title}</span></div>
                                      <div className="col-xs-6" id="row_right">
                                          {item.state=="进行中"?(<span style={{color:"red"}}>{item.state}</span>):(<span>{item.state}</span>)}
-
                                      </div>
                                  </div>
                                  <div className="row" id="row_center_align">
@@ -224,11 +223,11 @@ class VoteListTabPage extends React.Component{
                     <div className='identity-select'>
                         <div className={this.state.selectIndex == 0 ?
                             'identity-item-select' : 'identity-item-normal'}
-                             onClick={this.onTeacherClick}>老师
+                             onClick={this.onTeacherClick}>我发布的
                         </div>
                         <div className={this.state.selectIndex == 1 ?
                             'identity-item-select' : 'identity-item-normal'}
-                             onClick={this.onParentClick}>家长
+                             onClick={this.onParentClick}>我接收的
                         </div>
                     </div>
                     <div className="swiper-container" id="global_background">
@@ -242,7 +241,15 @@ class VoteListTabPage extends React.Component{
                                     {created}
                                 </InfiniteScroll>
                             </div>
-
+                            <div   className="swiper-slide">
+                                <InfiniteScroll
+                                    pageStart={0}
+                                    loadMore={this.loadMoreRightAction}
+                                    hasMore={this.state.hasMoreData}
+                                    loader={<LoadingMore/>}>
+                                    {recived}
+                                </InfiniteScroll>
+                            </div>
                         </div>
                     </div>
                 </div>

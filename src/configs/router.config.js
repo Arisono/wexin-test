@@ -85,7 +85,7 @@ export default class RouteConfig extends Component {
 
                     {/*刘杰*/}
                     <Route path={'/picturesWall'} component={PicturesWallItem}/>
-                    <Route path="/voteDetail" component={VoteDetailPage}/>
+                    <Route path="/voteDetail/:voteState" component={VoteDetailPage}/>
                     <Route path="/homePage" component={AppHomePage}/>
                     <Route path='/voteList' component={VoteListPage}/>
                     <Route path='/voteListTab' component={VoteListTabPage}/>

@@ -6,7 +6,6 @@
 import React, {Component} from 'react'
 import {Icon, Input, Button, Upload, Switch, message, Modal} from 'antd'
 import 'css/principal-mailbox.css'
-import WxImageViewer from 'react-wx-images-viewer'
 import {isObjEmpty} from "../../utils/common";
 import UploadEnclosure from 'components/UploadEnclosure'
 

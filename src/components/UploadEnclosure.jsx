@@ -8,8 +8,28 @@ import {Upload, Icon} from 'antd'
 import {Toast} from 'antd-mobile'
 import {isObjEmpty, isObjNull} from "../utils/common";
 import ImagesViewer from '../components/imagesVIewer/index'
+import PropTypes from 'prop-types';
 
 export default class UploadEnclosure extends Component {
+
+    static propTypes = {
+        action: PropTypes.string.isRequired,//上传地址
+        listType: PropTypes.string,//附件列表格式，默认picture-card
+        count: PropTypes.number,//附件限制数量，默认为1
+        multiple: PropTypes.bool,//是非支持多选，默认为false
+        title: PropTypes.string,//title，默认为‘附件’
+        needPoint: PropTypes.bool,//是非需要下方的指示点，默认为true
+        beforeUpload: PropTypes.func,//上传附件前的回调花事件
+        handleChange: PropTypes.func,//附件选择后的回调
+    }
+
+    static defaultProps = {
+        listType: 'picture-card',
+        count: 1,
+        multiple: false,
+        title: '附件',
+        needPoint: true,
+    }
 
     constructor() {
         super()
@@ -29,7 +49,7 @@ export default class UploadEnclosure extends Component {
 
     render() {
         const {fileList} = this.state
-        const {action, listType, count, multiple, title} = this.props
+        const {action, listType, count, multiple, title, needPoint} = this.props
 
         const imgs = []
         if (!isObjEmpty(fileList) && fileList !== '[]') {
@@ -37,6 +57,12 @@ export default class UploadEnclosure extends Component {
                 imgs.push(fileList[i].url)
             }
         }
+
+        let pointAble = needPoint
+        if (imgs.length > 9) {
+            pointAble = false
+        }
+
         const uploadButton = (
             <div>
                 <Icon type="plus"/>
@@ -62,7 +88,9 @@ export default class UploadEnclosure extends Component {
                         {fileList.length >= count ? null : uploadButton}
                     </Upload>
                     {this.state.previewVisible ?
-                        <ImagesViewer onClose={this.handleCancel} urls={imgs} index={this.state.previewIndex}/> : ""}
+                        <ImagesViewer onClose={this.handleCancel} urls={imgs}
+                                      index={this.state.previewIndex}
+                                      needPoint={pointAble}/> : ""}
                 </div>
             </div>
         )

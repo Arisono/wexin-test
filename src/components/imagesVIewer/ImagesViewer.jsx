@@ -15,6 +15,7 @@ class ImagesViewer extends Component {
         gap: PropTypes.number, // 间隙
         speed: PropTypes.number, // Duration of transition between slides (in ms)
         onClose: PropTypes.func.isRequired, // 关闭组件回调
+        needPoint: PropTypes.bool
     }
 
     static childContextTypes = {
@@ -27,6 +28,7 @@ class ImagesViewer extends Component {
         index: 0,
         gap: 10,
         speed: 300,
+        needPoint: true
     }
 
     constructor(props) {

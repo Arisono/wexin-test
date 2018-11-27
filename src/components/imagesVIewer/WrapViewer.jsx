@@ -15,6 +15,11 @@ class WrapViewer extends Component {
         zIndex: PropTypes.number.isRequired, // 组件图层深度
         gap: PropTypes.number.isRequired, // 间隙
         speed: PropTypes.number.isRequired, // Duration of transition between slides (in ms)
+        needPoint: PropTypes.bool
+    }
+
+    static defalutProps = {
+        needPoint: true
     }
 
     state = {
@@ -45,6 +50,7 @@ class WrapViewer extends Component {
             maxZoomNum,
             gap,
             speed,
+            needPoint,
         } = this.props;
 
         const {
@@ -64,7 +70,7 @@ class WrapViewer extends Component {
                     speed={speed}
                     index={index}
                 />
-                <Pointer length={urls.length} index={index} changeIndex={this.changeIndex}/>
+                {needPoint ? <Pointer length={urls.length} index={index} changeIndex={this.changeIndex}/> : ''}
             </div>
         );
     }

@@ -74,11 +74,9 @@ export default class PrincipalMailbox extends Component {
                 <div className='gray-line'></div>
                 <UploadEnclosure
                     action="//jsonplaceholder.typicode.com/posts/"
-                    listType="picture-card"
                     fileList={fileList}
                     count={4}
                     multiple={true}
-                    title='附件'
                     beforeUpload={this.beforeUpload.bind(this)}
                     handleChange={this.handleChange.bind(this)}
                 />

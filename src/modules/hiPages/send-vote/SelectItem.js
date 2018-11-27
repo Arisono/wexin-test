@@ -19,7 +19,7 @@ export default class SelectItem extends Component{
                                         style={{color: 'white'}}/> : null;
         return(
             <div onChange={this.handelValueCom}>
-                <input  ref='itemContent'  type="text" placeholder="请输入选项内容" value={this.props.itemata} className="select_item_sty" suffix={itemClear}/>
+                <input  ref='itemContent'  type="text" placeholder="请输入选项内容" value={this.props.itemata == null ? '' : this.props.itemata} className="select_item_sty" suffix={itemClear}/>
                 <div className="comhline_sty1"></div>
             </div>
         )

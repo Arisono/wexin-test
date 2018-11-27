@@ -9,6 +9,8 @@ import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import moment from 'moment'
 import 'antd/dist/antd.css';
 import SelectItem from './SelectItem';
+import {isObjEmpty} from "../../../utils/common";
+import {Toast} from 'antd-mobile'
 
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
@@ -21,8 +23,6 @@ export default class SendVote extends Component{
     }
      componentDidMount() {
         console.log('Component DID MOUNT!')
-
-
     }
     constructor(props){
         super(props);
@@ -36,7 +36,7 @@ export default class SendVote extends Component{
             previewVisible: false,
             previewImage: '',
             fileList: [],
-            votePerson:['0-0-0'],
+            votePerson:[],
             voteMembers:18
         }
     }
@@ -46,30 +46,46 @@ export default class SendVote extends Component{
 
         const treeData = [
             {
-                title: 'Node1',
-                value: '0-0',
-                key: '0-0',
+                title: '研发部',
+                value: 1000,
+                key: 1000,
                 children: [{
-                    title: 'Child Node1',
-                    value: '0-0-0',
-                    key: '0-0-0',
+                    title: '吴彦祖',
+                    value: 10000,
+                    key: 10000,
+                },{
+                    title: '陈冠希',
+                    value: 10001,
+                    key: 10001,
+                },{
+                    title: '古天乐',
+                    value: 10002,
+                    key: 10002,
+                },{
+                    title: '黄宗伟',
+                    value: 10003,
+                    key: 10003,
                 }],
             }, {
-                title: 'Node2',
-                value: '0-1',
-                key: '0-1',
+                title: '测试部',
+                value: 1001,
+                key: 1001,
                 children: [{
-                    title: 'Child Node3',
-                    value: '0-1-0',
-                    key: '0-1-0',
+                    title: '关之琳',
+                    value: 10010,
+                    key: 10010,
                 }, {
-                    title: 'Child Node4',
-                    value: '0-1-1',
-                    key: '0-1-1',
+                    title: '林青霞',
+                    value: 10011,
+                    key: 10011,
                 }, {
-                    title: 'Child Node5',
-                    value: '0-1-2',
-                    key: '0-1-2',
+                    title: '张曼玉',
+                    value: 10012,
+                    key: 10012,
+                },{
+                    title: '王祖贤',
+                    value: 10013,
+                    key: 10013,
                 }],
             }];
         const tProps = {
@@ -114,8 +130,8 @@ export default class SendVote extends Component{
                     <div style={{width:150,fontSize:15,color:"#333333"}}>投票类型:</div>
                     <div className="text-right" style={{width:"100%",}}>
                         <Select defaultValue="请选择" style={{ width:100 }} onChange={this.handleSelectChange}>
-                            <Option value="0">单选</Option>
-                            <Option value="1">多选</Option>
+                            <Option value="1">单选</Option>
+                            <Option value="2">多选</Option>
                         </Select>
                         <img src={nextArrowimg} className="nextarr_sty"/>
                     </div>
@@ -152,7 +168,7 @@ export default class SendVote extends Component{
 
                 <div className="clearfix" style={{margin:10}}>
                     <Upload
-                        action="//jsonplaceholder.typicode.com/posts/"
+                        action={API.voteCreate}
                         listType="picture-card"
                         fileList={this.state.fileList}                        o
                         nPreview={this.handlePreview}
@@ -172,10 +188,60 @@ export default class SendVote extends Component{
     //发布提交
     doSendVote = (event)=>{
         console.log('state',this.state)
-
-        fetchPost(API.voteCreate,{
-
-        },{})
+        if (this.state.votePerson.length == 0){
+            Toast.show('请选择投票对象...',1)
+            return
+        }
+        if(this.state.voteTitle == ''){
+            Toast.show('请填写投票主题...',1)
+            return
+        }
+        if(this.state.voteOptionss.length < 2){
+            Toast.show('请输入选项内容...',1)
+            return
+        }
+        if(this.state.voteType == null){
+            Toast.show('请选择投票类型...',1)
+            return
+        }
+        if(this.state.endValue == null){
+            Toast.show('请选择正确结束时间...',1)
+            return
+        }
+        var options = []
+        for(let i=0;i<this.state.voteOptionss.length;i++){
+            const item = {
+                optionName:this.state.voteOptionss[i],
+                optionStatus:1
+            }
+            options[i]=item
+        }
+        var voteFile = []
+        for (let i=0;i<this.state.fileList.length;i++){
+            voteFile[i] = this.state.fileList[i].thumbUrl
+        }
+        var params = {
+            voteString:{
+                creator: 10004,
+                voteStatus: 1,
+                voteRemarks: "这是一个调查",
+                voteName: "爱好调查",
+                voteFile:voteFile,
+                voter: this.state.votePerson,
+                voteEndDate: this.state.endValue,
+                voteType: this.state.voteType,
+                topics:[
+                    {
+                        topicName: this.state.voteTitle,
+                        topicStatus: 1,
+                        topicType: 1,
+                        options: options
+                    }
+                ]
+            }
+        }
+        console.log('params',JSON.stringify(params))
+        fetchPost(API.voteCreate,JSON.stringify(params),{})
             .then((response)=>{
                 console.log('response',response)
             })

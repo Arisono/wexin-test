@@ -53,7 +53,7 @@
 
 .wx-image-viewer .viewer-image-pointer {
     position: fixed;
-    bottom: 10px;
+    bottom: 20px;
     left: 0;
     width: 100%;
     text-align: center;

@@ -187,7 +187,6 @@ class ImageContainer extends PureComponent {
     }
 
     handleTouchStart = (event) => {
-        console.info('handleTouchStart');
         event.preventDefault();
         if (this.animationID) {
             raf.cancel(this.animationID);
@@ -202,8 +201,6 @@ class ImageContainer extends PureComponent {
 
                 this.startLeft = this.state.left;
                 this.startTop = this.state.top;
-
-                console.info('handleTouchStart this.startX = %s, this.startY = %s, this.startLeft = %s, this.startTop = %s', this.startX, this.startY, this.startLeft, this.startTop);
 
                 this.onTouchStartTime = (new Date()).getTime();
                 this.haveCallMoveFn = false;
@@ -245,7 +242,6 @@ class ImageContainer extends PureComponent {
 
                 this.diffX = diffX;
                 this.diffY = diffY;
-                console.info('handleTouchMove one diffX=%s, diffY=%s', diffX, diffY);
                 // 判断是否为点击
                 if (Math.abs(diffX) < minTapMoveValue && Math.abs(diffY) < minTapMoveValue) {
                     return;
@@ -261,7 +257,6 @@ class ImageContainer extends PureComponent {
                         return;
                     }
 
-                    console.info('handleMove one left=%s, this.startLeft=%s,this.originWidth=%s, width=%s', left, this.startLeft, this.originWidth, width);
                     if (diffX < 0 && this.startLeft <= this.originWidth - width) {
                         this.haveCallMoveFn = true;
                         this.callHandleMove(diffX);
@@ -283,7 +278,6 @@ class ImageContainer extends PureComponent {
                 if (height > screenHeight || this.state.scale === this.originScale) {
                     newTop = this.startTop + diffY;
                 }
-                console.info('handleTouchMove one newLeft=%s, newTop=%s', newLeft, newTop);
                 this.setState({
                     left: newLeft,
                     top: newTop,
@@ -301,7 +295,6 @@ class ImageContainer extends PureComponent {
                     const left = this.startLeft + ((1 - zoom) * this.oldPointLeft);
                     const top = this.startTop + ((1 - zoom) * this.oldPointTop);
 
-                    console.info('zoom = %s, left = %s, top = %s, scale', zoom, left, top, scale);
                     return {
                         left,
                         top,
@@ -316,7 +309,6 @@ class ImageContainer extends PureComponent {
     }
 
     handleTouchEnd = (event) => {
-        console.info('handleTouchEnd', event.touches.length);
         event.preventDefault();
 
         if (this.isTwoFingerMode) { // 双指操作结束
@@ -349,10 +341,8 @@ class ImageContainer extends PureComponent {
                     this.startLeft = left;
                     this.startTop = top;
                     this.startScale = scale;
-                    console.info('this.startX = %s, this.startY = %s, this.startLeft = %s, this.startTop = %s', this.startX, this.startY, this.startLeft, this.startTop);
                 }
 
-                console.info('zoom = %s, left = %s, top = %s, width=%s, height= %s', zoom, left, top, width, height);
                 return {
                     left,
                     top,
@@ -363,7 +353,6 @@ class ImageContainer extends PureComponent {
             const diffTime = (new Date()).getTime() - this.onTouchStartTime;
             const {diffX, diffY} = this;
 
-            console.info('handleTouchEnd one diffTime = %s, diffX = %s, diffy = %s', diffTime, diffX, diffY);
             // 判断为点击则关闭图片浏览组件
             if (diffTime < maxTapTimeValue && Math.abs(diffX) < minTapMoveValue && Math.abs(diffY) < minTapMoveValue) {
                 this.context.onClose();
@@ -450,7 +439,6 @@ class ImageContainer extends PureComponent {
                     } else {
                         top = (props.screenHeight - height) / 2;
                     }
-                    console.info('end animate left= %s, top = %s', left, top);
                     return {
                         left,
                         top,
@@ -460,7 +448,6 @@ class ImageContainer extends PureComponent {
                 left = tween.easeOutQuart(curTime, this.animateStartValue.x, this.animateFinalValue.x, maxAnimateTime);
                 top = tween.easeOutQuart(curTime, this.animateStartValue.y, this.animateFinalValue.y, maxAnimateTime);
 
-                console.info('startAnimate left= %s, top = %s, curTime = %s', left, top, curTime);
                 this.setState({
                     left,
                     top,
@@ -520,7 +507,6 @@ class ImageContainer extends PureComponent {
             width: screenWidth,
             height: screenHeight,
         };
-        // console.info('ImageContainer render');
         return (
             <div
                 className="viewer-image-container"

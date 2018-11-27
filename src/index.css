@@ -118,17 +118,6 @@ span.ant-select-selection.ant-select-selection--multiple {
     background: white !important;
 }
 
-.wx-image-viewer .viewer-image-pointer {
-    bottom: 20px !important;
-}
-
-.noPoint .wx-image-viewer .viewer-image-pointer {
-    display: none;
-}
-
-.havePoint .wx-image-viewer .viewer-image-pointer {
-
-}
 
 /***************************公共样式****************************************/
 .common-column-layout {

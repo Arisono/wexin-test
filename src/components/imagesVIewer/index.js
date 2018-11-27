@@ -1,3 +1,3 @@
-import WxImageViewer from './WxImageViewer'
+import ImagesViewer from './ImagesViewer'
 
-export default WxImageViewer
+export default ImagesViewer

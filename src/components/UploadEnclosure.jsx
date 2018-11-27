@@ -6,9 +6,9 @@
 import React, {Component} from 'react'
 import {Upload, Icon} from 'antd'
 import {isObjEmpty} from "../utils/common";
-import WxImageViewer from '../components/imagesVIewer/index'
+import ImagesViewer from '../components/imagesVIewer/index'
 
-export default class UploadImages extends Component {
+export default class UploadEnclosure extends Component {
 
     constructor() {
         super()
@@ -61,7 +61,7 @@ export default class UploadImages extends Component {
                         {fileList.length >= count ? null : uploadButton}
                     </Upload>
                     {this.state.previewVisible ?
-                        <WxImageViewer onClose={this.handleCancel} urls={imgs} index={this.state.previewIndex}/> : ""}
+                        <ImagesViewer onClose={this.handleCancel} urls={imgs} index={this.state.previewIndex}/> : ""}
                 </div>
             </div>
         )

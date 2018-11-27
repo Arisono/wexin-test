@@ -8,7 +8,7 @@ import {Icon, Input, Button, Upload, Switch, message, Modal} from 'antd'
 import 'css/principal-mailbox.css'
 import WxImageViewer from 'react-wx-images-viewer'
 import {isObjEmpty} from "../../utils/common";
-import UploadImages from 'components/UploadImages'
+import UploadEnclosure from 'components/UploadEnclosure'
 
 const {TextArea} = Input
 
@@ -65,7 +65,7 @@ export default class PrincipalMailbox extends Component {
             </div>
         );
         return (
-            <div className='pageLayout'>
+            <div className='principal-pageLayout'>
                 <div className='headerLayout'>欢迎各位家长向本校提出意见和建议</div>
                 <TextArea className='suggestInput' placeholder='请填写意见或建议…'
                           autosize={{minRows: 6, maxRows: 12}} value={suggest}
@@ -93,7 +93,7 @@ export default class PrincipalMailbox extends Component {
                         <WxImageViewer onClose={this.handleCancel} urls={imgs} index={this.state.previewIndex}/> : ""}
                 </div>*/}
 
-                <UploadImages
+                <UploadEnclosure
                     action="//jsonplaceholder.typicode.com/posts/"
                     listType="picture-card"
                     fileList={fileList}

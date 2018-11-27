@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import WrapViewer from './WrapViewer';
 
-import './WxImageViewer.css';
+import './ImageViewer.css';
 
-class WxImageViewer extends Component {
+class ImagesViewer extends Component {
     static propTypes = {
         maxZoomNum: PropTypes.number, // 最大放大倍数
         zIndex: PropTypes.number, // 组件图层深度
@@ -56,4 +56,4 @@ class WxImageViewer extends Component {
     }
 }
 
-export default WxImageViewer;
+export default ImagesViewer;

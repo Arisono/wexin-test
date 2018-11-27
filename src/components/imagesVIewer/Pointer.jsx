@@ -9,8 +9,6 @@ class Pointer extends PureComponent {
     }
 
     render() {
-        console.info("Point render")
-
         const {
             length,
             changeIndex,

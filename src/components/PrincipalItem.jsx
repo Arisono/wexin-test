@@ -33,6 +33,19 @@ export default class PrincipalItem extends Component {
                     <span className='principal-enclosure-count'>({principalBean.enclosure.length}张)</span>
                 </div>
         }
+        let replayItem = <span></span>
+        if (principalBean.reply) {
+            replayItem = <pre className='common-font-family'
+                              style={{
+                                  color: '#333333',
+                                  fontSize: '12px',
+                                  letterSpacing: '1.5px',
+                                  marginTop: '10px',
+                                  borderTop: '1px solid #d0d0d0',
+                                  padding: '10px',
+                                  whiteSpace: 'pre-line'
+                              }}>{principalBean.reply}</pre>
+        }
 
         return (
             <div style={{padding: '10px'}}>
@@ -45,10 +58,11 @@ export default class PrincipalItem extends Component {
                     </div>
                     <div className='principal-item-content'>{principalBean.suggest}</div>
                     {enclosureItem}
-                    <div style={{textAlign: 'right',marginTop:'10px'}}>
+                    <div style={{textAlign: 'right', marginTop: '10px'}}>
                         <span className='principal-item-delete'
                               onClick={this.onDeleteEvent}>删除</span>
                     </div>
+                    {replayItem}
                 </div>
             </div>
         )

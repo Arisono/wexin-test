@@ -27,6 +27,8 @@ export const API = {
     RecordOutgoingList:_baseURL + '/recordOutgoing/RecordOutgoingList',
     //创建投票单
     voteCreate:_baseURL + '/vote/voteCreate',
+    //充值，缴费记录
+    rechargeRecord:_baseURL + '/payRank/consumeRecode'
 
 }
 

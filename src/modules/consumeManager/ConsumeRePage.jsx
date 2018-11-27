@@ -23,19 +23,40 @@ export default class ConsumeRePage extends Component {
     componentDidMount() {
         document.title = '消费记录'
         Toast.loading('努力加载中...', 0)
-        for (let i = 0; i < 20; i++) {
-            let consumeBean = new ConsumeBean()
-            consumeBean.chargeName = '线上充值'+i
-            consumeBean.chargeTime = '2018-08-01 12:20:23'+i*i
-            consumeBean.chargeAmount = '+200000'+i
 
-            this.state.consumeList.push(consumeBean)
-        }
-
-        this.setState({
-            consumeList: this.state.consumeList
-        })
     }
+
+    componentWillUnmount () {
+
+        Toast.hide();
+
+    }
+
+    loadReleaseList= () => {
+        setTimeout(() => {
+            Toast.hide()
+            const {consumeList} = this.state
+            for (let i = 0; i < 20; i++) {
+                let consumeBean = new ConsumeBean()
+                consumeBean.chargeName = '线上充值'+i
+                consumeBean.chargeTime = '2018-08-01 12:20:23'+i*i
+                consumeBean.chargeAmount = '+200000'+i
+
+                this.state.consumeList.push(consumeBean)
+            }
+
+            this.setState({
+                consumeList: this.state.consumeList
+            })
+
+            this.setState({
+                consumeList,
+                isLoading: false
+            })
+        }, 1500)
+    }
+
+
 
     render() {
         const {consumeList, typeTitle,hasMoreData, isLoading} = this.state

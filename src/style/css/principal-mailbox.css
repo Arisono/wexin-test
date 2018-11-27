@@ -1,8 +1,10 @@
-.pageLayout {
+.principal-pageLayout {
     display: flex;
     flex-direction: column;
     width: 100%;
     background: white;
+    align-items: center;
+    padding-bottom: 30px;
 }
 
 .headerLayout {
@@ -33,6 +35,9 @@
     width: 100%;
     padding: 0 40px;
     margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
 }
 
 .imagesLayout {

@@ -114,6 +114,11 @@ span.ant-select-selection.ant-select-selection--multiple {
     background: transparent !important;
 }
 
+.am-modal-transparent .am-modal-content {
+    background: white !important;
+}
+
+
 /***************************公共样式****************************************/
 .common-column-layout {
     width: 100%;

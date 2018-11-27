@@ -4,8 +4,6 @@
 
 import React,{Component} from 'react';
 import './AccessNotice.css';
-import nextArrowimg from '../../../style/imgs/next_arrow.png';
-import arrowLeft from '../../../style/imgs/arrow_left.png';
 import line_img from '../../../style/imgs/line_img.png';
 import enter_img from '../../../style/imgs/ic_enter.png';
 import exit_img from '../../../style/imgs/ic_exit.png';

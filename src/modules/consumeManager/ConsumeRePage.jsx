@@ -9,6 +9,10 @@ import InfiniteScroll from "react-infinite-scroller";
 import LoadingMore from 'components/LoadingMore'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
+
+const mPageSize = 10
+var mPageIndex = 1
+
 export default class ConsumeRePage extends Component {
 
     constructor() {
@@ -40,6 +44,7 @@ export default class ConsumeRePage extends Component {
         setTimeout(() => {
             Toast.hide();
             const {consumeList} = this.state;
+
             for (let i = 0; i < 20; i++) {
                 let consumeBean = new ConsumeBean()
                 consumeBean.chargeName = '线上充值'+i
@@ -53,7 +58,16 @@ export default class ConsumeRePage extends Component {
                 consumeList,
                 isLoading: false
             })
+            fetchGet(API.rechargeRecord, {
+                stuId: 1,
+                rankStatus:1,
+                pageIndex: mPageIndex,
+                pageSize: mPageSize
+            }).then(response => {
 
+            }).catch(error => {
+                Toast.fail(error, 2)
+            })
 
         }, 1500)
     }

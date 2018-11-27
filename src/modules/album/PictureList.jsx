@@ -10,7 +10,9 @@ import {Button, Modal} from 'antd'
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import '../../index.css'
 import 'css/album-item.css'
-import WxImageViewer from 'react-wx-images-viewer'
+
+import ImagesViewer from '../../components/imagesVIewer/index'
+
 export default class PictureList extends Component {
 
     constructor() {
@@ -91,8 +93,9 @@ export default class PictureList extends Component {
                 </Modal>*/}
 
                 {previewVisible ?
-                    <WxImageViewer onClose={this.handleCancel} urls={pictureList}
-                                   index={this.state.previewIndex}/> : ""}
+                    <ImagesViewer onClose={this.handleCancel} urls={pictureList}
+                                  index={this.state.previewIndex}
+                                  needPoint={pictureList.length <= 9}/> : ""}
 
                 <div className='album-detail-bottom'>
                     <Button type='primary' className='album-detail-button'

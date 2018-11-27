@@ -18,6 +18,8 @@ export default class ApprovelDetail extends Component{
     constructor(){
         super();
         this.state = {
+            AMvisible: false,
+            AMTitle:null,
             detailList:[],
             pictureList:[],
             approvelData:[]
@@ -91,14 +93,50 @@ export default class ApprovelDetail extends Component{
                     </div>
                 </div>
 
+                <Modal
+                    title={this.state.AMTitle}
+                    visible={this.state.AMvisible}
+                    onOk={this.handleSubmit}
+                    onCancel={this.handleCancel}
+                    footer={[
+                        <Button key="back" onClick={this.handleCancel}>取消</Button>,
+                        <Button key="submit" type="primary" onClick={this.handleSubmit}>提交</Button>,
+                    ]}
+                >
+                   <div>
+                       <textarea autoFocus="autoFocus" ref='voteTitle' className="form-control" rows="4" placeholder="填写意见说明（非必填）" ></textarea>
+                   </div>
+                </Modal>
             </div>
         )
     }
     agreeClick = ()=>{
       console.log('agreeClick')
+        this.setState({
+            AMvisible:true,
+            AMTitle:'同意'
+        })
     }
     disagreeClick = ()=>{
         console.log('disagreeClick')
+        this.setState({
+            AMvisible:true,
+            AMTitle:'不同意'
+        })
+    }
+
+    handleSubmit = (e) => {
+        console.log(e);
+        this.setState({
+            AMvisible: false,
+        });
+    }
+
+    handleCancel = (e) => {
+        console.log(e);
+        this.setState({
+            AMvisible: false,
+        });
     }
     componentWillMount() {
     }
@@ -161,18 +199,14 @@ export default class ApprovelDetail extends Component{
         })
     }
     componentWillReceiveProps(newProps) {
-        console.log('Component WILL RECEIVE PROPS!')
     }
     shouldComponentUpdate(newProps, newState) {
         return true;
     }
     componentWillUpdate(nextProps, nextState) {
-        console.log('Component WILL UPDATE!');
     }
     componentDidUpdate(prevProps, prevState) {
-        console.log('Component DID UPDATE!')
     }
     componentWillUnmount() {
-        console.log('Component WILL UNMOUNT!')
     }
 }

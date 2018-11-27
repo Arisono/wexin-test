@@ -119,11 +119,15 @@ span.ant-select-selection.ant-select-selection--multiple {
 }
 
 .wx-image-viewer .viewer-image-pointer {
-    overflow: scroll;
     bottom: 20px !important;
-    /*display: flex;*/
-    overflow: scroll;
-    /*height: 20px;*/
+}
+
+.noPoint .wx-image-viewer .viewer-image-pointer {
+    display: none;
+}
+
+.havePoint .wx-image-viewer .viewer-image-pointer {
+
 }
 
 /***************************公共样式****************************************/

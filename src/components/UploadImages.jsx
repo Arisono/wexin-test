@@ -5,8 +5,8 @@
 
 import React, {Component} from 'react'
 import {Upload, Icon} from 'antd'
-import WxImageViewer from 'react-wx-images-viewer'
 import {isObjEmpty} from "../utils/common";
+import WxImageViewer from '../components/imagesVIewer/index'
 
 export default class UploadImages extends Component {
 

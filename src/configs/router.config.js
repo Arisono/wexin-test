@@ -31,6 +31,7 @@ import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
 import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
 import Approvel from '../modules/hiPages/approvel/Approvel';
 import ApprovelDetail from  '../modules/hiPages/approvel-detail/ApprovelDetail';
+import MeetDetail from '../modules/hiPages/meet-detail/MeetDetail';
 import WonderMoment from "../modules/video/WonderMoment";
 import NotifyBoardParent from "../modules/notificationCenter/NotifyBoardParent";
 import ConsumeRePage from '../modules/consumeManager/ConsumeRePage'
@@ -46,6 +47,7 @@ import NotifyBoardTeacher from "../modules/notificationCenter/NotifyBoardTeacher
 import ClassRechargeList from "../modules/payment/ClassRechargeList";
 import ClassRechargeDetail from "../modules/payment/ClassRechargeDetail";
 import LeaveAddCPage from "../modules/leave/LeaveAddCPage";
+import VoteListTabPage from "../modules/vote/VoteListTabPage";
 
 
 export default class RouteConfig extends Component {
@@ -61,11 +63,11 @@ export default class RouteConfig extends Component {
                     {/*饶猛*/}
                     <Route path='/bindMenu' component={BindMenu}/>
                     <Route path='/accountBind/:type?' component={AccountBind}/>
-                    <Route path='/newAlbum' component={NewAlbum}/>
+                    <Route path='/newAlbum/:classId' component={NewAlbum}/>
                     <Route path='/uploadImage' component={UploadImage}/>
                     <Route path='/uploadVideo' component={UploadVideo}/>
-                    <Route path='/classAlbum' component={ClassAlbum}/>
-                    <Route path='/pictureList/:title?' component={PictureList}/>
+                    <Route path='/classAlbum/:type?' component={ClassAlbum}/>
+                    <Route path='/pictureList/:albumId/:title?' component={PictureList}/>
                     <Route path='/videoPlayer/:title?' component={VideoPlayer}/>
                     <Route path='/principalMailbox' component={PrincipalMailbox}/>
                     <Route path='/meetingSignIn' component={MeetingSignIn}/>
@@ -73,9 +75,8 @@ export default class RouteConfig extends Component {
                     <Route path='/phonesList/:classTitle?' component={PhonesList}/>
                     <Route path='/systemMessage' component={SystemMessage}/>
                     <Route path='/useHelp' component={UseHelp}/>
-                    <Route path='/wonderMoment' component={WonderMoment}/>
+                    <Route path='/wonderMoment/:type?' component={WonderMoment}/>
                     <Route path='/principalHistory' component={PrincipalHistory}/>
-
                     <Route path='/campusCardRecharge' component={CampusCardRecharge}/>
                     <Route path='/rechargeList' component={RechargeList}/>
                     <Route path='/rechargeRelease' component={RechargeRelease}/>
@@ -85,14 +86,14 @@ export default class RouteConfig extends Component {
 
                     {/*刘杰*/}
                     <Route path={'/picturesWall'} component={PicturesWallItem}/>
-                    <Route path="/voteDetail" component={VoteDetailPage}/>
+                    <Route path="/voteDetail/:voteState" component={VoteDetailPage}/>
                     <Route path="/homePage" component={AppHomePage}/>
                     <Route path='/voteList' component={VoteListPage}/>
+                    <Route path='/voteListTab' component={VoteListTabPage}/>
                     <Route path='/leaveAddC' component={LeaveAddCPage}/>
                     <Route path='/leaveAdd' component={LeaveAddPage}/>
                     <Route path='/leaveApproval' component={LeaveApprovalPage}/>
                     <Route path='/leaveList' component={LeaveListPage}/>
-
                     <Route path='/releaseAssignment' component={ReleaseAssignmentPage}/>
                     <Route path='/assignmentList' component={AssignmentListPage}/>
                     <Route path='/assignmentDetail' component={AssignmentDetailPage}/>
@@ -102,11 +103,12 @@ export default class RouteConfig extends Component {
                     <Route path='/field-trip' component={FieldTrip}/> {/*//外勤出差*/}
                     <Route path='/res_apply' component={ResApply}/>{/*//用品申请*/}
                     <Route path='/send-vote' component={SendVote}/>{/*//发起投票*/}
-                    <Route path='/sendMeetting' component={SendMeet}/>  {/*//发起会议*/}
+                    <Route path='/sendMeetting' component={SendMeet}/> {/*//发起会议*/}
                     <Route path='/class-schedule' component={ClassSchedule}/> {/*//课程表*/}
                     <Route path='/score-inquiry' component={ScoreInquiry}/> {/*//成绩通知*/}
                     <Route path='/approvel' component={Approvel}/>{/*审批*/}
                     <Route path='/approvel-detail' component={ApprovelDetail}/> {/*审批详情*/}
+                    <Route path='/meet-detail' component={MeetDetail}/>  {/*会议签到详情*/}
 
                     {/*刘金龙*/}
                     {/*1:消费记录 2.充值记录*/}

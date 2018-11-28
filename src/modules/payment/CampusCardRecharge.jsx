@@ -5,7 +5,7 @@
 
 import React, {Component} from 'react'
 import {Icon, Button} from 'antd'
-import {Modal, Grid, InputItem} from 'antd-mobile'
+import {Modal, Grid, InputItem, List} from 'antd-mobile'
 import 'css/payment.css'
 import {isObjEmpty} from "../../utils/common";
 
@@ -98,7 +98,7 @@ export default class CampusCardRecharge extends Component {
                         <div className='recharge-modal-title-text'>自定义金额：</div>
                         <InputItem
                             className='recharge-modal-amount-input'
-                            type='money' clear
+                            type='digit' clear
                             moneyKeyboardAlign='left'
                             extra='元'
                             onFocus={this.onMoneyFocus}
@@ -107,7 +107,7 @@ export default class CampusCardRecharge extends Component {
                             onChange={this.onMoneyChange}
                             placeholder='请输入金额'/>
                     </div>
-                    <div style={{padding: moneyFocus ? '50px 24px 120px' : '50px 24px'}}>
+                    <div style={{padding: moneyFocus ? '50px 24px' : '50px 24px'}}>
                         <Button type="primary" className='commonButton' style={{width: '100%'}}>确认充值</Button>
                     </div>
                 </div>

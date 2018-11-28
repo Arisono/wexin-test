@@ -22,6 +22,12 @@ export default class WonderMoment extends Component {
         }
     }
 
+    componentWillMount() {
+        if (this.props.match.params.type) {
+            this.mType = this.props.match.params.type
+        }
+    }
+
     componentDidMount() {
         document.title = '精彩瞬间'
 
@@ -53,6 +59,15 @@ export default class WonderMoment extends Component {
     render() {
         const {classList, classText, videoList} = this.state
 
+        let addIcon = ''
+
+        if (this.mType == 'parents') {
+            addIcon = ''
+        } else if (this.mType == 'teacher') {
+            addIcon = <Icon type="plus-circle" theme='filled' className='common-add-icon'
+                            onClick={this.onAddVideo}/>
+        }
+
         return (
             <div style={{width: '100%', height: '100vh', display: 'flex', flexDirection: 'column'}}>
                 <div className='gray-line'></div>
@@ -71,9 +86,7 @@ export default class WonderMoment extends Component {
                         )
                     }/>
                 </div>
-
-                <Icon type="plus-circle" theme='filled' className='common-add-icon'
-                      onClick={this.onAddVideo}/>
+                {addIcon}
             </div>
         )
     }

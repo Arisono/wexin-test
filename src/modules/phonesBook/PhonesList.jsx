@@ -33,11 +33,11 @@ export default class PhonesList extends Component {
 
         for (let i = 0; i < 20; i++) {
             let phoneBean = new PhonesBean()
-            phoneBean.name = '饶老师'
+            phoneBean.name = '章晨望'
             phoneBean.phone = '13632423333'
             phoneBean.claName = title
             phoneBean.children = [
-                '语文', '数学', '语文', '数学'
+                '李泞', '赖思睿'
             ]
 
             this.state.phonesList.push(phoneBean)

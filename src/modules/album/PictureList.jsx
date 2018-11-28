@@ -7,11 +7,14 @@ import React, {Component} from 'react'
 import {isObjEmpty} from "../../utils/common";
 import LazyLoad from 'react-lazyload'
 import {Button, Modal} from 'antd'
+import {Toast} from 'antd-mobile'
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import '../../index.css'
 import 'css/album-item.css'
 
 import ImagesViewer from '../../components/imagesVIewer/index'
+import {fetchGet} from "../../utils/fetchRequest";
+import {API} from "../../configs/api.config";
 
 export default class PictureList extends Component {
 
@@ -27,11 +30,17 @@ export default class PictureList extends Component {
 
     componentDidMount() {
         const title = this.props.match.params.title
+        this.albumId = this.props.match.params.albumId
+
+        console.log(title + '---' + this.albumId)
         if (title) {
             document.title = title
         } else {
             document.title = '相册'
         }
+
+        Toast.loading('', 0)
+        this.getPictureList(this.albumId)
 
         let pictures = [
             'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
@@ -88,10 +97,6 @@ export default class PictureList extends Component {
                     </TransitionGroup>
                 </div>
 
-                {/*<Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                    <img alt="图片" style={{width: '100%'}} src={previewImage}/>
-                </Modal>*/}
-
                 {previewVisible ?
                     <ImagesViewer onClose={this.handleCancel} urls={pictureList}
                                   index={this.state.previewIndex}
@@ -105,6 +110,18 @@ export default class PictureList extends Component {
                 </div>
             </div>
         )
+    }
+
+    getPictureList = albumId => {
+        fetchGet(API.GET_PICTURE_LIST, {
+            parentId: albumId,
+            picStatus: 2
+        }).then(response => {
+            Toast.hide()
+        }).catch(error => {
+            Toast.hide()
+            Toast.fail(error)
+        })
     }
 
     addPicturesClick = () => {

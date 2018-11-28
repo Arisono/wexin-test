@@ -159,7 +159,7 @@ export default class NotifyBoardParent extends Component {
             }).then(response => {
                 Toast.hide()
                 console.log(response)
-               
+
                 response.data.notify.map((item,index)=>{
 
                     let notifyBoBean = new NotifyBoBean()

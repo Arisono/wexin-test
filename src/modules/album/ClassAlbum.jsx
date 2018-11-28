@@ -5,9 +5,13 @@
 
 import React, {Component} from 'react'
 import AlbumItem from 'components/AlbumItem'
-import {isObjEmpty} from "../../utils/common";
+import {getStrValue, isObjEmpty} from "../../utils/common";
 import {Icon} from 'antd'
-import {Picker, List} from 'antd-mobile'
+import {Picker, List, Toast} from 'antd-mobile'
+import {fetchGet} from "../../utils/fetchRequest";
+import {API} from "../../configs/api.config";
+import ClassBean from 'model/ClassBean'
+import AlbumBean from "../../model/AlbumBean";
 
 const uploadItem = new AlbumItem()
 uploadItem.coverImg = 'upload'
@@ -20,57 +24,26 @@ export default class ClassAlbum extends Component {
         super()
 
         this.state = {
-            albumList: [
-                uploadItem
-            ],
+            albumList: [],
             classList: [],
-            classText: ''
+            classText: []
         }
+    }
+
+    componentWillMount() {
+        if (this.props.match.params.type) {
+            this.mType = this.props.match.params.type
+        }
+
+        this.initAlbumList()
     }
 
     componentDidMount() {
         document.title = '班级相册'
-
         this.node.scrollIntoView();
-        const {classList, albumList} = this.state
 
-        let albumAll = [
-            {
-                coverImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                albumName: '六一儿童节',
-                quantity: 50,
-            },
-            {
-                coverImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                albumName: '六一儿童节',
-                quantity: 50,
-            },
-            {
-                coverImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                albumName: '六一儿童节',
-                quantity: 50,
-            }
-        ]
-
-
-        for (let i = 0; i < 10; i++) {
-            if (i % 2 == 0) {
-                classList.push({
-                    label: '三年级（一）班',
-                    value: '三年级（一）班'
-                })
-            } else {
-                classList.push({
-                    label: '三年级（二）班',
-                    value: '三年级（二）班'
-                })
-            }
-        }
-
-        this.setState({
-            albumList: albumList.concat(albumAll, albumAll, albumAll, albumAll),
-            classList
-        })
+        Toast.loading('', 0)
+        this.getClassList()
     }
 
     render() {
@@ -94,8 +67,7 @@ export default class ClassAlbum extends Component {
             <div ref={node => this.node = node}>
                 <div className='gray-line'></div>
                 <Picker data={classList} title='选择班级' extra='请选择'
-                        value={classText} onChange={this.handleClassChange}
-                        onOk={this.handleClassChange} cols={1}>
+                        value={classText} onChange={this.handleClassChange} cols={1}>
                     <List.Item arrow="horizontal">选择班级</List.Item>
                 </Picker>
                 <div className='gray-line'></div>
@@ -106,16 +78,125 @@ export default class ClassAlbum extends Component {
         )
     }
 
+    getClassList = () => {
+        const {classList, classText} = this.state
+        classList.length = 0
+
+        fetchGet(API.GET_CLASS_LIST, {
+            userId: 10002,
+        }).then(response => {
+            Toast.hide()
+
+            this.analysisClassList(response)
+        }).catch(error => {
+            Toast.hide()
+            Toast.fail(error, 2)
+        })
+    }
+
+    getAlbumList = classBean => {
+        this.initAlbumList()
+
+        fetchGet(API.GET_ALBUM_LIST, {
+            schId: classBean.schId,
+            picStatus: 2
+        }).then(response => {
+            Toast.hide()
+
+            const {albumList} = this.state
+            let dataArray = response.data
+            if (dataArray) {
+                for (let i = 0; i < dataArray.length; i++) {
+                    let dataObject = dataArray[i]
+                    if (dataObject) {
+                        let albumBean = new AlbumBean()
+
+                        albumBean.albumId = dataObject.picId
+                        albumBean.coverImg = dataObject.picUrl
+                        albumBean.albumName = dataObject.picName
+                        albumBean.quantity = dataObject.quantity
+                        albumBean.albumDate = dataObject.picDate
+                        albumBean.type = dataObject.picType
+                        albumBean.status = dataObject.picStatus
+                        albumBean.remarks = dataObject.picStatus
+                        albumBean.gradeId = dataObject.parentId
+                        albumBean.classId = dataObject.schId
+                        albumBean.classname = dataObject.schName
+
+                        albumList.push(albumBean)
+                    }
+                }
+                this.setState({albumList})
+            }
+        }).catch(error => {
+            Toast.hide()
+            Toast.fail(error)
+        })
+    }
+
     onItemClick = (index) => {
-        console.log(index)
-        if (index == 0) {
-            this.props.history.push('/newAlbum')
+        const {classList, classText, albumList} = this.state
+        if (index == 0 && this.mType == 'teacher') {
+            let classId = -1
+            if (classList[classText]) {
+                classId = classList[classText].schId
+            }
+            this.props.history.push('/newAlbum/' + classId)
         } else {
-            this.props.history.push('/pictureList')
+            this.props.history.push('/pictureList/' + getStrValue(albumList[index], 'albumId')
+                + '/' + this.state.albumList[index].albumName)
         }
     }
 
     handleClassChange = (v) => {
         this.setState({classText: v})
+        this.getAlbumList(this.state.classList[v])
+    }
+
+    initAlbumList = () => {
+        const {albumList} = this.state
+        albumList.length = 0
+        if (this.mType == 'parents') {
+        } else if (this.mType == 'teacher') {
+            this.setState({
+                albumList: [uploadItem]
+            })
+        }
+    }
+
+    analysisClassList = response => {
+        const {classList, classText} = this.state
+
+        let dataArray = response.data
+        if (dataArray) {
+            for (let i = 0; i < dataArray.length; i++) {
+                let dataObject = dataArray[i]
+                if (dataObject) {
+                    let classBean = new ClassBean()
+
+                    classBean.label = dataObject.parentName + dataObject.schName
+                    classBean.value = i
+                    classBean.schId = dataObject.schId
+                    classBean.parentId = dataObject.parentId
+                    classBean.schName = dataObject.schName
+                    classBean.schStatus = dataObject.schStatus
+                    classBean.schRemarks = dataObject.schRemarks
+                    classBean.grade = dataObject.parentName
+
+                    classList.push(classBean)
+                }
+            }
+
+            if (classList.length > 0) {
+                classText.push(classList[0].value)
+                this.setState({
+                    classList,
+                    classText
+                })
+
+                Toast.loading('获取相册中...', 0)
+                this.getAlbumList(classList[0])
+            }
+        }
     }
 }

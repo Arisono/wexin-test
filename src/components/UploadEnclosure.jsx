@@ -21,6 +21,7 @@ export default class UploadEnclosure extends Component {
         needPoint: PropTypes.bool,//是非需要下方的指示点，默认为true
         beforeUpload: PropTypes.func,//上传附件前的回调花事件
         handleChange: PropTypes.func,//附件选择后的回调
+        limit: PropTypes.bool,//是否限制附件个数
     }
 
     static defaultProps = {
@@ -29,6 +30,7 @@ export default class UploadEnclosure extends Component {
         multiple: false,
         title: '附件',
         needPoint: true,
+        limit: true
     }
 
     constructor() {
@@ -49,7 +51,7 @@ export default class UploadEnclosure extends Component {
 
     render() {
         const {fileList} = this.state
-        const {action, listType, count, multiple, title, needPoint} = this.props
+        const {action, listType, count, multiple, title, needPoint, limit} = this.props
 
         const imgs = []
         if (!isObjEmpty(fileList) && fileList !== '[]') {
@@ -74,7 +76,7 @@ export default class UploadEnclosure extends Component {
             <div style={{width: '100%'}}>
                 <div className='chooseLayout'>
                     <span className='annexText'>{title}</span>
-                    <span className='annexCount'>（{fileList.length}/{count}）张</span>
+                    {limit ? <span className='annexCount'>（{fileList.length}/{count}）张</span> : ''}
                 </div>
                 <div className='imagesLayout'>
                     <Upload
@@ -85,7 +87,7 @@ export default class UploadEnclosure extends Component {
                         beforeUpload={this.beforeUpload}
                         onPreview={this.handlePreview}
                         onChange={this.handleChange}>
-                        {fileList.length >= count ? null : uploadButton}
+                        {(fileList.length >= count && limit) ? null : uploadButton}
                     </Upload>
                     {this.state.previewVisible ?
                         <ImagesViewer onClose={this.handleCancel} urls={imgs}
@@ -97,8 +99,8 @@ export default class UploadEnclosure extends Component {
     }
 
     beforeUpload = (file, fileList) => {
-        const {count} = this.props
-        if (this.state.fileList.length + fileList.length > count) {
+        const {count, limit} = this.props
+        if (this.state.fileList.length + fileList.length > count && limit) {
             Toast.fail(`上传失败，附件数量不能超过${count}张`)
             return false
         } else {
@@ -116,7 +118,7 @@ export default class UploadEnclosure extends Component {
     }
 
     handleChange = ({fileList}) => {
-        if (fileList.length <= this.props.count) {
+        if (fileList.length <= this.props.count || !this.props.limit) {
             this.setState({fileList})
             this.props.handleChange(fileList)
         }

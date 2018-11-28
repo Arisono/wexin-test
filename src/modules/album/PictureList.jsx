@@ -14,6 +14,7 @@ import 'css/album-item.css'
 import ImagesViewer from '../../components/imagesVIewer/index'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
+import PictureBean from "../../model/PictureBean";
 
 export default class PictureList extends Component {
 
@@ -40,32 +41,13 @@ export default class PictureList extends Component {
 
         Toast.loading('', 0)
         this.getPictureList(this.albumId)
-
-        let pictures = [
-            'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3507505698,2706878664&fm=15&gp=0.jpg',
-            'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3507505698,2706878664&fm=15&gp=0.jpg',
-            'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=223394732,3681620813&fm=15&gp=0.jpg',
-            'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=223394732,3681620813&fm=15&gp=0.jpg',
-            'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=223394732,3681620813&fm=15&gp=0.jpg',
-            'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3507505698,2706878664&fm=15&gp=0.jpg',
-            'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=223394732,3681620813&fm=15&gp=0.jpg',
-        ]
-
-        this.setState({
-            pictureList: this.state.pictureList.concat(pictures, pictures, pictures, pictures)
-        })
     }
 
     render() {
         const {pictureList, previewVisible, previewImage} = this.state
         let pictureItems = []
         for (let i = 0; i < pictureList.length; i++) {
-            const pictureUrl = pictureList[i]
+            const pictureUrl = pictureList[i].picUrl
             if (!isObjEmpty(pictureUrl)) {
                 pictureItems.push(
                     i > 20 ?
@@ -115,11 +97,40 @@ export default class PictureList extends Component {
     }
 
     getPictureList = albumId => {
+
         fetchGet(API.GET_PICTURE_LIST, {
             parentId: albumId,
             picStatus: 2
         }).then(response => {
             Toast.hide()
+
+            const {pictureList} = this.state
+            pictureList.length = 0
+
+            if (response) {
+                const dataArray = response.data
+                if (dataArray) {
+                    dataArray.forEach((dataObject, index) => {
+                        const pictureBean = new PictureBean()
+
+                        pictureBean.picId = dataObject.picId
+                        pictureBean.picName = dataObject.picName
+                        pictureBean.picUrl = dataObject.picUrl
+                        pictureBean.picDate = dataObject.picDate
+                        pictureBean.picType = dataObject.picType
+                        pictureBean.picStatus = dataObject.picStatus
+                        pictureBean.parentId = dataObject.parentId
+                        pictureBean.picRemarks = dataObject.picRemarks
+                        pictureBean.schId = dataObject.schId
+                        pictureBean.quantity = dataObject.quantity
+                        pictureBean.schName = dataObject.schName
+
+                        pictureList.push(pictureBean)
+                    })
+                }
+            }
+
+            this.setState({pictureList})
         }).catch(error => {
             Toast.hide()
             Toast.fail(error)

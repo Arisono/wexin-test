@@ -9,7 +9,8 @@ import {Button,} from 'antd'
 import {Toast} from 'antd-mobile'
 import UploadEnclosure from 'components/UploadEnclosure'
 import {_baseURL, API} from "../../configs/api.config";
-import {fetchPost} from "../../utils/fetchRequest";
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
+import PictureBean from "../../model/PictureBean";
 
 export default class UploadImage extends Component {
 
@@ -19,6 +20,10 @@ export default class UploadImage extends Component {
 
     componentDidMount() {
         document.title = '上传图片'
+
+
+        // Toast.loading('', 0)
+        // this.getPictureList(this.albumId)
     }
 
     constructor() {
@@ -57,6 +62,46 @@ export default class UploadImage extends Component {
                 </div>
             </div>
         )
+    }
+
+    getPictureList = albumId => {
+        fetchGet(API.GET_PICTURE_LIST, {
+            parentId: albumId,
+            picStatus: 2
+        }).then(response => {
+            Toast.hide()
+
+            const {fileList} = this.state
+            fileList.length = 0
+
+            if (response) {
+                const dataArray = response.data
+                if (dataArray) {
+                    dataArray.forEach((dataObject, index) => {
+                        const pictureBean = {}
+
+                        pictureBean.picId = dataObject.picId
+                        pictureBean.picName = dataObject.picName
+                        pictureBean.picUrl = dataObject.picUrl
+                        pictureBean.picDate = dataObject.picDate
+                        pictureBean.picType = dataObject.picType
+                        pictureBean.picStatus = dataObject.picStatus
+                        pictureBean.parentId = dataObject.parentId
+                        pictureBean.picRemarks = dataObject.picRemarks
+                        pictureBean.schId = dataObject.schId
+                        pictureBean.quantity = dataObject.quantity
+                        pictureBean.schName = dataObject.schName
+
+                        fileList.push(pictureBean)
+                    })
+                }
+            }
+
+            this.setState({fileList})
+        }).catch(error => {
+            Toast.hide()
+            Toast.fail(error)
+        })
     }
 
     handleBefore = (file, fileList) => {

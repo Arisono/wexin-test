@@ -27,7 +27,7 @@ export default class ClassRechargeList extends Component {
     componentDidMount() {
         document.title = '班级收费'
 
-        Toast.loading('努力加载中...', 0)
+        Toast.loading('努力加载中...', 1)
     }
 
     componentWillUnmount() {

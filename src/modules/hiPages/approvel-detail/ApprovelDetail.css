@@ -1,19 +1,12 @@
 .comhline_sty {background-color:#F2F2F2;width:100%;height:10px}
 .comhline_sty1{background-color:#F2F2F2;width:100%;height:1px;}
-.headerDiv{
-    display: flex;flex-direction: row;height: 75px;width: 100%;
-}
-.headerImg{
-    height: 45px;width: 45px;border-radius: 25px;margin: 10px 20px;
-}
+.headerDiv{display: flex;flex-direction: row;height: 75px;width: 100%;  }
+.headerImg{height: 45px;width: 45px;border-radius: 25px;margin: 10px 20px;  }
 .timeList_sty{height: auto;display: flex;flex-direction: row;}
 .out_in{height: 45px;width: 45px;padding-top: 0px;border: none;}
 .lineimg_sty{height: 20px;width: 2px;margin-left: 20px;}
-.agree_sty{}
-
-.doing{
-    color: #C70404 ;
-}
-.done{
-    color: #666666;
-}
+.doing{color: #C70404;}
+.done{color: #666666; }
+.disagree_sty{width:120px;height: 30px;border-radius: 8px;font-size: 12px;border: 1px solid #4197FC;}
+.agree_sty{width:120px;height: 30px;border-radius: 8px;font-size: 12px;}
+.textarea_sty{}

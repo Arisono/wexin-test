@@ -8,11 +8,11 @@ export function fetchPost(url, params, header) {
     let formData = new FormData()
     if (params) {
         for (let key in params) {
-            if ((typeof params[key]) === 'string') {
-                formData.append(key, encodeURI(params[key].toString()))
-            } else {
+            // if ((typeof params[key]) === 'string') {
+            //     formData.append(key, encodeURI(params[key].toString()))
+            // } else {
                 formData.append(key, params[key])
-            }
+            // }
         }
     }
 

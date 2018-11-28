@@ -76,7 +76,6 @@ export default class RouteConfig extends Component {
                     <Route path='/useHelp' component={UseHelp}/>
                     <Route path='/wonderMoment' component={WonderMoment}/>
                     <Route path='/principalHistory' component={PrincipalHistory}/>
-
                     <Route path='/campusCardRecharge' component={CampusCardRecharge}/>
                     <Route path='/rechargeList' component={RechargeList}/>
                     <Route path='/rechargeRelease' component={RechargeRelease}/>
@@ -93,7 +92,6 @@ export default class RouteConfig extends Component {
                     <Route path='/leaveAdd' component={LeaveAddPage}/>
                     <Route path='/leaveApproval' component={LeaveApprovalPage}/>
                     <Route path='/leaveList' component={LeaveListPage}/>
-
                     <Route path='/releaseAssignment' component={ReleaseAssignmentPage}/>
                     <Route path='/assignmentList' component={AssignmentListPage}/>
                     <Route path='/assignmentDetail' component={AssignmentDetailPage}/>
@@ -108,7 +106,7 @@ export default class RouteConfig extends Component {
                     <Route path='/score-inquiry' component={ScoreInquiry}/> {/*//成绩通知*/}
                     <Route path='/approvel' component={Approvel}/>{/*审批*/}
                     <Route path='/approvel-detail' component={ApprovelDetail}/> {/*审批详情*/}
-                    <Route path='/meet-detail' component={MeetDetail}/>
+                    <Route path='/meet-detail' component={MeetDetail}/>  {/*会议签到详情*/}
 
                     {/*刘金龙*/}
                     <Route path='/consumeRePage' component={ConsumeRePage}/>

@@ -10,6 +10,8 @@ import InfiniteScroll from 'react-infinite-scroller'
 import LoadingMore from 'components/LoadingMore'
 import RechargeBean from 'model/RechargeBean'
 import RechargeItem from 'components/RechargeItem'
+import {fetchGet} from "../../utils/fetchRequest";
+import {API} from "../../configs/api.config";
 
 export default class RechargeList extends Component {
 
@@ -54,6 +56,7 @@ export default class RechargeList extends Component {
     }
 
     loadRechargeList = () => {
+
         setTimeout(() => {
             Toast.hide()
             const {rechargeList} = this.state

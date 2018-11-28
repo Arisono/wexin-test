@@ -6,23 +6,13 @@
 import React, {Component} from 'react'
 import 'css/new-album.css'
 import {Icon, Button, Upload, Modal} from 'antd'
+import UploadEnclosure from 'components/UploadEnclosure'
 
 export default class UploadImage extends Component {
 
     componentDidMount() {
         document.title = '上传图片'
     }
-
-    handleCancel = () => this.setState({previewVisible: false})
-
-    handlePreview = (file) => {
-        this.setState({
-            previewImage: file.url || file.thumbUrl,
-            previewVisible: true,
-        });
-    }
-
-    handleChange = ({fileList}) => this.setState({fileList})
 
     constructor() {
         super()
@@ -52,36 +42,19 @@ export default class UploadImage extends Component {
         );
         return (
             <div className='pageLayout'>
-                {/*<div className='gray-line'></div>
-                <div className='chooseLayout'>
-                    <div className='chooseText'>{isObjEmpty(classText) ? '选择班级' : classText}</div>
-                    <Icon type="right" theme="outlined"/>
-                </div>
                 <div className='gray-line'></div>
-                <div className='chooseLayout'>
-                    <div className='chooseText'>{isObjEmpty(albumText) ? '选择相册' : albumText}</div>
-                    <Icon type="right" theme="outlined"/>
-                </div>*/}
-                <div className='gray-line'></div>
-                <div className='chooseLayout'>
-                    <div className='chooseText'>添加图片</div>
-                </div>
-                <div className='imagesLayout'>
-                    <Upload
+                <div style={{flex: '1'}}>
+                    <UploadEnclosure
                         action="//jsonplaceholder.typicode.com/posts/"
-                        listType="picture-card"
                         fileList={fileList}
-                        multiple
-                        beforeUpload={this.handleBefore}
-                        onPreview={this.handlePreview}
-                        onChange={this.handleChange}
-                        showUploadList={{showPreviewIcon: true, showRemoveIcon: true}}>
-                        {fileList.length >= 50 ? null : uploadButton}
-                    </Upload>
-                    <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                        <img alt="图片" style={{width: '100%'}} src={previewImage}/>
-                    </Modal>
+                        limit={false}
+                        multiple={true}
+                        title='添加图片'
+                        beforeUpload={this.handleBefore.bind(this)}
+                        handleChange={this.handleChange.bind(this)}
+                    />
                 </div>
+
 
                 <div className='uploadLayout'>
                     <Button className='commonButton' type="primary" block
@@ -92,6 +65,9 @@ export default class UploadImage extends Component {
     }
 
     handleBefore = (file, fileList) => {
-        return false
+
     }
+
+    handleChange = ({fileList}) => this.setState({fileList})
+
 }

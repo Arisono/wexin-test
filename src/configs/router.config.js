@@ -62,11 +62,11 @@ export default class RouteConfig extends Component {
                     {/*饶猛*/}
                     <Route path='/bindMenu' component={BindMenu}/>
                     <Route path='/accountBind/:type?' component={AccountBind}/>
-                    <Route path='/newAlbum' component={NewAlbum}/>
+                    <Route path='/newAlbum/:classId' component={NewAlbum}/>
                     <Route path='/uploadImage' component={UploadImage}/>
                     <Route path='/uploadVideo' component={UploadVideo}/>
                     <Route path='/classAlbum/:type?' component={ClassAlbum}/>
-                    <Route path='/pictureList/:title?' component={PictureList}/>
+                    <Route path='/pictureList/:albumId/:title?' component={PictureList}/>
                     <Route path='/videoPlayer/:title?' component={VideoPlayer}/>
                     <Route path='/principalMailbox' component={PrincipalMailbox}/>
                     <Route path='/meetingSignIn' component={MeetingSignIn}/>

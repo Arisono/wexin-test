@@ -30,7 +30,7 @@ import SendMeet from '../modules/hiPages/sendMeetting/SendMeet';
 import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
 import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
 import Approvel from '../modules/hiPages/approvel/Approvel';
-import ApprovelDetail from  '../modules/hiPages/approvel-detail/ApprovelDetail';
+import ApprovelDetail from '../modules/hiPages/approvel-detail/ApprovelDetail';
 import WonderMoment from "../modules/video/WonderMoment";
 import NotifyBoardParent from "../modules/notificationCenter/NotifyBoardParent";
 import ConsumeRePage from '../modules/consumeManager/ConsumeRePage'
@@ -64,7 +64,7 @@ export default class RouteConfig extends Component {
                     <Route path='/newAlbum' component={NewAlbum}/>
                     <Route path='/uploadImage' component={UploadImage}/>
                     <Route path='/uploadVideo' component={UploadVideo}/>
-                    <Route path='/classAlbum' component={ClassAlbum}/>
+                    <Route path='/classAlbum/:type?' component={ClassAlbum}/>
                     <Route path='/pictureList/:title?' component={PictureList}/>
                     <Route path='/videoPlayer/:title?' component={VideoPlayer}/>
                     <Route path='/principalMailbox' component={PrincipalMailbox}/>
@@ -73,7 +73,7 @@ export default class RouteConfig extends Component {
                     <Route path='/phonesList/:classTitle?' component={PhonesList}/>
                     <Route path='/systemMessage' component={SystemMessage}/>
                     <Route path='/useHelp' component={UseHelp}/>
-                    <Route path='/wonderMoment' component={WonderMoment}/>
+                    <Route path='/wonderMoment/:type?' component={WonderMoment}/>
                     <Route path='/principalHistory' component={PrincipalHistory}/>
 
                     <Route path='/campusCardRecharge' component={CampusCardRecharge}/>
@@ -102,7 +102,7 @@ export default class RouteConfig extends Component {
                     <Route path='/field-trip' component={FieldTrip}/> {/*//外勤出差*/}
                     <Route path='/res_apply' component={ResApply}/>{/*//用品申请*/}
                     <Route path='/send-vote' component={SendVote}/>{/*//发起投票*/}
-                    <Route path='/sendMeetting' component={SendMeet}/>  {/*//发起会议*/}
+                    <Route path='/sendMeetting' component={SendMeet}/> {/*//发起会议*/}
                     <Route path='/class-schedule' component={ClassSchedule}/> {/*//课程表*/}
                     <Route path='/score-inquiry' component={ScoreInquiry}/> {/*//成绩通知*/}
                     <Route path='/approvel' component={Approvel}/>{/*审批*/}

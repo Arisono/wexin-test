@@ -20,11 +20,22 @@ export default class ClassAlbum extends Component {
         super()
 
         this.state = {
-            albumList: [
-                uploadItem
-            ],
+            albumList: [],
             classList: [],
             classText: ''
+        }
+    }
+
+    componentWillMount() {
+        if (this.props.match.params.type) {
+            this.mType = this.props.match.params.type
+        }
+
+        if (this.mType == 'parents') {
+        } else if (this.mType == 'teacher') {
+            this.setState({
+                albumList: [uploadItem]
+            })
         }
     }
 
@@ -107,8 +118,7 @@ export default class ClassAlbum extends Component {
     }
 
     onItemClick = (index) => {
-        console.log(index)
-        if (index == 0) {
+        if (index == 0 && this.mType == 'teacher') {
             this.props.history.push('/newAlbum')
         } else {
             this.props.history.push('/pictureList')

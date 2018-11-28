@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './AssignmentListPage.css'
 import { List} from 'antd';
+import { BrowserRouter as Router, Route, Link} from "react-router-dom";
 /**
  * 作业列表
  * Created by Arison on 17:48.
@@ -56,11 +57,13 @@ class AssignmentListPage extends React.Component{
     }
 
     render(){
-        return <div className="container-fluid" style={{padding:"0px",height:"1000px",backgroundColor:"#F3F3F3"}}>
+        return <div className="container-fluid"
+                    style={{padding:"0px",height:"1000px",backgroundColor:"#F3F3F3"}}>
             <List
                 id="assignment_list"
                 dataSource={data}
                 renderItem={item => (
+                    <Link to="/assignmentDetail" id="menu_span_normal">
                     <List.Item   className="row"  id="list_item_noBorder">
                             <div className="col-xs-12" >
                                    <div className="row" id="padding">
@@ -84,6 +87,7 @@ class AssignmentListPage extends React.Component{
                                 </div>
                          </div>
                     </List.Item>
+                    </Link>
                 )}
             />
         </div>

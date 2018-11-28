@@ -24,6 +24,10 @@ export const API = {
     GET_ALBUM_LIST: _baseURL + '/picture/getAlbumList',
     //获取相册内所有图片
     GET_PICTURE_LIST: _baseURL + '/picture/getPictureList',
+    //文件上传地址
+    UPLOAD_FILE: _baseURL + '/file/uploadFile',
+    //修改相册
+    UPDATE_ALBUM: _baseURL + '/picture/updateAlbum',
 
     //消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',

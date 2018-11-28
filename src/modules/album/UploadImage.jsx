@@ -7,6 +7,7 @@ import React, {Component} from 'react'
 import 'css/new-album.css'
 import {Icon, Button, Upload, Modal} from 'antd'
 import UploadEnclosure from 'components/UploadEnclosure'
+import {API} from "../../configs/api.config";
 
 export default class UploadImage extends Component {
 
@@ -45,7 +46,7 @@ export default class UploadImage extends Component {
                 <div className='gray-line'></div>
                 <div style={{flex: '1'}}>
                     <UploadEnclosure
-                        action="//jsonplaceholder.typicode.com/posts/"
+                        action={API.UPLOAD_FILE}
                         fileList={fileList}
                         limit={false}
                         multiple={true}
@@ -54,7 +55,6 @@ export default class UploadImage extends Component {
                         handleChange={this.handleChange.bind(this)}
                     />
                 </div>
-
 
                 <div className='uploadLayout'>
                     <Button className='commonButton' type="primary" block
@@ -68,6 +68,8 @@ export default class UploadImage extends Component {
 
     }
 
-    handleChange = ({fileList}) => this.setState({fileList})
+    handleChange = response => {
+        console.log(response)
+    }
 
 }

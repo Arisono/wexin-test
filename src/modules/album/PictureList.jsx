@@ -11,6 +11,7 @@ import {Toast} from 'antd-mobile'
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import '../../index.css'
 import 'css/album-item.css'
+
 import ImagesViewer from '../../components/imagesVIewer/index'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";

@@ -7,7 +7,7 @@ import './AccessNotice.css';
 import line_img from '../../../style/imgs/line_img.png';
 import enter_img from '../../../style/imgs/ic_enter.png';
 import exit_img from '../../../style/imgs/ic_exit.png';
-
+import httpRuquest from  '../../../utils/fetchRequest';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
 
@@ -74,13 +74,13 @@ export default class AccessNotice extends Component{
                         {this.state.out_inData.map((itemata,index) => <ItemComp key ={index} itemata = {itemata} handelSItem={this.handelSItem}></ItemComp>)}
                     </div>
                 </div>
-               {/* <div className="foot-sty">
-                    <div className="comhline_sty1"></div>
-                   <div className="foot-sty1">
-                       <div onClick={this.previousDataClick} style={{width:"50%"}} className="text-center"><img src={arrowLeft} alt=""  style={{height:32,width:17,marginTop:8}}/></div>
-                       <div onClick={this.nextDataClick} style={{width:"50%"}} className="text-center"><img src={nextArrowimg} alt=""  style={{height:32,width:17,marginTop:8}}/></div>
-                   </div>
-                </div>*/}
+               {/*{ <div className="foot-sty">*/}
+                    {/*<div className="comhline_sty1"></div>*/}
+                   {/*<div className="foot-sty1">*/}
+                       {/*<div onClick={this.previousDataClick} style={{width:"50%"}} className="text-center"><img src={arrowLeft} alt=""  style={{height:32,width:17,marginTop:8}}/></div>*/}
+                       {/*<div onClick={this.nextDataClick} style={{width:"50%"}} className="text-center"><img src={nextArrowimg} alt=""  style={{height:32,width:17,marginTop:8}}/></div>*/}
+                   {/*</div>*/}
+                {/*</div>}*/}
 
             </div>
         )

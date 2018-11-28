@@ -36,6 +36,10 @@ export const API = {
     curriculumListByStuId: _baseURL + '/curriculum/curriculumListByStuId',
     //查询学生出入校记录
     RecordOutgoingList: _baseURL + '/recordOutgoing/RecordOutgoingList',
+    //充值，缴费记录
+    rechargeRecord:_baseURL + '/payRank/consumeRecode',
+    //分页显示会议 /分页显示作业 /分页显示通知
+    notifyMessage:_baseURL + '/notify/getMeetingList',
     //创建投票单
     voteCreate: _baseURL + '/vote/voteCreate',
 

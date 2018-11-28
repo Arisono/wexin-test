@@ -78,6 +78,10 @@ class LeaveAddPage extends React.Component{
          this.props.history.push("/leaveList")
     }
 
+
+      componentWillMount(){
+              document.title ="学生请假";
+         }
     componentDidMount(){
 
     }

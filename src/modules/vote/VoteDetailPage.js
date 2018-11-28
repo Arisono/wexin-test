@@ -32,7 +32,9 @@ class VoteDetailPage extends React.Component{
     }
 
 
-
+   componentWillMount(){
+        document.title ="投票";
+   }
     
     componentDidMount(){
         // this.state.voteState=this.props.match.params.voteState;

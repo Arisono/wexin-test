@@ -73,6 +73,10 @@ class ReleaseAssignmentPage extends React.Component{
         };
     }
 
+      componentWillMount(){
+              document.title ="发布作业";
+         }
+
     callback(msg){
         console.log("leaveAddPage:callback："+JSON.stringify(msg));
     }

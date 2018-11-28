@@ -47,10 +47,18 @@ class AssignmentListPage extends React.Component{
         super(props);
         this.state={
             name:'AssignmentListPage',
-            role:'teacher'
+            role:this.props.match.params.role
         };
 
     }
+
+      componentWillMount(){
+          if("teacher"==this.props.match.params.role){
+              document.title ="作业发布";
+          }else{
+              document.title ="作业通知";
+          }
+      }
 
 
     componentDidMount(){

@@ -77,6 +77,9 @@ class VoteListTabPage extends React.Component{
         };
     }
 
+      componentWillMount(){
+              document.title ="投票";
+      }
 
     componentDidMount(){
         const that = this

@@ -51,7 +51,7 @@ import { BrowserRouter as Router, Route, Link} from "react-router-dom";
 import  './AppHomePage.css'
 import '../../style/css/app-gloal.css'
 import {constants} from '../../utils/constants'
-
+import Slider from "react-slick";
 
 /**
  * Created by Arison on 2018/11/1.
@@ -109,6 +109,7 @@ class AppHomePage extends React.Component {
     }
 
     componentDidMount(){
+        document.title ="智慧校园";
         console.log("componentDidMount()"+this.props.location.search);
         console.log("componentDidMount():query:"+this.props.location.query);
         const query =this.props.location.search;
@@ -140,7 +141,13 @@ class AppHomePage extends React.Component {
         let borderLine = {
             border: "1px solid #f4f4f4"
         };
-
+        var settings = {
+            className: "center",
+            infinite: true,
+            centerPadding: "60px",
+            slidesToShow: 5,
+            swipeToSlide: true,
+        };
         return <div className="container-fluid">
             {/*顶部Header*/}
             <div className="row" >
@@ -246,46 +253,40 @@ class AppHomePage extends React.Component {
                         <div className="row" style={borderLine}></div>
                         <div className="row">
                             <div className="col-xs-12" style={{margin: "0px", padding: "0px"}}>
-                                <Carousel className="flex_row"  autoplay={false} dots={false} afterChange={this.onChange.bind(this)}>
-                                    <div className="flex_row ">
-
-                                          <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                                       width={93} height={90}/>
-
-
-                                            <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                 width={93} height={90}/>
-
-
-                                            <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                 width={93} height={90}/>
-
+                                <Slider {...settings}>
+                                    <div >
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                             width={"31%"} />
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                             width={"31%"} />
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                             width={"31%"} />
                                     </div>
                                     <div className="flex_row " style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                                         <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                             width={93} height={90}/>
-                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 10px", display: "inline"}}
-                                             width={93} height={90}/>
-                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 10px", display: "inline"}}
-                                             width={93} height={90}/>
+                                             width={"31%"} />
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                             width={"31%"} />
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                             width={"31%"}/>
                                     </div>
                                     <div className="flex_row " style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                                         <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                             width={93} height={90}/>
-                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 10px", display: "inline"}}
-                                             width={93} height={90}/>
-                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 10px", display: "inline"}}
-                                             width={93} height={90}/>
+                                             width={"31%"} />
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                             width={"31%"}/>
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                             width={"31%"} />
                                     </div>
                                     <div className="flex_row " style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                                         <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                             width={93} height={90}/>
-                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 10px", display: "inline"}}
-                                             width={93} height={90}/>
-                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 10px", display: "inline"}}
-                                             width={93} height={90}/>
+                                             width={"31%"}/>
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                             width={"31%"} />
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                             width={"31%"} />
                                     </div>
-                                </Carousel>
+                                </Slider>
 
                             </div>
                         </div>
@@ -304,13 +305,13 @@ class AppHomePage extends React.Component {
                         </div>
                         <div className="row" id="page_horizontal_line"></div>
 
-                        <div className="row flex_row">
-                            <div className="item_flex2  flex_center">
-                                <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "20px 0px 3px 10px"}} width={160} height={160}/>
-                            </div>
-                            <div className="item_flex">
-                                <div><img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "20px 0px 0px 0px"}} width={100} height={80}/></div>
-                                <div><img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 0px 0px"}} width={100} height={80}/></div>
+                        <div className="row flex_row" >
+
+                            <img className=" padding_left" src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}  width={'60%'} height={"220px"}/>
+
+                            <div style={{width:"40%"}} className="padding_right">
+                                <div className="margin_bottom_5"><img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}  width={"100%"} height={"92px"}/></div>
+                                <div><img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}  width={"100%"} height={"92px"}/></div>
                             </div>
                         </div>
 

@@ -27,6 +27,7 @@ export const API = {
     RecordOutgoingList:_baseURL + '/recordOutgoing/RecordOutgoingList',
     //创建投票单
     voteCreate:_baseURL + '/vote/voteCreate',
+    voteList:_baseURL+"/vote/voteList",
 
 }
 

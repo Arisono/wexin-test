@@ -256,6 +256,14 @@
     padding: 15px;
 }
 
+.padding_left{
+    padding: 15px 7px 15px 15px;
+}
+
+.padding_right{
+    padding: 15px 15px 15px 7px;
+}
+
 .padding_20{
     padding: 20px;
 }
@@ -324,8 +332,12 @@
     margin: 0px 0px 15px 0px;
 }
 
-.margin_bottom_10{
+.margin_bottom_20{
     margin: 0px 0px 20px 0px;
+}
+
+.margin_bottom_5{
+    margin: 0px 0px 5px 0px;
 }
 
 

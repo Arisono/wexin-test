@@ -93,7 +93,7 @@ export default class RouteConfig extends Component {
                     <Route path='/leaveAddC' component={LeaveAddCPage}/>
                     <Route path='/leaveAdd' component={LeaveAddPage}/>
                     <Route path='/leaveApproval' component={LeaveApprovalPage}/>
-                    <Route path='/leaveList' component={LeaveListPage}/>
+                    <Route path='/leaveList/:role' component={LeaveListPage}/>
 
                     <Route path='/releaseAssignment' component={ReleaseAssignmentPage}/>
                     <Route path='/assignmentList/:role' component={AssignmentListPage}/>

@@ -97,14 +97,16 @@ export default class ApprovelDetail extends Component{
                     title={this.state.AMTitle}
                     visible={this.state.AMvisible}
                     onOk={this.handleSubmit}
+                    okText={'确认'}
+                    cancelText={'取消'}
                     onCancel={this.handleCancel}
-                    footer={[
-                        <Button key="back" onClick={this.handleCancel}>取消</Button>,
-                        <Button key="submit" type="primary" onClick={this.handleSubmit}>提交</Button>,
-                    ]}
+                    // footer={[
+                    //     <Button key="back" onClick={this.handleCancel}>取消</Button>,
+                    //     <Button key="submit" type="primary" onClick={this.handleSubmit}>提交</Button>,
+                    // ]}
                 >
                    <div>
-                       <textarea autoFocus="autoFocus" ref='voteTitle' className="form-control" rows="4" placeholder="填写意见说明（非必填）" ></textarea>
+                       <textarea autoFocus="autoFocus" ref='voteTitle' className="form-control" rows="5" placeholder="填写意见说明（非必填）" ></textarea>
                    </div>
                 </Modal>
             </div>

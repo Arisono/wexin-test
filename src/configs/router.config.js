@@ -31,6 +31,7 @@ import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
 import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
 import Approvel from '../modules/hiPages/approvel/Approvel';
 import ApprovelDetail from  '../modules/hiPages/approvel-detail/ApprovelDetail';
+import MeetDetail from '../modules/hiPages/meet-detail/MeetDetail';
 import WonderMoment from "../modules/video/WonderMoment";
 import NotifyBoardParent from "../modules/notificationCenter/NotifyBoardParent";
 import ConsumeRePage from '../modules/consumeManager/ConsumeRePage'
@@ -107,6 +108,7 @@ export default class RouteConfig extends Component {
                     <Route path='/score-inquiry' component={ScoreInquiry}/> {/*//成绩通知*/}
                     <Route path='/approvel' component={Approvel}/>{/*审批*/}
                     <Route path='/approvel-detail' component={ApprovelDetail}/> {/*审批详情*/}
+                    <Route path='/meet-detail' component={MeetDetail}/>
 
                     {/*刘金龙*/}
                     <Route path='/consumeRePage' component={ConsumeRePage}/>

@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './LeaveListPage.css'
 import '../../style/css/app-gloal.css'
 import { List} from 'antd';
-import { Button,message} from 'antd';
+import { Button,message,Icon} from 'antd';
 import InfiniteScroll from 'react-infinite-scroller'
 import {setTitle} from "../../utils/constants";
 import LoadingMore from "../../components/LoadingMore";
@@ -20,6 +20,7 @@ class LeaveListPage extends React.Component{
         this.state={
             name:'LeaveListPage',
             hasMoreData:true,
+            role:this.props.match.params.role,
             data:[{
                title:'黎明的请假单',
                 endTime:'2018-09-08 09:00',
@@ -34,7 +35,10 @@ class LeaveListPage extends React.Component{
                 }]
         };
     }
-    
+
+    componentWillMount(){
+              document.title ="学生请假";
+    }
     
     componentDidMount(){
 
@@ -67,6 +71,10 @@ class LeaveListPage extends React.Component{
         }, 1000)
 
     }
+    onAddAction=()=>{
+        this.props.history.push("/leaveAdd");
+    }
+
    
     render(){
         return <div className="container-fluid" id="global_background">
@@ -105,6 +113,10 @@ class LeaveListPage extends React.Component{
                                  </List.Item>
                              )}/>
                        </InfiniteScroll>
+                    {
+                        this.state.role=="teacher"?(""):(<Icon type="plus-circle" theme='filled' className='common-add-icon'
+                                                             onClick={this.onAddAction} />)
+                    }
                 </div>
             </div>
         </div>

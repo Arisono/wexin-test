@@ -140,13 +140,13 @@ export default class CampusCardRecharge extends Component {
             money: ''
         })
     }
-
+    //消费记录
     expensesRecord = () => {
-        this.props.history.push('/consumeRePage')
+        this.props.history.push('/consumeRePage/1')
     }
-
+    //充值记录
     rechargeRecord = () => {
-        this.props.history.push('/consumeRePage')
+        this.props.history.push('/consumeRePage/2')
     }
 
     onRechargeClick = () => {

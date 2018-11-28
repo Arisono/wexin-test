@@ -28,7 +28,9 @@ export const API = {
     //创建投票单
     voteCreate:_baseURL + '/vote/voteCreate',
     //充值，缴费记录
-    rechargeRecord:_baseURL + '/payRank/consumeRecode'
+    rechargeRecord:_baseURL + '/payRank/consumeRecode',
+    //分页显示会议 /分页显示作业 /分页显示通知
+    notifyMessage:_baseURL + '/notify/getMeetingList'
 
 }
 

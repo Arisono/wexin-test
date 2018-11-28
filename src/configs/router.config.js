@@ -109,7 +109,8 @@ export default class RouteConfig extends Component {
                     <Route path='/approvel-detail' component={ApprovelDetail}/> {/*审批详情*/}
 
                     {/*刘金龙*/}
-                    <Route path='/consumeRePage' component={ConsumeRePage}/>
+                    {/*1:消费记录 2.充值记录*/}
+                    <Route path='/consumeRePage/:type' component={ConsumeRePage}/>
                     <Route path='/notifyBoard/parent' component={NotifyBoardParent}/>
                     <Route path='/notifyBoard/teacher' component={NotifyBoardTeacher}/>
                     {/*龚鹏明*/}

@@ -1,0 +1,117 @@
+.comhline_sty {background-color:#F2F2F2;width:100%;height:10px}
+.comhline_sty1{background-color:#F2F2F2;width:100%;height:1px;}
+.end_sty{width: 302px;height: 36px;font-size: 15px;}
+.signItemLayout {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #F2F2F2;
+}
+
+.signCreateTime {
+    text-align: center;
+    background: #FFFFFF;
+    border-radius: 13px;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #6C6C6C;
+    letter-spacing: 0;
+    padding: 3px 10px;
+    margin: 18px 0 14px 0;
+}
+
+.signContentlayout {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #FFFFFF;
+    border-radius: 6px;
+    padding: 10px 16px;
+}
+
+.titleLayout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: white;
+    margin: 4px 0;
+}
+
+.titleText {
+    flex: 1;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #333333;
+    letter-spacing: 0;
+    font-weight: bold;
+}
+
+.meetStatusRed {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #FA5200;
+    letter-spacing: 0;
+}
+
+.meetStatusGray {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #666666;
+    letter-spacing: 0;
+}
+
+.contentItem {
+    display: flex;
+    align-items: center;
+    padding: 6px 0;
+    background: white;
+}
+
+.captionText {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #353535;
+    letter-spacing: 0;
+    width: 65px;
+    padding: 0;
+    background: white;
+}
+
+.valueText {
+    flex: 1;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #666666;
+    letter-spacing: 0;
+}
+
+.bottomLayout {
+    width: 100%;
+    text-align: right;
+    background: white;
+    margin: 4px 0;
+}
+
+.signBtnActive {
+    background: #4197FC;
+    border-radius: 2px;
+    padding: 4px 10px;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+}
+
+.signBtnEnable {
+    background: #929292;
+    border-radius: 2px;
+    padding: 4px 10px;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #FFFFFF;
+    letter-spacing: 0;
+}
+

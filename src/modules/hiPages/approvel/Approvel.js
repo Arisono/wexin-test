@@ -12,6 +12,7 @@ import icon_out from '../../../style/imgs/out_img.png';
 import icon_res from '../../../style/imgs/res_img.png';
 import icon_trip from '../../../style/imgs/trip_img.png';
 import ApprovelItem from './ApprovelItem';
+import {Link} from 'react-router-dom';
 
 let mySwiper
 
@@ -120,11 +121,16 @@ export default class Approvel extends Component{
                 </div>
                 <div className="swiper-container" style={{backgroundColor:"#F2F2F2",height:"100vh"}}>
                     <div className="swiper-wrapper">
+
+                            <div className="swiper-slide">
+                                <Link to="/approvel-detail">
+                                {this.state.applyList.map((itemdata,index) => <ApprovelItem type={1} index={index} itemata = {itemdata} clickApplyItem ={this.clickApplyItem} ></ApprovelItem>)}
+                                </Link>
+                            </div>
                         <div className="swiper-slide">
-                            {this.state.applyList.map((itemdata,index) => <ApprovelItem type={1} index={index} itemata = {itemdata} clickApplyItem ={this.clickApplyItem} ></ApprovelItem>)}
-                        </div>
-                        <div className="swiper-slide">
-                            {this.state.approvelList.map((itemdata,index) => <ApprovelItem type={2} index={index} itemata = {itemdata} clickApprovelItem ={this.clickApprovelItem} ></ApprovelItem>)}
+                            <Link to="/approvel-detail">
+                                {this.state.approvelList.map((itemdata,index) => <ApprovelItem type={2} index={index} itemata = {itemdata} clickApprovelItem ={this.clickApprovelItem} ></ApprovelItem>)}
+                            </Link>
                         </div>
                     </div>
                 </div>

@@ -15,12 +15,17 @@
     font-size: 15px;
 }
 #menu_span_normal{
-    color: grey;
+    color: #333333;
     font-size: 12px;
 }
 /*antd 轮播图*/
+
+.col-xs-12 .ant-carousel .slick-dots{
+    display:none;
+}
 .ant-carousel .slick-slide {
     text-align: center;
+    display:none;
     height: 160px;
     margin: 0px;
     line-height: 160px;
@@ -29,5 +34,6 @@
 }
 
 .ant-carousel .slick-slide h3 {
-    color: #fff;
+    color: #DDEBF9;
+
 }

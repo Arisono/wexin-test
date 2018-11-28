@@ -29,7 +29,8 @@ export default class AlbumItem extends Component {
             <div className='parentLayout' onClick={this.albumClick}>
                 <div className='itemLayout'>
                     <img className='coverImg'
-                         src={albumBean.coverImg == 'upload' ? require('imgs/ic_annex_upload.png') : albumBean.coverImg}/>
+                         src={albumBean.coverImg == 'upload' ? require('imgs/ic_annex_upload.png') :
+                             (albumBean.coverImg || require('imgs/img_default.png'))}/>
                     <span className='nameText'>{albumBean.albumName}</span>
                     <span className='quantityText'>{albumBean.quantity >= 0 ? (albumBean.quantity + '张') : ''}</span>
                 </div>

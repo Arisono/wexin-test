@@ -3,6 +3,15 @@
     background-color: #E6EEF7;
 
 }
+
+.vote-header{
+    background: url("../../style/imgs/icon_bg_content1.png") no-repeat ;
+    width:235px;height:70px;
+    margin-top: 20px;
+    font-size: 11px;
+    padding-top: 5px;
+    padding-left: 25px;
+}
 .ant-checkbox-inner{
     position: relative;
     top: 0;

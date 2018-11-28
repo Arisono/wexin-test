@@ -17,16 +17,23 @@ export const API = {
     //3作业发布 4通知公告 5 校长信箱 6会议
     GET_MEETING_LIST: _baseURL + '/notify/getMeetingList',
     //1系统信息 2使用帮助
-    SYSTEM_MESSAGE:_baseURL+'/notify/systemMessage',
+    SYSTEM_MESSAGE: _baseURL + '/notify/systemMessage',
+    //获取班级列表
+    GET_CLASS_LIST: _baseURL + '/school/getClassList',
+    //获取班级相册列表
+    GET_ALBUM_LIST: _baseURL + '/picture/getAlbumList',
+    //获取相册内所有图片
+    GET_PICTURE_LIST: _baseURL + '/picture/getPictureList',
+
     //消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
 
-   //根据学号取课程表
-    curriculumListByStuId:_baseURL + '/curriculum/curriculumListByStuId',
+    //根据学号取课程表
+    curriculumListByStuId: _baseURL + '/curriculum/curriculumListByStuId',
     //查询学生出入校记录
-    RecordOutgoingList:_baseURL + '/recordOutgoing/RecordOutgoingList',
+    RecordOutgoingList: _baseURL + '/recordOutgoing/RecordOutgoingList',
     //创建投票单
-    voteCreate:_baseURL + '/vote/voteCreate',
+    voteCreate: _baseURL + '/vote/voteCreate',
 
 }
 

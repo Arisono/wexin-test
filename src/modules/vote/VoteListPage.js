@@ -92,7 +92,7 @@ class VoteListPage extends React.Component{
                   <List
                       dataSource={this.state.data}
                       renderItem={item=>(
-                        <Link to="/voteDetail" id="menu_span_normal">
+                        <Link to={"/voteDetail/"+(item.state=='进行中'?true:false)} id="menu_span_normal">
                             <List.Item className="row " id="row_background"
                                        style={{padding:"10px"}}>
                                 <div className="col-xs-12 ">

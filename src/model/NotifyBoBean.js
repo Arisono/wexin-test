@@ -9,4 +9,5 @@ export default function NotifyBoBean() {
     this.receiveList = []
     this.unRead = 0
     this.readed = 0
+    this.allCount = 0
 }

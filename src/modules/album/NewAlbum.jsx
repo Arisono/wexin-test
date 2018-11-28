@@ -15,6 +15,11 @@ export default class NewAlbum extends Component {
 
     componentWillMount() {
         document.title = '新建相册'
+        const classId = this.props.match.params.classId
+        console.log(classId)
+        if (classId) {
+            this.classId = classId
+        }
     }
 
     constructor() {
@@ -26,6 +31,7 @@ export default class NewAlbum extends Component {
             classList: []
         }
     }
+
 
     componentDidMount() {
         const {classList} = this.state

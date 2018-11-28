@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { List} from 'antd';
 import '../../style/css/app-gloal.css'
 import './VoteListPage.css'
-import { Checkbox,message} from 'antd';
+import { Checkbox,message,Icon} from 'antd';
 import icon_vote_items  from "../../style/imgs/icon_vote_items.png";
 import {Link} from "react-router-dom";
 import LoadingMore from "../../components/LoadingMore";
@@ -118,6 +118,10 @@ class VoteListTabPage extends React.Component{
                  data:this.state.data
              });
         },1500);
+    }
+
+    onAddAction=()=>{
+        this.props.history.push("/send-vote")
     }
 
     loadMoreRightAction=()=>{
@@ -250,7 +254,10 @@ class VoteListTabPage extends React.Component{
                                     {recived}
                                 </InfiniteScroll>
                             </div>
+
                         </div>
+                        <Icon type="plus-circle" theme='filled' className='common-add-icon'
+                              onClick={this.onAddAction} />
                     </div>
                 </div>
             </div>

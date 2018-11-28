@@ -234,6 +234,18 @@
     flex: 1 0 auto;
 }
 
+.item_flex2{
+    flex: 2 0 auto;
+}
+
+.item_flex_1{
+    flex: 1;
+}
+
+.item_flex_3{
+    flex: 0 0 33.3333%;
+}
+
 
 /*全局边距设置*/
 .padding_10{

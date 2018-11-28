@@ -25,10 +25,10 @@
 }
 .ant-carousel .slick-slide {
     text-align: center;
-    display:none;
-    height: 160px;
+    display:flex;
+    height: 120px;
     margin: 0px;
-    line-height: 160px;
+    line-height: 120px;
     background: #DDEBF9;
     overflow: hidden;
 }

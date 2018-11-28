@@ -72,7 +72,7 @@ class LeaveListPage extends React.Component{
 
     }
     onAddAction=()=>{
-        this.props.history.push("/leaveAdd");
+        this.props.history.push("/leaveAdd/");
     }
 
    

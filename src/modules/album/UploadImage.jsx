@@ -5,11 +5,17 @@
 
 import React, {Component} from 'react'
 import 'css/new-album.css'
-import {Icon, Button, Upload, Modal} from 'antd'
+import {Button,} from 'antd'
+import {Toast} from 'antd-mobile'
 import UploadEnclosure from 'components/UploadEnclosure'
-import {API} from "../../configs/api.config";
+import {_baseURL, API} from "../../configs/api.config";
+import {fetchPost} from "../../utils/fetchRequest";
 
 export default class UploadImage extends Component {
+
+    componentWillMount() {
+        this.albumId = this.props.match.params.albumId
+    }
 
     componentDidMount() {
         document.title = '上传图片'
@@ -23,24 +29,13 @@ export default class UploadImage extends Component {
 
             previewVisible: false,
             previewImage: '',
-            fileList: [{
-                uid: '-1',
-                name: 'xxx.png',
-                status: 'done',
-                url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            }],
+            fileList: [],
         }
     }
 
     render() {
-        const {previewVisible, previewImage, fileList} = this.state;
-        const {classText, albumText} = this.state
-        const uploadButton = (
-            <div>
-                <Icon type="plus"/>
-                <div className="ant-upload-text">Upload</div>
-            </div>
-        );
+        const {fileList} = this.state;
+
         return (
             <div className='pageLayout'>
                 <div className='gray-line'></div>
@@ -68,8 +63,39 @@ export default class UploadImage extends Component {
 
     }
 
-    handleChange = response => {
-        console.log(response)
+    handleChange = fileList => {
+        if (fileList) {
+            fileList.forEach((value, index) => {
+                value.url = value.response ? (_baseURL + value.response.data) : ''
+            })
+
+            this.setState({fileList})
+        }
+
+        console.log(fileList)
+    }
+
+    releaseEvent = () => {
+        Toast.loading('相册更新中...', 0)
+
+        const {fileList} = this.state
+        const fileUrls = []
+        if (fileList) {
+            fileList.forEach((value, index) => {
+                fileUrls.push(value.url)
+            })
+        }
+
+        fetchPost(API.UPDATE_ALBUM, {
+            fileUrls: JSON.stringify(fileUrls),
+            parentId: this.albumId
+        }).then(response => {
+            Toast.hide()
+            Toast.success('更新成功')
+        }).catch(error => {
+            Toast.hide()
+            Toast.fail(error)
+        })
     }
 
 }

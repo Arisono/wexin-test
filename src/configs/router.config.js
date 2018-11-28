@@ -30,7 +30,7 @@ import SendMeet from '../modules/hiPages/sendMeetting/SendMeet';
 import ClassSchedule from '../modules/hiPages/class-schedule/ClassSchedule';
 import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
 import Approvel from '../modules/hiPages/approvel/Approvel';
-import ApprovelDetail from  '../modules/hiPages/approvel-detail/ApprovelDetail';
+import ApprovelDetail from '../modules/hiPages/approvel-detail/ApprovelDetail';
 import MeetDetail from '../modules/hiPages/meet-detail/MeetDetail';
 import WonderMoment from "../modules/video/WonderMoment";
 import NotifyBoardParent from "../modules/notificationCenter/NotifyBoardParent";
@@ -64,7 +64,7 @@ export default class RouteConfig extends Component {
                     <Route path='/bindMenu' component={BindMenu}/>
                     <Route path='/accountBind/:type?' component={AccountBind}/>
                     <Route path='/newAlbum/:classId' component={NewAlbum}/>
-                    <Route path='/uploadImage' component={UploadImage}/>
+                    <Route path='/uploadImage/:albumId' component={UploadImage}/>
                     <Route path='/uploadVideo' component={UploadVideo}/>
                     <Route path='/classAlbum/:type?' component={ClassAlbum}/>
                     <Route path='/pictureList/:albumId/:title?' component={PictureList}/>
@@ -108,7 +108,7 @@ export default class RouteConfig extends Component {
                     <Route path='/score-inquiry' component={ScoreInquiry}/> {/*//成绩通知*/}
                     <Route path='/approvel' component={Approvel}/>{/*审批*/}
                     <Route path='/approvel-detail' component={ApprovelDetail}/> {/*审批详情*/}
-                    <Route path='/meet-detail' component={MeetDetail}/>  {/*会议签到详情*/}
+                    <Route path='/meet-detail' component={MeetDetail}/> {/*会议签到详情*/}
 
                     {/*刘金龙*/}
                     <Route path='/consumeRePage' component={ConsumeRePage}/>

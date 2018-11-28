@@ -47,7 +47,7 @@ export default class PhonesSelect extends Component {
 
         for (let i = 0; i < 20; i++) {
             let phoneBean = new PhonesBean()
-            phoneBean.name = '章晨望'
+            phoneBean.name = '赖思睿'
             phoneBean.phone = '13632423333'
             phoneBean.claName = ''
             phoneBean.children = ['']

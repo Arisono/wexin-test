@@ -6,7 +6,7 @@
 import React, {Component} from 'react'
 import {isObjEmpty} from "../../utils/common";
 import LazyLoad from 'react-lazyload'
-import {Button, Modal} from 'antd'
+import {Button, Avatar, Icon} from 'antd'
 import {Toast} from 'antd-mobile'
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import '../../index.css'
@@ -96,17 +96,20 @@ export default class PictureList extends Component {
                     </TransitionGroup>
                 </div>
 
+                <img src={require('imgs/ic_album_edit.png')} className='common-add-icon album-edit-icon'
+                     onClick={this.editPicturesClick}/>
+
                 {previewVisible ?
                     <ImagesViewer onClose={this.handleCancel} urls={pictureList}
                                   index={this.state.previewIndex}
                                   needPoint={pictureList.length <= 9}/> : ""}
 
-                <div className='album-detail-bottom'>
+                {/*<div className='album-detail-bottom'>
                     <Button type='primary' className='album-detail-button'
                             onClick={this.addPicturesClick}>新增照片</Button>
                     <Button type='warning' className='album-detail-button'
                             onClick={this.deletePirturesClick}>删除</Button>
-                </div>
+                </div>*/}
             </div>
         )
     }
@@ -123,14 +126,9 @@ export default class PictureList extends Component {
         })
     }
 
-    addPicturesClick = () => {
-        this.props.history.push('/uploadImage')
+    editPicturesClick = () => {
+        this.props.history.push('/uploadImage/' + this.albumId)
     }
-
-    deletePirturesClick = () => {
-        this.props.history.push('/uploadImage')
-    }
-
 
     handlePreview = (url, index) => {
         this.setState({

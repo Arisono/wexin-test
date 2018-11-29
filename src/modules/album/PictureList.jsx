@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react'
-import {isObjEmpty} from "../../utils/common";
+import {getStrValue, isObjEmpty} from "../../utils/common";
 import LazyLoad from 'react-lazyload'
 import {Toast} from 'antd-mobile'
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
@@ -13,7 +13,7 @@ import 'css/album-item.css'
 
 import ImagesViewer from '../../components/imagesVIewer/index'
 import {fetchGet} from "../../utils/fetchRequest";
-import {API} from "../../configs/api.config";
+import {_baseURL, API} from "../../configs/api.config";
 import PictureBean from "../../model/PictureBean";
 
 export default class PictureList extends Component {
@@ -48,7 +48,7 @@ export default class PictureList extends Component {
         const {pictureList, previewVisible, description} = this.state
         let pictureItems = []
         for (let i = 0; i < pictureList.length; i++) {
-            const pictureUrl = pictureList[i].picUrl
+            const pictureUrl = pictureList[i].url
             if (!isObjEmpty(pictureUrl)) {
                 pictureItems.push(
                     i > 20 ?
@@ -123,17 +123,18 @@ export default class PictureList extends Component {
                         pictures.forEach((picture, index) => {
                             const pictureBean = new PictureBean()
 
-                            pictureBean.picId = picture.picId
-                            pictureBean.picName = picture.picName
-                            pictureBean.picUrl = picture.picUrl
-                            pictureBean.picDate = picture.picDate
-                            pictureBean.picType = picture.picType
-                            pictureBean.picStatus = picture.picStatus
-                            pictureBean.parentId = picture.parentId
-                            pictureBean.picRemarks = picture.picRemarks
-                            pictureBean.schId = picture.schId
-                            pictureBean.quantity = picture.quantity
-                            pictureBean.schName = picture.schName
+                            pictureBean.picId = getStrValue(picture, 'picId')
+                            pictureBean.picName = getStrValue(picture, 'picName')
+                            pictureBean.picUrl = getStrValue(picture, 'picUrl')
+                            pictureBean.picDate = getStrValue(picture, 'picDate')
+                            pictureBean.picType = getStrValue(picture, 'picType')
+                            pictureBean.picStatus = getStrValue(picture, 'picStatus')
+                            pictureBean.parentId = getStrValue(picture, 'parentId')
+                            pictureBean.picRemarks = getStrValue(picture, 'picRemarks')
+                            pictureBean.schId = getStrValue(picture, 'schId')
+                            pictureBean.quantity = getStrValue(picture, 'quantity')
+                            pictureBean.schName = getStrValue(picture, 'schName')
+                            pictureBean.url = _baseURL + getStrValue(picture, 'picUrl')
 
                             pictureList.push(pictureBean)
                         })

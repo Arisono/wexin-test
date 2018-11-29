@@ -7,6 +7,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './AssignmentListPage.css'
 import { List,Icon} from 'antd';
 import { BrowserRouter as Router, Route, Link} from "react-router-dom";
+import {fetchPost,fetchGet} from '../../utils/fetchRequest';
+import {API} from '../../configs/api.config';
+import {isObjEmpty} from  '../../utils/common';
+
 /**
  * 作业列表
  * Created by Arison on 17:48.
@@ -64,6 +68,19 @@ class AssignmentListPage extends React.Component{
     componentDidMount(){
         this.setState({
            role:this.props.match.params.role
+        })
+
+
+        //获取列表
+        fetchPost(API.homeWorkList,{
+            userId:'10000',
+            notifyType:'3',
+            pageIndex:'1',
+            pageSize:'10'
+        }).then((response)=>{
+            console.log("response:"+JSON.stringify(response));
+        }).catch((error)=>{
+            console.log("error:"+JSON.stringify(error));
         })
     }
 

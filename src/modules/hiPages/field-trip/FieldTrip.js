@@ -14,6 +14,7 @@ export default class FieldTrip extends Component{
     }
     constructor(){
         super();this.state = {
+            tripType:null,
             startValue: null,
             endValue: null,
             tripsHours:null,
@@ -37,7 +38,21 @@ export default class FieldTrip extends Component{
         return(
             <div onChange={this.handelValueCom}>
                 <div  className="item_sty">
-                    <div style={{width:150}}>开始时间</div>
+                    <div style={{width:150,fontSize:15,color:"#333333"}}>选择类型:</div>
+                    <div className="text-right" style={{width:"100%",}}>
+                        <Select defaultValue="请选择" style={{ width:100 }} onChange={this.handleSelectChange}>
+                            <Option value="1">类型1</Option>
+                            <Option value="2">类型2</Option>
+                            <Option value="3">类型3</Option>
+                            <Option value="4">类型4</Option>
+                        </Select>
+                        <img src={nextArrowimg} className="nextarr_sty"/>
+                    </div>
+                </div>
+                <div className="comhline_sty1"></div>
+
+                <div  className="item_sty">
+                    <div style={{width:150,color:"#333333"}}>开始时间</div>
                     <div className="text-right" style={{width:"100%",}}>
                         <DatePicker
                             disabledDate={this.disabledStartDate}
@@ -52,7 +67,7 @@ export default class FieldTrip extends Component{
                 <div className="comhline_sty1"></div>
 
                 <div  className="item_sty">
-                    <div style={{width:150}}>结束时间</div>
+                    <div style={{width:150,color:"#333333"}}>结束时间</div>
                     <div className="text-right" style={{width:"100%",}}>
                         <DatePicker
                             disabledDate={this.disabledEndDate}
@@ -69,7 +84,7 @@ export default class FieldTrip extends Component{
                 <div className="comhline_sty1"></div>
 
                 <div  className="item_sty">
-                    <div style={{width:150}}>时长</div>
+                    <div style={{width:150,color:"#333333"}}>时长(h)</div>
                     <div className="text-right" style={{width:"100%",}}>{this.state.tripsHours}
                         <img src={nextArrowimg} className="nextarr_sty"/>
                     </div>
@@ -80,7 +95,7 @@ export default class FieldTrip extends Component{
                 <div className="comhline_sty1"></div>
 
                 <div className="item_sty">
-                    <div  style={{fontSize:12,paddingTop:5,width:150}}>接收人:</div>
+                    <div  style={{fontSize:12,paddingTop:5,width:150,color:"#333333"}}>接收人:</div>
                     <div className='text-right' style={{width:"100%",}}>
                         <Select defaultValue="单选"  style={{ width:100,fontSize:12}} onChange={this.handleSelectChange}>
                             <Option value="0">吴彦祖</Option>
@@ -117,7 +132,11 @@ export default class FieldTrip extends Component{
     doSaveClick =() =>{
         console.log('state',this.state)
     }
-
+    handleSelectChange =(value) =>{
+        this.setState({
+            tripType:value
+        })
+    }
     handelValueCom = (event)=>{
         //获取用户名的值
         let tripsReason = this.refs.tripsReason.value;

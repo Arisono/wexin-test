@@ -90,7 +90,9 @@ export default class ClassAlbum extends Component {
             this.analysisClassList(response)
         }).catch(error => {
             Toast.hide()
-            Toast.fail(error, 2)
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            }
         })
     }
 
@@ -130,7 +132,9 @@ export default class ClassAlbum extends Component {
             }
         }).catch(error => {
             Toast.hide()
-            Toast.fail(error)
+            if (typeof error === 'string') {
+                Toast.fail(error)
+            }
         })
     }
 
@@ -138,10 +142,12 @@ export default class ClassAlbum extends Component {
         const {classList, classText, albumList} = this.state
         if (index == 0 && this.mType == 'teacher') {
             let classId = -1
+            let classname = ''
             if (classList[classText]) {
                 classId = classList[classText].schId
+                classname = classList[classText].label
             }
-            this.props.history.push('/newAlbum/' + classId)
+            this.props.history.push('/newAlbum/' + classId + '/' + classname)
         } else {
             this.props.history.push('/pictureList/' + getStrValue(albumList[index], 'albumId')
                 + '/' + this.state.albumList[index].albumName)
@@ -166,6 +172,8 @@ export default class ClassAlbum extends Component {
 
     analysisClassList = response => {
         const {classList, classText} = this.state
+        classList.length = 0
+        classText.length = 0
 
         let dataArray = response.data
         if (dataArray) {

@@ -7,7 +7,10 @@ import React, {Component} from 'react'
 import {Icon, Input, Button} from 'antd'
 import 'css/new-album.css'
 import {isObjEmpty} from "../../utils/common";
-import {Picker, List} from 'antd-mobile'
+import {Picker, List, Toast} from 'antd-mobile'
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
+import {API} from "../../configs/api.config";
+import ClassBean from 'model/ClassBean'
 
 const {TextArea} = Input
 
@@ -16,16 +19,27 @@ export default class NewAlbum extends Component {
     componentWillMount() {
         document.title = '新建相册'
         const classId = this.props.match.params.classId
-        console.log(classId)
+        const classname = this.props.match.params.name
+
         if (classId) {
             this.classId = classId
+        }
+        if (classname) {
+            this.classname = classname
+            this.setState({
+                classText: [this.classId],
+                classList: [{
+                    label: this.classname,
+                    value: this.classId
+                }]
+            })
         }
     }
 
     constructor() {
         super()
         this.state = {
-            classText: '',
+            classText: [],
             albumTitle: '',
             albumdescription: '',
             classList: []
@@ -34,23 +48,9 @@ export default class NewAlbum extends Component {
 
 
     componentDidMount() {
-        const {classList} = this.state
 
-        for (let i = 0; i < 10; i++) {
-            if (i % 2 == 0) {
-                classList.push({
-                    label: '三年级（一）班',
-                    value: '三年级（一）班'
-                })
-            } else {
-                classList.push({
-                    label: '三年级（二）班',
-                    value: '三年级（二）班'
-                })
-            }
-        }
-
-        this.setState({classList})
+        Toast.loading('', 0)
+        this.getClassList()
     }
 
     render() {
@@ -60,9 +60,7 @@ export default class NewAlbum extends Component {
             <div className='pageLayout'>
                 <div className='gray-line'></div>
                 <Picker data={classList} title='选择班级' extra='请选择'
-                        value={classText} onChange={this.handleClassChange}
-                        onOk={this.handleClassChange}
-                        children={List.Item} cols={1}>
+                        value={classText} onChange={this.handleClassChange} cols={1}>
                     <List.Item arrow="horizontal">选择班级</List.Item>
                 </Picker>
                 <div className='gray-line'></div>
@@ -79,6 +77,65 @@ export default class NewAlbum extends Component {
                 </div>
             </div>
         );
+    }
+
+    getClassList = () => {
+        const {classList} = this.state
+        classList.length = 0
+
+        fetchGet(API.GET_CLASS_LIST, {
+            userId: 10002,
+        }).then(response => {
+            Toast.hide()
+
+            this.analysisClassList(response)
+        }).catch(error => {
+            Toast.hide()
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            }
+        })
+    }
+
+
+    analysisClassList = response => {
+        const {classList, classText} = this.state
+        classList.length = 0
+        classText.length = 0
+
+        let dataArray = response.data
+        if (dataArray) {
+            let classindex = 0
+            for (let i = 0; i < dataArray.length; i++) {
+                let dataObject = dataArray[i]
+                if (dataObject) {
+                    let classBean = new ClassBean()
+
+                    classBean.label = dataObject.parentName + dataObject.schName
+                    classBean.value = i
+                    classBean.schId = dataObject.schId
+                    if (this.classId == classBean.schId) {
+                        classindex = i
+                    }
+
+                    classBean.parentId = dataObject.parentId
+                    classBean.schName = dataObject.schName
+                    classBean.schStatus = dataObject.schStatus
+                    classBean.schRemarks = dataObject.schRemarks
+                    classBean.grade = dataObject.parentName
+
+                    classList.push(classBean)
+                }
+            }
+
+            if (classList.length > 0) {
+                classText.push(classindex)
+                this.setState({
+                    classList,
+                    classText
+                })
+            }
+        }
     }
 
     handleClassChange = (v) => {
@@ -98,6 +155,38 @@ export default class NewAlbum extends Component {
     }
 
     releaseEvent = () => {
-        console.log('发布\n' + this.state.albumTitle + '\n' + this.state.albumdescription)
+        const {albumTitle, albumdescription} = this.state
+        console.log('发布\n' + albumTitle + '\n' + albumdescription)
+        if (isObjEmpty(albumTitle, albumdescription)) {
+            Toast.fail('请完善相册内容')
+            return
+        }
+
+        const {classList, classText} = this.state
+
+        if (classList[classText]) {
+            this.classId = classList[classText].schId
+        }
+
+        Toast.loading('新建相册中...', 0)
+        fetchPost(API.NEW_CLASS_ALBUM, {
+            picName: albumTitle,
+            picUrl: '',
+            picType: 1,
+            picRemarks: albumdescription,
+            schId: this.classId
+        }).then(response => {
+            Toast.hide()
+            Toast.success(`相册【${albumTitle}】新建成功`)
+            this.setState({
+                albumTitle: '',
+                albumdescription: ''
+            })
+        }).catch(error => {
+            Toast.hide()
+            if (typeof error === 'string') {
+                Toast.fail(error)
+            }
+        })
     }
 }

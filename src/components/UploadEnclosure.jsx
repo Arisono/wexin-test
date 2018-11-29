@@ -22,6 +22,7 @@ export default class UploadEnclosure extends Component {
         beforeUpload: PropTypes.func,//上传附件前的回调花事件
         handleChange: PropTypes.func,//附件选择后的回调
         limit: PropTypes.bool,//是否限制附件个数
+        handleRemove: PropTypes.func,//移除照片的回调
     }
 
     static defaultProps = {
@@ -86,7 +87,8 @@ export default class UploadEnclosure extends Component {
                         multiple={multiple}
                         beforeUpload={this.beforeUpload}
                         onPreview={this.handlePreview}
-                        onChange={this.handleChange}>
+                        onChange={this.handleChange}
+                        onRemove={this.handleRemove}>
                         {(fileList.length >= count && limit) ? null : uploadButton}
                     </Upload>
                     {this.state.previewVisible ?
@@ -122,5 +124,9 @@ export default class UploadEnclosure extends Component {
             this.setState({fileList})
             this.props.handleChange(fileList)
         }
+    }
+
+    handleRemove = (file) => {
+        return this.props.handleRemove(file)
     }
 }

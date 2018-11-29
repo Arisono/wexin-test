@@ -118,14 +118,13 @@ export default class UploadImage extends Component {
 
     handleRemove = (file) => {
         console.log(file)
-
-        fetchPost(API.DELETE_FILE, {
+        /*fetchPost(API.DELETE_FILE, {
             fileUrls: [file.picUrl]
         }).then(response => {
 
         }).catch(error => {
 
-        })
+        })*/
         return true
     }
 

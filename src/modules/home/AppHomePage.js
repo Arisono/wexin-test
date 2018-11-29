@@ -106,9 +106,9 @@ class AppHomePage extends React.Component {
         </Menu>
     );
 
-    onChange(a, b, c) {
+  /*  onChange(a, b, c) {
         console.log(a, b, c);
-    }
+    }*/
 
     componentDidMount(){
         document.title ="智慧校园";

@@ -11,6 +11,8 @@ import PicturesWallItem from "../../components/upload/PicturesWallItem";
 import {Icon} from "antd";
 import TargetSelect from "../../components/TargetSelect";
 const { TextArea } = Input;
+import {fetchPost,fetchGet,fetchGetNoSession} from '../../utils/fetchRequest';
+import {API} from '../../configs/api.config';
 
 const teacherData = []
 const parentData = []
@@ -82,7 +84,18 @@ class ReleaseAssignmentPage extends React.Component{
     }
 
     componentDidMount(){
-
+        fetchPost(API.homeWorkAdd,{
+                      notifyName:'10000',
+                      notifyType:'1',
+                      notifyDetails:'5',
+                      notifyCreator:'1',
+                      notifyStatus:'2',
+                      userIds:'10001,10002,10003'
+                  }).then((response)=>{
+                      console.log("response:"+JSON.stringify(response));
+                  }).catch((error)=>{
+                      console.log("error:"+JSON.stringify(error));
+                  })
     }
 
     onTargetChange = (value, label, checkNodes, count) => {

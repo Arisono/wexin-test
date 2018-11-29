@@ -22,10 +22,10 @@ export default class ResApply extends Component{
             receivingSays:null, //领取说明
             Receiver:null, //接收人
             selectContentArray: [
-                {
-                    res_user:"user",
-                    res_number:1
-                }
+                    {
+                        res_user:null,
+                        res_number:null
+                    }
                 ],
 
             previewVisible: false,

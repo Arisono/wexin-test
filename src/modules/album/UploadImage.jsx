@@ -78,7 +78,7 @@ export default class UploadImage extends Component {
                 const dataArray = response.data.pictures
                 if (dataArray) {
                     dataArray.forEach((dataObject, index) => {
-                        const pictureBean = {}
+                        const pictureBean = new PictureBean()
 
                         pictureBean.picId = dataObject.picId
                         pictureBean.picName = dataObject.picName
@@ -93,7 +93,7 @@ export default class UploadImage extends Component {
                         pictureBean.schName = dataObject.schName
 
                         pictureBean.uid = dataObject.picId
-                        pictureBean.url = dataObject.picUrl
+                        pictureBean.url = _baseURL + dataObject.picUrl
                         // pictureBean.type = ''
                         pictureBean.thumbUrl = dataObject.picUrl
                         pictureBean.status = 'done'
@@ -134,12 +134,12 @@ export default class UploadImage extends Component {
         if (fileList) {
             fileList.forEach((value, index) => {
                 value.url = value.response ? (_baseURL + value.response.data) : value.url
+                value.picUrl = value.response ? value.response.data : value.picUrl
             })
 
             this.setState({fileList})
         }
 
-        // console.log(fileList)
     }
 
     releaseEvent = () => {
@@ -149,9 +149,10 @@ export default class UploadImage extends Component {
         const fileUrls = []
         if (fileList) {
             fileList.forEach((value, index) => {
-                fileUrls.push(value.url)
+                fileUrls.push(value.picUrl)
             })
         }
+        console.log(fileUrls)
 
         fetchPost(API.UPDATE_ALBUM, {
             fileUrls: JSON.stringify(fileUrls),

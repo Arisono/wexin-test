@@ -59,6 +59,7 @@ export const API = {
     leaveCreate:_baseURL+"/leave/leaveCreate",
     leaveList:_baseURL+"/leave/leaveList",
 
+    issueNotification:_baseURL +'/notify/issueNotification'
 }
 
 

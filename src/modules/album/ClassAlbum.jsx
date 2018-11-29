@@ -114,17 +114,17 @@ export default class ClassAlbum extends Component {
                     if (dataObject) {
                         let albumBean = new AlbumBean()
 
-                        albumBean.albumId = dataObject.picId
-                        albumBean.coverImg = dataObject.picUrl
-                        albumBean.albumName = dataObject.picName
-                        albumBean.quantity = dataObject.quantity
-                        albumBean.albumDate = dataObject.picDate
-                        albumBean.type = dataObject.picType
-                        albumBean.status = dataObject.picStatus
-                        albumBean.remarks = dataObject.picStatus
-                        albumBean.gradeId = dataObject.parentId
-                        albumBean.classId = dataObject.schId
-                        albumBean.classname = dataObject.schName
+                        albumBean.albumId = getStrValue(dataObject, 'picId')
+                        albumBean.coverImg = getStrValue(dataObject, 'picUrl')
+                        albumBean.albumName = getStrValue(dataObject, 'picName')
+                        albumBean.quantity = getStrValue(dataObject, 'quantity')
+                        albumBean.albumDate = getStrValue(dataObject, 'picDate')
+                        albumBean.type = getStrValue(dataObject, 'picType')
+                        albumBean.status = getStrValue(dataObject, 'picStatus')
+                        albumBean.remarks = getStrValue(dataObject, 'picStatus')
+                        albumBean.gradeId = getStrValue(dataObject, 'parentId')
+                        albumBean.classId = getStrValue(dataObject, 'schId')
+                        albumBean.classname = getStrValue(dataObject, 'schName')
 
                         albumList.push(albumBean)
                     }
@@ -183,14 +183,14 @@ export default class ClassAlbum extends Component {
                 if (dataObject) {
                     let classBean = new ClassBean()
 
-                    classBean.label = dataObject.parentName + dataObject.schName
+                    classBean.label = getStrValue(dataObject, 'parentName') + getStrValue(dataObject, 'schName')
                     classBean.value = i
-                    classBean.schId = dataObject.schId
-                    classBean.parentId = dataObject.parentId
-                    classBean.schName = dataObject.schName
-                    classBean.schStatus = dataObject.schStatus
-                    classBean.schRemarks = dataObject.schRemarks
-                    classBean.grade = dataObject.parentName
+                    classBean.schId = getStrValue(dataObject, 'schId')
+                    classBean.parentId = getStrValue(dataObject, 'parentId')
+                    classBean.schName = getStrValue(dataObject, 'schName')
+                    classBean.schStatus = getStrValue(dataObject, 'schStatus')
+                    classBean.schRemarks = getStrValue(dataObject, 'schRemarks')
+                    classBean.grade = getStrValue(dataObject, 'parentName')
 
                     classList.push(classBean)
                 }

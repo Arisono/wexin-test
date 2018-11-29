@@ -5,11 +5,11 @@
 
 import React, {Component} from 'react'
 import 'css/new-album.css'
-import {getFileType, isObjEmpty} from "../../utils/common";
+import {getFileType, getStrValue, isObjEmpty} from "../../utils/common";
 import {Icon, Input, Button, Upload} from 'antd'
 import {Picker, List, Toast} from 'antd-mobile'
 import {API} from "../../configs/api.config";
-import {fetchGet} from "../../utils/fetchRequest";
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import ClassBean from 'model/ClassBean'
 
 const {TextArea} = Input
@@ -29,6 +29,7 @@ export default class UploadVideo extends Component {
             videoDescription: '',
             fileList: [],
             classList: [],
+            uploadDone: false,
         }
     }
 
@@ -100,7 +101,7 @@ export default class UploadVideo extends Component {
 
                 <div className='uploadLayout'>
                     <Button className='commonButton' type="primary" block
-                            onClick={this.releaseEvent}>发布</Button>
+                            onClick={this.releaseEvent} disabled={!this.state.uploadDone}>发布</Button>
                 </div>
             </div>
         )
@@ -137,18 +138,18 @@ export default class UploadVideo extends Component {
                 if (dataObject) {
                     let classBean = new ClassBean()
 
-                    classBean.label = dataObject.parentName + dataObject.schName
+                    classBean.label = getStrValue(dataObject, 'parentName') + getStrValue(dataObject, 'schName')
                     classBean.value = i
-                    classBean.schId = dataObject.schId
+                    classBean.schId = getStrValue(dataObject, 'schId')
                     if (this.classId == classBean.schId) {
                         classindex = i
                     }
 
-                    classBean.parentId = dataObject.parentId
-                    classBean.schName = dataObject.schName
-                    classBean.schStatus = dataObject.schStatus
-                    classBean.schRemarks = dataObject.schRemarks
-                    classBean.grade = dataObject.parentName
+                    classBean.parentId = getStrValue(dataObject, 'parentId')
+                    classBean.schName = getStrValue(dataObject, 'schName')
+                    classBean.schStatus = getStrValue(dataObject, 'schStatus')
+                    classBean.schRemarks = getStrValue(dataObject, 'schRemarks')
+                    classBean.grade = getStrValue(dataObject, 'parentName')
 
                     classList.push(classBean)
                 }
@@ -186,7 +187,14 @@ export default class UploadVideo extends Component {
         if (this.fileCurrect) {
             console.log(file)
             if (file.status === 'done') {
+                if (file.response) {
+                    this.videoUrl = file.response.data
+                }
                 Toast.success('上传成功')
+
+                this.setState({
+                    uploadDone: true
+                })
             }
             this.setState({fileList})
         }
@@ -207,5 +215,28 @@ export default class UploadVideo extends Component {
 
     handleClassChange = (v) => {
         this.setState({classValue: v})
+    }
+
+    releaseEvent = () => {
+        Toast.loading('视频发布中...', 0)
+        const {classList, classText} = this.state
+
+        if (classList[classText]) {
+            this.classId = classList[classText].schId
+        }
+        fetchPost(API.INSERT_VIDEO, {
+            picName: this.state.videoTitle,
+            picUrl: this.videoUrl,
+            schId: this.classId,
+            picRemarks: ''
+        }).then(response => {
+            Toast.hide()
+            Toast.success('视频发布成功')
+        }).catch(error => {
+            Toast.hide()
+            if (typeof error === 'string') {
+                Toast.fail(error)
+            }
+        })
     }
 }

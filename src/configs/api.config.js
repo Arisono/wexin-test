@@ -31,7 +31,9 @@ export const API = {
     //删除附件
     DELETE_FILE: _baseURL + '/picture/deleteFile',
     //新建相册
-    NEW_CLASS_ALBUM: _baseURL + '//picture/newClassAlbum',
+    NEW_CLASS_ALBUM: _baseURL + '/picture/newClassAlbum',
+    //视频上传
+    INSERT_VIDEO: _baseURL + '/picture/insertVideo',
 
     //消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
@@ -56,10 +58,10 @@ export const API = {
     homeWorkDetail: _baseURL + "/notify/taskDetail",
 
     //学生请假
-    leaveCreate:_baseURL+"/leave/leaveCreate",
-    leaveList:_baseURL+"/leave/leaveList",
+    leaveCreate: _baseURL + "/leave/leaveCreate",
+    leaveList: _baseURL + "/leave/leaveList",
 
-    issueNotification:_baseURL +'/notify/issueNotification'
+    issueNotification: _baseURL + '/notify/issueNotification'
 }
 
 

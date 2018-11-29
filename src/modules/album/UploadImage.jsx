@@ -11,6 +11,7 @@ import UploadEnclosure from 'components/UploadEnclosure'
 import {_baseURL, API} from "../../configs/api.config";
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import PictureBean from "../../model/PictureBean";
+import {getStrValue} from "../../utils/common";
 
 export default class UploadImage extends Component {
 
@@ -80,22 +81,22 @@ export default class UploadImage extends Component {
                     dataArray.forEach((dataObject, index) => {
                         const pictureBean = new PictureBean()
 
-                        pictureBean.picId = dataObject.picId
-                        pictureBean.picName = dataObject.picName
-                        pictureBean.picUrl = dataObject.picUrl
-                        pictureBean.picDate = dataObject.picDate
-                        pictureBean.picType = dataObject.picType
-                        pictureBean.picStatus = dataObject.picStatus
-                        pictureBean.parentId = dataObject.parentId
-                        pictureBean.picRemarks = dataObject.picRemarks
-                        pictureBean.schId = dataObject.schId
-                        pictureBean.quantity = dataObject.quantity
-                        pictureBean.schName = dataObject.schName
+                        pictureBean.picId = getStrValue(dataObject, 'picId')
+                        pictureBean.picName = getStrValue(dataObject, 'picName')
+                        pictureBean.picUrl = getStrValue(dataObject, 'picUrl')
+                        pictureBean.picDate = getStrValue(dataObject, 'picDate')
+                        pictureBean.picType = getStrValue(dataObject, 'picType')
+                        pictureBean.picStatus = getStrValue(dataObject, 'picStatus')
+                        pictureBean.parentId = getStrValue(dataObject, 'parentId')
+                        pictureBean.picRemarks = getStrValue(dataObject, 'picRemarks')
+                        pictureBean.schId = getStrValue(dataObject, 'schId')
+                        pictureBean.quantity = getStrValue(dataObject, 'quantity')
+                        pictureBean.schName = getStrValue(dataObject, 'schName')
 
-                        pictureBean.uid = dataObject.picId
-                        pictureBean.url = _baseURL + dataObject.picUrl
+                        pictureBean.uid = getStrValue(dataObject, 'picId')
+                        pictureBean.url = _baseURL + getStrValue(dataObject, 'picUrl')
                         // pictureBean.type = ''
-                        pictureBean.thumbUrl = dataObject.picUrl
+                        pictureBean.thumbUrl = getStrValue(dataObject, 'picUrl')
                         pictureBean.status = 'done'
                         // pictureBean.size = ''
 

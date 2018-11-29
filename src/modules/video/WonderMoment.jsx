@@ -11,6 +11,7 @@ import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import ClassBean from 'model/ClassBean'
 import AlbumBean from "../../model/AlbumBean";
+import {getStrValue} from "../../utils/common";
 
 export default class WonderMoment extends Component {
 
@@ -112,14 +113,14 @@ export default class WonderMoment extends Component {
                 if (dataObject) {
                     let classBean = new ClassBean()
 
-                    classBean.label = dataObject.parentName + dataObject.schName
+                    classBean.label = getStrValue(dataObject, 'parentName') + getStrValue(dataObject, 'schName')
                     classBean.value = i
-                    classBean.schId = dataObject.schId
-                    classBean.parentId = dataObject.parentId
-                    classBean.schName = dataObject.schName
-                    classBean.schStatus = dataObject.schStatus
-                    classBean.schRemarks = dataObject.schRemarks
-                    classBean.grade = dataObject.parentName
+                    classBean.schId = getStrValue(dataObject, 'schId')
+                    classBean.parentId = getStrValue(dataObject, 'parentId')
+                    classBean.schName = getStrValue(dataObject, 'schName')
+                    classBean.schStatus = getStrValue(dataObject, 'schStatus')
+                    classBean.schRemarks = getStrValue(dataObject, 'schRemarks')
+                    classBean.grade = getStrValue(dataObject, 'parentName')
 
                     classList.push(classBean)
                 }

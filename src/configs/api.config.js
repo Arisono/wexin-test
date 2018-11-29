@@ -59,7 +59,10 @@ export const API = {
     leaveCreate:_baseURL+"/leave/leaveCreate",
     leaveList:_baseURL+"/leave/leaveList",
 
-    issueNotification:_baseURL +'/notify/issueNotification'
+    //发布通知公告/发布作业/创建会议
+    issueNotification:_baseURL +'/notify/issueNotification',
+    //成绩查询
+    getScoreByStuId :_baseURL+'/score/getScoreByStuId',
 }
 
 

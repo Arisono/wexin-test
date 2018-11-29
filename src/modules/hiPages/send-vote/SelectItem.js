@@ -25,7 +25,7 @@ export default class SelectItem extends Component{
         )
     }
         itemEmpty =(index)=> {
-
+            this.props.removeSItem(this.props.index)
         }
         handelValueCom = (event)=>{
             //请输入选项内容

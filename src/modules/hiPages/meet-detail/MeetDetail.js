@@ -8,6 +8,9 @@ import './MeetDetail.css';
 import MeetingBean from "../../../model/MeetingBean";
 import hi_img from '../../../style/imgs/hiimg.png';
 import {Button} from 'antd';
+import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
+import {API} from '../../../configs/api.config';
+import {Toast} from 'antd-mobile'
 
 function SignItem() {
     return(
@@ -101,6 +104,22 @@ export default class MeetDetail extends Component{
         this.setState({
             meetingSignData:meetBean
         })
+
+
+        let params = {
+            notifyId:18,
+            userId:10002
+        }
+        fetchGet(API.homeWorkDetail,params,{})
+            .then((response)=>{
+                console.log('response',response)
+                if(response.success){
+
+                }
+            })
+            .catch((error) =>{
+                console.log('error',error)
+            })
     }
     componentWillReceiveProps(newProps) {
     }

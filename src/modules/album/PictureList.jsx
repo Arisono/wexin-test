@@ -6,7 +6,6 @@
 import React, {Component} from 'react'
 import {isObjEmpty} from "../../utils/common";
 import LazyLoad from 'react-lazyload'
-import {Button, Avatar, Icon} from 'antd'
 import {Toast} from 'antd-mobile'
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import '../../index.css'

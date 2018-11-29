@@ -6,11 +6,10 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import  './ReleaseAssignmentPage.css'
 import '../../style/css/app-gloal.css'
-import { Input,Button , DatePicker } from 'antd';
+import { Input,Button , DatePicker,Icon } from 'antd';
 import PicturesWallItem from "../../components/upload/PicturesWallItem";
-import {Icon} from "antd";
 import TargetSelect from "../../components/TargetSelect";
-import {fetchPost,fetchGet,fetchGetNoSession} from '../../utils/fetchRequest';
+import {fetchPost,fetchGet} from '../../utils/fetchRequest';
 import {API} from '../../configs/api.config';
 
 const { TextArea } = Input;
@@ -96,6 +95,19 @@ class ReleaseAssignmentPage extends React.Component{
                   }).catch((error)=>{
                       console.log("error:"+JSON.stringify(error));
                   })
+        //获取列表
+        fetchPost(API.homeWorkList,{
+            userId:'10000',
+            notifyType:'3',
+            pageIndex:'1',
+            pageSize:'10'
+        }).then((response)=>{
+            console.log("response:"+JSON.stringify(response));
+        }).catch((error)=>{
+            console.log("error:"+JSON.stringify(error));
+        })
+
+
     }
 
     onTargetChange = (value, label, checkNodes, count) => {
@@ -103,6 +115,10 @@ class ReleaseAssignmentPage extends React.Component{
             targetList: value,
             targetCount: count
         });
+    }
+
+    goListAction=()=>{
+        this.props.history.push("/assignmentList/teacher");
     }
 
     render(){
@@ -167,7 +183,7 @@ class ReleaseAssignmentPage extends React.Component{
                         <div className="row flex_row flex_center margin_top_20" >
                             <Button type="primary" size="large"  block><span id="span-lager">发 布 作 业</span></Button>
                         </div>
-                        <div id="row_center"><span id="link_href" >历史发布</span></div>
+                        <div id="row_center" onClick={this.goListAction}><span id="link_href" >历史发布</span></div>
                         <div id="bottom_height"></div>
                     </div>
             </div>

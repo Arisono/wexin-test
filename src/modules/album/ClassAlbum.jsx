@@ -101,7 +101,8 @@ export default class ClassAlbum extends Component {
 
         fetchGet(API.GET_ALBUM_LIST, {
             schId: classBean.schId,
-            picStatus: 2
+            picStatus: 2,
+            picType: 1
         }).then(response => {
             Toast.hide()
 

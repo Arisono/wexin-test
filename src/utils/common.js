@@ -202,6 +202,25 @@ String.prototype.endWith = function (s) {
     return true;
 }
 
+
+String.prototype.isStrEquals = function () {
+    let args = arguments
+    if (isObjNull(args) || args.length == 0) {
+        return false
+    } else {
+        for (let i = 0; i < args.length; i++) {
+            let arg = args[i]
+            if (isObjNull(arg)) {
+                return false
+            }
+            if (this === arg) {
+                return true
+            }
+        }
+        return false
+    }
+}
+
 //yyyy-MM-dd hh:mm:ss
 Date.prototype.format = function (fmt) {
     let o = {
@@ -321,5 +340,14 @@ export const getCheckedCount = (checkedNodes) => {
         return quantity
     } else {
         return 0
+    }
+}
+
+export const getFileType = (filePath) => {
+    var startIndex = filePath.lastIndexOf(".");
+    if (startIndex != -1) {
+        return filePath.substring(startIndex + 1, filePath.length).toLowerCase()
+    } else {
+        return ""
     }
 }

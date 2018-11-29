@@ -10,6 +10,7 @@ import VideoItem from 'components/VideoItem'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import ClassBean from 'model/ClassBean'
+import AlbumBean from "../../model/AlbumBean";
 
 export default class WonderMoment extends Component {
 
@@ -131,21 +132,73 @@ export default class WonderMoment extends Component {
                     classValue
                 })
 
-                Toast.loading('获取相册中...', 0)
-                this.getAlbumList(classList[0])
+                Toast.loading('获取视频中...', 0)
+                this.getVideoList(classList[0])
             }
         }
     }
+
+
+    getVideoList = classBean => {
+
+        fetchGet(API.GET_ALBUM_LIST, {
+            schId: classBean.schId,
+            picStatus: 2,
+            picType: 2
+        }).then(response => {
+            Toast.hide()
+
+            /*const {albumList} = this.state
+            let dataArray = response.data
+            if (dataArray) {
+                for (let i = 0; i < dataArray.length; i++) {
+                    let dataObject = dataArray[i]
+                    if (dataObject) {
+                        let albumBean = new AlbumBean()
+
+                        albumBean.albumId = dataObject.picId
+                        albumBean.coverImg = dataObject.picUrl
+                        albumBean.albumName = dataObject.picName
+                        albumBean.quantity = dataObject.quantity
+                        albumBean.albumDate = dataObject.picDate
+                        albumBean.type = dataObject.picType
+                        albumBean.status = dataObject.picStatus
+                        albumBean.remarks = dataObject.picStatus
+                        albumBean.gradeId = dataObject.parentId
+                        albumBean.classId = dataObject.schId
+                        albumBean.classname = dataObject.schName
+
+                        albumList.push(albumBean)
+                    }
+                }
+                this.setState({albumList})
+            }*/
+        }).catch(error => {
+            Toast.hide()
+            if (typeof error === 'string') {
+                Toast.fail(error)
+            }
+        })
+    }
+
 
     onDeleteVideo = (index) => {
         console.log('删除第' + index)
     }
 
     onAddVideo = () => {
-        this.props.history.push('/uploadVideo')
+        const {classList, classValue} = this.state
+        let classId = -1
+        let classname = ''
+        if (classList[classValue]) {
+            classId = classList[classValue].schId
+            classname = classList[classValue].label
+        }
+        this.props.history.push('/uploadVideo/' + classId + '/' + classname)
     }
 
     handleClassChange = (v) => {
         this.setState({classValue: v})
+        this.getVideoList(this.state.classList[v])
     }
 }

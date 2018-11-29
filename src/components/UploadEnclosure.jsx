@@ -14,6 +14,7 @@ export default class UploadEnclosure extends Component {
 
     static propTypes = {
         action: PropTypes.string.isRequired,//上传地址
+        accept: PropTypes.string,//接受上传的文件类型
         listType: PropTypes.string,//附件列表格式，默认picture-card
         count: PropTypes.number,//附件限制数量，默认为1
         multiple: PropTypes.bool,//是非支持多选，默认为false
@@ -31,7 +32,8 @@ export default class UploadEnclosure extends Component {
         multiple: false,
         title: '附件',
         needPoint: true,
-        limit: true
+        limit: true,
+        accept: 'image/*'
     }
 
     constructor() {
@@ -52,7 +54,7 @@ export default class UploadEnclosure extends Component {
 
     render() {
         const {fileList} = this.state
-        const {action, listType, count, multiple, title, needPoint, limit} = this.props
+        const {action, listType, count, multiple, title, needPoint, limit, accept} = this.props
 
         const imgs = []
         if (!isObjEmpty(fileList) && fileList !== '[]') {
@@ -82,6 +84,7 @@ export default class UploadEnclosure extends Component {
                 <div className='imagesLayout'>
                     <Upload
                         action={action}
+                        accept={accept}
                         listType={listType}
                         fileList={fileList}
                         multiple={multiple}

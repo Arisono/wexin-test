@@ -65,7 +65,7 @@ export default class RouteConfig extends Component {
                     <Route path='/accountBind/:type?' component={AccountBind}/>
                     <Route path='/newAlbum/:classId/:name?' component={NewAlbum}/>
                     <Route path='/uploadImage/:albumId' component={UploadImage}/>
-                    <Route path='/uploadVideo' component={UploadVideo}/>
+                    <Route path='/uploadVideo/:classId/:name?' component={UploadVideo}/>
                     <Route path='/classAlbum/:type?' component={ClassAlbum}/>
                     <Route path='/pictureList/:albumId/:title?' component={PictureList}/>
                     <Route path='/videoPlayer/:title?' component={VideoPlayer}/>

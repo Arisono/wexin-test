@@ -5,30 +5,26 @@
 
 import React, {Component} from 'react'
 import 'css/new-album.css'
-import {isObjEmpty} from "../../utils/common";
+import {getFileType, isObjEmpty} from "../../utils/common";
 import {Icon, Input, Button, Upload} from 'antd'
-import {Picker,List} from 'antd-mobile'
+import {Picker, List, Toast} from 'antd-mobile'
+import {API} from "../../configs/api.config";
+import {fetchGet} from "../../utils/fetchRequest";
+import ClassBean from 'model/ClassBean'
 
 const {TextArea} = Input
 
-const props = {
-    action: '//jsonplaceholder.typicode.com/posts/',
-    listType: 'picture',
-    onChange({file, fileList}) {
-        if (file.status !== 'uploading') {
-            console.log(file, fileList);
-        }
-    },
-    defaultFileList: [],
-};
-
 export default class UploadVideo extends Component {
+
+    static state = {
+        raomeng: ''
+    }
 
     constructor() {
         super()
 
         this.state = {
-            classText: '',
+            classValue: [],
             videoTitle: '',
             videoDescription: '',
             fileList: [],
@@ -36,47 +32,61 @@ export default class UploadVideo extends Component {
         }
     }
 
+    componentWillMount() {
+        const classId = this.props.match.params.classId
+        const classname = this.props.match.params.name
+
+        if (classId) {
+            this.classId = classId
+        }
+        if (classname) {
+            this.classname = classname
+            this.setState({
+                classValue: [this.classId],
+                classList: [{
+                    label: this.classname,
+                    value: this.classId
+                }]
+            })
+        }
+    }
+
     componentDidMount() {
         document.title = '上传视频'
 
-        const {classList} = this.state
-
-        for (let i = 0; i < 10; i++) {
-            if (i % 2 == 0) {
-                classList.push({
-                    label: '三年级（一）班',
-                    value: '三年级（一）班'
-                })
-            } else {
-                classList.push({
-                    label: '三年级（二）班',
-                    value: '三年级（二）班'
-                })
-            }
-        }
-
-        this.setState({classList})
+        Toast.loading('', 0)
+        this.getClassList()
     }
 
     render() {
-        const {classText, videoTitle, videoDescription, fileList, classList} = this.state
+        const {classValue, videoTitle, fileList, classList} = this.state
+
+        const props = {
+            action: API.UPLOAD_FILE,
+            listType: 'picture',
+            defaultFileList: [],
+            fileList: fileList,
+        }
+
         return (
             <div className='pageLayout' style={{background: 'white'}}>
                 <div className='gray-line'></div>
                 <Picker data={classList} title='选择班级' extra='请选择'
-                        value={classText} onChange={this.handleClassChange}
+                        value={classValue} onChange={this.handleClassChange}
                         onOk={this.handleClassChange} cols={1}>
                     <List.Item arrow="horizontal">选择班级</List.Item>
                 </Picker>
                 <div className='uploadCaptionText'>视频名称</div>
                 <input className='titleInput' placeholder='请输入视频名称'
                        value={videoTitle} onChange={this.titleChange}/>
+                <div className='gray-line' style={{height: '1px'}}></div>
                 {/*<div className='uploadCaptionText'>视频描述</div>
                 <TextArea className='contentInput' placeholder='请输入视频描述'
                           autosize={{minRows: 8, maxRows: 16}} value={videoDescription}
                           onChange={this.descriptionChange}/>*/}
                 <div style={{padding: '10px', marginTop: '12px', flex: '1'}}>
                     <Upload {...props} disabled={fileList.length >= 1}
+                            beforeUpload={this.handleBefore}
                             onChange={this.handleChange}>
                         <div style={{display: 'flex', padding: '10px', alignItems: 'center'}}>
                             <div className={fileList.length < 1 ? 'uploadBtn' : 'uploadBtn-disable'}>
@@ -96,7 +106,92 @@ export default class UploadVideo extends Component {
         )
     }
 
-    handleChange = ({fileList}) => this.setState({fileList})
+    getClassList = () => {
+        const {classList} = this.state
+        classList.length = 0
+
+        fetchGet(API.GET_CLASS_LIST, {
+            userId: 10002,
+        }).then(response => {
+            Toast.hide()
+
+            this.analysisClassList(response)
+        }).catch(error => {
+            Toast.hide()
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            }
+        })
+    }
+
+    analysisClassList = response => {
+        const {classList, classValue} = this.state
+        classList.length = 0
+        classValue.length = 0
+
+        let dataArray = response.data
+        if (dataArray) {
+            let classindex = 0
+            for (let i = 0; i < dataArray.length; i++) {
+                let dataObject = dataArray[i]
+                if (dataObject) {
+                    let classBean = new ClassBean()
+
+                    classBean.label = dataObject.parentName + dataObject.schName
+                    classBean.value = i
+                    classBean.schId = dataObject.schId
+                    if (this.classId == classBean.schId) {
+                        classindex = i
+                    }
+
+                    classBean.parentId = dataObject.parentId
+                    classBean.schName = dataObject.schName
+                    classBean.schStatus = dataObject.schStatus
+                    classBean.schRemarks = dataObject.schRemarks
+                    classBean.grade = dataObject.parentName
+
+                    classList.push(classBean)
+                }
+            }
+
+            if (classList.length > 0) {
+                classValue.push(classindex)
+                this.setState({
+                    classList,
+                    classValue
+                })
+            }
+        }
+    }
+
+    handleBefore = (file) => {
+        let fileType = getFileType(file.name)
+        if (fileType.isStrEquals('mp4', 'rmvb', 'avi', 'ts')) {
+            if (file.size && file.size > 100 * 1024 * 1024) {
+                this.fileCurrect = false
+                Toast.fail('文件大小不能超过100M')
+                return false
+            }
+            this.fileCurrect = true
+            return true
+        } else {
+            this.fileCurrect = false
+            Toast.fail('文件格式错误,请上传视频文件')
+            return false
+        }
+
+    }
+
+    handleChange = ({file, fileList}) => {
+        if (this.fileCurrect) {
+            console.log(file)
+            if (file.status === 'done') {
+                Toast.success('上传成功')
+            }
+            this.setState({fileList})
+        }
+
+    }
 
     titleChange = e => {
         this.setState({
@@ -111,6 +206,6 @@ export default class UploadVideo extends Component {
     }
 
     handleClassChange = (v) => {
-        this.setState({classText: v})
+        this.setState({classValue: v})
     }
 }

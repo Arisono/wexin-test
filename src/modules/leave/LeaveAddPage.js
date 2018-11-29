@@ -69,15 +69,20 @@ class LeaveAddPage extends React.Component{
         super(props);
         this.state={
             name:'LeaveAddPage',
+            role:"parent",
             targetList: ['1-1'],
             targetCount: 1
         };
     }
 
     clickLeaveList(){
-         this.props.history.push("/leaveList")
+         this.props.history.push("/leaveList/"+this.state.role)
     }
 
+
+      componentWillMount(){
+              document.title ="学生请假";
+         }
     componentDidMount(){
 
     }

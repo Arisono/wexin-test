@@ -154,14 +154,9 @@ class LeaveAddCPage extends React.Component{
                         <TextArea id="input_no_border" rows={4} placeholder="请填写请假理由"></TextArea>
                     </div>
                     <div  className="row"  id="page_horizontal_line"></div>
-                    <div className="row leave-input flex_row
-                           flex_center">
+                    <div className="row">
                         {/*  <span>        抄送对象：</span>*/}
-                        <div className="item_flex">
-
-                            <TargetSelect className="flex_row flex_center" style={{width:"310px"}} {...targetProps}></TargetSelect>
-
-                        </div>
+                            <TargetSelect   {...targetProps}></TargetSelect>
                         {/*  <Icon type="right"/>*/}
                     </div>
                     <div className="row" id="page_block_min"></div>

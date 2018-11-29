@@ -7,6 +7,14 @@ import {isObjEmpty} from "../../utils/common";
 import {Toast} from "antd-mobile";
 import InfiniteScroll from "react-infinite-scroller";
 import LoadingMore from 'components/LoadingMore'
+import {fetchGet} from "../../utils/fetchRequest";
+import {API} from "../../configs/api.config";
+
+
+let ttype = 1
+const mPageSize = 10
+var mPageIndex = 0
+
 export default class ConsumeRePage extends Component {
 
     constructor() {
@@ -21,23 +29,79 @@ export default class ConsumeRePage extends Component {
     }
 
     componentDidMount() {
-        document.title = '消费记录'
-        Toast.loading('努力加载中...', 0)
-        for (let i = 0; i < 20; i++) {
-            let consumeBean = new ConsumeBean()
-            consumeBean.chargeName = '线上充值'+i
-            consumeBean.chargeTime = '2018-08-01 12:20:23'+i*i
-            consumeBean.chargeAmount = '+200000'+i
 
-            this.state.consumeList.push(consumeBean)
+        if (this.props.match.params.type) {
+
+            ttype =  this.props.match.params.type
+
         }
 
-        this.setState({
-            consumeList: this.state.consumeList
-        })
+        if(ttype == 1){
+            console.log(this.props.match.params.type)
+            document.title = '消费记录'
+
+        }else{
+            console.log(this.props.match.params.type)
+            document.title = '充值记录'
+
+        }
+
+
+        Toast.loading('努力加载中...', 0)
+
     }
 
+    componentWillUnmount () {
+
+        Toast.hide();
+
+    }
+
+    loadReleaseList= () => {
+
+            const {consumeList} = this.state;
+            mPageIndex = mPageIndex+1;
+
+            fetchGet(API.rechargeRecord, {
+                stuId: 10000,
+                rankStatus:ttype,
+                pageIndex: mPageIndex,
+                pageSize: mPageSize
+            }).then(response => {
+
+                console.log(response);
+
+                response.data.map((item,index)=>{
+
+                    let consumeBean = new ConsumeBean()
+                        consumeBean.chargeName = item.rankName
+                        consumeBean.chargeTime = item.rankDate
+                        consumeBean.chargeAmount = item.rankTatal
+                        this.state.consumeList.push(consumeBean)
+
+
+                })
+
+
+                this.setState({
+                    consumeList,
+                    isLoading: false,
+                    hasMoreData:false
+
+                })
+
+                Toast.hide();
+            }).catch(error => {
+                Toast.fail(error, 2)
+
+            })
+
+    }
+
+
+
     render() {
+
         const {consumeList, typeTitle,hasMoreData, isLoading} = this.state
 
         return (

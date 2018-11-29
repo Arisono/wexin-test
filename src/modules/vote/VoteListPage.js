@@ -12,6 +12,9 @@ import icon_vote_items  from "../../style/imgs/icon_vote_items.png";
 import {Link} from "react-router-dom";
 import LoadingMore from "../../components/LoadingMore";
 import InfiniteScroll from 'react-infinite-scroller'
+import {Toast} from 'antd-mobile'
+import {fetchPost,fetchGet,fetchGetNoSession} from '../../utils/fetchRequest';
+import {API} from '../../configs/api.config';
 /**
  * Created by Arison on 20:14.
  */
@@ -48,9 +51,21 @@ class VoteListPage extends React.Component{
         };
     }
 
+    componentWillMount(){
+        document.title ="投票";
+   }
 
     componentDidMount(){
-
+          fetchGet(API.voteList,{
+              stuId:'10000',//学号ID
+              pageIndex:'1',
+              pageSize:'5',
+              voteType:'1',
+          }).then((response)=>{
+              console.log("response:"+JSON.stringify(response));
+          }).catch((error)=>{
+              console.log("error:"+JSON.stringify(error));
+          });
     }
 
 

@@ -29,7 +29,10 @@ const data =[{
             name:'AssignmentDetailPage'
         };
     }
-    
+
+      componentWillMount(){
+              document.title ="作业详情";
+         }
     
     componentDidMount(){
         
@@ -69,8 +72,6 @@ const data =[{
                                       </div>
                                   </List.Item>
                               )}/>
-
-
 
 
                           </div>

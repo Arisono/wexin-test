@@ -47,12 +47,10 @@ export default class PhonesSelect extends Component {
 
         for (let i = 0; i < 20; i++) {
             let phoneBean = new PhonesBean()
-            phoneBean.name = '饶老师'
+            phoneBean.name = '赖思睿'
             phoneBean.phone = '13632423333'
-            phoneBean.claName = ""
-            phoneBean.children = [
-                '语文', '数学', '语文', '数学'
-            ]
+            phoneBean.claName = ''
+            phoneBean.children = ['']
 
             teacherList.push(phoneBean)
         }
@@ -66,17 +64,6 @@ export default class PhonesSelect extends Component {
     render() {
         const {selectIndex, teacherList, parentList} = this.state
 
-        /*const teacherItems = <List dataSource={teacherList} renderItem={
-            (item, index) => (
-                <List.Item>
-                    <div className='phoneListItem'
-                         onClick={this.onTeacherItemClick.bind(this, index)}>
-                        <div
-                            className='phoneItemText'>{item}</div>
-                        <Icon type="right" theme="outlined"/>
-                    </div>
-                </List.Item>
-            )}/>*/
         const teacherItems = <List className='phones-list-layout' dataSource={teacherList}
                                    renderItem={phonesBean => (
                                        <List.Item>

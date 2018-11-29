@@ -24,6 +24,14 @@ export const API = {
     GET_ALBUM_LIST: _baseURL + '/picture/getAlbumList',
     //获取相册内所有图片
     GET_PICTURE_LIST: _baseURL + '/picture/getPictureList',
+    //文件上传地址
+    UPLOAD_FILE: _baseURL + '/file/uploadFile',
+    //修改相册
+    UPDATE_ALBUM: _baseURL + '/picture/updateAlbum',
+    //删除附件
+    DELETE_FILE: _baseURL + '/picture/deleteFile',
+    //新建相册
+    NEW_CLASS_ALBUM: _baseURL + '//picture/newClassAlbum',
 
     //消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
@@ -32,8 +40,24 @@ export const API = {
     curriculumListByStuId: _baseURL + '/curriculum/curriculumListByStuId',
     //查询学生出入校记录
     RecordOutgoingList: _baseURL + '/recordOutgoing/RecordOutgoingList',
+    //充值，缴费记录
+    rechargeRecord: _baseURL + '/payRank/consumeRecode',
+    //分页显示会议 /分页显示作业 /分页显示通知
+    notifyMessage: _baseURL + '/notify/getMeetingList',
+
+
     //创建投票单
     voteCreate: _baseURL + '/vote/voteCreate',
+    voteList: _baseURL + "/vote/voteList",
+    voteDetail: _baseURL + "/vote/voteList",
+    //发布作业
+    homeWorkAdd: _baseURL + "/notify/issueNotification",
+    homeWorkList: _baseURL + "/notify/getMeetingList",
+    homeWorkDetail: _baseURL + "/notify/taskDetail",
+
+    //学生请假
+    leaveCreate:_baseURL+"/leave/leaveCreate",
+    leaveList:_baseURL+"/leave/leaveList",
 
     issueNotification:_baseURL +'/notify/issueNotification'
 }

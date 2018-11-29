@@ -35,6 +35,7 @@ export const API = {
     //创建投票单
     voteCreate: _baseURL + '/vote/voteCreate',
 
+    issueNotification:_baseURL +'/notify/issueNotification'
 }
 
 

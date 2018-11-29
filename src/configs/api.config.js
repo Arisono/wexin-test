@@ -50,6 +50,12 @@ export const API = {
 
     //创建投票单
     voteCreate: _baseURL + '/vote/voteCreate',
+
+    //获取所有老师电话号码
+    getTeacherPhones:_baseURL + '/user/getTeacherPhones',
+    //获取班级家长手机号
+    getParentPhones:_baseURL + '/user/getParentPhones',
+
     voteList: _baseURL + "/vote/voteList",
     voteDetail: _baseURL + "/vote/voteList",
     //发布作业

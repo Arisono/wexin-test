@@ -6,7 +6,7 @@
 import React, {Component} from 'react'
 import {Icon, Input, Button} from 'antd'
 import 'css/new-album.css'
-import {isObjEmpty} from "../../utils/common";
+import {getStrValue, isObjEmpty} from "../../utils/common";
 import {Picker, List, Toast} from 'antd-mobile'
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
@@ -111,18 +111,18 @@ export default class NewAlbum extends Component {
                 if (dataObject) {
                     let classBean = new ClassBean()
 
-                    classBean.label = dataObject.parentName + dataObject.schName
+                    classBean.label = getStrValue(dataObject, 'parentName') + getStrValue(dataObject, 'schName')
                     classBean.value = i
-                    classBean.schId = dataObject.schId
+                    classBean.schId = getStrValue(dataObject, 'schId')
                     if (this.classId == classBean.schId) {
                         classindex = i
                     }
 
-                    classBean.parentId = dataObject.parentId
-                    classBean.schName = dataObject.schName
-                    classBean.schStatus = dataObject.schStatus
-                    classBean.schRemarks = dataObject.schRemarks
-                    classBean.grade = dataObject.parentName
+                    classBean.parentId = getStrValue(dataObject, 'parentId')
+                    classBean.schName = getStrValue(dataObject, 'schName')
+                    classBean.schStatus = getStrValue(dataObject, 'schStatus')
+                    classBean.schRemarks = getStrValue(dataObject, 'schRemarks')
+                    classBean.grade = getStrValue(dataObject, 'parentName')
 
                     classList.push(classBean)
                 }

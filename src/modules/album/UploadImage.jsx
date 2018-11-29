@@ -21,9 +21,8 @@ export default class UploadImage extends Component {
     componentDidMount() {
         document.title = '上传图片'
 
-
-        // Toast.loading('', 0)
-        // this.getPictureList(this.albumId)
+        Toast.loading('', 0)
+        this.getPictureList(this.albumId)
     }
 
     constructor() {
@@ -53,12 +52,13 @@ export default class UploadImage extends Component {
                         title='添加图片'
                         beforeUpload={this.handleBefore.bind(this)}
                         handleChange={this.handleChange.bind(this)}
+                        handleRemove={this.handleRemove.bind(this)}
                     />
                 </div>
 
                 <div className='uploadLayout'>
                     <Button className='commonButton' type="primary" block
-                            onClick={this.releaseEvent}>上传</Button>
+                            onClick={this.releaseEvent}>更新</Button>
                 </div>
             </div>
         )
@@ -92,11 +92,19 @@ export default class UploadImage extends Component {
                         pictureBean.quantity = dataObject.quantity
                         pictureBean.schName = dataObject.schName
 
+                        pictureBean.uid = dataObject.picId
+                        pictureBean.url = dataObject.picUrl
+                        // pictureBean.type = ''
+                        pictureBean.thumbUrl = dataObject.picUrl
+                        pictureBean.status = 'done'
+                        // pictureBean.size = ''
+
                         fileList.push(pictureBean)
                     })
                 }
             }
 
+            console.log(fileList)
             this.setState({fileList})
         }).catch(error => {
             Toast.hide()
@@ -108,16 +116,21 @@ export default class UploadImage extends Component {
 
     }
 
+    handleRemove = (file) => {
+        console.log(file)
+        return false
+    }
+
     handleChange = fileList => {
         if (fileList) {
             fileList.forEach((value, index) => {
-                value.url = value.response ? (_baseURL + value.response.data) : ''
+                value.url = value.response ? (_baseURL + value.response.data) : value.url
             })
 
             this.setState({fileList})
         }
 
-        console.log(fileList)
+        // console.log(fileList)
     }
 
     releaseEvent = () => {

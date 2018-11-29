@@ -7,6 +7,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './AssignmentDetailPage.css'
 import '../../style/css/app-gloal.css'
 import { List} from 'antd';
+import {fetchPost,fetchGet} from '../../utils/fetchRequest';
+import {API} from '../../configs/api.config';
+import {isObjEmpty} from  '../../utils/common';
 /**
  * 作业详情
  * Created by Arison on 17:49.
@@ -35,7 +38,7 @@ const data =[{
          }
     
     componentDidMount(){
-        
+
     }
    
     render(){

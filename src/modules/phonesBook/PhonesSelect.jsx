@@ -11,8 +11,15 @@ import {List, Icon} from 'antd'
 import {isObjEmpty} from "../../utils/common";
 import PhonesItem from "components/PhonesItem";
 import PhonesBean from 'model/PhonesBean'
+import {fetchGet} from "../../utils/fetchRequest";
+import {API} from "../../configs/api.config";
+import {Toast} from "antd-mobile";
+
 
 let mySwiper
+
+const mPageSize = 10
+var mPageIndex = 0
 
 export default class PhonesSelect extends Component {
 
@@ -31,6 +38,8 @@ export default class PhonesSelect extends Component {
         const that = this
         const {selectIndex, teacherList, parentList} = this.state
 
+
+
         mySwiper = new Swiper('.swiper-container', {
             autoplay: false,
             loop: false,
@@ -43,22 +52,81 @@ export default class PhonesSelect extends Component {
             }
         })
 
-        let parents = ['三年级(4)班', '三年级(6)班', '四年级(12)班', '三年级(4)班']
 
-        for (let i = 0; i < 20; i++) {
-            let phoneBean = new PhonesBean()
-            phoneBean.name = '赖思睿'
-            phoneBean.phone = '13632423333'
-            phoneBean.claName = ''
-            phoneBean.children = ['']
 
-            teacherList.push(phoneBean)
-        }
+        fetchGet(API.getTeacherPhones,{
+            stuId: 10000,
+        }).then(response => {
 
-        this.setState({
-            teacherList: teacherList,
-            parentList: parentList.concat(parents, parents, parents, parents, parents)
+            console.log(response);
+
+            response.data.map((item,index)=>{
+
+                let phoneBean = new PhonesBean()
+                phoneBean.name = item.userName
+                phoneBean.phone = item.UserPhone
+                phoneBean.claName = item.schName
+                phoneBean.children = ['']
+
+                teacherList.push(phoneBean)
+
+
+            })
+
+
+            this.setState({
+
+                isLoading: false,
+                hasMoreData:false
+
+            })
+
+            Toast.hide();
+        }).catch(error => {
+            // Toast.fail(error, 2)
+
         })
+        fetchGet(API.GET_CLASS_LIST,{
+            userId: 10000,
+        }).then(response => {
+
+            console.log(response);
+
+            response.data.map((item,index)=>{
+
+               parentList.push(item)
+
+
+            })
+
+
+            this.setState({
+                parentList:parentList
+
+            })
+
+            Toast.hide();
+        }).catch(error => {
+            // Toast.fail(error, 2)
+
+        })
+
+        // let parents = ['三年级(4)班', '三年级(6)班', '四年级(12)班', '三年级(4)班']
+        //
+        // for (let i = 0; i < 20; i++) {
+        //     // let phoneBean = new PhonesBean()
+        //     // phoneBean.name = '章晨望'
+        //     // phoneBean.phone = '13632423333'
+        //     // phoneBean.claName = ''
+        //     // phoneBean.children = ['']
+        //     //
+        //     // teacherList.push(phoneBean)
+        // }
+
+        // this.setState({
+        //     teacherList: teacherList,
+        //     parentList: parentList.concat(parents, parents, parents, parents, parents)
+        // })
     }
 
     render() {
@@ -77,7 +145,7 @@ export default class PhonesSelect extends Component {
                     <div className='phoneListItem'
                          onClick={this.onParentItemClick.bind(this, index)}>
                         <div
-                            className='phoneItemText'>{item}</div>
+                            className='phoneItemText'>{item.schName}</div>
                         <Icon type="right" theme="outlined"/>
                     </div>
                 </List.Item>

@@ -24,6 +24,8 @@ class VoteListPage extends React.Component{
         this.state={
             name:'VoteListPage',
             hasMoreData:true,
+            pageIndex:1,
+            pageSize:1,
             data:[
                 {
                     title:'三年级2班',
@@ -58,11 +60,27 @@ class VoteListPage extends React.Component{
     componentDidMount(){
           fetchGet(API.voteList,{
               stuId:'10000',//学号ID
-              pageIndex:'1',
-              pageSize:'5',
+              pageIndex:this.state.pageIndex,
+              pageSize:this.state.pageSize,
               voteType:'1',
           }).then((response)=>{
-              console.log("response:"+JSON.stringify(response));
+              this.state.data.length=0;
+              for (let i = 0; i < response.data.length; i++) {
+                    let  voteObject  = response.data[i];
+                    let stateStr=voteObject.voteStatus==1?"进行中":"已结束"
+                    let options=voteObject.topics[0].options;
+                    let model={
+                      title:voteObject.voteName,
+                      state:stateStr,
+                      endTime:voteObject.creatDate,
+                      votes:options
+                  };
+                    this.state.data.push(model);
+              }
+              this.setState({
+                  data:this.state.data
+              });
+
           }).catch((error)=>{
               console.log("error:"+JSON.stringify(error));
           });
@@ -70,26 +88,59 @@ class VoteListPage extends React.Component{
 
 
     loadMoreAction(){
-        setTimeout(()=>{
-             for (let i = 0; i < 10; i++) {
-                       let model={
-                           title:'三年级2班',
-                           state:'已结束',
-                           endTime:'2018-11-15 08:00',
-                           votes:[
-                               '深圳南山',
-                               '深圳宝安',
-                               '深圳福田'
-                           ]
-                       };
-                       this.state.data.push(model);
+        console.log("loadMoreAction() pageIndex:",this.state.pageIndex);
+        fetchGet(API.voteList,{
+            stuId:'10000',//学号ID
+            pageIndex:this.state.pageIndex++,
+            pageSize:this.state.pageSize,
+            voteType:'1',
+        }).then((response)=>{
+            if(response.success){
+                for (let i = 0; i < response.data.length; i++) {
+                    let  voteObject  = response.data[i];
+                    let stateStr=voteObject.voteStatus==1?"进行中":"已结束"
+                    let options=voteObject.topics[0].options;
+                    let model={
+                        title:voteObject.voteName,
+                        state:stateStr,
+                        endTime:voteObject.creatDate,
+                        votes:options
+                    };
+                    this.state.data.push(model);
+                }
+                this.setState({
+                    data:this.state.data
+                });
+            }else{
 
-             }
+            }
 
-             this.setState({
-                 data:this.state.data
-             });
-        },1500);
+
+        }).catch((error)=>{
+            console.log("error:"+JSON.stringify(error));
+            message.info("加载完成")
+            this.setState({ hasMoreData:false})
+        });
+        // setTimeout(()=>{
+        //      for (let i = 0; i < 10; i++) {
+        //                let model={
+        //                    title:'三年级2班',
+        //                    state:'已结束',
+        //                    endTime:'2018-11-15 08:00',
+        //                    votes:[
+        //                        '深圳南山',
+        //                        '深圳宝安',
+        //                        '深圳福田'
+        //                    ]
+        //                };
+        //                this.state.data.push(model);
+        //
+        //      }
+        //
+        //      this.setState({
+        //          data:this.state.data
+        //      });
+        // },1500);
     }
 
 
@@ -123,7 +174,7 @@ class VoteListPage extends React.Component{
                                             <List dataSource={item.votes}
                                                   renderItem={item=>(
                                                       <List.Item style={{width:"120px"}}>
-                                                          <Checkbox >{item}</Checkbox>
+                                                          <Checkbox >{item.optionName}</Checkbox>
                                                       </List.Item>
                                                   )}/>
                                             <div className="flex_center item_flex">

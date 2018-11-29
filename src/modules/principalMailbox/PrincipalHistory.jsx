@@ -110,8 +110,14 @@ export default class PrincipalHistory extends Component {
                     }
                         rechargeBean.suggest = item.notifyDetails
                         rechargeBean.enclosure = item.notifyFiles
-                        rechargeBean.reply = '尊敬的家长：\n您好！收到你的信件，校方非常重视你的意见，我们会加强班级主任老师与任课老师的教务工作，并与学生家长持久沟通！共同促进学生的健康成长！'
-                    
+
+
+                        if(item.leaveMessages.length > 0){
+
+                            rechargeBean.reply = item.leaveMessages[0].messContent
+
+                        }
+
                     principalList.push(rechargeBean)
 
                 })
@@ -124,7 +130,7 @@ export default class PrincipalHistory extends Component {
                 Toast.hide()
 
             }).catch(error => {
-                Toast.fail(error, 2)
+                // Toast.fail(error, 2)
             })
 
     }

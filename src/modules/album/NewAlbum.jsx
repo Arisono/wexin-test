@@ -156,7 +156,6 @@ export default class NewAlbum extends Component {
 
     releaseEvent = () => {
         const {albumTitle, albumdescription} = this.state
-        console.log('发布\n' + albumTitle + '\n' + albumdescription)
         if (isObjEmpty(albumTitle, albumdescription)) {
             Toast.fail('请完善相册内容')
             return

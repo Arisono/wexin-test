@@ -26,6 +26,7 @@ export default class PictureList extends Component {
             pictureList: [],
             previewVisible: false,
             previewImage: '',
+            description: ''
         }
     }
 
@@ -45,7 +46,7 @@ export default class PictureList extends Component {
     }
 
     render() {
-        const {pictureList, previewVisible, previewImage} = this.state
+        const {pictureList, previewVisible, description} = this.state
         let pictureItems = []
         for (let i = 0; i < pictureList.length; i++) {
             const pictureUrl = pictureList[i].picUrl
@@ -72,7 +73,7 @@ export default class PictureList extends Component {
 
         return (
             <div style={{display: 'flex', width: '100%', height: '100vh', flexDirection: 'column'}}>
-                <div className='album-detail-title'>摄影与2018年六月一日，老师与家长们参加儿童节活动，热情高涨！</div>
+                <div className='album-detail-title'>{description}</div>
                 <div style={{flex: '1', overflow: 'scroll', padding: '5px', webkitOverflowScrolling: 'touch'}}>
                     <TransitionGroup>
                         {pictureItems}
@@ -109,32 +110,44 @@ export default class PictureList extends Component {
             pictureList.length = 0
 
             if (response) {
-                const dataArray = response.data
-                if (dataArray) {
-                    dataArray.forEach((dataObject, index) => {
-                        const pictureBean = new PictureBean()
+                const dataObject = response.data
+                if (dataObject) {
+                    const albumObj = dataObject.album
+                    if (albumObj.picRemarks) {
+                        this.setState({
+                            description: albumObj.picRemarks
+                        })
+                    }
 
-                        pictureBean.picId = dataObject.picId
-                        pictureBean.picName = dataObject.picName
-                        pictureBean.picUrl = dataObject.picUrl
-                        pictureBean.picDate = dataObject.picDate
-                        pictureBean.picType = dataObject.picType
-                        pictureBean.picStatus = dataObject.picStatus
-                        pictureBean.parentId = dataObject.parentId
-                        pictureBean.picRemarks = dataObject.picRemarks
-                        pictureBean.schId = dataObject.schId
-                        pictureBean.quantity = dataObject.quantity
-                        pictureBean.schName = dataObject.schName
+                    const pictures = dataObject.pictures
+                    if (pictures) {
+                        pictures.forEach((picture, index) => {
+                            const pictureBean = new PictureBean()
 
-                        pictureList.push(pictureBean)
-                    })
+                            pictureBean.picId = picture.picId
+                            pictureBean.picName = picture.picName
+                            pictureBean.picUrl = picture.picUrl
+                            pictureBean.picDate = picture.picDate
+                            pictureBean.picType = picture.picType
+                            pictureBean.picStatus = picture.picStatus
+                            pictureBean.parentId = picture.parentId
+                            pictureBean.picRemarks = picture.picRemarks
+                            pictureBean.schId = picture.schId
+                            pictureBean.quantity = picture.quantity
+                            pictureBean.schName = picture.schName
+
+                            pictureList.push(pictureBean)
+                        })
+                    }
                 }
             }
 
             this.setState({pictureList})
         }).catch(error => {
             Toast.hide()
-            Toast.fail(error)
+            if (typeof error === 'string') {
+                Toast.fail(error)
+            }
         })
     }
 

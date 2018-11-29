@@ -75,7 +75,7 @@ export default class UploadImage extends Component {
             fileList.length = 0
 
             if (response) {
-                const dataArray = response.data
+                const dataArray = response.data.pictures
                 if (dataArray) {
                     dataArray.forEach((dataObject, index) => {
                         const pictureBean = {}
@@ -108,7 +108,9 @@ export default class UploadImage extends Component {
             this.setState({fileList})
         }).catch(error => {
             Toast.hide()
-            Toast.fail(error)
+            if (typeof error === 'string') {
+                Toast.fail(error)
+            }
         })
     }
 

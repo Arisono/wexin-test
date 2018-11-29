@@ -5,6 +5,8 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Menu, Dropdown, Icon} from 'antd';
+import "slick-carousel/slick/slick-theme.css"
+import "slick-carousel/slick/slick.css"
 
 import  icon_group from '../../style/imgs/icon_group.png'
 import  icon_home_menu_dengji from '../../style/imgs/icon_home_menu_dengji.png'
@@ -104,11 +106,12 @@ class AppHomePage extends React.Component {
         </Menu>
     );
 
-    onChange(a, b, c) {
+  /*  onChange(a, b, c) {
         console.log(a, b, c);
-    }
+    }*/
 
     componentDidMount(){
+        document.title ="智慧校园";
         console.log("componentDidMount()"+this.props.location.search);
         console.log("componentDidMount():query:"+this.props.location.query);
         const query =this.props.location.search;
@@ -140,7 +143,14 @@ class AppHomePage extends React.Component {
         let borderLine = {
             border: "1px solid #f4f4f4"
         };
-
+        var settings = {
+            className: "center",
+            centerMode: true,
+            infinite: false,
+            centerPadding: "20px",
+            slidesToShow: 3,
+            speed: 500
+        };
         return <div className="container-fluid">
             {/*顶部Header*/}
             <div className="row" >
@@ -163,7 +173,7 @@ class AppHomePage extends React.Component {
                                     width={60} height={60} class="img-circle" style={{border:'3px solid #ffffff'}}/>
                             </div>
                             <div className="col-xs-9" id="global-clear">
-                                <div style={{marginTop: "30px", marginLeft: "15px"}}><span style={{fontSize: "16px",color:"black"}}>尊敬的陈小明
+                                <div style={{marginTop: "30px", marginLeft: "0px"}}><span style={{fontSize: "16px",color:"black"}}>尊敬的陈小明
                                     {
                                         this.state.isTeacher?('老师'):('家长')
                                     }
@@ -245,40 +255,31 @@ class AppHomePage extends React.Component {
                         </div>
                         <div className="row" style={borderLine}></div>
                         <div className="row">
-
-                            <div className="col-xs-12" style={{margin: "0px", padding: "0px"}}>
-                                <Carousel autoplay={true} dots={false} afterChange={this.onChange.bind(this)}>
-                                    <div className="flex_row " style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                            <div className="col-xs-12" style={{ margin: "0px", padding: "0px"}}>
+                                <Carousel autoplay={true} dots={false} >
+                                    <div >
                                         <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                             width={93} height={90}/>
-                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 10px", display: "inline"}}
-                                             width={93} height={90}/>
-                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 10px", display: "inline"}}
-                                             width={93} height={90}/>
+                                             width={"31%"} />
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                             width={"31%"} />
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                             width={"31%"} />
                                     </div>
-                                    <div className="flex_row " style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                    <div >
                                         <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                             width={93} height={90}/>
-                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 10px", display: "inline"}}
-                                             width={93} height={90}/>
-                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 10px", display: "inline"}}
-                                             width={93} height={90}/>
+                                             width={"31%"} />
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                             width={"31%"} />
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                             width={"31%"} />
                                     </div>
-                                    <div className="flex_row " style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                    <div >
                                         <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                             width={93} height={90}/>
-                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 10px", display: "inline"}}
-                                             width={93} height={90}/>
-                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 10px", display: "inline"}}
-                                             width={93} height={90}/>
-                                    </div>
-                                    <div className="flex_row " style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                             width={"31%"} />
                                         <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                             width={93} height={90}/>
-                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 10px", display: "inline"}}
-                                             width={93} height={90}/>
-                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 10px", display: "inline"}}
-                                             width={93} height={90}/>
+                                             width={"31%"} />
+                                        <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                             width={"31%"} />
                                     </div>
                                 </Carousel>
 
@@ -299,13 +300,13 @@ class AppHomePage extends React.Component {
                         </div>
                         <div className="row" id="page_horizontal_line"></div>
 
-                        <div className="row">
-                            <div className="col-xs-7  flex_row_right">
-                                <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "20px 0px 3px 10px"}} width={160} height={160}/>
-                            </div>
-                            <div className="col-xs-5">
-                                <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "20px 0px 0px 0px"}} width={100} height={80}/>
-                                <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 0px 0px"}} width={100} height={80}/>
+                        <div className="row flex_row" >
+
+                            <img className=" padding_left" src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}  width={'60%'} height={"220px"}/>
+
+                            <div style={{width:"40%"}} className="padding_right">
+                                <div className="margin_bottom_5"><img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}  width={"100%"} height={"92px"}/></div>
+                                <div><img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}  width={"100%"} height={"92px"}/></div>
                             </div>
                         </div>
 
@@ -359,7 +360,7 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <Link className="flex_column flex_center" to="/releaseAssignment" id="menu_span_normal">
+                        <Link className="flex_column flex_center" to="/assignmentList/teacher" id="menu_span_normal">
                             <div><img src={icon_home_menu_3} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                             </div>
                             <div style={{paddingBottom: "20px", paddingLeft: "0px"}}>
@@ -418,7 +419,7 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <Link className="flex_column flex_center" to="/leaveList"  id="menu_span_normal">
+                        <Link className="flex_column flex_center" to="/leaveList/teacher"  id="menu_span_normal">
                         <div><img src={icon_home_menu_6} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
@@ -433,7 +434,7 @@ function TeacherMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}>
-                        <Link className="flex_column flex_center" to="/classAlbum"  id="menu_span_normal">
+                        <Link className="flex_column flex_center" to="/classAlbum/teacher"  id="menu_span_normal">
                             <div><img src={icon_home_menu_7} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                             </div>
                             <div style={{paddingBottom: "20px",paddingLeft: "0px"}}><span
@@ -443,7 +444,7 @@ function TeacherMenu() {
                         </Link>
                     </div>
                      <div className="col-xs-3" >
-                         <Link className="flex_column flex_center" to="/wonderMoment" id="menu_span_normal">
+                         <Link className="flex_column flex_center" to="/wonderMoment/teacher" id="menu_span_normal">
                      <div> <img src={icon_home_menu_8} style={{margin:"20px 20px 8px 20px"}}  width={20} height={20} /></div>
                      <div style={{paddingBottom:"20px",paddingLeft:"0px"}}>  <span style={{fontSize:"12px"}}>
                       精彩瞬间
@@ -630,7 +631,7 @@ function ParentMenu() {
                         flexDirection: "column",
                         justifyContent: "center",
                         alignItems: "center"
-                    }}> <Link  className="flex_column flex_center" to="/assignmentList" id="menu_span_normal">
+                    }}> <Link  className="flex_column flex_center" to="/assignmentList/parent" id="menu_span_normal">
                         <div><img src={icon_home_menu_24} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
@@ -659,7 +660,7 @@ function ParentMenu() {
                         flexDirection: "column",
                         justifyContent: "center",
                         alignItems: "center"
-                    }}><Link className="flex_column flex_center" to="/leaveList" id="menu_span_normal">
+                    }}><Link className="flex_column flex_center" to="/leaveList/parent" id="menu_span_normal">
                         <div><img src={icon_home_menu_26} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
@@ -782,7 +783,7 @@ function ParentMenu() {
                         flexDirection: "column",
                         justifyContent: "center",
                         alignItems: "center"
-                    }}> <Link className="flex_column flex_center" to="/classAlbum" id="menu_span_normal">
+                    }}> <Link className="flex_column flex_center" to="/classAlbum/parent" id="menu_span_normal">
                         <div><img src={icon_home_menu_33} style={{margin: "20px 20px 8px 20px"}} width={20}
                                   height={20}/></div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
@@ -794,7 +795,7 @@ function ParentMenu() {
                     <div className="col-xs-3" id="row_center_align">
                         <div><img src={icon_home_menu_34} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/></div>
                         <div style={{paddingBottom: "20px",paddingLeft: "0px"}}><span
-                            style={{fontSize: "12px"}} >  <Link className="flex_column flex_center" to="/wonderMoment" id="menu_span_normal">精彩瞬间</Link></span></div>
+                            style={{fontSize: "12px"}} >  <Link className="flex_column flex_center" to="/wonderMoment/parent" id="menu_span_normal">精彩瞬间</Link></span></div>
                     </div>
                     <div className="col-xs-3" style={{
                         display: "flex",

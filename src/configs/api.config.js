@@ -43,7 +43,14 @@ export const API = {
     //分页显示会议 /分页显示作业 /分页显示通知
     notifyMessage: _baseURL + '/notify/getMeetingList',
     //创建投票单
-    voteCreate: _baseURL + '/vote/voteCreate',
+    voteCreate:_baseURL + '/vote/voteCreate',
+    voteList:_baseURL+"/vote/voteList",
+    voteDetail:_baseURL+"/vote/voteList",
+    //发布作业
+    homeWorkAdd:_baseURL+"/notify/issueNotification",
+    homeWorkList:_baseURL+"",
+    homeWorkDetail:_baseURL+"",
+
 
 }
 

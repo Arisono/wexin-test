@@ -5,7 +5,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './AssignmentListPage.css'
-import { List} from 'antd';
+import { List,Icon} from 'antd';
 import { BrowserRouter as Router, Route, Link} from "react-router-dom";
 /**
  * 作业列表
@@ -46,16 +46,31 @@ class AssignmentListPage extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            name:'AssignmentListPage'
+            name:'AssignmentListPage',
+            role:this.props.match.params.role
         };
 
     }
 
+      componentWillMount(){
+          if("teacher"==this.props.match.params.role){
+              document.title ="作业发布";
+          }else{
+              document.title ="作业通知";
+          }
+      }
+
 
     componentDidMount(){
-
+        this.setState({
+           role:this.props.match.params.role
+        })
     }
 
+
+    onAddAction=()=>{
+        this.props.history.push("/releaseAssignment");
+    }
     render(){
         return <div className="container-fluid"
                     style={{padding:"0px",height:"1000px",backgroundColor:"#F3F3F3"}}>
@@ -90,6 +105,11 @@ class AssignmentListPage extends React.Component{
                     </Link>
                 )}
             />
+            {
+                this.state.role=="teacher"?(<Icon type="plus-circle" theme='filled' className='common-add-icon'
+                                           onClick={this.onAddAction} />):("")
+            }
+
         </div>
     }
 }

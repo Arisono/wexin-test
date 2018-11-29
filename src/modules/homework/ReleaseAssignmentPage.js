@@ -10,10 +10,10 @@ import { Input,Button , DatePicker } from 'antd';
 import PicturesWallItem from "../../components/upload/PicturesWallItem";
 import {Icon} from "antd";
 import TargetSelect from "../../components/TargetSelect";
-const { TextArea } = Input;
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../utils/fetchRequest';
 import {API} from '../../configs/api.config';
 
+const { TextArea } = Input;
 const teacherData = []
 const parentData = []
 
@@ -85,11 +85,11 @@ class ReleaseAssignmentPage extends React.Component{
 
     componentDidMount(){
         fetchPost(API.homeWorkAdd,{
-                      notifyName:'10000',
-                      notifyType:'1',
-                      notifyDetails:'5',
-                      notifyCreator:'1',
-                      notifyStatus:'2',
+                      notifyName:'语文课后作业',//标题
+                      notifyType:'3',//作业发布
+                      notifyDetails:'回家背诵唐诗三百首，明天检查',//内容
+                      notifyCreator:'10000',//创建者
+                      notifyStatus:'2',//状态
                       userIds:'10001,10002,10003'
                   }).then((response)=>{
                       console.log("response:"+JSON.stringify(response));

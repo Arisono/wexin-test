@@ -9,7 +9,7 @@ import '../../style/css/app-gloal.css'
 import { Input,Button , DatePicker,Icon } from 'antd';
 import PicturesWallItem from "../../components/upload/PicturesWallItem";
 import TargetSelect from "../../components/TargetSelect";
-import {fetchPost} from '../../utils/fetchRequest';
+import {fetchPost,fetchGet} from '../../utils/fetchRequest';
 import {API} from '../../configs/api.config';
 
 const { TextArea } = Input;
@@ -95,6 +95,19 @@ class ReleaseAssignmentPage extends React.Component{
                   }).catch((error)=>{
                       console.log("error:"+JSON.stringify(error));
                   })
+        //获取列表
+        fetchPost(API.homeWorkList,{
+            userId:'10000',
+            notifyType:'3',
+            pageIndex:'1',
+            pageSize:'10'
+        }).then((response)=>{
+            console.log("response:"+JSON.stringify(response));
+        }).catch((error)=>{
+            console.log("error:"+JSON.stringify(error));
+        })
+
+
     }
 
     onTargetChange = (value, label, checkNodes, count) => {

@@ -234,6 +234,18 @@
     flex: 1 0 auto;
 }
 
+.item_flex2{
+    flex: 2 0 auto;
+}
+
+.item_flex_1{
+    flex: 1;
+}
+
+.item_flex_3{
+    flex: 0 0 33.3333%;
+}
+
 
 /*全局边距设置*/
 .padding_10{
@@ -242,6 +254,14 @@
 
 .padding_15{
     padding: 15px;
+}
+
+.padding_left{
+    padding: 15px 7px 15px 15px;
+}
+
+.padding_right{
+    padding: 15px 15px 15px 7px;
 }
 
 .padding_20{
@@ -312,8 +332,12 @@
     margin: 0px 0px 15px 0px;
 }
 
-.margin_bottom_10{
+.margin_bottom_20{
     margin: 0px 0px 20px 0px;
+}
+
+.margin_bottom_5{
+    margin: 0px 0px 5px 0px;
 }
 
 

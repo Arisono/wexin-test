@@ -36,6 +36,7 @@ class PicturesWallItem extends React.Component{
 
     //file参数需要传递给父组件！
     handleChange = ({ file,fileList }) =>{
+        console.log("test1",file)
         this.props.callback(file);
         this.setState({ fileList })
     }
@@ -44,9 +45,9 @@ class PicturesWallItem extends React.Component{
 
 
     componentDidMount(){
-        
+
     }
-   
+
     render(){
         const { previewVisible, previewImage, fileList } = this.state;
         //上传按钮

@@ -1,5 +1,6 @@
 /**
 *   Created by FANGlh on 2018/11/8 14:57.
+ *   *   创建投票
 */
 
 import React,{Component} from 'react';
@@ -239,7 +240,7 @@ export default class SendVote extends Component{
                 ]
         }
         console.log('params',{
-            voteString:JSON.stringify(params)
+            voteString:params
         })
         fetchPost(API.voteCreate,{
             voteString:JSON.stringify(params)
@@ -255,7 +256,7 @@ export default class SendVote extends Component{
             })
     }
     selectPersononChange = (value) => {
-        console.log('selectPersononChange ', value);
+        // console.log('selectPersononChange ', value);
         this.setState({votePerson:value });
     }
     removeSItem = (index)=>{
@@ -266,8 +267,8 @@ export default class SendVote extends Component{
         })
     }
     handelSItem = (itemdata,index)=>{
-        console.log('index',index)
-        console.log('itemdata',itemdata)
+        // console.log('index',index)
+        // console.log('itemdata',itemdata)
         let voteOptionss = this.state.voteOptionss
         voteOptionss[index] = itemdata
         this.setState({

@@ -19,7 +19,7 @@ export default class UploadImage extends Component {
     }
 
     componentDidMount() {
-        document.title = '上传图片'
+        document.title = '编辑相册'
 
         Toast.loading('', 0)
         this.getPictureList(this.albumId)
@@ -49,7 +49,7 @@ export default class UploadImage extends Component {
                         fileList={fileList}
                         limit={false}
                         multiple={true}
-                        title='添加图片'
+                        title='编辑相册'
                         beforeUpload={this.handleBefore.bind(this)}
                         handleChange={this.handleChange.bind(this)}
                         handleRemove={this.handleRemove.bind(this)}
@@ -118,7 +118,15 @@ export default class UploadImage extends Component {
 
     handleRemove = (file) => {
         console.log(file)
-        return false
+
+        fetchPost(API.DELETE_FILE, {
+            fileUrls: [file.picUrl]
+        }).then(response => {
+
+        }).catch(error => {
+
+        })
+        return true
     }
 
     handleChange = fileList => {

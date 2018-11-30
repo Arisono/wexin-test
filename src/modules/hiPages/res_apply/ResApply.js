@@ -33,6 +33,7 @@ export default class ResApply extends Component{
             fileList: [], //附件
         }
     }
+
     render(){
         //添加附件按钮
         const uploadButton = (
@@ -50,7 +51,7 @@ export default class ResApply extends Component{
                </div>
 
                 <div >
-                    {this.state.selectContentArray.map((itemata,index) => <UserItem index ={index} itemata = {itemata} handelRItem={this.handelRItem}></UserItem>)}
+                    {this.state.selectContentArray.map((itemata,index) => <UserItem index ={index} itemata = {itemata} handelRItem={this.handelRItem} removeSItem={this.removeSItem}></UserItem>)}
                     <div onClick={this.addUserItem} className="text-center" style={{color:"#0CE11D",fontSize:12,margin:10}}>+ <span style={{color:"#666666"}}>添加物品明细</span></div>
                 </div>
 
@@ -98,6 +99,16 @@ export default class ResApply extends Component{
     //提交
     doSaveClick =() =>{
         console.log('state',this.state)
+    }
+    removeSItem = (index)=>{
+        if(this.state.selectContentArray.length == 1){
+            return
+        }
+        let selectContentArray = this.state.selectContentArray
+        selectContentArray.splice(index,1)
+        this.setState({
+            selectContentArray
+        })
     }
     handelRItem = (itemObject,index)=>{
         console.log('itemObject',itemObject)

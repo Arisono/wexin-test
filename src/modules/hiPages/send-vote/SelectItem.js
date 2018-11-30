@@ -17,8 +17,8 @@ export default class SelectItem extends Component{
         return(
             <div onChange={this.handelValueCom}>
                 <div style={{display:'flex',flexDirection:'row'}}>
-                        <textarea style={{width:'90%'}}  rows="2" ref='itemContent'  type="text" placeholder="请输入选项内容" value={this.props.itemata == null ? '' : this.props.itemata} className="textarea_sty" />
-                        <img src={delete_img} alt="" style={{height:30,width:30,marginTop:10,marginRight:10}} onClick={this.itemEmpty.bind(this,this.props.index)}/>
+                        <textarea style={{width:'90%'}}  rows="1" ref='itemContent'  type="text" placeholder="请输入选项内容" value={this.props.itemata == null ? '' : this.props.itemata} className="textarea_sty" />
+                        <img src={delete_img} alt="" style={{height:20,width:20,marginTop:10,marginRight:10}} onClick={this.itemEmpty.bind(this,this.props.index)}/>
                 </div>
                 <div className="comhline_sty1"></div>
             </div>

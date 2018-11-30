@@ -6,6 +6,8 @@ import React,{Component} from 'react';
 import './ScoreInquiry.css';
 import { Select  } from 'antd';
 import ScoreData from './ScoreData';
+import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
+import {API} from '../../../configs/api.config';
 
 const Option = Select.Option;
 
@@ -23,7 +25,7 @@ export default class ScoreInquiry extends Component{
             <div className="this_contaior" >
                <div className="header_select_sty">
                    <div style={{width:"50%",}}>
-                       <Select defaultValue="单科查询-请选择" style={{ width:'100%' }} onChange={this.handleSelectClass}>
+                       <Select defaultValue="单科查询-请选择" style={{ width:'100%',height:40 }} onChange={this.handleSelectClass}>
                            <Option value="5" >单科-语文</Option>
                            <Option value="15">单科-数学</Option>
                            <Option value="25">单科-英语</Option>
@@ -31,7 +33,7 @@ export default class ScoreInquiry extends Component{
                        </Select>
                    </div>
                    <div style={{width:"50%"}}>
-                       <Select defaultValue="阶段查询-请选择" style={{width:"100%"}} onChange={this.handleSelectClass}>
+                       <Select defaultValue="阶段查询-请选择" style={{width:"100%",height:40}} onChange={this.handleSelectClass}>
                            <Option value="5">月考一</Option>
                            <Option value="15">期中考试</Option>
                            <Option value="25">月考二</Option>
@@ -40,7 +42,7 @@ export default class ScoreInquiry extends Component{
                    </div>
                </div>
 
-                <div style={{marginTop:30}}>
+                <div style={{marginTop:40}}>
                     {this.state.ScoreDataList.map((itemata,index) => <ScoreData key={index} itemata = {itemata}></ScoreData>)}
                 </div>
             </div>
@@ -58,5 +60,25 @@ export default class ScoreInquiry extends Component{
         this.setState({
             selectTime:value
         })
+    }
+    componentWillMount() {
+        document.title = '成绩查询'
+    }
+    componentDidMount() {
+        let params = {
+            stuId:10000,
+            scoreDate:'',
+            scoreName:''
+        }
+        fetchGet(API.getScoreByStuId,params,{})
+            .then((response)=>{
+                console.log('response',response)
+                if(response.success){
+
+                }
+            })
+            .catch((error) =>{
+                console.log('error',error)
+            })
     }
 }

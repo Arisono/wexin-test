@@ -6,6 +6,9 @@
 import React, {Component} from 'react'
 import {Icon} from 'antd'
 import ReactPlayer from 'react-player'
+import {Modal} from 'antd-mobile'
+
+const {alert} = Modal
 
 export default class VideoItem extends Component {
 
@@ -25,11 +28,11 @@ export default class VideoItem extends Component {
         return (
             <div className='video-item-root'>
                 <div className='video-item-head'>
-                    <div className='video-item-title'>{videoInfo.title}</div>
+                    <div className='video-item-title'>{videoInfo.picName}</div>
                     <Icon type="close-circle" theme='filled' onClick={this.onDeleteEvent}/>
                 </div>
                 <ReactPlayer
-                    url='http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4'
+                    url={videoInfo.url}
                     controls
                     width='100%'
                     height='max-content'/>
@@ -38,6 +41,16 @@ export default class VideoItem extends Component {
     }
 
     onDeleteEvent = () => {
-        this.props.deleteEvent(this.props.index)
+        alert('提示', '确定删除该条视频吗？', [
+            {
+                text: '取消', onPress: () => {
+                }
+            },
+            {
+                text: '确定', onPress: () => {
+                    this.props.deleteEvent(this.props.index)
+                }
+            }
+        ])
     }
 }

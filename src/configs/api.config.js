@@ -52,9 +52,9 @@ export const API = {
     voteCreate: _baseURL + '/vote/voteCreate',
 
     //获取所有老师电话号码
-    getTeacherPhones:_baseURL + '/user/getTeacherPhones',
+    getTeacherPhones: _baseURL + '/user/getTeacherPhones',
     //获取班级家长手机号
-    getParentPhones:_baseURL + '/user/getParentPhones',
+    getParentPhones: _baseURL + '/user/getParentPhones',
 
     voteList: _baseURL + "/vote/voteList",
     voteDetail: _baseURL + "/vote/voteList",
@@ -67,7 +67,10 @@ export const API = {
     leaveCreate: _baseURL + "/leave/leaveCreate",
     leaveList: _baseURL + "/leave/leaveList",
 
-    issueNotification: _baseURL + '/notify/issueNotification'
+    //发布通知公告/发布作业/创建会议
+    issueNotification:_baseURL +'/notify/issueNotification',
+    //成绩查询
+    getScoreByStuId :_baseURL+'/score/getScoreByStuId',
 }
 
 

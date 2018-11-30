@@ -218,6 +218,10 @@ export default class UploadVideo extends Component {
     }
 
     releaseEvent = () => {
+        if (isObjEmpty(this.state.videoTitle)) {
+            Toast.fail('请输入视频名称')
+            return
+        }
         Toast.loading('视频发布中...', 0)
         const {classList, classText} = this.state
 

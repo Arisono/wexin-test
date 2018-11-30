@@ -260,15 +260,15 @@ export default class SendVote extends Component{
         this.setState({votePerson:value });
     }
     removeSItem = (index)=>{
-        let voteOptionss = this.state.voteOptionss
-        voteOptionss.splice(index,1)
-        this.setState({
-            voteOptionss
-        })
+        // let voteOptionss = this.state.voteOptionss
+        // voteOptionss.splice(index,1)
+        // this.setState({
+        //     voteOptionss
+        // })
     }
     handelSItem = (itemdata,index)=>{
-        // console.log('index',index)
-        // console.log('itemdata',itemdata)
+        console.log('index',index)
+        console.log('itemdata',itemdata)
         let voteOptionss = this.state.voteOptionss
         voteOptionss[index] = itemdata
         this.setState({

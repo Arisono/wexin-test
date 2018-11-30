@@ -97,7 +97,7 @@ export default class RouteConfig extends Component {
 
                     <Route path='/releaseAssignment' component={ReleaseAssignmentPage}/>
                     <Route path='/assignmentList/:role' component={AssignmentListPage}/>
-                    <Route path='/assignmentDetail' component={AssignmentDetailPage}/>
+                    <Route path='/assignmentDetail/:role/:id' component={AssignmentDetailPage}/>
 
                     {/*方龙海*/}
                     <Route path='/access-notice' component={AccessNotice}/> {/*进出校通知*/}

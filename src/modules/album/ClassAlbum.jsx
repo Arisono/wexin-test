@@ -9,7 +9,7 @@ import {getStrValue, isObjEmpty} from "../../utils/common";
 import {Icon} from 'antd'
 import {Picker, List, Toast} from 'antd-mobile'
 import {fetchGet} from "../../utils/fetchRequest";
-import {API} from "../../configs/api.config";
+import {_baseURL, API} from "../../configs/api.config";
 import ClassBean from 'model/ClassBean'
 import AlbumBean from "../../model/AlbumBean";
 
@@ -115,7 +115,8 @@ export default class ClassAlbum extends Component {
                         let albumBean = new AlbumBean()
 
                         albumBean.albumId = getStrValue(dataObject, 'picId')
-                        albumBean.coverImg = getStrValue(dataObject, 'picUrl')
+                        albumBean.coverImg = getStrValue(dataObject, 'picUrl') ?
+                            _baseURL + getStrValue(dataObject, 'picUrl') : ''
                         albumBean.albumName = getStrValue(dataObject, 'picName')
                         albumBean.quantity = getStrValue(dataObject, 'quantity')
                         albumBean.albumDate = getStrValue(dataObject, 'picDate')

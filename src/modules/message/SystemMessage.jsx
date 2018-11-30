@@ -12,6 +12,7 @@ import {Toast} from 'antd-mobile'
 import LoadingMore from 'components/LoadingMore'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
+import {getStrValue, isObjEmpty} from "../../utils/common";
 
 const mPageSize = 10
 let mPageIndex = 1
@@ -54,36 +55,50 @@ export default class SystemMessage extends Component {
         )
     }
 
-    loadSystemList = () => {
-        setTimeout(() => {
-            Toast.hide()
+    loadSystemList = (index) => {
+        if (!this.dataLoading) {
             const {systemMsgs} = this.state
-            for (let i = 0; i < 10; i++) {
-                let systemBean = {}
-                if (i % 2 == 0) {
-                    systemBean.time = '2018-10-25 10:20'
-                    systemBean.content = '智慧校园版本已更新至V2.0.1'
-                } else {
-                    systemBean.time = '2018-11-12 21:14'
-                    systemBean.content = '最新的用户您好！最新系统升级，我们将在2018-10-28 停止系统服务，次日回复正常。给您带来不便我们深感歉意！'
-                }
-                systemMsgs.push(systemBean)
-            }
-
-            this.setState({
-                systemMsgs,
-                isLoading: false
-            })
 
             fetchGet(API.SYSTEM_MESSAGE, {
                 notifyType: 1,
-                pageIndex: mPageIndex,
+                pageIndex: index,
                 pageSize: mPageSize
             }).then(response => {
+                Toast.hide()
+                this.dataLoading = false
 
+                if (response) {
+                    let dataArray = response.data
+                    if (!isObjEmpty(dataArray) && dataArray != []) {
+                        dataArray.forEach((dataObject, index) => {
+                            systemMsgs.push({
+                                time: getStrValue(dataObject, 'creat_date'),
+                                content: getStrValue(dataObject, 'notify_details')
+                            })
+                        })
+                    } else {
+                        this.setState({
+                            hasMoreData: false
+                        })
+                    }
+                }
+
+                this.setState({
+                    systemMsgs,
+                    isLoading: false
+                })
             }).catch(error => {
-                Toast.fail(error, 2)
+                Toast.hide()
+                this.dataLoading = false
+                if (typeof error === 'string') {
+                    Toast.fail(error, 2)
+                }
+
+                this.setState({
+                    systemMsgs,
+                    isLoading: false
+                })
             })
-        }, 1500)
+        }
     }
 }

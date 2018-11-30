@@ -96,7 +96,7 @@ export default class UploadImage extends Component {
                         pictureBean.uid = getStrValue(dataObject, 'picId')
                         pictureBean.url = _baseURL + getStrValue(dataObject, 'picUrl')
                         // pictureBean.type = ''
-                        pictureBean.thumbUrl = getStrValue(dataObject, 'picUrl')
+                        pictureBean.thumbUrl = _baseURL + getStrValue(dataObject, 'picUrl')
                         pictureBean.status = 'done'
                         // pictureBean.size = ''
 

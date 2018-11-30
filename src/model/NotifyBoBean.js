@@ -1,5 +1,5 @@
 export default function NotifyBoBean() {
-
+    this.noId = 0
     this.noTitle = ''
     this.noStatu = ''
     this.noContent = ''

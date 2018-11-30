@@ -64,7 +64,7 @@ export default class NotifyBoardTeacher extends Component {
         const detailModal = this.getDetailModal()
 
         return (
-            <div className='notify-select-root'>
+            <div className='notify-select-root' ref={this.scrollRef}>
                 <div className='gray-line'></div>
                 <div className='identity-select'>
                     <div className={selectIndex == 0 ?
@@ -181,6 +181,8 @@ export default class NotifyBoardTeacher extends Component {
                 pageStart={0}
                 loadMore={this.loadReleaseList}
                 initialLoad={false}
+                useWindow={false}
+                getScrollParent={this.scrollRef}
                 hasMore={this.state.hasMoreRelease}
                 loader={<LoadingMore/>}>
                 <Skeleton loading={this.state.isReleaseLoading} active paragraph={{rows: 3}}>
@@ -195,6 +197,10 @@ export default class NotifyBoardTeacher extends Component {
             </InfiniteScroll>
         </div>
     )
+
+    scrollRef = (e) => {
+        console.log('scroll',e)
+    }
 
     getReceiveItems = () => (
         <div className='notify-bg-root'>

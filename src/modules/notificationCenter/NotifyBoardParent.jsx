@@ -58,7 +58,6 @@ export default class NotifyBoardParent extends Component {
         )
     }
 
-
     getDetailModal = () => {
         const {notifyList} = this.state
 
@@ -137,16 +136,43 @@ export default class NotifyBoardParent extends Component {
 
 
     onDetailClick = (index) => {
-        this.selectIndex = index
         const {notifyList} = this.state
+        this.selectIndex = index
 
-        if (notifyList && notifyList[index]) {
-            notifyList[index].noStatu = '已读'
-        }
+        Toast.loading('', 0)
+        fetchGet(API.TASK_DETAIL, {
+            notifyId: notifyList[index].noId,
+            userId: '10001',
+        }).then(response => {
+            Toast.hide()
+            if (response && response.data) {
+                let item = response.data
+                if (notifyList && notifyList[index]) {
+                    let notifyBoBean = notifyList[index]
 
-        this.setState({
-            notifyList,
-            detailVisible: true
+                    notifyBoBean.noId = getIntValue(item, 'notifyId')
+                    notifyBoBean.noTitle = getStrValue(item, 'notifyName')
+                    notifyBoBean.enclosure = getArrayValue(item, 'notifyFiles')
+                    if (item.notifyRecords) {
+                        notifyBoBean.unRead = getArrayValue(item.notifyRecords, 'unReads')
+                        notifyBoBean.readed = getArrayValue(item.notifyRecords, 'reads')
+                    }
+                    notifyBoBean.noContent = getStrValue(item, 'notifyDetails')
+                    notifyBoBean.noIssue = getStrValue(item, 'notifyCreatorName')
+                    notifyBoBean.noTime = getStrValue(item, 'creatDate')
+                    notifyBoBean.noStatu = '已读'
+                }
+
+                this.setState({
+                    notifyList,
+                    detailVisible: true
+                })
+            }
+        }).catch(error => {
+            Toast.hide()
+            if (typeof error === 'string') {
+                Toast.fail(error)
+            }
         })
     }
 
@@ -161,14 +187,17 @@ export default class NotifyBoardParent extends Component {
             pageSize: mPageSize
         }).then(response => {
             Toast.hide()
-            if (response && response.data && response.data.notify) {
+            if (response && response.data && response.data.notify.length > 0) {
                 response.data.notify.forEach((item, index) => {
                     let notifyBoBean = new NotifyBoBean()
 
+                    notifyBoBean.noId = getIntValue(item, 'notifyId')
                     notifyBoBean.noTitle = getStrValue(item, 'notifyName')
                     notifyBoBean.enclosure = getArrayValue(item, 'notifyFiles')
-                    notifyBoBean.unRead = 25
-                    notifyBoBean.readed = 20
+                    if (item.notifyRecords) {
+                        notifyBoBean.unRead = getArrayValue(item.notifyRecords, 'unReads')
+                        notifyBoBean.readed = getArrayValue(item.notifyRecords, 'reads')
+                    }
                     notifyBoBean.noContent = getStrValue(item, 'notifyDetails')
                     notifyBoBean.noIssue = getStrValue(item, 'notifyCreatorName')
                     notifyBoBean.noTime = getStrValue(item, 'creatDate')
@@ -178,13 +207,17 @@ export default class NotifyBoardParent extends Component {
                     } else {
                         notifyBoBean.noStatu = '已读'
                     }
+
                     notifyList.push(notifyBoBean)
+                })
+            } else {
+                this.setState({
+                    hasMoreData: false
                 })
             }
             this.setState({
                 notifyList,
                 isLoading: false,
-                hasMoreData: false
             })
 
         }).catch(error => {

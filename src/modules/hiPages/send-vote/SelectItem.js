@@ -4,7 +4,7 @@
 
 import React,{Component} from 'react';
 import { Icon} from 'antd';
-
+import delete_img from '../../../style/imgs/delete.png';
 export default class SelectItem extends Component{
 
     constructor(props){
@@ -14,17 +14,18 @@ export default class SelectItem extends Component{
         }
     }
     render(){
-        const itemClear = this.props.itemata ? <Icon type="close-circle"
-                                        onClick={this.itemEmpty(this,this.props.index)}
-                                        style={{color: 'white'}}/> : null;
         return(
             <div onChange={this.handelValueCom}>
-                <input  ref='itemContent'  type="text" placeholder="请输入选项内容" value={this.props.itemata == null ? '' : this.props.itemata} className="select_item_sty" />
+                <div style={{display:'flex',flexDirection:'row'}}>
+                        <textarea style={{width:'90%'}}  rows="2" ref='itemContent'  type="text" placeholder="请输入选项内容" value={this.props.itemata == null ? '' : this.props.itemata} className="textarea_sty" />
+                        <img src={delete_img} alt="" style={{height:30,width:30,marginTop:10,marginRight:10}} onClick={this.itemEmpty.bind(this,this.props.index)}/>
+                </div>
                 <div className="comhline_sty1"></div>
             </div>
         )
     }
         itemEmpty =(index)=> {
+             console.log('index',index)
             this.props.removeSItem(this.props.index)
         }
         handelValueCom = (event)=>{

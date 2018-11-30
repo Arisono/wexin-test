@@ -244,9 +244,78 @@ class AppHomePage extends React.Component {
                 </div>
             </div>
             {this.state.isTeacher ? (<TeacherMenu/>) : (<ParentMenu/>)}
+
             {this.state.isTeacher ? (
-                <div></div>
-            ) : (    <div>
+                <div>
+                    {/*班级相册*/}
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <div className="row">
+                                <div className="col-xs-12" style={{padding: "10px"}}>班级相册</div>
+                            </div>
+                            <div className="row" style={borderLine}></div>
+                            <div className="row">
+                                <div className="col-xs-12" style={{ margin: "0px", padding: "0px"}}>
+                                    <Carousel autoplay={true} dots={false} >
+                                        <div >
+                                            <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                 width={"31%"} />
+                                            <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                 width={"31%"} />
+                                            <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                 width={"31%"} />
+                                        </div>
+                                        <div >
+                                            <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                 width={"31%"} />
+                                            <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                 width={"31%"} />
+                                            <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                 width={"31%"} />
+                                        </div>
+                                        <div >
+                                            <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                 width={"31%"} />
+                                            <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                 width={"31%"} />
+                                            <img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"} style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                 width={"31%"} />
+                                        </div>
+                                    </Carousel>
+
+                                </div>
+                            </div>
+
+
+                            <div className="row" style={{background: "#F3F3F3", height: "10px"}}/>
+                        </div>
+                    </div>
+
+
+                    {/*精彩瞬间*/}
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <div className="row" >
+                                <div className="col-xs-3" style={{padding: "10px"}}>精彩瞬间</div>
+                            </div>
+                            <div className="row" id="page_horizontal_line"></div>
+
+                            <div className="row flex_row" >
+
+                                <img className=" padding_left" src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}  width={'60%'} height={"220px"}/>
+
+                                <div style={{width:"40%"}} className="padding_right">
+                                    <div className="margin_bottom_5"><img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}  width={"100%"} height={"92px"}/></div>
+                                    <div><img src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}  width={"100%"} height={"92px"}/></div>
+                                </div>
+                            </div>
+
+                            <div className="row" style={{height: "50px"}}></div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <div>
                 {/*班级相册*/}
                 <div className="row">
                     <div className="col-sm-12">

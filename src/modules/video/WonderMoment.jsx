@@ -7,11 +7,12 @@ import React, {Component} from 'react'
 import {Icon, List} from 'antd'
 import {Picker, List as Mlist, Toast} from 'antd-mobile'
 import VideoItem from 'components/VideoItem'
-import {fetchGet} from "../../utils/fetchRequest";
-import {API} from "../../configs/api.config";
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
+import {_baseURL, API} from "../../configs/api.config";
 import ClassBean from 'model/ClassBean'
 import AlbumBean from "../../model/AlbumBean";
 import {getStrValue} from "../../utils/common";
+import PictureBean from "../../model/PictureBean";
 
 export default class WonderMoment extends Component {
 
@@ -36,16 +37,6 @@ export default class WonderMoment extends Component {
 
         Toast.loading('', 0)
         this.getClassList()
-
-        const {classList, videoList} = this.state
-
-        for (let i = 0; i < 10; i++) {
-            videoList.push({
-                title: '六一儿童节舞蹈'
-            })
-        }
-
-        this.setState({classList, videoList})
     }
 
     render() {
@@ -64,8 +55,7 @@ export default class WonderMoment extends Component {
             <div style={{width: '100%', height: '100vh', display: 'flex', flexDirection: 'column'}}>
                 <div className='gray-line'></div>
                 <Picker data={classList} title='选择班级' extra='请选择'
-                        value={classValue} onChange={this.handleClassChange}
-                        onOk={this.handleClassChange} cols={1}>
+                        value={classValue} onChange={this.handleClassChange} cols={1}>
                     <Mlist.Item arrow="horizontal">选择班级</Mlist.Item>
                 </Picker>
                 <div className='gray-line'></div>
@@ -141,6 +131,8 @@ export default class WonderMoment extends Component {
 
 
     getVideoList = classBean => {
+        const {videoList} = this.state
+        videoList.length = 0
 
         fetchGet(API.GET_ALBUM_LIST, {
             schId: classBean.schId,
@@ -149,42 +141,59 @@ export default class WonderMoment extends Component {
         }).then(response => {
             Toast.hide()
 
-            /*const {albumList} = this.state
-            let dataArray = response.data
-            if (dataArray) {
-                for (let i = 0; i < dataArray.length; i++) {
-                    let dataObject = dataArray[i]
-                    if (dataObject) {
-                        let albumBean = new AlbumBean()
+            if (response) {
+                const dataArray = response.data
+                if (dataArray) {
+                    if (dataArray) {
+                        dataArray.forEach((video, index) => {
+                            const videoeBean = new PictureBean()
 
-                        albumBean.albumId = dataObject.picId
-                        albumBean.coverImg = dataObject.picUrl
-                        albumBean.albumName = dataObject.picName
-                        albumBean.quantity = dataObject.quantity
-                        albumBean.albumDate = dataObject.picDate
-                        albumBean.type = dataObject.picType
-                        albumBean.status = dataObject.picStatus
-                        albumBean.remarks = dataObject.picStatus
-                        albumBean.gradeId = dataObject.parentId
-                        albumBean.classId = dataObject.schId
-                        albumBean.classname = dataObject.schName
+                            videoeBean.picId = getStrValue(video, 'picId')
+                            videoeBean.picName = getStrValue(video, 'picName')
+                            videoeBean.picUrl = getStrValue(video, 'picUrl')
+                            videoeBean.picDate = getStrValue(video, 'picDate')
+                            videoeBean.picType = getStrValue(video, 'picType')
+                            videoeBean.picStatus = getStrValue(video, 'picStatus')
+                            videoeBean.parentId = getStrValue(video, 'parentId')
+                            videoeBean.picRemarks = getStrValue(video, 'picRemarks')
+                            videoeBean.schId = getStrValue(video, 'schId')
+                            videoeBean.quantity = getStrValue(video, 'quantity')
+                            videoeBean.schName = getStrValue(video, 'schName')
+                            videoeBean.url = _baseURL + getStrValue(video, 'picUrl')
 
-                        albumList.push(albumBean)
+                            videoList.push(videoeBean)
+                        })
                     }
                 }
-                this.setState({albumList})
-            }*/
+            }
+
+            this.setState({videoList})
+        }).catch(error => {
+            Toast.hide()
+            if (typeof error === 'string') {
+                Toast.fail(error)
+            }
+            this.setState({videoList})
+        })
+    }
+
+
+    onDeleteVideo = (index) => {
+        Toast.loading('视频删除中...', 0)
+        const {videoList} = this.state
+        fetchPost(API.DELETE_FILE, {
+            fileUrls: [videoList[index].picUrl]
+        }).then(response => {
+            Toast.hide()
+            Toast.success('视频删除成功')
+            videoList.splice(index, 1)
+            this.setState({videoList})
         }).catch(error => {
             Toast.hide()
             if (typeof error === 'string') {
                 Toast.fail(error)
             }
         })
-    }
-
-
-    onDeleteVideo = (index) => {
-        console.log('删除第' + index)
     }
 
     onAddVideo = () => {

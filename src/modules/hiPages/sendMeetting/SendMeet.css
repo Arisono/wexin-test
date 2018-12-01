@@ -3,7 +3,7 @@
 .pageborder{margin-top:10px;margin-bottom:10px;}
 .nextarr_sty{height:15px;width:8px;margin-left:5px;}
 .item_sty{padding:10px 15px; display: flex;fontSize:12px;}
-.comBtn_sty{width:302px;height:36px;margin-top: 40px;font-size:15px}
+.comBtn_sty{width:302px;height:36px;font-size:14px;background: #4197Fc; margin: 20px auto;color: white;border-radius: 9px;letter-spacing: 10px;}
 .textarea_sty{border:none;fontSize:15px; color:#333333;padding:10px 20px;}
 .meet_penson{padding:10px 20px; display: flex;flex-direction: row;flex-wrap: wrap;width: 100%;}
 .meet_penson_img{height: 50px;width: 50px;}

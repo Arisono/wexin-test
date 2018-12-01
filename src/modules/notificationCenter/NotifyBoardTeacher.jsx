@@ -4,16 +4,23 @@
  */
 
 import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
 import Swiper from 'swiper/dist/js/swiper'
 import 'swiper/dist/css/swiper.min.css'
 import 'css/consume-re.css'
 import NotifyBoBean from '../../model/NotifyBoBean'
 import {List, Icon, Skeleton} from 'antd'
-import {Modal, PullToRefresh} from 'antd-mobile'
-import InfiniteScroll from 'react-infinite-scroller'
-import LoadingMore from 'components/LoadingMore'
+import {Modal, PullToRefresh, Toast} from 'antd-mobile'
+import RefreshLayout from '../../components/RefreshLayout'
 import NotifyBoardItem from "../../components/NotifyBoardItem";
-import {isObjEmpty} from "../../utils/common";
+import {getArrayValue, getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
+import {_baseURL, API} from "../../configs/api.config";
+
+
+const mPageSize = 10
+let mReleaseIndex = 0
+let mReceiveIndex = 0
 
 export default class NotifyBoardTeacher extends Component {
 
@@ -26,13 +33,18 @@ export default class NotifyBoardTeacher extends Component {
             receiveList: [],
             isReleaseLoading: true,
             isReceiveLoading: true,
-            hasMoreRelease: true,
-            hasMoreReceive: true,
-            detailVisible: false
+            detailVisible: false,
+            isReleaseRefreshing: false,
+            isReceiveRefreshing: false,
+            height: document.documentElement.clientHeight
         }
     }
 
     componentDidMount() {
+        const hei = this.state.height - ReactDOM.findDOMNode(this.contain).offsetTop;
+        this.setState({
+            height: hei
+        })
         document.title = '通知公告'
 
         const that = this
@@ -64,7 +76,7 @@ export default class NotifyBoardTeacher extends Component {
         const detailModal = this.getDetailModal()
 
         return (
-            <div className='notify-select-root' ref={this.scrollRef}>
+            <div className='notify-select-root'>
                 <div className='gray-line'></div>
                 <div className='identity-select'>
                     <div className={selectIndex == 0 ?
@@ -76,7 +88,10 @@ export default class NotifyBoardTeacher extends Component {
                          onClick={this.onReceiveClick}>我接收的
                     </div>
                 </div>
-                <div className="swiper-container">
+                <div className="swiper-container"
+                     ref={el => {
+                         this.contain = el
+                     }}>
                     <div className="swiper-wrapper">
                         <div className="swiper-slide">
                             {releaseItems}
@@ -111,16 +126,17 @@ export default class NotifyBoardTeacher extends Component {
         if (!isObjEmpty(notifyBoBean.enclosure) && notifyBoBean.enclosure != '[]') {
             enclosureItem =
                 <div className='principal-enclosure-layout'>
-                    <img src={notifyBoBean.enclosure[0]} className='principal-enclosure-img'/>
+                    <img src={_baseURL + notifyBoBean.enclosure[0]} className='principal-enclosure-img'/>
                     <span className='principal-enclosure-count'>({notifyBoBean.enclosure.length}张)</span>
                 </div>
         }
 
-        const receives = notifyBoBean.receiveList
+        const receives = notifyBoBean.readed
         const receiveItems = []
         if (!isObjEmpty(receives) && receives != '[]') {
             for (let i = 0; i < receives.length; i++) {
-                receiveItems.push(<span className='notify-detail-modal-receive'>{receives[i]}</span>)
+                receiveItems.push(<span
+                    className='notify-detail-modal-receive'>{getStrValue(receives[i], 'userName')}</span>)
             }
         }
 
@@ -157,7 +173,7 @@ export default class NotifyBoardTeacher extends Component {
                                     fontSize: '12px',
                                     color: '#161616',
                                     marginLeft: '10px'
-                                }}>{notifyBoBean.readed}/{notifyBoBean.allCount}</span>
+                                }}>{getIntValue(notifyBoBean.readed, 'length')}/{notifyBoBean.allCount}</span>
                             </div>
                         </div>
                         <div>
@@ -177,14 +193,10 @@ export default class NotifyBoardTeacher extends Component {
 
     getReleaseItems = () => (
         <div className='notify-bg-root'>
-            <InfiniteScroll
-                pageStart={0}
-                loadMore={this.loadReleaseList}
-                initialLoad={false}
-                useWindow={false}
-                getScrollParent={this.scrollRef}
-                hasMore={this.state.hasMoreRelease}
-                loader={<LoadingMore/>}>
+            <RefreshLayout
+                refreshing={this.state.isReleaseRefreshing}
+                onRefresh={this.loadReleaseList}
+                height={this.state.height}>
                 <Skeleton loading={this.state.isReleaseLoading} active paragraph={{rows: 3}}>
                     <List split={false} dataSource={this.state.releaseList}
                           renderItem={(notifyBoBean, index) => (
@@ -194,22 +206,16 @@ export default class NotifyBoardTeacher extends Component {
                                                type='release'/>
                           )}/>
                 </Skeleton>
-            </InfiniteScroll>
+            </RefreshLayout>
         </div>
     )
 
-    scrollRef = (e) => {
-        console.log('scroll',e)
-    }
-
     getReceiveItems = () => (
         <div className='notify-bg-root'>
-            <InfiniteScroll
-                pageStart={0}
-                initialLoad={false}
-                loadMore={this.loadReceiveList}
-                hasMore={this.state.hasMoreReceive}
-                loader={<LoadingMore/>}>
+            <RefreshLayout
+                refreshing={this.state.isReceiveRefreshing}
+                onRefresh={this.loadReceiveList}
+                height={this.state.height}>
                 <Skeleton loading={this.state.isReceiveLoading} active paragraph={{rows: 3}}>
                     <List split={false} dataSource={this.state.receiveList}
                           renderItem={(notifyBoBean, index) => (
@@ -219,93 +225,211 @@ export default class NotifyBoardTeacher extends Component {
                                                type='receive'/>
                           )}/>
                 </Skeleton>
-            </InfiniteScroll>
+            </RefreshLayout>
         </div>
     )
 
     onDetailClick = (index, type) => {
+        const {releaseList, receiveList} = this.state
         this.selectIndex = index
         this.selectType = type
-        this.setState({
-            detailVisible: true
+
+        let notifyBoBean = new NotifyBoBean()
+        if (this.selectType === 'release') {
+            notifyBoBean = releaseList[this.selectIndex]
+        } else if (this.selectType === 'receive') {
+            notifyBoBean = receiveList[this.selectIndex]
+        }
+
+        Toast.loading('', 0)
+        fetchGet(API.TASK_DETAIL, {
+            notifyId: notifyBoBean.noId,
+            userId: '10000',
+        }).then(response => {
+            Toast.hide()
+            if (response && response.data) {
+                let item = response.data
+                if (notifyBoBean) {
+
+                    notifyBoBean.noId = getIntValue(item, 'notifyId')
+                    notifyBoBean.noTitle = getStrValue(item, 'notifyName')
+                    console.log(getArrayValue(item, 'notifyFiles'))
+                    notifyBoBean.enclosure = getArrayValue(item, 'notifyFiles').length > 0 ? JSON.parse(getArrayValue(item, 'notifyFiles')) : []
+                    if (item.notifyRecords) {
+                        notifyBoBean.unRead = getArrayValue(item.notifyRecords, 'unReads')
+                        notifyBoBean.readed = getArrayValue(item.notifyRecords, 'reads')
+
+                        notifyBoBean.allCount = getIntValue(notifyBoBean.unRead, 'length') + getIntValue(notifyBoBean.readed, 'length')
+                    }
+                    notifyBoBean.noContent = getStrValue(item, 'notifyDetails')
+                    notifyBoBean.noIssue = getStrValue(item, 'notifyCreatorName')
+                    notifyBoBean.noTime = getStrValue(item, 'creatDate')
+                    notifyBoBean.noStatu = '已读'
+                }
+
+                this.setState({
+                    detailVisible: true
+                })
+
+                if (this.selectType === 'release') {
+                    this.setState({
+                        releaseList
+                    })
+                    notifyBoBean = releaseList[this.selectIndex]
+                } else if (this.selectType === 'receive') {
+                    this.setState({
+                        receiveList
+                    })
+                }
+            }
+        }).catch(error => {
+            Toast.hide()
+            if (typeof error === 'string') {
+                Toast.fail(error)
+            }
         })
     }
 
     loadReleaseList = () => {
-        setTimeout(() => {
-            console.log('loadReleaseList')
-            const receivesDemo = ['李泞', '章晨望', '赖斯睿', '左熹', '李爽']
-            const {releaseList} = this.state
-            for (let i = 0; i < 20; i++) {
-                let notifyBoBean = new NotifyBoBean()
+        mReleaseIndex++
+        console.log(mReleaseIndex)
+        try {
+            this.setState({
+                isReleaseRefreshing: true
+            })
+        } catch (e) {
 
-                notifyBoBean.noTitle = '2019春季校运会'
-                if (i % 2 === 0) {
-                    notifyBoBean.noStatu = ''
-                    notifyBoBean.enclosure = [
-                        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543039474667&di=32c37088ba29d428392cee485ce29995&imgtype=0&src=http%3A%2F%2Fpic153.nipic.com%2Ffile%2F20171226%2F26515894_231421032000_2.jpg',
-                        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543039450432&di=c4e6d3b8039a4b2b2713a8fa278a54cc&imgtype=0&src=http%3A%2F%2Ffx120.120askimages.com%2F120ask_news%2F2017%2F0706%2F201707061499322886181789.jpg'
-                    ]
-                    notifyBoBean.receiveList = receivesDemo.concat(receivesDemo, receivesDemo, receivesDemo)
-                    notifyBoBean.unRead = 25
-                    notifyBoBean.readed = 20
-                    notifyBoBean.allCount = 45
-                } else {
-                    notifyBoBean.noStatu = ''
-                    notifyBoBean.enclosure = []
-                    notifyBoBean.receiveList = receivesDemo.concat(receivesDemo, receivesDemo)
-                    notifyBoBean.unRead = 30
-                    notifyBoBean.readed = 15
-                    notifyBoBean.allCount = 45
+        }
+        const {releaseList} = this.state
+        if (mReleaseIndex === 1) {
+            releaseList.length = 0
+        }
+
+        fetchPost(API.notifyMessage, {
+            userId: 10000,
+            notifyType: 4,
+            pageIndex: mReleaseIndex,
+            pageSize: mPageSize
+        }).then(response => {
+            if (response && response.data && response.data.creat.length > 0) {
+                response.data.creat.forEach((item, index) => {
+                    let notifyBoBean = new NotifyBoBean()
+
+                    notifyBoBean.noId = getIntValue(item, 'notifyId')
+                    notifyBoBean.noTitle = getStrValue(item, 'notifyName')
+                    notifyBoBean.enclosure = getArrayValue(item, 'notifyFiles')
+                    if (item.notifyRecords) {
+                        notifyBoBean.unRead = getArrayValue(item.notifyRecords, 'unReads')
+                        notifyBoBean.readed = getArrayValue(item.notifyRecords, 'reads')
+
+                        notifyBoBean.allCount = getIntValue(notifyBoBean.unRead, 'length') + getIntValue(notifyBoBean.readed, 'length')
+                    }
+                    notifyBoBean.noContent = getStrValue(item, 'notifyDetails')
+                    notifyBoBean.noIssue = getStrValue(item, 'notifyCreatorName')
+                    notifyBoBean.noTime = getStrValue(item, 'creatDate')
+
+                    if (getIntValue(item, 'isRead') == 1) {
+                        notifyBoBean.noStatu = '未读'
+                    } else {
+                        notifyBoBean.noStatu = '已读'
+                    }
+
+                    releaseList.push(notifyBoBean)
+                })
+            } else {
+                if (mReleaseIndex > 1) {
+                    mReleaseIndex--
                 }
-                notifyBoBean.noContent = ' 尊敬的家长和尊敬的各位来宾，你们好，我校将在10月25号举办校园运动会，请各位家长们积极配合校园运动会的工作的开展'
-                notifyBoBean.noIssue = '周老师'
-                notifyBoBean.noTime = '2019-03-20 18:00'
-
-                releaseList.push(notifyBoBean)
             }
             this.setState({
                 releaseList,
-                isReleaseLoading: false
+                isReleaseLoading: false,
+                isReleaseRefreshing: false,
             })
-        }, 1500)
+
+        }).catch(error => {
+            if (mReleaseIndex > 1) {
+                mReleaseIndex--
+            }
+            this.setState({
+                isReleaseLoading: false,
+                isReleaseRefreshing: false
+            })
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            }
+        })
     }
 
     loadReceiveList = () => {
-        setTimeout(() => {
-            console.log('loadReceiveList')
-            const receivesDemo = ['李泞', '章晨望', '赖斯睿', '左熹', '李爽']
-            const {receiveList} = this.state
-            for (let i = 0; i < 20; i++) {
-                let notifyBoBean = new NotifyBoBean()
+        mReceiveIndex++
+        console.log(mReceiveIndex)
+        try {
+            this.setState({
+                isReceiveRefreshing: true
+            })
+        } catch (e) {
 
-                notifyBoBean.noTitle = '国庆全体师生出游活动'
-                if (i % 2 === 0) {
-                    notifyBoBean.noStatu = '已读'
-                    notifyBoBean.enclosure = [
-                        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543039474667&di=32c37088ba29d428392cee485ce29995&imgtype=0&src=http%3A%2F%2Fpic153.nipic.com%2Ffile%2F20171226%2F26515894_231421032000_2.jpg',
-                        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543039450432&di=c4e6d3b8039a4b2b2713a8fa278a54cc&imgtype=0&src=http%3A%2F%2Ffx120.120askimages.com%2F120ask_news%2F2017%2F0706%2F201707061499322886181789.jpg'
-                    ]
-                    notifyBoBean.receiveList = receivesDemo.concat(receivesDemo, receivesDemo, receivesDemo)
-                    notifyBoBean.unRead = 25
-                    notifyBoBean.readed = 20
-                } else {
-                    notifyBoBean.noStatu = '未读'
-                    notifyBoBean.enclosure = []
-                    notifyBoBean.receiveList = receivesDemo.concat(receivesDemo, receivesDemo)
-                    notifyBoBean.unRead = 30
-                    notifyBoBean.readed = 15
+        }
+        const {receiveList} = this.state
+        if (mReceiveIndex === 1) {
+            receiveList.length = 0
+        }
+
+        fetchPost(API.notifyMessage, {
+            userId: 10000,
+            notifyType: 4,
+            pageIndex: mReceiveIndex,
+            pageSize: mPageSize
+        }).then(response => {
+            if (response && response.data && response.data.notify.length > 0) {
+                response.data.notify.forEach((item, index) => {
+                    let notifyBoBean = new NotifyBoBean()
+
+                    notifyBoBean.noId = getIntValue(item, 'notifyId')
+                    notifyBoBean.noTitle = getStrValue(item, 'notifyName')
+                    notifyBoBean.enclosure = getArrayValue(item, 'notifyFiles')
+                    if (item.notifyRecords) {
+                        notifyBoBean.unRead = getArrayValue(item.notifyRecords, 'unReads')
+                        notifyBoBean.readed = getArrayValue(item.notifyRecords, 'reads')
+
+                        notifyBoBean.allCount = getIntValue(notifyBoBean.unRead, 'length') + getIntValue(notifyBoBean.readed, 'length')
+                    }
+                    notifyBoBean.noContent = getStrValue(item, 'notifyDetails')
+                    notifyBoBean.noIssue = getStrValue(item, 'notifyCreatorName')
+                    notifyBoBean.noTime = getStrValue(item, 'creatDate')
+
+                    if (getIntValue(item, 'isRead') == 1) {
+                        notifyBoBean.noStatu = '未读'
+                    } else {
+                        notifyBoBean.noStatu = '已读'
+                    }
+
+                    receiveList.push(notifyBoBean)
+                })
+            } else {
+                if (mReceiveIndex > 1) {
+                    mReceiveIndex--
                 }
-                notifyBoBean.noContent = ' 尊敬的家长和尊敬的各位来宾，你们好，我校将在10月1号组织全体师生出游活动，请各位家长们积极配合'
-                notifyBoBean.noIssue = '周老师'
-                notifyBoBean.noTime = '2019-03-20 18:00'
-                receiveList.push(notifyBoBean)
             }
             this.setState({
                 receiveList,
-                isReceiveLoading: false
+                isReceiveLoading: false,
+                isReceiveRefreshing: false,
             })
-        }, 3000)
+
+        }).catch(error => {
+            if (mReceiveIndex > 1) {
+                mReceiveIndex--
+            }
+            this.setState({
+                isReceiveLoading: false,
+                isReceiveRefreshing: false
+            })
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            }
+        })
     }
 
     onReleaseClick = () => {

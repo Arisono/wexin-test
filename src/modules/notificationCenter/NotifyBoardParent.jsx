@@ -11,9 +11,8 @@ import {getArrayValue, getIntValue, getStrValue, isObjEmpty, isObjNull} from "..
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
 
-
 const mPageSize = 10
-var mPageIndex = 0
+let mPageIndex = 0
 
 export default class NotifyBoardParent extends Component {
 
@@ -22,10 +21,9 @@ export default class NotifyBoardParent extends Component {
 
         this.state = {
             notifyList: [],
-            hasMoreData: true,
             isLoading: true,
             detailVisible: false,
-            isRefreshing: true,
+            isRefreshing: false,
             height: document.documentElement.clientHeight
         }
     }
@@ -43,7 +41,7 @@ export default class NotifyBoardParent extends Component {
     }
 
     render() {
-        const {notifyList, hasMoreData, isLoading, isRefreshing} = this.state
+        const {notifyList, isLoading, isRefreshing} = this.state
         const detailModal = this.getDetailModal()
 
         return (
@@ -57,12 +55,6 @@ export default class NotifyBoardParent extends Component {
                         overflow: 'auto',
                     }}
                     onRefresh={this.loadRechargeList}>
-                    {/*<InfiniteScroll*/}
-                    {/*pageStart={0}*/}
-                    {/*// initialLoad={false}*/}
-                    {/*loadMore={this.loadRechargeList}*/}
-                    {/*hasMore={hasMoreData}*/}
-                    {/*loader={<LoadingMore/>}>*/}
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
                         <List split={false} dataSource={notifyList}
                               renderItem={(notifyBoBean, index) => (
@@ -71,7 +63,6 @@ export default class NotifyBoardParent extends Component {
                                                    index={index}/>
                               )}/>
                     </Skeleton>
-                    {/*</InfiniteScroll>*/}
                 </PullToRefresh>
                 {detailModal}
             </div>
@@ -162,7 +153,7 @@ export default class NotifyBoardParent extends Component {
         Toast.loading('', 0)
         fetchGet(API.TASK_DETAIL, {
             notifyId: notifyList[index].noId,
-            userId: '10001',
+            userId: '10000',
         }).then(response => {
             Toast.hide()
             if (response && response.data) {
@@ -213,7 +204,7 @@ export default class NotifyBoardParent extends Component {
         }
 
         fetchPost(API.notifyMessage, {
-            userId: 10001,
+            userId: 10000,
             notifyType: 4,
             pageIndex: mPageIndex,
             pageSize: mPageSize
@@ -246,9 +237,6 @@ export default class NotifyBoardParent extends Component {
                 if (mPageIndex > 1) {
                     mPageIndex--
                 }
-                this.setState({
-                    hasMoreData: false
-                })
             }
             this.setState({
                 notifyList,

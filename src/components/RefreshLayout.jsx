@@ -21,8 +21,8 @@ export default class RefreshLayout extends Component {
 
     static defaultProps = {
         direction: 'up',
-        damping: 100,
-        distanceToRefresh: 25
+        damping: 120,
+        distanceToRefresh: 30
     }
 
     constructor() {
@@ -60,7 +60,7 @@ export default class RefreshLayout extends Component {
                 ref={el => this.ptr = el}
                 style={{
                     height: height,
-                    overflow: 'scroll',
+                    overflow: 'auto',
                     ...style
                 }}
                 damping={damping}

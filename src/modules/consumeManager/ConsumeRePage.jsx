@@ -32,77 +32,71 @@ export default class ConsumeRePage extends Component {
 
         if (this.props.match.params.type) {
 
-            ttype =  this.props.match.params.type
+            ttype = this.props.match.params.type
 
         }
 
-        if(ttype == 1){
+        if (ttype == 1) {
             console.log(this.props.match.params.type)
             document.title = '消费记录'
 
-        }else{
+        } else {
             console.log(this.props.match.params.type)
             document.title = '充值记录'
 
         }
 
-
         Toast.loading('努力加载中...', 0)
 
     }
 
-    componentWillUnmount () {
-
+    componentWillUnmount() {
         Toast.hide();
-
     }
 
-    loadReleaseList= () => {
+    loadReleaseList = () => {
 
-            const {consumeList} = this.state;
-            mPageIndex = mPageIndex+1;
+        const {consumeList} = this.state;
+        mPageIndex = mPageIndex + 1;
 
-            fetchGet(API.rechargeRecord, {
-                stuId: 10000,
-                rankStatus:ttype,
-                pageIndex: mPageIndex,
-                pageSize: mPageSize
-            }).then(response => {
+        fetchGet(API.rechargeRecord, {
+            stuId: 10000,
+            rankStatus: ttype,
+            pageIndex: mPageIndex,
+            pageSize: mPageSize
+        }).then(response => {
 
-                console.log(response);
+            console.log(response);
 
-                response.data.map((item,index)=>{
+            response.data.map((item, index) => {
+                let consumeBean = new ConsumeBean()
+                consumeBean.chargeName = item.rankName
+                consumeBean.chargeTime = item.rankDate
+                consumeBean.chargeAmount = item.rankTatal
+                this.state.consumeList.push(consumeBean)
+            })
 
-                    let consumeBean = new ConsumeBean()
-                        consumeBean.chargeName = item.rankName
-                        consumeBean.chargeTime = item.rankDate
-                        consumeBean.chargeAmount = item.rankTatal
-                        this.state.consumeList.push(consumeBean)
-
-
-                })
-
-
-                this.setState({
-                    consumeList,
-                    isLoading: false,
-                    hasMoreData:false
-
-                })
-
-                Toast.hide();
-            }).catch(error => {
-                Toast.fail(error, 2)
+            this.setState({
+                consumeList,
+                isLoading: false,
+                hasMoreData: false
 
             })
 
-    }
+            Toast.hide();
+        }).catch(error => {
+            Toast.hide();
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            }
+        })
 
+    }
 
 
     render() {
 
-        const {consumeList, typeTitle,hasMoreData, isLoading} = this.state
+        const {consumeList, typeTitle, hasMoreData, isLoading} = this.state
 
         return (
             <div className='consume-select-root'>
@@ -114,13 +108,14 @@ export default class ConsumeRePage extends Component {
                     hasMore={hasMoreData}
                     loader={<LoadingMore/>}>
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
-                <List className='phones-list-layout' dataSource={consumeList} renderItem={consumeBean => (
-                    <List.Item>
-                        <ConsumeReItem consumeBean={consumeBean}/>
-                    </List.Item>
-                    )}/>
+                        <List className='phones-list-layout' dataSource={consumeList} renderItem={consumeBean => (
+                            <List.Item>
+                                <ConsumeReItem consumeBean={consumeBean}/>
+                            </List.Item>
+                        )}/>
                     </Skeleton>
                 </InfiniteScroll>
             </div>
         )
-    }}
+    }
+}

@@ -7,6 +7,7 @@ import React, {Component} from 'react'
 import {Icon, Input, Button, Upload, Modal} from 'antd'
 import 'css/announce.css'
 import TargetSelect from 'components/TargetSelect'
+import UploadEnclosure from 'components/UploadEnclosure'
 
 const {TextArea} = Input
 const teacherData = []
@@ -88,23 +89,8 @@ export default class AnnounceRelease extends Component {
     }
 
     render() {
-        const {previewVisible, previewImage, fileList} = this.state;
-        const {announceTitle, announceContent, targetCount, targetList} = this.state
-        const uploadButton = (
-            <div>
-                <Icon type="plus"/>
-                <div className="ant-upload-text">Upload</div>
-            </div>
-        );
-        const uploadProps = {
-            action: "//jsonplaceholder.typicode.com/posts/",
-            listType: "picture-card",
-            fileList: fileList,
-            multiple: false,
-            onPreview: this.handlePreview,
-            onChange: this.handleChange,
-            showUploadList: {showPreviewIcon: true, showRemoveIcon: true}
-        }
+        const {announceTitle, announceContent, targetCount, targetList, fileList} = this.state
+
         const targetProps = {
             targetData: targetData,
             targetValues: targetList,
@@ -124,15 +110,14 @@ export default class AnnounceRelease extends Component {
                           autosize={{minRows: 6, maxRows: 12}} value={announceContent}
                           onChange={this.contentChange}/>
                 <div className='gray-line'></div>
-                <div className='annex-title'>附件</div>
-                <div style={{padding: '12px 16px'}}>
-                    <Upload {...uploadProps}>
-                        {fileList.length >= 1 ? null : uploadButton}
-                    </Upload>
-                    <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                        <img alt="example" style={{width: '100%'}} src={previewImage}/>
-                    </Modal>
-                </div>
+                <UploadEnclosure
+                    action="//jsonplaceholder.typicode.com/posts/"
+                    fileList={fileList}
+                    count={4}
+                    multiple={true}
+                    beforeUpload={this.beforeUpload.bind(this)}
+                    handleChange={this.handleChange.bind(this)}
+                />
 
                 <Button className='commonButton' type='primary' style={{margin: '35px'}}>发布</Button>
 
@@ -160,13 +145,8 @@ export default class AnnounceRelease extends Component {
         })
     }
 
-    handleCancel = () => this.setState({previewVisible: false})
+    beforeUpload = (file, fileList) => {
 
-    handlePreview = (file) => {
-        this.setState({
-            previewImage: file.url || file.thumbUrl,
-            previewVisible: true,
-        });
     }
 
     handleChange = ({fileList}) => this.setState({fileList})

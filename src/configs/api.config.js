@@ -42,6 +42,10 @@ export const API = {
     PAYMENT_PAYFEE: _baseURL + '/payment/payFee',
     //收费列表家长端
     PAYMENT_PAYMENTLIST: _baseURL + '/payment/paymentList',
+    //收费列表教师端
+    PAYMENT_PAYMENTLIST_TEACHER: _baseURL + '/payment/paymentListByUserId',
+    //收费详情
+    PAYMENT_PAYMENT_DETAIL: _baseURL + '/payment/paymentDetails',
 
     //消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',

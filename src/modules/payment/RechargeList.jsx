@@ -11,6 +11,7 @@ import RechargeItem from 'components/RechargeItem'
 import RefreshLayout from '../../components/RefreshLayout'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
+import {getIntValue, getStrValue} from "../../utils/common";
 
 const mPageSize = 10
 let mPageIndex = 0
@@ -34,6 +35,10 @@ export default class RechargeList extends Component {
         this.loadRechargeList()
     }
 
+    componentWillUnmount() {
+        Toast.hide()
+    }
+
     render() {
         const {rechargeList, isLoading, isRefreshing} = this.state
 
@@ -49,13 +54,13 @@ export default class RechargeList extends Component {
                               )}/>
                     </Skeleton>
                 </RefreshLayout>
-
             </div>
         )
     }
 
     loadRechargeList = () => {
         mPageIndex++
+        console.log(mPageIndex)
         try {
             this.setState({
                 isRefreshing: true
@@ -76,15 +81,37 @@ export default class RechargeList extends Component {
         }).then(response => {
             Toast.hide()
 
-            let rechargeBean = new RechargeBean()
-            rechargeBean.type = '学费'
-            rechargeBean.name = '李泞'
-            rechargeBean.endTime = '2018-20-20  12:00'
-            rechargeBean.remarks = '三年级上学期学费'
-            rechargeBean.amount = '1000.00'
-            rechargeBean.status = '去交费'
-            rechargeList.push(rechargeBean)
+            if (response && response.data && response.data.length > 0) {
+                let dataArray = response.data
+                for (let i = 0; i < dataArray.length; i++) {
+                    let dataObject = dataArray[i]
+                    if (dataObject) {
+                        let rechargeBean = new RechargeBean()
+                        rechargeBean.payId = getIntValue(dataObject, 'payId')
+                        rechargeBean.payName = getStrValue(dataObject, 'payName')
+                        rechargeBean.userName = getStrValue(dataObject, 'userName')
+                        rechargeBean.endTime = getStrValue(dataObject, 'payEndDate')
+                        rechargeBean.remarks = getStrValue(dataObject, 'payRemarks')
+                        rechargeBean.amount = getStrValue(dataObject, 'payTotal')
+                        rechargeBean.statusCode = getStrValue(dataObject, 'payStatus')
+                        if (rechargeBean.statusCode === 3) {
+                            rechargeBean.status = '已结束'
+                        } else if (rechargeBean.statusCode === 4) {
+                            rechargeBean.status = '去交费'
+                        } else if (rechargeBean.statusCode === 5) {
+                            rechargeBean.status = '已支付'
+                        } else if (rechargeBean.statusCode === 6) {
+                            rechargeBean.status = '已退款'
+                        }
 
+                        rechargeList.push(rechargeBean)
+                    }
+                }
+            } else {
+                if (mPageIndex > 1) {
+                    mPageIndex--
+                }
+            }
 
             this.setState({
                 rechargeList,

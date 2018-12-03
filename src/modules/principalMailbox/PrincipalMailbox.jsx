@@ -8,6 +8,7 @@ import {Icon, Input, Button, Upload, Switch, message, Modal} from 'antd'
 import 'css/principal-mailbox.css'
 import {isObjEmpty} from "../../utils/common";
 import UploadEnclosure from 'components/UploadEnclosure'
+import {API} from "../../configs/api.config";
 
 const {TextArea} = Input
 
@@ -72,7 +73,7 @@ export default class PrincipalMailbox extends Component {
                 <span className='wordCount'>{suggest.length + '/500'}</span>
                 <div className='gray-line'></div>
                 <UploadEnclosure
-                    action="//jsonplaceholder.typicode.com/posts/"
+                    action={API.UPLOAD_FILE}
                     fileList={fileList}
                     count={4}
                     multiple={true}

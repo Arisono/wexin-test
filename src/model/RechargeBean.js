@@ -4,10 +4,12 @@
  */
 
 export default function RechargeBean() {
-    this.type = ''
-    this.name = ''
+    this.payId = -1
+    this.payNamer = ''
+    this.userName = ''
     this.endTime = ''
     this.remarks = ''
     this.amount = ''
     this.status = ''
+    this.statusCode = -1
 }

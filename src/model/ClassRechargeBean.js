@@ -1,10 +1,12 @@
 export default function ClassRechargeBean() {
+    this.payId = -1
     this.title = ''
     this.status = ''
+    this.statusCode = -1
     this.percapita = ''
     this.endTime = ''
     this.remarks = ''
     this.money = ''
-    this.totalPerson = 0
-    this.paid = 0
+    this.totalPerson = []
+    this.paid = []
 }

@@ -47,6 +47,8 @@ import  icon_home_menu_35 from '../../style/imgs/icon_home_menu35.png'
 
 import  icon_home_help from '../../style/imgs/icon_home_help.png'
 import  icon_home_message from '../../style/imgs/icon_home_message.png'
+import  icon_home_oa from '../../style/imgs/icon_home_menu_oa.png'
+
 
 import {Carousel} from 'antd';
 import { BrowserRouter as Router, Route, Link} from "react-router-dom";
@@ -534,6 +536,23 @@ function TeacherMenu() {
                 <div className="row" style={borderLine}></div>
                 {/*横向图文列表*/}
                 <div className="row">
+
+                    <div className="col-xs-3" style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }}>
+                        <Link className="flex_column flex_center" to="/approvel"  id="menu_span_normal">
+                            <div><img src={icon_home_oa} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/>
+                            </div>
+                            <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
+                                style={{fontSize: "12px"}}>
+                          我的审批
+                        </span></div>
+                        </Link>
+                    </div>
+
                     <div className="col-xs-3" style={{
                         display: "flex",
                         flexDirection: "column",
@@ -580,6 +599,11 @@ function TeacherMenu() {
                         </span></div>
                         </Link>
                     </div>
+
+
+                </div>
+
+                <div className="row">
                     <div className="col-xs-3" style={{
                         display: "flex",
                         flexDirection: "column",
@@ -595,10 +619,6 @@ function TeacherMenu() {
                         </span></div>
                         </Link>
                     </div>
-
-                </div>
-
-                <div className="row">
                     <div className="col-xs-3" style={{
                         display: "flex",
                         flexDirection: "column",
@@ -751,7 +771,7 @@ function ParentMenu() {
                         </span></div></Link>
                     </div>
                     <div className="col-xs-3" id="row_center_align">
-                        <Link className="flex_column flex_center" to="/phonesSelect" id="menu_span_normal">
+                        <Link className="flex_column flex_center" to="/phonesList" id="menu_span_normal">
                         <div><img src={icon_home_menu_28} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/></div>
                         <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
                             style={{fontSize: "12px"}}>

@@ -49,6 +49,7 @@ import ClassRechargeDetail from "../modules/payment/ClassRechargeDetail";
 import LeaveAddCPage from "../modules/leave/LeaveAddCPage";
 import VoteListTabPage from "../modules/vote/VoteListTabPage";
 import TestImagesViewer from "../modules/demo/TestImagesViewer";
+import ImageGrid from "../components/image/ImageGrid";
 
 
 export default class RouteConfig extends Component {
@@ -86,6 +87,7 @@ export default class RouteConfig extends Component {
                     <Route path='/classRechargeDetail' component={ClassRechargeDetail}/>
 
                     {/*刘杰*/}
+                    <Route path={"/ImageGrid"} component={ImageGrid}/>
                     <Route path={"/TestImagesViewer"} component={TestImagesViewer}/>
                     <Route path={'/picturesWall'} component={PicturesWallItem}/>
                     <Route path="/voteDetail/:voteState" component={VoteDetailPage}/>

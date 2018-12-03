@@ -114,17 +114,6 @@ export default class PrincipalMailbox extends Component {
 
     }
 
-    handleCancel = () => this.setState({previewVisible: false})
-
-    handlePreview = (file, index) => {
-        this.setState({
-            previewImage: file.url || file.thumbUrl,
-            previewVisible: true,
-            previewIndex: file.index || 0
-        });
-        console.log('预览' + index)
-    }
-
     handleChange = ({fileList}) => this.setState({fileList})
 
     principalRecord = () => {

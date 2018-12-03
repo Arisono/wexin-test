@@ -77,9 +77,12 @@
 /*通知公告*/
 .notify-bg-root {
     width: 100%;
+    /*min-height: 100vh;*/
+    flex: 1;
     display: flex;
     flex-direction: column;
     background-color: #F2F2F2;
+    overflow: scroll;
 
 }
 

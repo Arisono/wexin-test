@@ -5,13 +5,13 @@
 
 import React,{Component} from 'react';
 import  './SendVote.css';
-import { DatePicker,Select,Switch,Upload, Icon, Modal,TreeSelect} from 'antd';
+import { Select,Switch,Upload, Icon, Modal,TreeSelect,Button} from 'antd';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import moment from 'moment'
 import 'antd/dist/antd.css';
 import SelectItem from './SelectItem';
 import {isObjEmpty} from "../../../utils/common";
-import {Toast} from 'antd-mobile'
+import {Toast,Picker,List,DatePicker} from 'antd-mobile';
 
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
@@ -38,7 +38,14 @@ export default class SendVote extends Component{
             previewImage: '',
             fileList: [],
             votePerson:[],
-            voteMembers:18
+            voteMembers:18,
+            typeVote:[{
+                label: '单选',
+                value: '单选'
+            },{
+                label: '多选',
+                value: '多选'
+            }]
         }
     }
 
@@ -95,7 +102,7 @@ export default class SendVote extends Component{
             onChange: this.selectPersononChange,
             treeCheckable: true,
             showCheckedStrategy: SHOW_PARENT,
-            searchPlaceholder: 'Please select',
+            searchPlaceholder: '请选择投票对象',
             allowClear:true,
             style: {
                 width: '100%',
@@ -113,7 +120,7 @@ export default class SendVote extends Component{
 
             <div onChange={this.handelValueCom}>
 
-                <div style={{color:"#333333",fontSize:15,margin:10}}>投票对象 <span style={{color:"#666666"}}>(共{this.state.voteMembers}人)</span>  </div>
+                <div style={{color:"#333333",fontSize:15,margin:10}}>投票对象 <span style={{color:"#666666"}}>(共{this.state.votePerson.length}人)</span>  </div>
                 <div className="comhline_sty1"></div>
 
                 <TreeSelect {...tProps} />
@@ -127,37 +134,47 @@ export default class SendVote extends Component{
                 </div>
 
                 <div className="comhline_sty"></div>
-                <div  className="item_sty">
-                    <div style={{width:150,fontSize:15,color:"#333333"}}>投票类型:</div>
-                    <div className="text-right" style={{width:"100%",}}>
-                        <Select defaultValue="请选择" style={{ width:100 }} onChange={this.handleSelectChange}>
-                            <Option value="1">单选</Option>
-                            <Option value="2">多选</Option>
-                        </Select>
-                        <img src={nextArrowimg} className="nextarr_sty"/>
-                    </div>
+                <div  className="common-column-layout">
+                        <Picker
+                            data={this.state.typeVote} title='投票类型' extra='请选择'
+                            value={this.state.voteType}
+                            onChange={this.handleSelectChange}
+                            onOk={this.handleSelectChange} cols={1}>
+                            <List.Item arrow="horizontal" >投票类型</List.Item>
+                        </Picker>
+                        {/*<Select defaultValue="请选择" style={{ width:100 }} onChange={this.handleSelectChange}>*/}
+                            {/*<Option value="1">单选</Option>*/}
+                            {/*<Option value="2">多选</Option>*/}
+                        {/*</Select>*/}
+                        {/*<img src={nextArrowimg} className="nextarr_sty"/>*/}
+                    <div className="comhline_sty1"></div>
+                    <DatePicker
+                        value={this.state.endValue}
+                        onChange={date => this.setState({endValue:date})}>
+                        <List.Item arrow="horizontal">结束时间</List.Item>
+                    </DatePicker>
                 </div>
-                <div className="comhline_sty1"></div>
 
-                <div  className="item_sty">
-                    <div style={{width:150,fontSize:15,color:"#333333"}}>结束时间:</div>
-                    <div className="text-right" style={{width:"100%",}}>
-                        <DatePicker
-                            showTime
-                            format="YYYY-MM-DD HH:mm:ss"
-                            value={this.state.endValue}
-                            placeholder="请选择结束时间"
-                            onChange={this.SelechEndTime}
-                        />
-                        <img src={nextArrowimg} className="nextarr_sty"/></div>
-                </div>
+
+                {/*<div  className="item_sty">*/}
+                    {/*<div style={{width:150,fontSize:15,color:"#333333"}}>结束时间:</div>*/}
+                    {/*<div className="text-right" style={{width:"100%",}}>*/}
+                        {/*<DatePicker*/}
+                            {/*showTime*/}
+                            {/*format="YYYY-MM-DD HH:mm:ss"*/}
+                            {/*value={this.state.endValue}*/}
+                            {/*placeholder="请选择结束时间"*/}
+                            {/*onChange={this.SelechEndTime}*/}
+                        {/*/>*/}
+                        {/*<img src={nextArrowimg} className="nextarr_sty"/></div>*/}
+                {/*</div>*/}
                 <div className="comhline_sty1"></div>
 
                 <div  className="item_sty">
                     <div style={{width:150,fontSize:15,color:"#333333"}}>匿名投票:</div>
                     <div className="text-right" style={{width:"100%",}}>
                         <Switch checkedChildren="开" unCheckedChildren="关" defaultunchecked = "false"  onChange={this.switchStatues}/>
-                        <img src={nextArrowimg} className="nextarr_sty"/></div>
+                    </div>
                 </div>
                 <div className="comhline_sty1"></div>
 
@@ -175,14 +192,14 @@ export default class SendVote extends Component{
                         nPreview={this.handlePreview}
                         onChange={this.handleChange}
                         multiple={true}>
-                        {this.state.fileList.length >= 9 ? null : uploadButton}
+                        {this.state.fileList.length >= 4 ? null : uploadButton}
                     </Upload>
                     <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
                         <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
                     </Modal>
                 </div>
 
-                <center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSendVote}>提交</button></center>
+                <center><Button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSendVote}>提交</Button></center>
             </div>
         )
     }
@@ -209,6 +226,14 @@ export default class SendVote extends Component{
             Toast.show('请选择正确结束时间...',1)
             return
         }
+
+        var nowT = new Date().getTime()
+        var endT = new Date(this.state.endValue).getTime()
+        if(nowT > endT){
+            Toast.show('当前时间不可大于结束时间',1)
+            return
+        }
+
         var options = []
         for(let i=0;i<this.state.voteOptionss.length;i++){
             const item = {
@@ -260,6 +285,9 @@ export default class SendVote extends Component{
         this.setState({votePerson:value });
     }
     removeSItem = (index)=>{
+        if(this.state.voteOptionss.length == 2){
+            return
+        }
         let voteOptionss = this.state.voteOptionss
         voteOptionss.splice(index,1)
         this.setState({
@@ -267,8 +295,8 @@ export default class SendVote extends Component{
         })
     }
     handelSItem = (itemdata,index)=>{
-        // console.log('index',index)
-        // console.log('itemdata',itemdata)
+        console.log('index',index)
+        console.log('itemdata',itemdata)
         let voteOptionss = this.state.voteOptionss
         voteOptionss[index] = itemdata
         this.setState({
@@ -285,12 +313,7 @@ export default class SendVote extends Component{
     addAnnex = (event)=>{
         console.log('addAnnex')
     }
-    SelechEndTime = (value) =>{
-        // console.log('value',moment(value.toLocaleString()).format('YYYY-MM-DD HH:mm:ss'))
-        this.setState({
-            endValue:value
-        })
-    }
+
     handleSelectChange =(value) =>{
         this.setState({
             voteType:value

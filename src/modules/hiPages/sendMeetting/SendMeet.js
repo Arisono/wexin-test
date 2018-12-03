@@ -6,12 +6,13 @@ import React,{Component} from 'react';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import './SendMeet.css';
 import 'antd/dist/antd.css';
-import { DatePicker,Select, TreeSelect,Icon } from 'antd';
+import { Select, TreeSelect,Icon,Button} from 'antd';
 import moment from 'moment'
 import add_newimg from '../../../style/imgs/add_new.png';
-import {Toast} from 'antd-mobile';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
+import {Toast,Picker,List,DatePicker} from 'antd-mobile';
+
 const Option = Select.Option;
 
 function Test(){
@@ -33,10 +34,26 @@ export default class SendMeet extends Component{
             endOpen: false,
             titleValue:null,
             contentValue:null,
-            earlyTime:0,
+            earlyTime:null,
             headerArray: [1,2,3,4,1,2,3,4,1,2,3,4,1,2,3],
             meetPerson:[],
-            meetAddress:null
+            meetAddress:null,
+            noticeType:[{
+                label:'创建即提醒',
+                value:'0'
+            },{
+                label:'会前5分钟',
+                value:5
+            },{
+                label:'会前15分钟',
+                value:15
+            },{
+                label:'会前25分钟',
+                value:25
+            },{
+                label:'会前35分钟',
+                value:35
+            }]
         };
 
     }
@@ -88,63 +105,40 @@ export default class SendMeet extends Component{
             onChange: this.selectPersononChange,
             treeCheckable: true,
             showCheckedStrategy: SHOW_PARENT,
-            searchPlaceholder: 'Please select',
+            searchPlaceholder: '请选择与会人',
             allowClear:true,
             style: {
                 width: '100%',
             },
         };
         return(
-            <div >
                 <div onChange={this.handelValueCom}>
                     {/*<p>{new Date().getTime()}</p>*/}
                     <textarea autoFocus="autoFocus" ref='meetTitle' className="form-control textarea_sty" rows="2" placeholder="请填写会议主题…" ></textarea>
                     <textarea ref='meetAddress' className="form-control textarea_sty" rows="3" placeholder="请填写会议地址…"></textarea>
                     <div className="comhline_sty"></div>
-                    <div  className="item_sty">
-                        <div style={{width:150}}>会议开始时间:</div>
-                        <div className="text-right" style={{width:"100%",}}>
-                            <DatePicker
-                                disabledDate={this.disabledStartDate}
-                                showTime
-                                format="YYYY-MM-DD HH:mm:ss"
-                                value={this.state.startValue}
-                                placeholder="请选择开始时间"
-                                onChange={this.onStartChange}
-                                onOpenChange={this.handleStartOpenChange}
-                            /><img src={nextArrowimg} className="nextarr_sty"/></div>
+                    <div  className="common-column-layout" style={{fontSize:15}}>
+                        <DatePicker
+                            value={this.state.startValue}
+                            onChange={date => this.setState({startValue:date})}>
+                            <List.Item arrow="horizontal">会议开始时间</List.Item>
+                        </DatePicker>
+                        <div className="comhline_sty1"></div>
+                        <DatePicker
+                            value={this.state.endValue}
+                            onChange={date => this.setState({endValue:date})}>
+                            <List.Item arrow="horizontal">会议结束时间</List.Item>
+                        </DatePicker>
+                        <div className="comhline_sty1"></div>
+                        <Picker
+                            data={this.state.noticeType} title='提醒时间' extra='请选择'
+                            value={this.state.earlyTime}
+                            onChange={this.handleSelectChange}
+                            onOk={this.handleSelectChange} cols={1}>
+                            <List.Item arrow="horizontal" >提醒时间</List.Item>
+                        </Picker>
                     </div>
-                    <div className="comhline_sty1"></div>
 
-                    <div  className="item_sty">
-                        <div style={{width:150}}>会议结束时间:</div>
-                        <div className="text-right" style={{width:"100%",}}>
-                            <DatePicker
-                                disabledDate={this.disabledEndDate}
-                                showTime
-                                format="YYYY-MM-DD HH:mm:ss"
-                                value={this.state.endValue}
-                                placeholder="请选择结束时间"
-                                onChange={this.onEndChange}
-                                open={this.state.endOpen}
-                                onOpenChange={this.handleEndOpenChange}
-                            />
-                            <img src={nextArrowimg} className="nextarr_sty"/></div>
-                    </div>
-                    <div className="comhline_sty1"></div>
-
-                    <div  className="item_sty">
-                        <div style={{width:150}}>提醒:</div>
-                        <div className="text-right" style={{width:"100%",}}>
-                            <Select defaultValue="创建即提醒" style={{ width:120 }} onChange={this.handleSelectChange}>
-                                <Option value="5">会前5分钟</Option>
-                                <Option value="15">会前15分钟</Option>
-                                <Option value="25">会前25分钟</Option>
-                                <Option value="35">会前35分钟</Option>
-                            </Select>
-                            <img src={nextArrowimg} className="nextarr_sty"/>
-                        </div>
-                    </div>
                     <div className="comhline_sty1"></div>
 
                     <span className="item_sty">与会人</span>
@@ -152,9 +146,8 @@ export default class SendMeet extends Component{
                         {/*<img onClick={this.addPerson} className="meet_penson_img img-circle" style={{height: 40,width: 40,marginTop:10,marginLeft:5}} src={add_newimg}/>*/}
                     {/*<div> <textarea className="form-control textarea_sty" >ww</textarea></div>*/}
                     <TreeSelect {...tProps} />
-                    <center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSaveClick}>创建</button></center>
+                    <center><Button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSaveClick}>创建</Button></center>
                 </div >
-            </div>
         )
     }
     doSaveClick = (event)=>{
@@ -185,9 +178,19 @@ export default class SendMeet extends Component{
             Toast.show('请选择与会人...',1)
             return
         }
-
+        var nowT = new Date().getTime()
         var startT = new Date(this.state.startValue).getTime()
+        var endT = new Date(this.state.endValue).getTime()
+
         console.log('startT',startT)
+        if(nowT > startT){
+            Toast.show('开始时间不可小于当前时间',1)
+            return
+        }
+        if(startT > endT){
+            Toast.show('结束时间不可小于开始时间',1)
+            return
+        }
         var noticeT = startT - this.state.earlyTime*1000*60
         // console.log('this.state.earlyTime*1000*60',this.state.earlyTime*1000*60)
         console.log('noticeT',noticeT)
@@ -227,48 +230,10 @@ export default class SendMeet extends Component{
         return startValue.valueOf() > endValue.valueOf();
     }
 
-    disabledEndDate = (endValue) => {
-        const startValue = this.state.startValue;
-        if (!endValue || !startValue) {
-            return false;
-        }
-        return endValue.valueOf() <= startValue.valueOf();
-    }
-
-    onChange = (field, value) => {
-        this.setState({
-            [field]: value,
-        });
-    }
-
-    onStartChange = (value) => {
-        this.onChange('startValue', value);
-    }
-
-    onEndChange = (value) => {
-        this.onChange('endValue', value);
-    }
-
-    handleStartOpenChange = (open) => {
-        if (!open) {
-            this.setState({ endOpen: true });
-        }
-    }
-
-    handleEndOpenChange = (open) => {
-        this.setState({ endOpen: open });
-    }
     handleSelectChange =(value) =>{
         console.log(`selected ${value}`);
         this.setState({
             earlyTime:value
-        })
-    }
-
-    addPerson = (event)=>{
-        let headerArray =  [...this.state.headerArray,1];
-        this.setState({
-            headerArray
         })
     }
 

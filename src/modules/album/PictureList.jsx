@@ -47,8 +47,10 @@ export default class PictureList extends Component {
     render() {
         const {pictureList, previewVisible, description} = this.state
         let pictureItems = []
+        let pictureUrls = []
         for (let i = 0; i < pictureList.length; i++) {
             const pictureUrl = pictureList[i].url
+            pictureUrls.push(pictureUrl)
             if (!isObjEmpty(pictureUrl)) {
                 pictureItems.push(
                     i > 20 ?
@@ -83,9 +85,9 @@ export default class PictureList extends Component {
                      onClick={this.editPicturesClick}/>
 
                 {previewVisible ?
-                    <ImagesViewer onClose={this.handleCancel} urls={pictureList}
+                    <ImagesViewer onClose={this.handleCancel} urls={pictureUrls}
                                   index={this.state.previewIndex}
-                                  needPoint={pictureList.length <= 9}/> : ""}
+                                  needPoint={pictureUrls.length <= 9}/> : ""}
 
                 {/*<div className='album-detail-bottom'>
                     <Button type='primary' className='album-detail-button'

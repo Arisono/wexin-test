@@ -1,18 +1,18 @@
 import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
 import NotifyBoBean from 'model/NotifyBoBean'
 import {List, Icon, Skeleton} from 'antd'
 import InfiniteScroll from 'react-infinite-scroller'
 import LoadingMore from 'components/LoadingMore'
 import NotifyBoardItem from "../../components/NotifyBoardItem";
 import 'css/consume-re.css'
-import {Toast, Modal} from "antd-mobile";
-import {isObjEmpty, isObjNull} from "../../utils/common";
-import {fetchGet,fetchPost} from "../../utils/fetchRequest";
-import {API} from "../../configs/api.config";
-
+import {Toast, Modal, PullToRefresh} from "antd-mobile";
+import {getArrayValue, getIntValue, getStrValue, isObjEmpty, isObjNull} from "../../utils/common";
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
+import {_baseURL, API} from "../../configs/api.config";
 
 const mPageSize = 10
-var mPageIndex = 1
+let mPageIndex = 0
 
 export default class NotifyBoardParent extends Component {
 
@@ -21,30 +21,40 @@ export default class NotifyBoardParent extends Component {
 
         this.state = {
             notifyList: [],
-            hasMoreData: true,
             isLoading: true,
-            detailVisible: false
+            detailVisible: false,
+            isRefreshing: false,
+            height: document.documentElement.clientHeight
         }
     }
 
     componentDidMount() {
-
+        const hei = this.state.height - ReactDOM.findDOMNode(this.ptr).offsetTop;
+        setTimeout(() =>
+                this.setState({
+                    height: hei,
+                })
+            , 0);
         document.title = '通知公告'
-        // Toast.loading('努力加载中...', 0)
-
+        Toast.loading('努力加载中...', 0)
+        this.loadRechargeList()
     }
 
     render() {
-        const {notifyList, hasMoreData, isLoading} = this.state
+        const {notifyList, isLoading, isRefreshing} = this.state
         const detailModal = this.getDetailModal()
 
         return (
             <div className='notify-bg-root'>
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={this.loadRechargeList}
-                    hasMore={hasMoreData}
-                    loader={<LoadingMore/>}>
+                <PullToRefresh
+                    direction='up'
+                    refreshing={isRefreshing}
+                    ref={el => this.ptr = el}
+                    style={{
+                        height: this.state.height,
+                        overflow: 'auto',
+                    }}
+                    onRefresh={this.loadRechargeList}>
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
                         <List split={false} dataSource={notifyList}
                               renderItem={(notifyBoBean, index) => (
@@ -53,12 +63,11 @@ export default class NotifyBoardParent extends Component {
                                                    index={index}/>
                               )}/>
                     </Skeleton>
-                </InfiniteScroll>
+                </PullToRefresh>
                 {detailModal}
             </div>
         )
     }
-
 
     getDetailModal = () => {
         const {notifyList} = this.state
@@ -72,7 +81,7 @@ export default class NotifyBoardParent extends Component {
         if (!isObjEmpty(notifyBoBean.enclosure) && notifyBoBean.enclosure != '[]') {
             enclosureItem =
                 <div className='principal-enclosure-layout'>
-                    <img src={notifyBoBean.enclosure[0]} className='principal-enclosure-img'/>
+                    <img src={_baseURL + notifyBoBean.enclosure[0]} className='principal-enclosure-img'/>
                     <span className='principal-enclosure-count'>({notifyBoBean.enclosure.length}张)</span>
                 </div>
         }
@@ -99,7 +108,7 @@ export default class NotifyBoardParent extends Component {
                     <div className='notify-detail-modal-content-layout'>
                         <div className='notify-detail-modal-content-header'>
                             <div className='notify-detail-modal-header-tilte'>{notifyBoBean.noTitle}</div>
-                           {/* <span
+                            {/* <span
                                 className={notifyBoBean.noStatu === '已读' ?
                                     'notify-item-statuAl' : 'notify-item-statuNo'}>{notifyBoBean.noStatu}</span>*/}
                         </div>
@@ -138,101 +147,117 @@ export default class NotifyBoardParent extends Component {
 
 
     onDetailClick = (index) => {
+        const {notifyList} = this.state
         this.selectIndex = index
-        this.setState({
-            detailVisible: true
+
+        Toast.loading('', 0)
+        fetchGet(API.TASK_DETAIL, {
+            notifyId: notifyList[index].noId,
+            userId: '10000',
+        }).then(response => {
+            Toast.hide()
+            if (response && response.data) {
+                let item = response.data
+                if (notifyList && notifyList[index]) {
+                    let notifyBoBean = notifyList[index]
+
+                    notifyBoBean.noId = getIntValue(item, 'notifyId')
+                    notifyBoBean.noTitle = getStrValue(item, 'notifyName')
+                    notifyBoBean.enclosure = getArrayValue(item, 'notifyFiles')
+                    if (item.notifyRecords) {
+                        notifyBoBean.unRead = getArrayValue(item.notifyRecords, 'unReads')
+                        notifyBoBean.readed = getArrayValue(item.notifyRecords, 'reads')
+                    }
+                    notifyBoBean.noContent = getStrValue(item, 'notifyDetails')
+                    notifyBoBean.noIssue = getStrValue(item, 'notifyCreatorName')
+                    notifyBoBean.noTime = getStrValue(item, 'creatDate')
+                    notifyBoBean.noStatu = '已读'
+                }
+
+                this.setState({
+                    notifyList,
+                    detailVisible: true
+                })
+            }
+        }).catch(error => {
+            Toast.hide()
+            if (typeof error === 'string') {
+                Toast.fail(error)
+            }
         })
     }
 
     loadRechargeList = () => {
-        // setTimeout(() => {
+        mPageIndex++
+        console.log(mPageIndex)
+        try {
+            this.setState({
+                isRefreshing: true
+            })
+        } catch (e) {
 
-            const {notifyList} = this.state
+        }
 
+        const {notifyList} = this.state
+        if (mPageIndex === 1) {
+            notifyList.length = 0
+        }
 
-
-            fetchPost(API.notifyMessage, {
-                userId: 10001,
-                notifyType:4,
-                pageIndex: mPageIndex,
-                pageSize: mPageSize
-            }).then(response => {
-                Toast.hide()
-                console.log(response)
-
-                response.data.notify.map((item,index)=>{
-
+        fetchPost(API.notifyMessage, {
+            userId: 10000,
+            notifyType: 4,
+            pageIndex: mPageIndex,
+            pageSize: mPageSize
+        }).then(response => {
+            Toast.hide()
+            if (response && response.data && response.data.notify.length > 0) {
+                response.data.notify.forEach((item, index) => {
                     let notifyBoBean = new NotifyBoBean()
 
-                    notifyBoBean.noTitle = item.notifyName
-                    notifyBoBean.enclosure = []
-                    notifyBoBean.unRead = 25
-                    notifyBoBean.readed = 20
-                    notifyBoBean.noContent=item.notifyDetails
-                    notifyBoBean.noIssue = item.notifyCreator
-                    notifyBoBean.noTime = item.creatDate
+                    notifyBoBean.noId = getIntValue(item, 'notifyId')
+                    notifyBoBean.noTitle = getStrValue(item, 'notifyName')
+                    notifyBoBean.enclosure = getArrayValue(item, 'notifyFiles')
+                    if (item.notifyRecords) {
+                        notifyBoBean.unRead = getArrayValue(item.notifyRecords, 'unReads')
+                        notifyBoBean.readed = getArrayValue(item.notifyRecords, 'reads')
+                    }
+                    notifyBoBean.noContent = getStrValue(item, 'notifyDetails')
+                    notifyBoBean.noIssue = getStrValue(item, 'notifyCreatorName')
+                    notifyBoBean.noTime = getStrValue(item, 'creatDate')
 
-                    if(item.isRead == 1){
-
-                        notifyBoBean.noStatu = '已读'
-
-                    }else{
-
+                    if (getIntValue(item, 'isRead') == 1) {
                         notifyBoBean.noStatu = '未读'
-
+                    } else {
+                        notifyBoBean.noStatu = '已读'
                     }
 
                     notifyList.push(notifyBoBean)
-
                 })
-
-
-                this.setState({
-                    notifyList,
-                    isLoading: false,
-                    hasMoreData:false
-
-                })
-
-                Toast.hide();
-            }).catch(error => {
-                // Toast.fail(error, 2)
-
+            } else {
+                if (mPageIndex > 1) {
+                    mPageIndex--
+                }
+            }
+            this.setState({
+                notifyList,
+                isLoading: false,
+                isRefreshing: false,
             })
 
-        //     const receivesDemo = ['李泞', '章晨望', '赖斯睿', '左熹', '李爽']
-        //     for (let i = 0; i < 20; i++) {
-        //         let notifyBoBean = new NotifyBoBean()
-        //
-        //         notifyBoBean.noTitle = '2019春季校运会'
-        //         if (i % 2 === 0) {
-        //             notifyBoBean.noStatu = '已读'
-        //             notifyBoBean.enclosure = [
-        //                 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543039474667&di=32c37088ba29d428392cee485ce29995&imgtype=0&src=http%3A%2F%2Fpic153.nipic.com%2Ffile%2F20171226%2F26515894_231421032000_2.jpg',
-        //                 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543039450432&di=c4e6d3b8039a4b2b2713a8fa278a54cc&imgtype=0&src=http%3A%2F%2Ffx120.120askimages.com%2F120ask_news%2F2017%2F0706%2F201707061499322886181789.jpg'
-        //             ]
-        //             notifyBoBean.receiveList = receivesDemo.concat(receivesDemo, receivesDemo, receivesDemo)
-        //             notifyBoBean.unRead = 25
-        //             notifyBoBean.readed = 20
-        //         } else {
-        //             notifyBoBean.noStatu = '未读'
-        //             notifyBoBean.enclosure = []
-        //             notifyBoBean.receiveList = receivesDemo.concat(receivesDemo, receivesDemo)
-        //             notifyBoBean.unRead = 30
-        //             notifyBoBean.readed = 15
-        //         }
-        //         notifyBoBean.noContent = ' 尊敬的家长和尊敬的各位来宾，你们好，我校将在10月25号举办校园运动会，请各位家长们积极配合校园运动会的工作的开展'
-        //         notifyBoBean.noIssue = '周老师'
-        //         notifyBoBean.noTime = '2019-03-20 18:00'
-        //
-        //         notifyList.push(notifyBoBean)
-        //     }
-        //
-        //     this.setState({
-        //         notifyList,
-        //         isLoading: false
-        //     })
-        // }, 1500)
+        }).catch(error => {
+            Toast.hide();
+
+            if (mPageIndex > 1) {
+                mPageIndex--
+            }
+            this.setState({
+                isLoading: false,
+                isRefreshing: false
+            })
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            }
+        })
     }
 
 }

@@ -114,6 +114,8 @@ class AssignmentDetailPage extends React.Component {
         }).catch((error) => {
             console.log("error:" + JSON.stringify(error));
         })
+
+        this.getMessage();
     }
 
     onClickImage() {
@@ -135,11 +137,45 @@ class AssignmentDetailPage extends React.Component {
                       console.log("response:"+JSON.stringify(response));
                       if(response.success){
                          Toast.info("留言成功！");
+                          this.getMessage();
                       }
                   }).catch((error)=>{
                       console.log("error:"+JSON.stringify(error));
                   })
 
+    }
+
+    getMessage() {
+        fetchGet(API.messageList, {
+            notifyId: this.state.id
+        }).then((response) => {
+            // "messId":3,
+            //  "messName":"这是留言",
+            //  "messDate":"2018-12-03 15:50:00",
+            //  "messContent":"这个是作业的留言",
+            //  "userId":10001,
+            //  "userName":"饶猛",
+            //  "userPhoto":null,
+            //  "lvId":null,
+            //  "notifyId":101
+            console.log("response:" + JSON.stringify(response));
+            this.state.data.length=0;
+            for (let i = 0; i < response.data.length; i++) {
+
+                let model = {
+                    name: response.data[i].userName,
+                    content: response.data[i].messContent
+                }
+                this.state.data.push(model);
+            }
+
+            this.setState({
+                data: this.state.data
+            })
+
+        }).catch((error) => {
+            console.log("error:" + JSON.stringify(error));
+        })
     }
 
 
@@ -191,7 +227,7 @@ class AssignmentDetailPage extends React.Component {
             </div>
             <div className="row" id="page_block_min"></div>
             <div className="row">
-                <div className="col-xs-12">
+                <div className="col-xs-12 margin_bottom_50">
                     <div className="margin_top_bottom_15">留言(20/40)</div>
                     <div id="page_horizontal_line"></div>
                     <div>

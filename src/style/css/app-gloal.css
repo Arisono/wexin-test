@@ -187,6 +187,11 @@
 .flex{
     display: flex;
 }
+
+.flex_row_stretch{
+    align-items:stretch
+}
+
 .flex_row{
     display: flex;
     flex-direction: row;
@@ -353,6 +358,14 @@
 
 .margin_bottom_20{
     margin: 0px 0px 20px 0px;
+}
+
+.margin_bottom_30{
+    margin: 0px 0px 30px 0px;
+}
+
+.margin_bottom_50{
+    margin: 0px 0px 50px 0px;
 }
 
 .margin_bottom_5{

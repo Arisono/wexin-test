@@ -21,7 +21,6 @@ export default class ClassRechargeDetail extends Component {
 
         this.state = {
             rechargeBean: new ClassRechargeBean(),
-            phonesList: [],
         }
     }
 
@@ -47,7 +46,22 @@ export default class ClassRechargeDetail extends Component {
         const percapita = rechargeBean.percapita
         const totalPerson = rechargeBean.totalPerson.length
         const payedPerson = rechargeBean.paid.length
+        const unpayPerson = rechargeBean.unPay
         const amount = percapita * totalPerson
+
+        const phonesList = []
+        if (unpayPerson && unpayPerson.length > 0) {
+            unpayPerson.forEach((item, index) => {
+                const phoneBean = new PhonesBean()
+
+                phoneBean.claName = ''
+                phoneBean.claId = ''
+                phoneBean.name = getStrValue(item, 'userName')
+                phoneBean.phone = getStrValue(item, 'phone')
+
+                phonesList.push(phoneBean)
+            })
+        }
 
         return (
             <div className='class-page-layout'>
@@ -85,7 +99,7 @@ export default class ClassRechargeDetail extends Component {
                 </div>
 
                 <List className='no-list-layout'
-                      dataSource={this.state.phonesList}
+                      dataSource={phonesList}
                       renderItem={phonesBean => (
                           <List.Item>
                               <PhonesItem phonesBean={phonesBean}/>
@@ -127,6 +141,7 @@ export default class ClassRechargeDetail extends Component {
                     let userUnPay = dataObject.userPayments.userUnPay || []
                     rechargeBean.totalPerson = userPay.concat(userUnPay)
                     rechargeBean.paid = userPay
+                    rechargeBean.unPay = userUnPay
                 }
 
                 this.setState({rechargeBean})

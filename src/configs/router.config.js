@@ -67,7 +67,7 @@ export default class RouteConfig extends Component {
                     <Route path='/uploadImage/:albumId' component={UploadImage}/>
                     <Route path='/uploadVideo/:classId/:name?' component={UploadVideo}/>
                     <Route path='/classAlbum/:type?' component={ClassAlbum}/>
-                    <Route path='/pictureList/:albumId/:title?' component={PictureList}/>
+                    <Route path='/pictureList/:type/:albumId/:title?' component={PictureList}/>
                     <Route path='/videoPlayer/:title?' component={VideoPlayer}/>
                     <Route path='/principalMailbox' component={PrincipalMailbox}/>
                     <Route path='/meetingSignIn' component={MeetingSignIn}/>

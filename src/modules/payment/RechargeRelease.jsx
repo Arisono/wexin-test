@@ -4,12 +4,12 @@
  */
 
 import React, {Component} from 'react'
-import {Icon, Input, Button, TreeSelect} from 'antd'
-import {Picker, InputItem, DatePicker, List} from 'antd-mobile'
+import {Input, Button} from 'antd'
+import {Picker, InputItem, DatePicker, List, Toast} from 'antd-mobile'
 import 'css/payment.css'
-import {getCheckedNodes} from "../../utils/common";
 import {API} from 'api'
 import TargetSelect from 'components/TargetSelect'
+import {fetchPost} from "../../utils/fetchRequest";
 
 const {TextArea} = Input
 
@@ -73,7 +73,6 @@ export default class RechargeRelease extends Component {
             classText: '',
             remarks: '',
             endTime: now,
-            date: now,
             targetList: ['1-1'],
             targetCount: 1
         }
@@ -102,6 +101,10 @@ export default class RechargeRelease extends Component {
         })
 
         this.setState({typeList: typeList})
+    }
+
+    componentWillUnmount() {
+        Toast.hide()
     }
 
     render() {
@@ -134,24 +137,49 @@ export default class RechargeRelease extends Component {
                         className='recharge-release-amount-input'
                         type='money' clear
                         moneyKeyboardAlign='left'
-                        placeholder='请输入金额'/>
+                        placeholder='请输入金额'
+                        onChange={this.amountChange}/>
                 </div>
                 <TextArea className='remarks-input' placeholder='请输入备注'
                           autosize={{minRows: 4, maxRows: 8}} value={remarks}
                           onChange={this.remarksChange}/>
                 <div className='gray-line'></div>
                 <DatePicker
-                    value={this.state.date}
-                    onChange={date => this.setState({date})}>
+                    value={this.state.endTime}
+                    onChange={this.onDateChange}>
                     <List.Item arrow="horizontal">截止时间</List.Item>
                 </DatePicker>
                 <div className='gray-line'></div>
 
                 <Button type='primary'
                         style={{margin: '35px'}}
-                        className='commonButton'>发起收款</Button>
+                        className='commonButton'
+                        onClick={this.onRechargeRelease}>发起收款</Button>
             </div>
         )
+    }
+
+    onRechargeRelease = () => {
+        Toast.loading('正在发布...', 0)
+
+        const {} = this.state
+
+        const userList = ['10000', '10001', '10002', '10003']
+        console.log(JSON.stringify(userList))
+        fetchPost(API.PAYMENT_PAYFEE, {
+            payName: '',
+            payTotal: '',
+            payStartDate: '',
+            payEndDate: '',
+            payStatus: 1,
+            payRemarks: '',
+            userId: 10001,
+            stuIds: ''
+        })
+    }
+
+    amountChange = (value) => {
+        console.log(value)
     }
 
     onTargetChange = (value, label, checkNodes, count) => {
@@ -172,6 +200,7 @@ export default class RechargeRelease extends Component {
     }
 
     onDateChange = date => {
+        console.log(date)
         this.setState({
             endTime: date
         })

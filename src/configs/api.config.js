@@ -38,6 +38,10 @@ export const API = {
     TASK_DETAIL: _baseURL + '/notify/taskDetail',
     //发布通知公告/发布作业/创建会议
     ISSUE_NOTIFICATION: _baseURL + '/notify/issueNotification',
+    //发布缴费
+    PAYMENT_PAYFEE: _baseURL + '/payment/payFee',
+    //收费列表家长端
+    PAYMENT_PAYMENTLIST: _baseURL + '/payment/paymentList',
 
     //消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',

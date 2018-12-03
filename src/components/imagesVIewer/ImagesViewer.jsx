@@ -24,7 +24,7 @@ class ImagesViewer extends Component {
 
     static defaultProps = {
         maxZoomNum: 4,
-        zIndex: 100,
+        zIndex: 1000,
         index: 0,
         gap: 10,
         speed: 300,

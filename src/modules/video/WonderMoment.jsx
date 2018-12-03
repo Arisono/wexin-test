@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react'
-import {Icon, List} from 'antd'
+import {Icon, List, Skeleton} from 'antd'
 import {Picker, List as Mlist, Toast} from 'antd-mobile'
 import VideoItem from 'components/VideoItem'
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
@@ -22,7 +22,8 @@ export default class WonderMoment extends Component {
         this.state = {
             classList: [],
             classValue: [],
-            videoList: []
+            videoList: [],
+            isLoading: true
         }
     }
 
@@ -40,15 +41,17 @@ export default class WonderMoment extends Component {
     }
 
     render() {
-        const {classList, classValue, videoList} = this.state
+        const {classList, classValue, videoList, isLoading} = this.state
 
         let addIcon = ''
-
+        let deleteAble = false
         if (this.mType == 'parents') {
             addIcon = ''
+            deleteAble = false
         } else if (this.mType == 'teacher') {
             addIcon = <Icon type="plus-circle" theme='filled' className='common-add-icon'
                             onClick={this.onAddVideo}/>
+            deleteAble = true
         }
 
         return (
@@ -60,13 +63,16 @@ export default class WonderMoment extends Component {
                 </Picker>
                 <div className='gray-line'></div>
                 <div style={{flex: '1', overflow: 'scroll', webkitOverflowScrolling: 'touch'}}>
-                    <List dataSource={videoList} renderItem={
-                        (item, index) => (
-                            <VideoItem
-                                videoInfo={item} index={index}
-                                deleteEvent={this.onDeleteVideo.bind(this)}/>
-                        )
-                    }/>
+                    <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
+                        <List dataSource={videoList} renderItem={
+                            (item, index) => (
+                                <VideoItem
+                                    videoInfo={item} index={index}
+                                    deleteEvent={this.onDeleteVideo.bind(this)}
+                                    deleteAble={deleteAble}/>
+                            )
+                        }/>
+                    </Skeleton>
                 </div>
                 {addIcon}
             </div>
@@ -85,6 +91,7 @@ export default class WonderMoment extends Component {
             this.analysisClassList(response)
         }).catch(error => {
             Toast.hide()
+
             if (typeof error === 'string') {
                 Toast.fail(error, 2)
             }
@@ -167,13 +174,20 @@ export default class WonderMoment extends Component {
                 }
             }
 
-            this.setState({videoList})
+            this.setState({
+                videoList,
+                isLoading: false
+            })
         }).catch(error => {
             Toast.hide()
             if (typeof error === 'string') {
                 Toast.fail(error)
             }
-            this.setState({videoList})
+
+            this.setState({
+                videoList,
+                isLoading: false
+            })
         })
     }
 

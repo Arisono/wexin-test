@@ -31,6 +31,8 @@ export default class PictureList extends Component {
 
     componentDidMount() {
         const title = this.props.match.params.title
+
+        this.mType = this.props.match.params.type
         this.albumId = this.props.match.params.albumId
 
         console.log(title + '---' + this.albumId)
@@ -81,8 +83,10 @@ export default class PictureList extends Component {
                     </TransitionGroup>
                 </div>
 
-                <img src={require('imgs/ic_album_edit.png')} className='common-add-icon album-edit-icon'
-                     onClick={this.editPicturesClick}/>
+                {this.mType == 'teacher' ?
+                    <img src={require('imgs/ic_album_edit.png')} className='common-add-icon album-edit-icon'
+                         onClick={this.editPicturesClick}/> : ''}
+
 
                 {previewVisible ?
                     <ImagesViewer onClose={this.handleCancel} urls={pictureUrls}

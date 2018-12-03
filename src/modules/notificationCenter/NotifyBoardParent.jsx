@@ -8,6 +8,7 @@ import {Toast, Modal, PullToRefresh} from "antd-mobile";
 import {getArrayValue, getIntValue, getStrValue, isObjEmpty, isObjNull} from "../../utils/common";
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
+import ImagesViewer from "../../components/imagesVIewer";
 
 const mPageSize = 10
 let mPageIndex = 0
@@ -22,7 +23,8 @@ export default class NotifyBoardParent extends Component {
             isLoading: true,
             detailVisible: false,
             isRefreshing: false,
-            height: document.documentElement.clientHeight
+            height: document.documentElement.clientHeight,
+            previewVisible: false
         }
     }
 
@@ -69,7 +71,7 @@ export default class NotifyBoardParent extends Component {
     }
 
     getDetailModal = () => {
-        const {notifyList} = this.state
+        const {notifyList, previewVisible} = this.state
 
         let notifyBoBean = notifyList[this.selectIndex]
 
@@ -77,12 +79,18 @@ export default class NotifyBoardParent extends Component {
             return
         }
         let enclosureItem = <div></div>
+        let pictureUrls = []
         if (!isObjEmpty(notifyBoBean.enclosure) && notifyBoBean.enclosure != '[]') {
             enclosureItem =
                 <div className='principal-enclosure-layout'>
-                    <img src={_baseURL + notifyBoBean.enclosure[0]} className='principal-enclosure-img'/>
+                    <img src={_baseURL + notifyBoBean.enclosure[0]} className='principal-enclosure-img'
+                         onClick={this.handlePreview}/>
                     <span className='principal-enclosure-count'>({notifyBoBean.enclosure.length}张)</span>
                 </div>
+
+            notifyBoBean.enclosure.forEach((enclosure, index) => {
+                pictureUrls.push(_baseURL + enclosure)
+            })
         }
 
         const receives = notifyBoBean.receiveList
@@ -91,33 +99,40 @@ export default class NotifyBoardParent extends Component {
             for (let i = 0; i < receives.length; i++) {
                 receiveItems.push(<span className='notify-detail-modal-receive'>{receives[i]}</span>)
             }
+
         }
 
         return (
-            <Modal
-                popup
-                visible={this.state.detailVisible}
-                onClose={this.onModalClose}
-                animationType="slide-up">
-                <div className='notify-detail-modal-layout'>
-                    <div style={{width: '100%', padding: '12px 14px', background: 'transparent', textAlign: 'right'}}>
-                        <Icon type="close-circle" style={{color: 'white', fontSize: '20px'}}
-                              onClick={this.onModalClose}/>
-                    </div>
-                    <div className='notify-detail-modal-content-layout'>
-                        <div className='notify-detail-modal-content-header'>
-                            <div className='notify-detail-modal-header-tilte'>{notifyBoBean.noTitle}</div>
-                            {/* <span
+            <div>
+                <Modal
+                    popup
+                    visible={this.state.detailVisible}
+                    onClose={this.onModalClose}
+                    animationType="slide-up">
+                    <div className='notify-detail-modal-layout'>
+                        <div style={{
+                            width: '100%',
+                            padding: '12px 14px',
+                            background: 'transparent',
+                            textAlign: 'right'
+                        }}>
+                            <Icon type="close-circle" style={{color: 'white', fontSize: '20px'}}
+                                  onClick={this.onModalClose}/>
+                        </div>
+                        <div className='notify-detail-modal-content-layout'>
+                            <div className='notify-detail-modal-content-header'>
+                                <div className='notify-detail-modal-header-tilte'>{notifyBoBean.noTitle}</div>
+                                {/* <span
                                 className={notifyBoBean.noStatu === '已读' ?
                                     'notify-item-statuAl' : 'notify-item-statuNo'}>{notifyBoBean.noStatu}</span>*/}
-                        </div>
-                        <div className='notify-detail-modal-content-text'>{notifyBoBean.noContent}</div>
-                        <div style={{padding: '10px'}}>
-                            {enclosureItem}
-                        </div>
-                        <div className='notify-detail-modal-time'>{notifyBoBean.noIssue}</div>
-                        <div className='notify-detail-modal-time'>{notifyBoBean.noTime}</div>
-                        {/*<div className='gray-line'></div>
+                            </div>
+                            <div className='notify-detail-modal-content-text'>{notifyBoBean.noContent}</div>
+                            <div style={{padding: '10px'}}>
+                                {enclosureItem}
+                            </div>
+                            <div className='notify-detail-modal-time'>{notifyBoBean.noIssue}</div>
+                            <div className='notify-detail-modal-time'>{notifyBoBean.noTime}</div>
+                            {/*<div className='gray-line'></div>
                         <div className='common-flex-row-10 common-font-family'>
                             <span style={{color: '#363636'}}>接收人</span>
                             <div style={{flex: '1', textAlign: 'right'}}>
@@ -132,9 +147,16 @@ export default class NotifyBoardParent extends Component {
                         <div>
                             {receiveItems}
                         </div>*/}
+                        </div>
                     </div>
-                </div>
-            </Modal>
+                </Modal>
+
+                {previewVisible ?
+                    <ImagesViewer onClose={this.handleCancel} urls={pictureUrls}
+                                  index={0}
+                                  needPoint={pictureUrls.length <= 9}/> : ""}
+            </div>
+
         )
     }
 
@@ -259,4 +281,11 @@ export default class NotifyBoardParent extends Component {
         })
     }
 
+    handlePreview = () => {
+        this.setState({
+            previewVisible: true,
+        });
+    }
+
+    handleCancel = () => this.setState({previewVisible: false})
 }

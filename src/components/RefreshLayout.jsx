@@ -11,12 +11,13 @@ import PropTypes from 'prop-types'
 export default class RefreshLayout extends Component {
 
     static propTypes = {
-        direction: PropTypes.string,
-        refreshing: PropTypes.bool.isRequired,
-        style: PropTypes.object,
-        onRefresh: PropTypes.func.isRequired,
-        damping: PropTypes.number,
-        distanceToRefresh: PropTypes.number,
+        direction: PropTypes.string,//刷新方向：up或down,默认up
+        refreshing: PropTypes.bool.isRequired,//是否正在刷新
+        style: PropTypes.object,//样式，有默认样式一般可以不传
+        onRefresh: PropTypes.func.isRequired,//加载方法，必传
+        damping: PropTypes.number,//加载距离，不用传
+        distanceToRefresh: PropTypes.number,//可拉动距离，不用传
+        height:PropTypes.number,//组件高度，一般不用传
     }
 
     static defaultProps = {
@@ -35,7 +36,6 @@ export default class RefreshLayout extends Component {
 
     componentDidMount() {
         setTimeout(() => {
-
             if (this.props.height) {
                 this.setState({
                     height: this.props.height,

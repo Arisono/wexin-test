@@ -66,7 +66,9 @@ export const API = {
     homeWorkAdd: _baseURL + "/notify/issueNotification",
     homeWorkList: _baseURL + "/notify/getMeetingList",
     homeWorkDetail: _baseURL + "/notify/taskDetail",
-
+    //留言功能
+    messageCreate: _baseURL +"/leaveMessage/messageCreate",
+    messageList:_baseURL +"/leaveMessage/getMessageListByNotifyId",
     //学生请假
     leaveCreate: _baseURL + "/leave/leaveCreate",
     leaveList: _baseURL + "/leave/leaveList",

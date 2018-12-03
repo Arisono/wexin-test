@@ -72,7 +72,7 @@ export default class RouteConfig extends Component {
                     <Route path='/principalMailbox' component={PrincipalMailbox}/>
                     <Route path='/meetingSignIn' component={MeetingSignIn}/>
                     <Route path='/phonesSelect' component={PhonesSelect}/>
-                    <Route path='/phonesList/:classTitle?' component={PhonesList}/>
+                    <Route path='/phonesList/:classId/:classTitle?' component={PhonesList}/>
                     <Route path='/systemMessage' component={SystemMessage}/>
                     <Route path='/useHelp' component={UseHelp}/>
                     <Route path='/wonderMoment/:type?' component={WonderMoment}/>

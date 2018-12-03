@@ -15,7 +15,6 @@ import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {Toast} from "antd-mobile";
 
-
 let mySwiper
 
 const mPageSize = 10
@@ -36,9 +35,7 @@ export default class PhonesSelect extends Component {
     componentDidMount() {
         document.title = '通讯录'
         const that = this
-        const {selectIndex, teacherList, parentList} = this.state
-
-
+        const {selectIndex} = this.state
 
         mySwiper = new Swiper('.swiper-container', {
             autoplay: false,
@@ -52,81 +49,8 @@ export default class PhonesSelect extends Component {
             }
         })
 
-
-
-        fetchGet(API.getTeacherPhones,{
-            stuId: 10000,
-        }).then(response => {
-
-            console.log(response);
-
-            response.data.map((item,index)=>{
-
-                let phoneBean = new PhonesBean()
-                phoneBean.name = item.userName
-                phoneBean.phone = item.UserPhone
-                phoneBean.claName = item.schName
-                phoneBean.children = ['']
-
-                teacherList.push(phoneBean)
-
-
-            })
-
-
-            this.setState({
-
-                isLoading: false,
-                hasMoreData:false
-
-            })
-
-            Toast.hide();
-        }).catch(error => {
-            // Toast.fail(error, 2)
-
-        })
-        fetchGet(API.GET_CLASS_LIST,{
-            userId: 10000,
-        }).then(response => {
-
-            console.log(response);
-
-            response.data.map((item,index)=>{
-
-               parentList.push(item)
-
-
-            })
-
-
-            this.setState({
-                parentList:parentList
-
-            })
-
-            Toast.hide();
-        }).catch(error => {
-            // Toast.fail(error, 2)
-
-        })
-
-        // let parents = ['三年级(4)班', '三年级(6)班', '四年级(12)班', '三年级(4)班']
-        //
-        // for (let i = 0; i < 20; i++) {
-        //     // let phoneBean = new PhonesBean()
-        //     // phoneBean.name = '章晨望'
-        //     // phoneBean.phone = '13632423333'
-        //     // phoneBean.claName = ''
-        //     // phoneBean.children = ['']
-        //     //
-        //     // teacherList.push(phoneBean)
-        // }
-
-        // this.setState({
-        //     teacherList: teacherList,
-        //     parentList: parentList.concat(parents, parents, parents, parents, parents)
-        // })
+        this.getTeacherPhones()
+        this.getClassList()
     }
 
     render() {
@@ -178,14 +102,69 @@ export default class PhonesSelect extends Component {
         )
     }
 
-    onTeacherItemClick = (index) => {
+    getClassList = () => {
+        const {parentList} = this.state
+
+        fetchGet(API.GET_CLASS_LIST, {
+            userId: 10000,
+        }).then(response => {
+            Toast.hide();
+
+            if (response && response.data) {
+                response.data.map((item, index) => {
+                    parentList.push(item)
+                })
+
+                this.setState({
+                    parentList: parentList
+                })
+            }
+
+        }).catch(error => {
+            Toast.hide();
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            }
+        })
+    }
+
+    getTeacherPhones = () => {
         const {teacherList} = this.state
-        this.props.history.push('/phonesList/' + teacherList[index])
+
+        fetchGet(API.getTeacherPhones, {
+            stuId: 10000,
+        }).then(response => {
+            Toast.hide();
+
+            response.data.map((item, index) => {
+                let phoneBean = new PhonesBean()
+                phoneBean.name = item.userName
+                phoneBean.phone = item.UserPhone
+                phoneBean.claName = item.schName
+                phoneBean.children = ['']
+
+                teacherList.push(phoneBean)
+
+            })
+
+            this.setState({
+                isLoading: false,
+                hasMoreData: false
+            })
+
+        }).catch(error => {
+            Toast.hide();
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            }
+        })
     }
 
     onParentItemClick = (index) => {
         const {parentList} = this.state
-        this.props.history.push('/phonesList/' + parentList[index])
+        let selectItem = parentList[index]
+        this.props.history.push('/phonesList/' + selectItem.schId + '/' + selectItem.schName)
     }
 
     onTeacherClick = () => {

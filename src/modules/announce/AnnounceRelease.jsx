@@ -143,8 +143,8 @@ export default class AnnounceRelease extends Component {
             notifyDetails: announceContent,
             notifyCreator: 10001,
             notifyStatus: 2,
-            notifyFiles: fileUrls,
-            userIds: ['10000', '10001', '10002', '10003']
+            notifyFiles: JSON.stringify(fileUrls),
+            userIds: JSON.stringify(['10000', '10001', '10002', '10003'])
         }).then(response => {
             Toast.hide()
 

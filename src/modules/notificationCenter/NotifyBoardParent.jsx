@@ -2,8 +2,6 @@ import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import NotifyBoBean from 'model/NotifyBoBean'
 import {List, Icon, Skeleton} from 'antd'
-import InfiniteScroll from 'react-infinite-scroller'
-import LoadingMore from 'components/LoadingMore'
 import NotifyBoardItem from "../../components/NotifyBoardItem";
 import 'css/consume-re.css'
 import {Toast, Modal, PullToRefresh} from "antd-mobile";

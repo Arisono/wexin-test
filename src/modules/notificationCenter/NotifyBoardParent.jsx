@@ -154,7 +154,7 @@ export default class NotifyBoardParent extends Component {
         Toast.loading('', 0)
         fetchGet(API.TASK_DETAIL, {
             notifyId: notifyList[index].noId,
-            userId: '10000',
+            userId: '10001',
         }).then(response => {
             Toast.hide()
             if (response && response.data) {

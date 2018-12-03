@@ -308,7 +308,7 @@ export default class NotifyBoardTeacher extends Component {
         }
 
         fetchPost(API.notifyMessage, {
-            userId: 10000,
+            userId: 10001,
             notifyType: 4,
             pageIndex: mReleaseIndex,
             pageSize: mPageSize
@@ -379,7 +379,7 @@ export default class NotifyBoardTeacher extends Component {
         }
 
         fetchPost(API.notifyMessage, {
-            userId: 10000,
+            userId: 10001,
             notifyType: 4,
             pageIndex: mReceiveIndex,
             pageSize: mPageSize

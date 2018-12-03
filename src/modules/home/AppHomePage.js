@@ -751,7 +751,7 @@ function ParentMenu() {
                         </span></div></Link>
                     </div>
                     <div className="col-xs-3" id="row_center_align">
-                        <Link className="flex_column flex_center" to="/phonesSelect" id="menu_span_normal">
+                        <Link className="flex_column flex_center" to="/phonesList" id="menu_span_normal">
                         <div><img src={icon_home_menu_28} style={{margin: "20px 20px 8px 20px"}} width={20} height={20}/></div>
                         <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
                             style={{fontSize: "12px"}}>

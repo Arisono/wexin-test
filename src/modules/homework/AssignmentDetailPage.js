@@ -11,8 +11,7 @@ import {fetchPost, fetchGet} from '../../utils/fetchRequest';
 import {API, _baseURL} from '../../configs/api.config';
 import {isObjEmpty} from  '../../utils/common';
 import ImagesViewer from "../../components/imagesVIewer/ImagesViewer";
-
-
+import {Toast} from 'antd-mobile'
 /**
  * 作业详情
  * Created by Arison on 17:49.
@@ -33,6 +32,7 @@ class AssignmentDetailPage extends React.Component {
             headerUrl: "",
             title: "",
             content: "",
+            messageContent:null,
             files: [
                 "https://upload-images.jianshu.io/upload_images/1131704-be7459b6d71b4fcb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240",
                 "https://upload-images.jianshu.io/upload_images/1131704-4ea9451586c1ef07.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
@@ -121,10 +121,38 @@ class AssignmentDetailPage extends React.Component {
             previewVisible: true
         })
     }
-    
+
     onMessageSend=()=>{
+        if(isObjEmpty(this.state.messageContent)){
+             Toast.info("请输入留言内容")
+        }
+        fetchPost(API.messageCreate,{
+            messName:'这是留言',
+            messContent:this.state.messageContent,
+            userId:'10001',
+            notifyId:this.state.id,
+                  }).then((response)=>{
+                      console.log("response:"+JSON.stringify(response));
+                      if(response.success){
+                         Toast.info("留言成功！");
+                      }
+                  }).catch((error)=>{
+                      console.log("error:"+JSON.stringify(error));
+                  })
 
     }
+
+
+    onChangeMessage=(event)=>{
+        let msg=    event.target.value;
+        this.setState({
+            messageContent:msg
+        })
+    }
+
+
+
+
 
     handleCancel = () => this.setState({previewVisible: false})
 
@@ -182,8 +210,8 @@ class AssignmentDetailPage extends React.Component {
             </div>
             {this.state.role==="teacher"?(""):(<div className="footer bg_white">
                 <div className="flex padding_10">
-                    <Input  placeholder="留言"  ></Input>
-                    <Button  onclick={this.onMessageSend}  type={"primary"} className="margin_left_10">发送</Button>
+                    <Input  onChange={this.onChangeMessage} placeholder="留言"  ></Input>
+                    <Button  onClick={this.onMessageSend}  type={"primary"} className="margin_left_10">发送</Button>
                 </div>
             </div>)}
         </div>

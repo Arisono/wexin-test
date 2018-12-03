@@ -145,6 +145,7 @@ export default class ResApply extends Component{
             approveName: this.state.resUser,
             approveDetails:this.state.receivingSays,
             approveType: 2,
+            appType:1,
             proposer: 10000,
             approver: 10007,
             approveFiles:approveFiles,

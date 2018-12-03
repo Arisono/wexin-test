@@ -80,10 +80,11 @@ class ReleaseAssignmentPage extends React.Component{
                 notifyCreator: '10000',//创建者
                 notifyStatus: '2',//状态  2发布  1草稿
                 userIds: '10001,10002,10003',//通知
-                notifyFiles: '',
+                notifyFiles: [],
                 startDate: '',//当前时间
                 endDate: null//截止时间
             }
+
         }
     }
 
@@ -91,18 +92,23 @@ class ReleaseAssignmentPage extends React.Component{
               document.title ="发布作业";
          }
 
-    callback(msg){
-        console.log("leaveAddPage:callback："+JSON.stringify(msg));
+    callback=(file,fileList)=>{
+        console.log("leaveAddPage:callback：",fileList);
+        this.state.data.notifyFiles.length=0;
+        for (let i = 0; i < fileList.length; i++) {
+            if(fileList[i].status==="done"){
+                this.state.data.notifyFiles.push(fileList[i].response.data)
+            }
+        }
+        console.log("callback()", this.state.data.notifyFiles);
+    }
+
+    handleRemove=(file)=>{
+
     }
 
     componentDidMount(){
-        // fetchGet(API.homeWorkDetail,{
-        //     notifyId:"15"
-        // }).then((response)=>{
-        //     console.log("response:"+JSON.stringify(response));
-        // }).catch((error)=>{
-        //     console.log("error:"+JSON.stringify(error));
-        // })
+
     }
 
 
@@ -116,7 +122,7 @@ class ReleaseAssignmentPage extends React.Component{
                         notifyCreator: '10000',//创建者
                         notifyStatus: '2',//状态  2发布  1草稿
                         userIds: '10001,10002,10003',//通知
-                        notifyFiles: '',
+                        notifyFiles: [],
                         startDate: '',//当前时间
                         endDate: this.state.data.endDate//截止时间
                     }
@@ -135,33 +141,20 @@ class ReleaseAssignmentPage extends React.Component{
                 notifyCreator: '10000',//创建者
                 notifyStatus: '2',//状态  2发布  1草稿
                 userIds: '10001,10002,10003',//通知
-                notifyFiles: '',
+                notifyFiles: [],
                 startDate: '',//当前时间
                 endDate: this.state.data.endDate//截止时间
             }
         })
     }
-    changeEndDateOk=(value,dateString)=>{
+    changeEndDateOk=(value)=>{
         console.log("changeName():"+value);
-        console.log("changeName():"+dateString);
-        if(isObjEmpty(dateString)){
+        if(isObjEmpty(value)){
             message.info("请选择日期");
             return
         }
-        this.setState({
-            data:{
-                notifyDetails: this.state.data.notifyDetails,//标题
-                notifyName: this.state.data.notifyName,//标题
-                notifyType: '3',//作业发布
-                notifyCreator: '10000',//创建者
-                notifyStatus: '2',//状态  2发布  1草稿
-                userIds: '10001,10002,10003',//通知
-                notifyFiles: '',
-                startDate: '',//当前时间
-                endDate: dateString,//标题
-            }
-        })
     }
+
     changeEndDate=(value,dateString)=>{
         console.log("changeName():"+value);
         console.log("changeName():"+dateString);
@@ -173,7 +166,7 @@ class ReleaseAssignmentPage extends React.Component{
                 notifyCreator: '10000',//创建者
                 notifyStatus: '2',//状态  2发布  1草稿
                 userIds: '10001,10002,10003',//通知
-                notifyFiles: '',
+                notifyFiles: [],
                 startDate: '',//当前时间
                 endDate: dateString,//标题
             }
@@ -210,7 +203,8 @@ class ReleaseAssignmentPage extends React.Component{
             notifyCreator:'10000',//创建者
             notifyStatus:'2',//状态
             endDate:this.state.data.endDate,
-            userIds:'10001,10002,10003'
+            userIds:'10001,10002,10003',
+            notifyFiles:this.state.data.notifyFiles
         }).then((response)=>{
             console.log("response:"+JSON.stringify(response));
             if (response.success){
@@ -291,7 +285,13 @@ class ReleaseAssignmentPage extends React.Component{
                     <div className="col-xs-12">
                         <div className="row"><div className="col-xs-6" id="page_tile">附件</div></div>
                         <div className="row" id="row_padding_with" >
-                            <PicturesWallItem action={API.UPLOAD_FILE} number={1} callback = { this.callback.bind(this)}></PicturesWallItem>
+                            <PicturesWallItem
+                                action={API.UPLOAD_FILE}
+                                number={4}
+                                callback = { this.callback.bind(this)}>
+                                handleRemove={this.handleRemove.bind(this)}
+                            </PicturesWallItem>
+
 
                         </div>
                         <div className="row flex_row flex_center margin_top_20" >

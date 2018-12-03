@@ -3,26 +3,58 @@
 */
 
 import React,{Component} from 'react';
-import { DatePicker,Select,Icon,Upload,Modal} from 'antd';
+import { Select,Icon,Upload,Modal} from 'antd';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import './FieldTrip.css';
+import {Toast,Picker,List,DatePicker} from 'antd-mobile';
+import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
+import {API} from '../../../configs/api.config';
 
+import moment from 'moment'
+const  nowTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
 const Option = Select.Option;
 export default class FieldTrip extends Component{
     componentWillMount() {
         document.title = '外勤出差'
     }
     constructor(){
-        super();this.state = {
-            tripType:null,
+        super();
+        this.state = {
+            tripType:'666',
             startValue: null,
             endValue: null,
+            Tdurntion:null,
             tripsHours:null,
-            tripsReason:null,
-
+            tripsReason:new Date().toLocaleString(),
+            Receiver:'吴彦祖',
             previewVisible: false,
             previewImage: '',
             fileList: [], //附件
+            typeList:[
+                {
+                    label: '类型1',
+                    value: '类型1'
+                },{
+                    label: '类型2',
+                    value: '类型2'
+                },{
+                    label: '类型3',
+                    value: '类型3'
+                },{
+                    label: '类型4',
+                    value: '类型4'
+                }
+            ],
+            receiverPerson:[{
+                label: '吴彦祖',
+                value: '吴彦祖'
+            },{
+                label: '陈冠希',
+                value: '陈冠希'
+            },{
+                label: '古天乐',
+                value: '古天乐'
+            }]
         };
 
     }
@@ -37,79 +69,57 @@ export default class FieldTrip extends Component{
 
         return(
             <div onChange={this.handelValueCom}>
-                <div  className="item_sty">
-                    <div style={{width:150,fontSize:15,color:"#333333"}}>选择类型:</div>
-                    <div className="text-right" style={{width:"100%",}}>
-                        <Select defaultValue="请选择" style={{ width:100 }} onChange={this.handleSelectChange}>
-                            <Option value="1">类型1</Option>
-                            <Option value="2">类型2</Option>
-                            <Option value="3">类型3</Option>
-                            <Option value="4">类型4</Option>
-                        </Select>
-                        <img src={nextArrowimg} className="nextarr_sty"/>
-                    </div>
+                <div className="common-column-layout">
+                    <Picker
+                        data={this.state.typeList} title='出差类型' extra='请选择'
+                        value={this.state.tripType}
+                        onChange={this.handleSelectChange}
+                        onOk={this.handleSelectChange} cols={1}>
+                        <List.Item arrow="horizontal" >出差类型</List.Item>
+                    </Picker>
                 </div>
-                <div className="comhline_sty1"></div>
 
-                <div  className="item_sty">
-                    <div style={{width:150,color:"#333333"}}>开始时间</div>
-                    <div className="text-right" style={{width:"100%",}}>
-                        <DatePicker
-                            disabledDate={this.disabledStartDate}
-                            showTime
-                            format="YYYY-MM-DD HH:mm:ss"
-                            value={this.state.startValue}
-                            placeholder="请选择开始时间"
-                            onChange={this.onStartChange}
-                            onOpenChange={this.handleStartOpenChange}
-                        /><img src={nextArrowimg} className="nextarr_sty"/></div>
-                </div>
                 <div className="comhline_sty1"></div>
+                <DatePicker
+                    value={this.state.startValue}
+                    onChange={this.setStartDate}>
+                    <List.Item arrow="horizontal">开始时间</List.Item>
+                </DatePicker>
+                <div className="comhline_sty1"></div>
+                <DatePicker
+                    value={this.state.endValue}
+                    onChange={this.setEndDate}>
+                    <List.Item arrow="horizontal">结束时间</List.Item>
+                </DatePicker>
 
-                <div  className="item_sty">
-                    <div style={{width:150,color:"#333333"}}>结束时间</div>
-                    <div className="text-right" style={{width:"100%",}}>
-                        <DatePicker
-                            disabledDate={this.disabledEndDate}
-                            showTime
-                            format="YYYY-MM-DD HH:mm:ss"
-                            value={this.state.endValue}
-                            placeholder="请选择结束时间"
-                            onChange={this.onEndChange}
-                            open={this.state.endOpen}
-                            onOpenChange={this.handleEndOpenChange}
-                        />
-                        <img src={nextArrowimg} className="nextarr_sty"/></div>
-                </div>
+
                 <div className="comhline_sty1"></div>
 
                 <div  className="item_sty">
                     <div style={{width:150,color:"#333333"}}>时长(h)</div>
                     <div className="text-right" style={{width:"100%",}}>{this.state.tripsHours}
-                        <img src={nextArrowimg} className="nextarr_sty"/>
+                        {this.state.Tdurntion}<img src={nextArrowimg} className="nextarr_sty"/>
                     </div>
                 </div>
                 <div className="comhline_sty"></div>
 
-                <textarea  ref='tripsReason' className="form-control textarea_sty" rows="5" placeholder="请填写出差事由…" ></textarea>
+                <textarea  ref='tripsReason' className="form-control textarea_sty" rows="5" placeholder="请填写出差事由…" value={this.state.tripsReason}></textarea>
                 <div className="comhline_sty1"></div>
-
-                <div className="item_sty">
-                    <div  style={{fontSize:12,paddingTop:5,width:150,color:"#333333"}}>接收人:</div>
-                    <div className='text-right' style={{width:"100%",}}>
-                        <Select defaultValue="单选"  style={{ width:100,fontSize:12}} onChange={this.handleSelectChange}>
-                            <Option value="0">吴彦祖</Option>
-                            <Option value="1">陈冠希</Option>
-                            <Option value="2">古天乐</Option>
-                        </Select>
-                        <img src={nextArrowimg} className="nextarr_sty"/>
-                    </div>
+                <div className="common-column-layout">
+                    <Picker
+                        data={this.state.receiverPerson} title='接收人' extra='请选择'
+                        value={this.state.Receiver}
+                        onChange={this.handleSelectChange1}
+                        onOk={this.handleSelectChange1} cols={1}>
+                        <List.Item arrow="horizontal" >接收人</List.Item>
+                    </Picker>
                 </div>
+
                 <div className="comhline_sty"></div>
 
                 <div className="clearfix" style={{margin:10}}>
                     <Upload
-                        action="//jsonplaceholder.typicode.com/posts/"
+                        action={API.UPLOAD_FILE}
                         listType="picture-card"
                         fileList={this.state.fileList}
                         onPreview={this.handlePreview}
@@ -131,10 +141,108 @@ export default class FieldTrip extends Component{
     //提交
     doSaveClick =() =>{
         console.log('state',this.state)
+        // console.log('startValue',this.state.startValue)
+        if(this.state.tripType == null || this.state.tripType == ''){
+            Toast.show('请选择出差类型',1)
+            return
+        }
+        if(this.state.startValue == null || this.state.startValue == ''){
+            Toast.show('请选择开始时间',1)
+            return
+        }
+        if(this.state.endValue == null || this.state.endValue == ''){
+            Toast.show('请选择结束时间',1)
+            return
+        }
+        var startT = new Date(this.state.startValue).getTime()
+        var endT = new Date(this.state.endValue).getTime()
+        // console.log('startT',startT)
+        if(startT > endT){
+            Toast.show('结束时间不可小于开始时间',1)
+            return
+        }
+        if(this.state.tripsReason == null || this.state.tripsReason == ''){
+            Toast.show('请输入出差事由',1)
+            return
+        }
+        if(this.state.Receiver == null || this.state.Receiver == ''){
+            Toast.show('请选择接收人',1)
+            return
+        }
+        var approveFiles = []
+        for(let i=0;i<this.state.fileList.length;i++){
+            if(this.state.fileList[i].response && this.state.fileList[i].response.success){
+                approveFiles.push(this.state.fileList[i].response.data)
+                if(i==this.state.fileList.length-1){
+                    this.setState({
+                        approveFiles:approveFiles
+                    })
+                    console.log('approveFiles',approveFiles)
+                }
+            }
+        }
+
+        var params = {
+            appType:1,
+            approveName: "这是一个出差",
+            approveDetails:this.state.tripsReason,
+            approveType: 1,
+            proposer: 10000,
+            approver: 10007,
+            startDate: moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
+            endDate: moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
+            approveFiles:approveFiles
+        }
+        console.log('param',{
+            oaString:params
+        })
+        fetchPost(API.oaCreate,{
+            oaString:JSON.stringify(params)
+        },{})
+            .then((response)=>{
+                console.log('response',response)
+                if(response.success){
+                    Toast.show(response.data,1)
+                }
+            })
+            .catch((error) =>{
+                console.log('error',error)
+            })
+    }
+    setStartDate = (value) =>{
+        this.setthisTime(value,null)
+    }
+    setEndDate = (value) =>{
+        this.setthisTime(null,value)
+    }
+    setthisTime = (stT,enT) =>{
+       this.setState({
+           startValue:stT == null ? this.state.startValue : stT,
+           endValue:enT == null ? this.state.endValue : enT
+       },function () {
+           var startT = new Date(this.state.startValue).getTime()
+           var endT = new Date(this.state.endValue).getTime()
+           // console.log('startT',startT)
+           // console.log('endT',endT)
+           if(startT > endT && stT == null){
+               Toast.show('结束时间不可小于开始时间',1)
+               return
+           }else if(startT != 0 && endT != 0){
+               var Tdurntion = parseInt((endT - startT)/(1000*60*60))
+               this.setState({
+                   Tdurntion:Tdurntion
+               })
+           }
+       })
     }
     handleSelectChange =(value) =>{
         this.setState({
             tripType:value
+        })
+    }
+    handleSelectChange1 =(value) =>{
+        this.setState({
+            Receiver:value
         })
     }
     handelValueCom = (event)=>{

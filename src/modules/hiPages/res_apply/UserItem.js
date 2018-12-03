@@ -23,12 +23,12 @@ export default class UserItem extends Component{
                 </div>
                 <div className="item_sty">
                     <div className="left_title">物品名称</div>
-                    <input  ref='itemuser'  className="text-right right_input" type="text" placeholder="请输入"  value={this.props.itemata.res_user} />
+                    <input  ref='itemuser'  className="text-right right_input" type="text" placeholder="请输入"  value={this.props.itemata.artName} />
                 </div>
                 <div className="comhline_sty1"></div>
                 <div className="item_sty">
                     <div className="left_title">数量</div>
-                    <input   ref='itemnumber' className="text-right right_input" type="number" placeholder="请输入" value={this.props.itemata.res_number} />
+                    <input   ref='itemnumber' className="text-right right_input" type="number" placeholder="请输入" value={this.props.itemata.artCount} />
                 </div>
                 <div className="comhline_sty1"></div>
             </div>
@@ -45,8 +45,8 @@ export default class UserItem extends Component{
         // console.log('itemuser',itemuser)
         // console.log('itemnumber',itemnumber)
         this.props.handelRItem({
-            res_user:itemuser,
-            res_number:itemnumber
+            artName:itemuser,
+            artCount:itemnumber
         },this.props.index)
     }
 }

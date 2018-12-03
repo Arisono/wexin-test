@@ -10,48 +10,33 @@ import { BrowserRouter as Router, Route, Link} from "react-router-dom";
 import {fetchPost,fetchGet} from '../../utils/fetchRequest';
 import {API} from '../../configs/api.config';
 import {isObjEmpty} from  '../../utils/common';
+import InfiniteScroll from 'react-infinite-scroller'
+import LoadingMore from "../../components/LoadingMore";
 
 /**
  * 作业列表
  * Created by Arison on 17:48.
  */
-const data = [
-    {
-        title: '语文作业',
-        state:'未读',
-        content:'背诵课文',
-        end_time:'2018-08-23 16:00',
-        publisher:'陈莉莉'
-    },
-    {
-        title: '数学作业',
-        state:'未读',
-        content:'背诵课文',
-        end_time:'2018-08-23 16:00',
-        publisher:'陈莉莉'
-    },
-    {
-        title: '英语作业',
-        state:'未读',
-        content:'背诵课文',
-        end_time:'2018-08-23 16:00',
-        publisher:'陈莉莉'
-
-    },
-    {
-        title: '物理作业',
-        state:'未读',
-        content:'背诵课文',
-        end_time:'2018-08-23 16:00',
-        publisher:'陈莉莉'
-    }
-];
 class AssignmentListPage extends React.Component{
     constructor(props){
         super(props);
         this.state={
             name:'AssignmentListPage',
-            role:this.props.match.params.role
+            role:this.props.match.params.role,
+            pageIndex:'1',
+            pageSize:'5',
+            hasMoreData:true,
+            data:[
+                {
+                    title: '语文作业',
+                    state:'未读',
+                    content:'背诵课文',
+                    end_time:'2018-08-23 16:00',
+                    publisher:'陈莉莉',
+                    models:{}
+                }
+
+            ]
         };
 
     }
@@ -69,59 +54,123 @@ class AssignmentListPage extends React.Component{
         this.setState({
            role:this.props.match.params.role
         })
-
-
-        //获取列表
         fetchPost(API.homeWorkList,{
             userId:'10000',
             notifyType:'3',
-            pageIndex:'1',
-            pageSize:'10'
+            pageIndex:this.state.pageIndex,
+            pageSize:this.state.pageSize
         }).then((response)=>{
             console.log("response:"+JSON.stringify(response));
+            this.state.data.length=0;
+            for (let i = 0; i < response.data.creat.length; i++) {
+                let model=response.data.creat[i];
+                let item={
+                    title: model.notifyName,
+                    state: model.isRead==1?'未读':"已读",
+                    content: model.notifyDetails,
+                    end_time:model.endDate,
+                    publisher:model.notifyCreatorName,
+                    models:model
+                };
+                this.state.data.push(item)
+            }
+            this.setState({
+                data:this.state.data
+            })
         }).catch((error)=>{
             console.log("error:"+JSON.stringify(error));
         })
+    }
+
+    loadMoreAction=()=>{
+        setTimeout(()=>{
+            this.state.pageIndex++
+            fetchPost(API.homeWorkList,{
+                userId:'10000',
+                notifyType:'3',
+                pageIndex:this.state.pageIndex,
+                pageSize:this.state.pageSize
+            }).then((response)=>{
+                console.log("response:"+JSON.stringify(response));
+               if(response.data.creat.length>0){
+                   for (let i = 0; i < response.data.creat.length; i++) {
+                       let model=response.data.creat[i];
+                       let item={
+                           title: model.notifyName,
+                           state: model.isRead==1?'未读':"已读",
+                           content: model.notifyDetails,
+                           end_time:model.endDate,
+                           publisher:model.notifyCreatorName,
+                           models:model
+                       };
+                       this.state.data.push(item)
+                   }
+                   this.setState({
+                       data:this.state.data
+                   })
+               }else{
+                   this.setState({
+                       hasMoreData:false,
+                   })
+               }
+
+
+            }).catch((error)=>{
+                console.log("error:"+JSON.stringify(error));
+            })
+                },1000);
     }
 
 
     onAddAction=()=>{
         this.props.history.push("/releaseAssignment");
     }
+
+
     render(){
         return <div className="container-fluid"
                     style={{padding:"0px",height:"1000px",backgroundColor:"#F3F3F3"}}>
-            <List
-                id="assignment_list"
-                dataSource={data}
-                renderItem={item => (
-                    <Link to="/assignmentDetail" id="menu_span_normal">
-                    <List.Item   className="row"  id="list_item_noBorder">
-                            <div className="col-xs-12" >
-                                   <div className="row" id="padding">
-                                       <div className="col-xs-6" id="row_left">
-                                           <span id="span_header_left">{item.title}</span></div>
-                                       <div className="col-xs-6" id="row_right">
-                                           <span id="span_header_right">{item.state}</span></div>
-                                   </div>
-                                <div id="page_horizontal_line"></div>
-                                <div className="row" id="padding">
-                                    <div className="col-xs-4">内容：</div>
-                                    <div className="col-xs-8"><span id="span_display">{item.content}</span></div>
-                                </div>
-                                <div className="row" id="padding">
-                                    <div className="col-xs-4">截止时间：</div>
-                                    <div className="col-xs-8"><span id="span_display">{item.end_time}</span></div>
-                                </div>
-                                <div className="row" id="padding">
-                                    <div className="col-xs-4">发布老师：</div>
-                                    <div className="col-xs-8"><span id="span_display">{item.publisher}</span></div>
-                                </div>
-                         </div>
-                    </List.Item>
-                    </Link>
-                )}
-            />
+            <InfiniteScroll
+                pageStart={0}
+                initialLoad={false}
+                loadMore={this.loadMoreAction}
+                hasMore={this.state.hasMoreData}
+                loader={<LoadingMore/>}>
+                <List
+                    id="assignment_list"
+                    dataSource={this.state.data}
+                    renderItem={item => {
+                        console.log("item()",item);
+                        return (
+                            <Link to={"/assignmentDetail/"+this.state.role+"/"+item.models.notifyId} id="menu_span_normal">
+                                <List.Item   className="row"  id="list_item_noBorder">
+                                    <div className="col-xs-12" >
+                                        <div className="row" id="padding">
+                                            <div className="col-xs-6" id="row_left">
+                                                <span id="span_header_left">{item.title}</span></div>
+                                            <div className="col-xs-6" id="row_right">
+                                                <span id="span_header_right">{item.state}</span></div>
+                                        </div>
+                                        <div id="page_horizontal_line"></div>
+                                        <div className="row" id="padding">
+                                            <div className="col-xs-4">内容：</div>
+                                            <div className="col-xs-8"><span id="span_display">{item.content}</span></div>
+                                        </div>
+                                        <div className="row" id="padding">
+                                            <div className="col-xs-4">截止时间：</div>
+                                            <div className="col-xs-8"><span id="span_display">{item.end_time}</span></div>
+                                        </div>
+                                        <div className="row" id="padding">
+                                            <div className="col-xs-4">发布老师：</div>
+                                            <div className="col-xs-8"><span id="span_display">{item.publisher}</span></div>
+                                        </div>
+                                    </div>
+                                </List.Item>
+                            </Link>
+                        )
+                    }}
+                />
+              </InfiniteScroll>
             {
                 this.state.role=="teacher"?(<Icon type="plus-circle" theme='filled' className='common-add-icon'
                                            onClick={this.onAddAction} />):("")

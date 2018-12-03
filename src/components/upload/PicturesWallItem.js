@@ -4,7 +4,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-
+import PropTypes from 'prop-types';
 import { Upload, Icon, message,Modal } from 'antd';
 
 /**
@@ -14,6 +14,12 @@ import { Upload, Icon, message,Modal } from 'antd';
  * Created by Arison on 18:01.
  */
 class PicturesWallItem extends React.Component{
+
+    static propTypes = {
+        callback:PropTypes.func,
+        handleRemove: PropTypes.func//移除照片的回调
+    }
+
     constructor(props){
         super(props);
         let action= this.props.action == null ? "//jsonplaceholder.typicode.com/posts/" : this.props.action;
@@ -36,9 +42,12 @@ class PicturesWallItem extends React.Component{
 
     //file参数需要传递给父组件！
     handleChange = ({ file,fileList }) =>{
-        console.log("test1",file)
-        this.props.callback(file);
+        this.props.callback(file,fileList);
         this.setState({ fileList })
+    }
+
+    onRemove=(file)=>{
+        this.props.handleRemove(file);
     }
 
     handleCancel = () => this.setState({ previewVisible: false })
@@ -64,7 +73,10 @@ class PicturesWallItem extends React.Component{
                 listType="picture-card"
                 fileList={fileList}
                 onPreview={this.handlePreview}
-                onChange={this.handleChange}>
+                onRemove={this.onRemove}
+                onChange={this.handleChange}
+            >
+
                 {fileList.length >= this.state.fileSize ? null : uploadButton}
             </Upload>
 

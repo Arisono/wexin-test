@@ -41,10 +41,10 @@ export default class SendVote extends Component{
             voteMembers:18,
             typeVote:[{
                 label: '单选',
-                value: '单选'
+                value: '1'
             },{
                 label: '多选',
-                value: '多选'
+                value: '2'
             }]
         }
     }
@@ -155,19 +155,6 @@ export default class SendVote extends Component{
                     </DatePicker>
                 </div>
 
-
-                {/*<div  className="item_sty">*/}
-                    {/*<div style={{width:150,fontSize:15,color:"#333333"}}>结束时间:</div>*/}
-                    {/*<div className="text-right" style={{width:"100%",}}>*/}
-                        {/*<DatePicker*/}
-                            {/*showTime*/}
-                            {/*format="YYYY-MM-DD HH:mm:ss"*/}
-                            {/*value={this.state.endValue}*/}
-                            {/*placeholder="请选择结束时间"*/}
-                            {/*onChange={this.SelechEndTime}*/}
-                        {/*/>*/}
-                        {/*<img src={nextArrowimg} className="nextarr_sty"/></div>*/}
-                {/*</div>*/}
                 <div className="comhline_sty1"></div>
 
                 <div  className="item_sty">
@@ -186,7 +173,7 @@ export default class SendVote extends Component{
 
                 <div className="clearfix" style={{margin:10}}>
                     <Upload
-                        action={API.voteCreate}
+                        action={API.UPLOAD_FILE}
                         listType="picture-card"
                         fileList={this.state.fileList}                        o
                         nPreview={this.handlePreview}
@@ -210,7 +197,7 @@ export default class SendVote extends Component{
             Toast.show('请选择投票对象...',1)
             return
         }
-        if(this.state.voteTitle == ''){
+        if(this.state.voteTitle == '' || this.state.voteTitle == null){
             Toast.show('请填写投票主题...',1)
             return
         }
@@ -218,11 +205,11 @@ export default class SendVote extends Component{
             Toast.show('请输入选项内容...',1)
             return
         }
-        if(this.state.voteType == null){
+        if(this.state.voteType == null || this.state.voteType == ''){
             Toast.show('请选择投票类型...',1)
             return
         }
-        if(this.state.endValue == null){
+        if(this.state.endValue == null || this.state.endValue == ''){
             Toast.show('请选择正确结束时间...',1)
             return
         }
@@ -242,18 +229,38 @@ export default class SendVote extends Component{
             }
             options[i]=item
         }
-        var voteFile = []
-        for (let i=0;i<this.state.fileList.length;i++){
-            voteFile[i] = this.state.fileList[i].thumbUrl
+        var approveFiles = []
+        for(let i=0;i<this.state.fileList.length;i++){
+            if(this.state.fileList[i].response && this.state.fileList[i].response.success){
+                approveFiles.push(this.state.fileList[i].response.data)
+                if(i==this.state.fileList.length-1){
+                    this.setState({
+                        approveFiles:approveFiles
+                    })
+                    console.log('approveFiles',approveFiles)
+                }
+            }
+        }
+        var approveFiles = []
+        for(let i=0;i<this.state.fileList.length;i++){
+            if(this.state.fileList[i].response.success){
+                approveFiles.push(this.state.fileList[i].response.data)
+                if(i==this.state.fileList.length-1){
+                    this.setState({
+                        approveFiles:approveFiles
+                    })
+                    console.log('approveFiles',approveFiles)
+                }
+            }
         }
         var params = {
                 creator: 10004,
                 voteStatus: 1,
                 voteRemarks: "这是一个调查",
                 voteName: "爱好调查",
-                voteFile:voteFile,
+                voteFile:approveFiles,
                 voter: this.state.votePerson,
-                voteEndDate: this.state.endValue,
+                voteEndDate:  moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
                 voteType: this.state.voteType,
                 topics:[
                     {
@@ -315,8 +322,9 @@ export default class SendVote extends Component{
     }
 
     handleSelectChange =(value) =>{
+        console.log('voteType',value)
         this.setState({
-            voteType:value
+            voteType:value[0]
         })
     }
     handelValueCom = (event)=>{

@@ -130,6 +130,8 @@ export default class UploadEnclosure extends Component {
     }
 
     handleRemove = (file) => {
-        return this.props.handleRemove(file)
+        if (this.props.handleRemove) {
+            return this.props.handleRemove(file)
+        }
     }
 }

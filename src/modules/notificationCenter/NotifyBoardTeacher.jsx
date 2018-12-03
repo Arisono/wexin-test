@@ -54,6 +54,7 @@ export default class NotifyBoardTeacher extends Component {
         this.mySwiper = new Swiper('.swiper-container', {
             autoplay: false,
             loop: false,
+            noSwiping: true,
             on: {
                 slideChangeTransitionEnd: function () {
                     that.setState({
@@ -95,10 +96,10 @@ export default class NotifyBoardTeacher extends Component {
                          this.contain = el
                      }}>
                     <div className="swiper-wrapper">
-                        <div className="swiper-slide">
+                        <div className="swiper-slide swiper-no-swiping">
                             {releaseItems}
                         </div>
-                        <div className="swiper-slide">
+                        <div className="swiper-slide swiper-no-swiping">
                             {receiveItems}
                         </div>
                     </div>
@@ -308,7 +309,7 @@ export default class NotifyBoardTeacher extends Component {
         }
 
         fetchPost(API.notifyMessage, {
-            userId: 10000,
+            userId: 10001,
             notifyType: 4,
             pageIndex: mReleaseIndex,
             pageSize: mPageSize
@@ -379,7 +380,7 @@ export default class NotifyBoardTeacher extends Component {
         }
 
         fetchPost(API.notifyMessage, {
-            userId: 10000,
+            userId: 10001,
             notifyType: 4,
             pageIndex: mReceiveIndex,
             pageSize: mPageSize

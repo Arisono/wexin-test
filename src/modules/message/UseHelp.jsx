@@ -96,7 +96,8 @@ export default class UseHelp extends Component {
 
                 this.setState({
                     helpList: helpList,
-                    isLoading: false
+                    isLoading: false,
+                    hasMoreData: false
                 })
             })
 

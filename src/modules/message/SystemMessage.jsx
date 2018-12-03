@@ -96,7 +96,8 @@ export default class SystemMessage extends Component {
 
                 this.setState({
                     systemMsgs,
-                    isLoading: false
+                    isLoading: false,
+                    hasMoreData: false
                 })
             })
         }

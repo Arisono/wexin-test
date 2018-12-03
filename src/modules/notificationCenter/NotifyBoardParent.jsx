@@ -29,6 +29,7 @@ export default class NotifyBoardParent extends Component {
     }
 
     componentDidMount() {
+        mPageIndex = 0
         const hei = this.state.height - ReactDOM.findDOMNode(this.ptr).offsetTop;
         setTimeout(() =>
                 this.setState({

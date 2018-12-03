@@ -41,6 +41,8 @@ export default class NotifyBoardTeacher extends Component {
     }
 
     componentDidMount() {
+        mReleaseIndex = 0
+        mReceiveIndex = 0
         const hei = this.state.height - ReactDOM.findDOMNode(this.contain).offsetTop;
         this.setState({
             height: hei

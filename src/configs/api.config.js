@@ -73,6 +73,11 @@ export const API = {
     issueNotification: _baseURL + '/notify/issueNotification',
     //成绩查询
     getScoreByStuId: _baseURL + '/score/getScoreByStuId',
+
+    //OA单据创建
+    oaCreate:_baseURL + '/oaApprove/oaCreate',
+    //审批列表
+    oaApproveList:_baseURL + '/oaApprove/oaList'
 }
 
 

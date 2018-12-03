@@ -13,6 +13,8 @@ import icon_res from '../../../style/imgs/res_img.png';
 import icon_trip from '../../../style/imgs/trip_img.png';
 import ApprovelItem from './ApprovelItem';
 import {Link} from 'react-router-dom';
+import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
+import {API} from '../../../configs/api.config';
 
 let mySwiper
 
@@ -92,6 +94,18 @@ export default class Approvel extends Component{
             applyList:applyListData,
             approvelList:approvelListData
         })
+
+        fetchGet(API.oaApproveList,{
+            userId:10000,
+            pageIndex:1,
+            pageSize:10
+        },{})
+            .then((response)=>{
+                console.log('response',response)
+            })
+            .catch((error) =>{
+                console.log('error',error)
+            })
     }
     componentWillReceiveProps(newProps) {
     }

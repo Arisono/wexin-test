@@ -7,6 +7,10 @@ import './ResApply.css';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import { Select,Upload,Modal,Icon } from 'antd';
 import UserItem from './UserItem';
+import {Toast,Picker,List} from 'antd-mobile';
+import {isObjEmpty} from "../../../utils/common";
+import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
+import {API} from '../../../configs/api.config';
 
 const Option = Select.Option;
 
@@ -18,19 +22,29 @@ export default class ResApply extends Component{
     constructor(){
         super();
         this.state = {
-            resUser:null, //物品用途
-            receivingSays:null, //领取说明
-            Receiver:null, //接收人
+            resUser:'这是一个用品申请', //物品用途
+            receivingSays:new Date().toLocaleString(), //领取说明
+            Receiver:'程冠希', //接收人
             selectContentArray: [
                     {
-                        res_user:null,
-                        res_number:null
+                        artName:null,
+                        artCount:null
                     }
                 ],
 
             previewVisible: false,
             previewImage: '',
-            fileList: [], //附件
+            fileList: [], //附件，
+            receiverPerson:[{
+                label: '吴彦祖',
+                value: '吴彦祖'
+            },{
+                label: '陈冠希',
+                value: '陈冠希'
+            },{
+                label: '古天乐',
+                value: '古天乐'
+            }]
         }
     }
 
@@ -47,7 +61,7 @@ export default class ResApply extends Component{
                 <div className="comhline_sty"></div>
                 <div className="item_sty">
                    <div className="left_title">物品用途</div>
-                   <input ref='resUser' className="text-right right_input" type="text" placeholder="请输入"  autoFocus="autoFocus"/>
+                   <input ref='resUser' className="text-right right_input" type="text" placeholder="请输入"  autoFocus="autoFocus" value={this.state.resUser}/>
                </div>
 
                 <div >
@@ -55,20 +69,20 @@ export default class ResApply extends Component{
                     <div onClick={this.addUserItem} className="text-center" style={{color:"#0CE11D",fontSize:12,margin:10}}>+ <span style={{color:"#666666"}}>添加物品明细</span></div>
                 </div>
 
-                <textarea ref='receivingSays' className="form-control textarea_sty" rows="5"  placeholder="领取说明" ></textarea>
+                <textarea ref='receivingSays' className="form-control textarea_sty" rows="5"  placeholder="领取说明"  value={this.state.receivingSays}></textarea>
                 <div className="comhline_sty1"></div>
 
-                <div className="item_sty">
-                    <div className="left_title" style={{fontSize:12,paddingTop:5}}>接收人:</div>
-                    <div className='text-right' style={{width:"100%",}}>
-                        <Select defaultValue="单选"  style={{ width:100,fontSize:12}} onChange={this.handleSelectChange}>
-                            <Option value="0">吴彦祖</Option>
-                            <Option value="1">陈冠希</Option>
-                            <Option value="2">古天乐</Option>
-                        </Select>
-                        <img src={nextArrowimg} className="nextarr_sty"/>
-                    </div>
+
+                <div className="common-column-layout">
+                    <Picker
+                        data={this.state.receiverPerson} title='接收人' extra='请选择'
+                        value={this.state.Receiver}
+                        onChange={this.handleSelectChange}
+                        onOk={this.handleSelectChange} cols={1}>
+                        <List.Item arrow="horizontal" >接收人</List.Item>
+                    </Picker>
                 </div>
+
                 <div className="comhline_sty"></div>
 
                 <div  className="item_sty">
@@ -77,7 +91,7 @@ export default class ResApply extends Component{
 
                 <div className="clearfix" style={{margin:10}}>
                     <Upload
-                        action="//jsonplaceholder.typicode.com/posts/"
+                        action={API.UPLOAD_FILE}
                         listType="picture-card"
                         fileList={this.state.fileList}
                         onPreview={this.handlePreview}
@@ -99,6 +113,58 @@ export default class ResApply extends Component{
     //提交
     doSaveClick =() =>{
         console.log('state',this.state)
+        if(this.state.resUser == null || this.state.resUser == ''){
+            Toast.show('请输入物品用途',1)
+            return
+        }
+        if(isObjEmpty(this.state.selectContentArray)){
+            Toast.show('物品明细存在未输入项')
+            return
+        }
+        if(this.state.receivingSays == null || this.state.receivingSays == ''){
+            Toast.show('请输入领取说明',1)
+            return
+        }
+        if(this.state.Receiver == null || this.state.Receiver == ''){
+            Toast.show('请选择接收人',1)
+            return
+        }
+        var approveFiles = []
+        for(let i=0;i<this.state.fileList.length;i++){
+            if(this.state.fileList[i].response && this.state.fileList[i].response.success){
+                approveFiles.push(this.state.fileList[i].response.data)
+                if(i==this.state.fileList.length-1){
+                    this.setState({
+                        approveFiles:approveFiles
+                    })
+                    console.log('approveFiles',approveFiles)
+                }
+            }
+        }
+        var params = {
+            approveName: this.state.resUser,
+            approveDetails:this.state.receivingSays,
+            approveType: 2,
+            proposer: 10000,
+            approver: 10007,
+            approveFiles:approveFiles,
+            articles:this.state.selectContentArray
+        }
+        console.log('param',{
+            oaString:params
+        })
+        fetchPost(API.oaCreate,{
+            oaString:JSON.stringify(params)
+        },{})
+            .then((response)=>{
+                console.log('response',response)
+                if(response.success){
+                    Toast.show(response.data,1)
+                }
+            })
+            .catch((error) =>{
+                console.log('error',error)
+            })
     }
     removeSItem = (index)=>{
         if(this.state.selectContentArray.length == 1){

@@ -1,18 +1,16 @@
 import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
 import NotifyBoBean from 'model/NotifyBoBean'
 import {List, Icon, Skeleton} from 'antd'
-import InfiniteScroll from 'react-infinite-scroller'
-import LoadingMore from 'components/LoadingMore'
 import NotifyBoardItem from "../../components/NotifyBoardItem";
 import 'css/consume-re.css'
-import {Toast, Modal} from "antd-mobile";
+import {Toast, Modal, PullToRefresh} from "antd-mobile";
 import {getArrayValue, getIntValue, getStrValue, isObjEmpty, isObjNull} from "../../utils/common";
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
 
-
 const mPageSize = 10
-var mPageIndex = 1
+let mPageIndex = 0
 
 export default class NotifyBoardParent extends Component {
 
@@ -21,29 +19,41 @@ export default class NotifyBoardParent extends Component {
 
         this.state = {
             notifyList: [],
-            hasMoreData: true,
             isLoading: true,
-            detailVisible: false
+            detailVisible: false,
+            isRefreshing: false,
+            height: document.documentElement.clientHeight
         }
     }
 
     componentDidMount() {
-
+        mPageIndex = 0
+        const hei = this.state.height - ReactDOM.findDOMNode(this.ptr).offsetTop;
+        setTimeout(() =>
+                this.setState({
+                    height: hei,
+                })
+            , 0);
         document.title = '通知公告'
         Toast.loading('努力加载中...', 0)
+        this.loadRechargeList()
     }
 
     render() {
-        const {notifyList, hasMoreData, isLoading} = this.state
+        const {notifyList, isLoading, isRefreshing} = this.state
         const detailModal = this.getDetailModal()
 
         return (
             <div className='notify-bg-root'>
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={this.loadRechargeList}
-                    hasMore={hasMoreData}
-                    loader={<LoadingMore/>}>
+                <PullToRefresh
+                    direction='up'
+                    refreshing={isRefreshing}
+                    ref={el => this.ptr = el}
+                    style={{
+                        height: this.state.height,
+                        overflow: 'auto',
+                    }}
+                    onRefresh={this.loadRechargeList}>
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
                         <List split={false} dataSource={notifyList}
                               renderItem={(notifyBoBean, index) => (
@@ -52,7 +62,7 @@ export default class NotifyBoardParent extends Component {
                                                    index={index}/>
                               )}/>
                     </Skeleton>
-                </InfiniteScroll>
+                </PullToRefresh>
                 {detailModal}
             </div>
         )
@@ -176,14 +186,26 @@ export default class NotifyBoardParent extends Component {
         })
     }
 
-    loadRechargeList = (index) => {
-        console.log(index)
+    loadRechargeList = () => {
+        mPageIndex++
+        console.log(mPageIndex)
+        try {
+            this.setState({
+                isRefreshing: true
+            })
+        } catch (e) {
+
+        }
+
         const {notifyList} = this.state
+        if (mPageIndex === 1) {
+            notifyList.length = 0
+        }
 
         fetchPost(API.notifyMessage, {
-            userId: 10001,
+            userId: 10000,
             notifyType: 4,
-            pageIndex: index,
+            pageIndex: mPageIndex,
             pageSize: mPageSize
         }).then(response => {
             Toast.hide()
@@ -211,21 +233,29 @@ export default class NotifyBoardParent extends Component {
                     notifyList.push(notifyBoBean)
                 })
             } else {
-                this.setState({
-                    hasMoreData: false
-                })
+                if (mPageIndex > 1) {
+                    mPageIndex--
+                }
             }
             this.setState({
                 notifyList,
                 isLoading: false,
+                isRefreshing: false,
             })
 
         }).catch(error => {
             Toast.hide();
+
+            if (mPageIndex > 1) {
+                mPageIndex--
+            }
             this.setState({
                 isLoading: false,
+                isRefreshing: false
             })
-            Toast.fail(error, 2)
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            }
         })
     }
 

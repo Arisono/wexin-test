@@ -219,6 +219,13 @@
     align-items: center;
 }
 
+.flex_column_bottom{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
 .flex_center{
     display: flex;
     justify-content: center;
@@ -298,7 +305,19 @@
 }
 
 .margin_left_right_10{
-    margin: 0px 10px 0px 10px;
+     margin: 0px 10px 0px 10px;
+ }
+
+.margin_right_5{
+     margin: 0px 5px 0px 0px;
+ }
+
+.margin_left_5{
+    margin: 0px 0px 0px 5px;
+}
+
+.margin_left_10{
+    margin: 0px 0px 0px 10px;
 }
 
 .margin_top_bottom_10{
@@ -340,5 +359,16 @@
     margin: 0px 0px 5px 0px;
 }
 
+.bg_white{
+    background: white;
+}
 
-
+/*固定底部*/
+.footer {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 50px;
+    z-index: 9999;
+}

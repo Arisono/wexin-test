@@ -167,7 +167,7 @@ export default class UploadVideo extends Component {
 
     handleBefore = (file) => {
         let fileType = getFileType(file.name)
-        if (fileType.isStrEquals('mp4', 'rmvb', 'avi', 'ts')) {
+        if (fileType.isStrEquals('mp4', 'rmvb', 'avi', 'ts', 'mov','qt','asf','rm','navi')) {
             if (file.size && file.size > 100 * 1024 * 1024) {
                 this.fileCurrect = false
                 Toast.fail('文件大小不能超过100M')

@@ -12,9 +12,9 @@ import icon_vote_items  from "../../style/imgs/icon_vote_items.png";
 import {Link} from "react-router-dom";
 import LoadingMore from "../../components/LoadingMore";
 import InfiniteScroll from 'react-infinite-scroller'
-import {Toast} from 'antd-mobile'
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../utils/fetchRequest';
 import {API} from '../../configs/api.config';
+import {Toast} from 'antd-mobile'
 /**
  * Created by Arison on 20:14.
  */
@@ -25,22 +25,11 @@ class VoteListPage extends React.Component{
             name:'VoteListPage',
             hasMoreData:true,
             pageIndex:1,
-            pageSize:1,
+            pageSize:10,
             data:[
                 {
                     title:'三年级2班',
                     state:'进行中',
-                    endTime:'2018-11-15 08:00',
-                    votes:[
-                        '深圳南山',
-                        '深圳宝安',
-                        '深圳福田'
-                    ]
-
-                },
-                {
-                    title:'三年级2班',
-                    state:'已结束',
                     endTime:'2018-11-15 08:00',
                     votes:[
                         '深圳南山',
@@ -88,59 +77,44 @@ class VoteListPage extends React.Component{
 
 
     loadMoreAction(){
-        console.log("loadMoreAction() pageIndex:",this.state.pageIndex);
-        fetchGet(API.voteList,{
-            stuId:'10000',//学号ID
-            pageIndex:this.state.pageIndex++,
-            pageSize:this.state.pageSize,
-            voteType:'1',
-        }).then((response)=>{
-            if(response.success){
-                for (let i = 0; i < response.data.length; i++) {
-                    let  voteObject  = response.data[i];
-                    let stateStr=voteObject.voteStatus==1?"进行中":"已结束"
-                    let options=voteObject.topics[0].options;
-                    let model={
-                        title:voteObject.voteName,
-                        state:stateStr,
-                        endTime:voteObject.creatDate,
-                        votes:options
-                    };
-                    this.state.data.push(model);
-                }
-                this.setState({
-                    data:this.state.data
-                });
-            }else{
+      setTimeout(()=>{
+          this.state.pageIndex++
+          console.log("加载更多index:",this.state.pageIndex);
+          fetchGet(API.voteList,{
+              stuId:'10000',//学号ID
+              pageIndex:this.state.pageIndex,
+              pageSize:this.state.pageSize,
+              voteType:'1',
+          }).then((response)=>{
+              if(response.success){
+                  for (let i = 0; i < response.data.length; i++) {
+                      let  voteObject  = response.data[i];
+                      let stateStr=voteObject.voteStatus==1?"进行中":"已结束"
+                      let options=voteObject.topics[0].options;
+                      let model={
+                          title:voteObject.voteName,
+                          state:stateStr,
+                          endTime:voteObject.creatDate,
+                          votes:options
+                      };
+                      this.state.data.push(model);
+                  }
+                  this.setState({
+                      data:this.state.data
+                  });
+                  if(response.data.length<this.state.pageSize){
+                      this.setState({
+                          hasMoreData:false
+                      });
+                      Toast.info("数据加载完成");
+                  }
+              }
 
-            }
-
-
-        }).catch((error)=>{
-            console.log("error:"+JSON.stringify(error));
-            message.info("加载完成")
-            this.setState({ hasMoreData:false})
-        });
-        // setTimeout(()=>{
-        //      for (let i = 0; i < 10; i++) {
-        //                let model={
-        //                    title:'三年级2班',
-        //                    state:'已结束',
-        //                    endTime:'2018-11-15 08:00',
-        //                    votes:[
-        //                        '深圳南山',
-        //                        '深圳宝安',
-        //                        '深圳福田'
-        //                    ]
-        //                };
-        //                this.state.data.push(model);
-        //
-        //      }
-        //
-        //      this.setState({
-        //          data:this.state.data
-        //      });
-        // },1500);
+          }).catch((error)=>{
+              console.log("error:"+JSON.stringify(error));
+              this.setState({ hasMoreData:false})
+          });
+              },1000);
     }
 
 
@@ -149,11 +123,11 @@ class VoteListPage extends React.Component{
             <div className="row">
               <div className="col-xs-12 clear_margin">
                    <InfiniteScroll
+                       initialLoad={false}
                        pageStart={0}
                        loadMore={this.loadMoreAction.bind(this)}
                        hasMore={this.state.hasMoreData}
                        loader={<LoadingMore/>}>
-
 
                   <List
                       dataSource={this.state.data}

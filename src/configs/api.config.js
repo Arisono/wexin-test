@@ -36,6 +36,8 @@ export const API = {
     INSERT_VIDEO: _baseURL + '/picture/insertVideo',
     //作业 /会议/通知等详情
     TASK_DETAIL: _baseURL + '/notify/taskDetail',
+    //发布通知公告/发布作业/创建会议
+    ISSUE_NOTIFICATION: _baseURL + '/notify/issueNotification',
 
     //消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
@@ -64,7 +66,9 @@ export const API = {
     homeWorkAdd: _baseURL + "/notify/issueNotification",
     homeWorkList: _baseURL + "/notify/getMeetingList",
     homeWorkDetail: _baseURL + "/notify/taskDetail",
-
+    //留言功能
+    messageCreate: _baseURL +"/leaveMessage/messageCreate",
+    messageList:_baseURL +"/leaveMessage/getMessageListByNotifyId",
     //学生请假
     leaveCreate: _baseURL + "/leave/leaveCreate",
     leaveList: _baseURL + "/leave/leaveList",

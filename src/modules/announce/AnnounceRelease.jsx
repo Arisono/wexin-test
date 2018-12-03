@@ -4,9 +4,13 @@
  */
 
 import React, {Component} from 'react'
-import {Icon, Input, Button, Upload, Modal} from 'antd'
+import {Input, Button} from 'antd'
 import 'css/announce.css'
+import {Toast} from 'antd-mobile'
 import TargetSelect from 'components/TargetSelect'
+import UploadEnclosure from 'components/UploadEnclosure'
+import {fetchPost} from "../../utils/fetchRequest";
+import {_baseURL, API} from "../../configs/api.config";
 
 const {TextArea} = Input
 const teacherData = []
@@ -67,12 +71,7 @@ export default class AnnounceRelease extends Component {
 
             previewVisible: false,
             previewImage: '',
-            fileList: [{
-                uid: '-1',
-                name: 'xxx.png',
-                status: 'done',
-                url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            }],
+            fileList: [],
             targetList: ['1-1'],
             targetCount: 1
         }
@@ -84,27 +83,12 @@ export default class AnnounceRelease extends Component {
     }
 
     componentWillUnmount() {
-
+        Toast.hide()
     }
 
     render() {
-        const {previewVisible, previewImage, fileList} = this.state;
-        const {announceTitle, announceContent, targetCount, targetList} = this.state
-        const uploadButton = (
-            <div>
-                <Icon type="plus"/>
-                <div className="ant-upload-text">Upload</div>
-            </div>
-        );
-        const uploadProps = {
-            action: "//jsonplaceholder.typicode.com/posts/",
-            listType: "picture-card",
-            fileList: fileList,
-            multiple: false,
-            onPreview: this.handlePreview,
-            onChange: this.handleChange,
-            showUploadList: {showPreviewIcon: true, showRemoveIcon: true}
-        }
+        const {announceTitle, announceContent, targetCount, targetList, fileList} = this.state
+
         const targetProps = {
             targetData: targetData,
             targetValues: targetList,
@@ -124,21 +108,52 @@ export default class AnnounceRelease extends Component {
                           autosize={{minRows: 6, maxRows: 12}} value={announceContent}
                           onChange={this.contentChange}/>
                 <div className='gray-line'></div>
-                <div className='annex-title'>附件</div>
-                <div style={{padding: '12px 16px'}}>
-                    <Upload {...uploadProps}>
-                        {fileList.length >= 1 ? null : uploadButton}
-                    </Upload>
-                    <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                        <img alt="example" style={{width: '100%'}} src={previewImage}/>
-                    </Modal>
-                </div>
+                <UploadEnclosure
+                    action={API.UPLOAD_FILE}
+                    fileList={fileList}
+                    count={4}
+                    multiple={true}
+                    beforeUpload={this.beforeUpload.bind(this)}
+                    handleChange={this.handleChange.bind(this)}
+                />
 
-                <Button className='commonButton' type='primary' style={{margin: '35px'}}>发布</Button>
+                <Button className='commonButton' type='primary' style={{margin: '35px'}}
+                        onClick={this.releaseAnnounce}>发布</Button>
 
                 {/*<span className='announce-release-history'>历史发布</span>*/}
             </div>
         )
+    }
+
+    releaseAnnounce = () => {
+        Toast.loading('正在发布...', 0)
+        const {announceTitle, announceContent, fileList} = this.state
+
+        const fileUrls = []
+        if (fileList) {
+            fileList.forEach((value, index) => {
+                fileUrls.push(value.picUrl)
+            })
+        }
+        console.log(fileUrls)
+
+        fetchPost(API.ISSUE_NOTIFICATION, {
+            notifyName: announceTitle,
+            notifyType: 4,
+            notifyDetails: announceContent,
+            notifyCreator: 10001,
+            notifyStatus: 2,
+            notifyFiles: JSON.stringify(fileUrls),
+            userIds: JSON.stringify(['10000', '10001', '10002', '10003'])
+        }).then(response => {
+            Toast.hide()
+
+        }).catch(error => {
+            Toast.hide()
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            }
+        })
     }
 
     onTargetChange = (value, label, checkNodes, count) => {
@@ -160,14 +175,18 @@ export default class AnnounceRelease extends Component {
         })
     }
 
-    handleCancel = () => this.setState({previewVisible: false})
+    beforeUpload = (file, fileList) => {
 
-    handlePreview = (file) => {
-        this.setState({
-            previewImage: file.url || file.thumbUrl,
-            previewVisible: true,
-        });
     }
 
-    handleChange = ({fileList}) => this.setState({fileList})
+    handleChange = fileList => {
+        if (fileList) {
+            fileList.forEach((value, index) => {
+                value.url = value.response ? (_baseURL + value.response.data) : value.url
+                value.picUrl = value.response ? value.response.data : value.picUrl
+            })
+
+            this.setState({fileList})
+        }
+    }
 }

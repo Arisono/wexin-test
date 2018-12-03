@@ -9,7 +9,7 @@ import {List, Skeleton} from 'antd'
 import RechargeBean from 'model/RechargeBean'
 import RechargeItem from 'components/RechargeItem'
 import RefreshLayout from '../../components/RefreshLayout'
-import {fetchGet, fetchPost} from "../../utils/fetchRequest";
+import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 
 const mPageSize = 10

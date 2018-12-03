@@ -35,7 +35,7 @@ export default class VideoItem extends Component {
                     url={videoInfo.url}
                     controls
                     width='100%'
-                    height='min-content'/>
+                    height='200px'/>
             </div>
         )
     }

@@ -11,6 +11,7 @@ import TargetSelect from 'components/TargetSelect'
 import UploadEnclosure from 'components/UploadEnclosure'
 import {fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
+import {isObjEmpty} from "../../utils/common";
 
 const {TextArea} = Input
 const teacherData = []
@@ -126,8 +127,17 @@ export default class AnnounceRelease extends Component {
     }
 
     releaseAnnounce = () => {
-        Toast.loading('正在发布...', 0)
         const {announceTitle, announceContent, fileList} = this.state
+
+        if (isObjEmpty(announceTitle)) {
+            Toast.fail('请输入通知标题')
+            return
+        }
+        if (isObjEmpty(announceContent)) {
+            Toast.fail('请输入通知内容')
+            return
+        }
+        Toast.loading('正在发布...', 0)
 
         const fileUrls = []
         if (fileList) {

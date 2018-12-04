@@ -11,6 +11,7 @@ import TargetSelect from 'components/TargetSelect'
 import UploadEnclosure from 'components/UploadEnclosure'
 import {fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
+import {isObjEmpty} from "../../utils/common";
 
 const {TextArea} = Input
 const teacherData = []
@@ -126,8 +127,17 @@ export default class AnnounceRelease extends Component {
     }
 
     releaseAnnounce = () => {
-        Toast.loading('正在发布...', 0)
         const {announceTitle, announceContent, fileList} = this.state
+
+        if (isObjEmpty(announceTitle)) {
+            Toast.fail('请输入通知标题')
+            return
+        }
+        if (isObjEmpty(announceContent)) {
+            Toast.fail('请输入通知内容')
+            return
+        }
+        Toast.loading('正在发布...', 0)
 
         const fileUrls = []
         if (fileList) {
@@ -135,7 +145,7 @@ export default class AnnounceRelease extends Component {
                 fileUrls.push(value.picUrl)
             })
         }
-        console.log(fileUrls)
+        const userList = ['10000', '10001', '10002', '10003']
 
         fetchPost(API.ISSUE_NOTIFICATION, {
             notifyName: announceTitle,
@@ -144,10 +154,16 @@ export default class AnnounceRelease extends Component {
             notifyCreator: 10001,
             notifyStatus: 2,
             notifyFiles: JSON.stringify(fileUrls),
-            userIds: JSON.stringify(['10000', '10001', '10002', '10003'])
+            userIds: JSON.stringify(userList)
         }).then(response => {
             Toast.hide()
+            Toast.success('发布成功')
 
+            this.setState({
+                announceTitle: '',
+                announceContent: '',
+                fileList: []
+            })
         }).catch(error => {
             Toast.hide()
             if (typeof error === 'string') {

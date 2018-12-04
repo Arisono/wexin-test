@@ -10,12 +10,13 @@ import 'swiper/dist/css/swiper.min.css'
 import 'css/consume-re.css'
 import NotifyBoBean from '../../model/NotifyBoBean'
 import {List, Icon, Skeleton} from 'antd'
-import {Modal, PullToRefresh, Toast} from 'antd-mobile'
+import {Modal, Toast} from 'antd-mobile'
 import RefreshLayout from '../../components/RefreshLayout'
 import NotifyBoardItem from "../../components/NotifyBoardItem";
 import {getArrayValue, getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
+import ImagesViewer from "../../components/imagesVIewer";
 
 
 const mPageSize = 10
@@ -36,7 +37,8 @@ export default class NotifyBoardTeacher extends Component {
             detailVisible: false,
             isReleaseRefreshing: false,
             isReceiveRefreshing: false,
-            height: document.documentElement.clientHeight
+            height: document.documentElement.clientHeight,
+            previewVisible: false
         }
     }
 
@@ -116,7 +118,7 @@ export default class NotifyBoardTeacher extends Component {
     }
 
     getDetailModal = () => {
-        const {releaseList, receiveList} = this.state
+        const {releaseList, receiveList, previewVisible} = this.state
 
         let notifyBoBean = new NotifyBoBean()
         if (this.selectType === 'release') {
@@ -126,12 +128,18 @@ export default class NotifyBoardTeacher extends Component {
         }
 
         let enclosureItem = <div></div>
+        let pictureUrls = []
         if (!isObjEmpty(notifyBoBean.enclosure) && notifyBoBean.enclosure != '[]') {
             enclosureItem =
                 <div className='principal-enclosure-layout'>
-                    <img src={_baseURL + notifyBoBean.enclosure[0]} className='principal-enclosure-img'/>
+                    <img src={_baseURL + notifyBoBean.enclosure[0]} className='principal-enclosure-img'
+                         onClick={this.handlePreview}/>
                     <span className='principal-enclosure-count'>({notifyBoBean.enclosure.length}张)</span>
                 </div>
+
+            notifyBoBean.enclosure.forEach((enclosure, index) => {
+                pictureUrls.push(_baseURL + enclosure)
+            })
         }
 
         const receives = notifyBoBean.readed
@@ -144,47 +152,59 @@ export default class NotifyBoardTeacher extends Component {
         }
 
         return (
-            <Modal
-                popup
-                visible={this.state.detailVisible}
-                onClose={this.onModalClose}
-                animationType="slide-up">
-                <div className='notify-detail-modal-layout'>
-                    <div style={{width: '100%', padding: '12px 14px', background: 'transparent', textAlign: 'right'}}>
-                        <Icon type="close-circle" style={{color: 'white', fontSize: '20px'}}
-                              onClick={this.onModalClose}/>
-                    </div>
-                    <div className='notify-detail-modal-content-layout'>
-                        <div className='notify-detail-modal-content-header'>
-                            <div className='notify-detail-modal-header-tilte'>{notifyBoBean.noTitle}</div>
-                            <span
-                                className={notifyBoBean.noStatu === '已读' ?
-                                    'notify-item-statuAl' : 'notify-item-statuNo'}>{notifyBoBean.noStatu}</span>
+            <div>
+                <Modal
+                    popup
+                    visible={this.state.detailVisible}
+                    onClose={this.onModalClose}
+                    animationType="slide-up">
+                    <div className='notify-detail-modal-layout'>
+                        <div style={{
+                            width: '100%',
+                            padding: '12px 14px',
+                            background: 'transparent',
+                            textAlign: 'right'
+                        }}>
+                            <Icon type="close-circle" style={{color: 'white', fontSize: '20px'}}
+                                  onClick={this.onModalClose}/>
                         </div>
-                        <div className='notify-detail-modal-content-text'>{notifyBoBean.noContent}</div>
-                        <div style={{padding: '10px'}}>
-                            {enclosureItem}
-                        </div>
-                        <div className='notify-detail-modal-time'>{notifyBoBean.noIssue}</div>
-                        {/*<div className='notify-detail-modal-time'>{notifyBoBean.noTime}</div>*/}
-                        <div className='gray-line'></div>
-                        <div className='common-flex-row-10 common-font-family'>
-                            <span style={{color: '#363636'}}>接收人名单</span>
-                            <div style={{flex: '1', textAlign: 'right'}}>
-                                {/*<span style={{fontSize: '12px', color: '#CD1D1D'}}>未读：{notifyBoBean.unRead}</span>*/}
-                                <span style={{
-                                    fontSize: '12px',
-                                    color: '#161616',
-                                    marginLeft: '10px'
-                                }}>{getIntValue(notifyBoBean.readed, 'length')}/{notifyBoBean.allCount}</span>
+                        <div className='notify-detail-modal-content-layout'>
+                            <div className='notify-detail-modal-content-header'>
+                                <div className='notify-detail-modal-header-tilte'>{notifyBoBean.noTitle}</div>
+                                <span
+                                    className={notifyBoBean.noStatu === '已读' ?
+                                        'notify-item-statuAl' : 'notify-item-statuNo'}>{notifyBoBean.noStatu}</span>
+                            </div>
+                            <div className='notify-detail-modal-content-text'>{notifyBoBean.noContent}</div>
+                            <div style={{padding: '10px'}}>
+                                {enclosureItem}
+                            </div>
+                            <div className='notify-detail-modal-time'>{notifyBoBean.noIssue}</div>
+                            {/*<div className='notify-detail-modal-time'>{notifyBoBean.noTime}</div>*/}
+                            <div className='gray-line'></div>
+                            <div className='common-flex-row-10 common-font-family'>
+                                <span style={{color: '#363636'}}>接收人名单</span>
+                                <div style={{flex: '1', textAlign: 'right'}}>
+                                    {/*<span style={{fontSize: '12px', color: '#CD1D1D'}}>未读：{notifyBoBean.unRead}</span>*/}
+                                    <span style={{
+                                        fontSize: '12px',
+                                        color: '#161616',
+                                        marginLeft: '10px'
+                                    }}>{getIntValue(notifyBoBean.readed, 'length')}/{notifyBoBean.allCount}</span>
+                                </div>
+                            </div>
+                            <div>
+                                {receiveItems}
                             </div>
                         </div>
-                        <div>
-                            {receiveItems}
-                        </div>
                     </div>
-                </div>
-            </Modal>
+                </Modal>
+                {previewVisible ?
+                    <ImagesViewer onClose={this.handleCancel} urls={pictureUrls}
+                                  index={0}
+                                  needPoint={pictureUrls.length <= 9}/> : ""}
+            </div>
+
         )
     }
 
@@ -454,4 +474,12 @@ export default class NotifyBoardTeacher extends Component {
     onAddNotify = () => {
         this.props.history.push('/announceRelease')
     }
+
+    handlePreview = () => {
+        this.setState({
+            previewVisible: true,
+        });
+    }
+
+    handleCancel = () => this.setState({previewVisible: false})
 }

@@ -4,12 +4,20 @@
  */
 
 export default function MeetingBean() {
-    this.createTime = 0
+    this.meetId = 0
     this.title = ''
     this.meetStatus = ''
-    this.startTime = 0
-    this.endTime = 0
+    this.meetStatusCode = 0
+    this.meetDetail = ''
+    this.createTime = ''
+    this.startTime = ''
+    this.endTime = ''
+    this.remainTime = ''
     this.address = ''
     this.sponsor = ''
+    this.sponsorId = 0
     this.signStatus = ''
+    this.signStatusCode=0
+    this.remarks = ''
+
 }

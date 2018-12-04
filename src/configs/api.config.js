@@ -38,6 +38,26 @@ export const API = {
     TASK_DETAIL: _baseURL + '/notify/taskDetail',
     //发布通知公告/发布作业/创建会议
     ISSUE_NOTIFICATION: _baseURL + '/notify/issueNotification',
+    //发布缴费
+    PAYMENT_PAYFEE: _baseURL + '/payment/payFee',
+    //收费列表家长端
+    PAYMENT_PAYMENTLIST: _baseURL + '/payment/paymentList',
+    //收费列表教师端
+    PAYMENT_PAYMENTLIST_TEACHER: _baseURL + '/payment/paymentListByUserId',
+    //收费详情
+    PAYMENT_PAYMENT_DETAIL: _baseURL + '/payment/paymentDetails',
+    //结束收款
+    PAYMENT_ENTPAY: _baseURL + '/payment/endPay',
+    //获取所有老师的电话
+    TEACHER_PHONES_LIST:_baseURL+'/user/getTeacherPhoneList',
+    //获取相应班级老师电话号码
+    GET_TEACHER_PHONES: _baseURL + '/user/getTeacherPhones',
+    //获取班级家长手机号
+    GET_PARENT_PHONES: _baseURL + '/user/getParentPhones',
+    //会议签到
+    MEETING_SIGN:_baseURL+'/notify/meetingSign',
+
+
 
     //消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
@@ -51,15 +71,8 @@ export const API = {
     //分页显示会议 /分页显示作业 /分页显示通知
     notifyMessage: _baseURL + '/notify/getMeetingList',
 
-
     //创建投票单
     voteCreate: _baseURL + '/vote/voteCreate',
-
-    //获取所有老师电话号码
-    getTeacherPhones: _baseURL + '/user/getTeacherPhones',
-    //获取班级家长手机号
-    getParentPhones: _baseURL + '/user/getParentPhones',
-
     voteList: _baseURL + "/vote/voteList",
     voteDetail: _baseURL + "/vote/voteList",
     //发布作业
@@ -67,8 +80,8 @@ export const API = {
     homeWorkList: _baseURL + "/notify/getMeetingList",
     homeWorkDetail: _baseURL + "/notify/taskDetail",
     //留言功能
-    messageCreate: _baseURL +"/leaveMessage/messageCreate",
-    messageList:_baseURL +"/leaveMessage/getMessageListByNotifyId",
+    messageCreate: _baseURL + "/leaveMessage/messageCreate",
+    messageList: _baseURL + "/leaveMessage/getMessageListByNotifyId",
     //学生请假
     leaveCreate: _baseURL + "/leave/leaveCreate",
     leaveList: _baseURL + "/leave/leaveList",
@@ -79,7 +92,7 @@ export const API = {
     getScoreByStuId: _baseURL + '/score/getScoreByStuId',
 
     //OA单据创建
-    oaCreate:_baseURL + '/oaApprove/oaCreate',
+    oaCreate: _baseURL + '/oaApprove/oaCreate',
     //审批列表
     oaApproveList:_baseURL + '/oaApprove/oaList',
     //审批操作

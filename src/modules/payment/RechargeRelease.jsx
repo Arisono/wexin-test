@@ -4,12 +4,14 @@
  */
 
 import React, {Component} from 'react'
-import {Icon, Input, Button, TreeSelect} from 'antd'
-import {Picker, InputItem, DatePicker, List} from 'antd-mobile'
+import {Input, Button} from 'antd'
+import {Picker, InputItem, DatePicker, List, Toast} from 'antd-mobile'
 import 'css/payment.css'
-import {getCheckedNodes} from "../../utils/common";
 import {API} from 'api'
 import TargetSelect from 'components/TargetSelect'
+import {fetchPost} from "../../utils/fetchRequest";
+import {getStrValue, isObjEmpty} from "../../utils/common";
+import {regExpConfig} from "../../configs/regexp.config";
 
 const {TextArea} = Input
 
@@ -73,7 +75,7 @@ export default class RechargeRelease extends Component {
             classText: '',
             remarks: '',
             endTime: now,
-            date: now,
+            percapita: '',
             targetList: ['1-1'],
             targetCount: 1
         }
@@ -86,26 +88,33 @@ export default class RechargeRelease extends Component {
 
         typeList.push({
             label: '学校收费',
-            value: '学校收费'
+            value: '1'
         })
         typeList.push({
             label: '班级收费',
-            value: '班级收费'
+            value: '2'
         })
         typeList.push({
             label: '学杂费',
-            value: '学杂费'
+            value: '3'
         })
         typeList.push({
             label: '书本费',
-            value: '书本费'
+            value: '4'
         })
 
         this.setState({typeList: typeList})
     }
 
+    componentWillUnmount() {
+        Toast.hide()
+    }
+
     render() {
-        const {typeList, classText, remarks, targetCount, targetList} = this.state
+        const {
+            typeList, classText, remarks,
+            targetCount, targetList, percapita
+        } = this.state
 
         const targetProps = {
             targetData: targetData,
@@ -122,8 +131,7 @@ export default class RechargeRelease extends Component {
                 <div className='gray-line'></div>
                 <Picker
                     data={typeList} title='收款类型' extra='请选择'
-                    value={classText} onChange={this.handleClassChange}
-                    onOk={this.handleClassChange} cols={1}>
+                    value={classText} onChange={this.handleClassChange} cols={1}>
                     <List.Item arrow="horizontal">收款类型</List.Item>
                 </Picker>
                 <div className='gray-line'></div>
@@ -134,24 +142,86 @@ export default class RechargeRelease extends Component {
                         className='recharge-release-amount-input'
                         type='money' clear
                         moneyKeyboardAlign='left'
-                        placeholder='请输入金额'/>
+                        placeholder='请输入金额'
+                        value={percapita}
+                        onChange={this.amountChange}/>
                 </div>
                 <TextArea className='remarks-input' placeholder='请输入备注'
                           autosize={{minRows: 4, maxRows: 8}} value={remarks}
                           onChange={this.remarksChange}/>
                 <div className='gray-line'></div>
                 <DatePicker
-                    value={this.state.date}
-                    onChange={date => this.setState({date})}>
+                    value={this.state.endTime}
+                    onChange={this.onDateChange}>
                     <List.Item arrow="horizontal">截止时间</List.Item>
                 </DatePicker>
                 <div className='gray-line'></div>
 
                 <Button type='primary'
                         style={{margin: '35px'}}
-                        className='commonButton'>发起收款</Button>
+                        className='commonButton'
+                        onClick={this.onRechargeRelease}>发起收款</Button>
             </div>
         )
+    }
+
+    onRechargeRelease = () => {
+        const {classText, remarks, percapita, endTime, typeList} = this.state
+
+        console.log(typeList[classText].label + '/' + Number(classText) + '/' + remarks + '/' + percapita + '/' + endTime.format('yyyy-MM-dd hh:mm:ss'));
+
+        if (isObjEmpty(classText, percapita, endTime)) {
+            Toast.fail('存在未填项', 2)
+            return
+        }
+
+        if (!regExpConfig.float.test(percapita)) {
+            Toast.fail('请输入正确的收款金额')
+            return
+        }
+        Toast.loading('正在发布...', 0)
+
+        const userList = ['10000', '10001', '10002', '10003']
+
+        const params = {
+            payName: typeList[classText] ? typeList[classText].label : '',
+            payTotal: percapita,
+            payStartDate: now.format('yyyy-MM-dd hh:mm:ss'),
+            payEndDate: endTime.format('yyyy-MM-dd hh:mm:ss'),
+            payStatus: 2,
+            payRemarks: remarks,
+            payType: Number(classText),
+            userId: 10001,
+            stuIds: JSON.stringify(userList)
+        }
+        fetchPost(API.PAYMENT_PAYFEE, {
+            paymentString: JSON.stringify(params)
+        }).then(response => {
+            Toast.hide()
+
+            Toast.success('发布成功')
+
+            this.setState({
+                classText: '',
+                remarks: '',
+                endTime: now,
+                percapita: '',
+            })
+        }).catch(error => {
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('数据请求异常', 2)
+            }
+        })
+    }
+
+    amountChange = (value) => {
+        this.setState({
+            percapita: value
+        })
     }
 
     onTargetChange = (value, label, checkNodes, count) => {
@@ -162,6 +232,7 @@ export default class RechargeRelease extends Component {
     }
 
     handleClassChange = (v) => {
+        console.log(v)
         this.setState({classText: v})
     }
 
@@ -172,6 +243,7 @@ export default class RechargeRelease extends Component {
     }
 
     onDateChange = date => {
+        console.log(date)
         this.setState({
             endTime: date
         })

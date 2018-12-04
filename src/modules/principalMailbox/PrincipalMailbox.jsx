@@ -4,10 +4,11 @@
  */
 
 import React, {Component} from 'react'
-import {Icon, Input, Button, Upload, Switch, message, Modal} from 'antd'
+import {Icon, Input, Button, Switch, message} from 'antd'
 import 'css/principal-mailbox.css'
 import {isObjEmpty} from "../../utils/common";
 import UploadEnclosure from 'components/UploadEnclosure'
+import {_baseURL, API} from "../../configs/api.config";
 
 const {TextArea} = Input
 
@@ -18,27 +19,7 @@ export default class PrincipalMailbox extends Component {
 
         this.state = {
             suggest: '',
-            previewVisible: false,
-            previewImage: '',
-            fileList: [{
-                index: 0,
-                uid: '-1',
-                name: 'xxx.png',
-                status: 'done',
-                url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            }, {
-                index: 1,
-                uid: '-2',
-                name: 'xxx.png',
-                status: 'done',
-                url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543039474667&di=32c37088ba29d428392cee485ce29995&imgtype=0&src=http%3A%2F%2Fpic153.nipic.com%2Ffile%2F20171226%2F26515894_231421032000_2.jpg',
-            }, {
-                index: 2,
-                uid: '-3',
-                name: 'xxx.png',
-                status: 'done',
-                url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543039450432&di=c4e6d3b8039a4b2b2713a8fa278a54cc&imgtype=0&src=http%3A%2F%2Ffx120.120askimages.com%2F120ask_news%2F2017%2F0706%2F201707061499322886181789.jpg',
-            }],
+            fileList: [],
             isAnonymous: false,
             previewIndex: 0
         }
@@ -49,7 +30,7 @@ export default class PrincipalMailbox extends Component {
     }
 
     render() {
-        const {previewVisible, previewImage, fileList, suggest, isAnonymous} = this.state;
+        const {fileList, suggest, isAnonymous} = this.state;
         const imgs = []
         if (!isObjEmpty(fileList) && fileList !== '[]') {
             for (let i = 0; i < fileList.length; i++) {
@@ -57,12 +38,6 @@ export default class PrincipalMailbox extends Component {
             }
         }
 
-        const uploadButton = (
-            <div>
-                <Icon type="plus"/>
-                <div className="ant-upload-text">Upload</div>
-            </div>
-        );
         return (
             <div className='principal-pageLayout'>
                 <div className='headerLayout'>欢迎各位家长向本校提出意见和建议</div>
@@ -72,7 +47,7 @@ export default class PrincipalMailbox extends Component {
                 <span className='wordCount'>{suggest.length + '/500'}</span>
                 <div className='gray-line'></div>
                 <UploadEnclosure
-                    action="//jsonplaceholder.typicode.com/posts/"
+                    action={API.UPLOAD_FILE}
                     fileList={fileList}
                     count={4}
                     multiple={true}
@@ -114,7 +89,16 @@ export default class PrincipalMailbox extends Component {
 
     }
 
-    handleChange = ({fileList}) => this.setState({fileList})
+    handleChange = fileList => {
+        if (fileList) {
+            fileList.forEach((value, index) => {
+                value.url = value.response ? (_baseURL + value.response.data) : value.url
+                value.picUrl = value.response ? value.response.data : value.picUrl
+            })
+
+            this.setState({fileList})
+        }
+    }
 
     principalRecord = () => {
         this.props.history.push('/principalHistory')

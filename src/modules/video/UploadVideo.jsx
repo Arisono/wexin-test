@@ -167,7 +167,7 @@ export default class UploadVideo extends Component {
 
     handleBefore = (file) => {
         let fileType = getFileType(file.name)
-        if (fileType.isStrEquals('mp4', 'rmvb', 'avi', 'ts', 'mov','qt','asf','rm','navi')) {
+        if (fileType.isStrEquals('mp4', 'rmvb', 'avi', 'ts', 'mov', 'qt', 'asf', 'rm', 'navi')) {
             if (file.size && file.size > 100 * 1024 * 1024) {
                 this.fileCurrect = false
                 Toast.fail('文件大小不能超过100M')
@@ -223,11 +223,12 @@ export default class UploadVideo extends Component {
             return
         }
         Toast.loading('视频发布中...', 0)
-        const {classList, classText} = this.state
+        const {classList, classValue} = this.state
 
-        if (classList[classText]) {
-            this.classId = classList[classText].schId
+        if (classList[classValue]) {
+            this.classId = classList[classValue].schId
         }
+        console.log(this.classId)
         fetchPost(API.INSERT_VIDEO, {
             picName: this.state.videoTitle,
             picUrl: this.videoUrl,

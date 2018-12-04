@@ -4,22 +4,23 @@
  */
 
 import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
 import Swiper from 'swiper/dist/js/swiper'
 import 'swiper/dist/css/swiper.min.css'
 import 'css/phones.css'
-import {List, Icon} from 'antd'
-import {isObjEmpty} from "../../utils/common";
+import {List, Icon, Skeleton} from 'antd'
 import PhonesItem from "components/PhonesItem";
 import PhonesBean from 'model/PhonesBean'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {Toast} from "antd-mobile";
-
+import RefreshLayout from "../../components/RefreshLayout";
+import {getStrValue} from "../../utils/common";
 
 let mySwiper
 
 const mPageSize = 10
-var mPageIndex = 0
+let mPageIndex = 0
 
 export default class PhonesSelect extends Component {
 
@@ -29,16 +30,21 @@ export default class PhonesSelect extends Component {
         this.state = {
             selectIndex: 0,
             teacherList: [],
-            parentList: []
+            parentList: [],
+            isPhonesLoading: true,
+            isClassLoading: true,
+            isRefreshing: false,
         }
     }
 
     componentDidMount() {
         document.title = '通讯录'
+        const hei = this.state.height - ReactDOM.findDOMNode(this.contain).offsetTop;
+        this.setState({
+            height: hei
+        })
         const that = this
-        const {selectIndex, teacherList, parentList} = this.state
-
-
+        const {selectIndex} = this.state
 
         mySwiper = new Swiper('.swiper-container', {
             autoplay: false,
@@ -52,104 +58,44 @@ export default class PhonesSelect extends Component {
             }
         })
 
-
-
-        fetchGet(API.getTeacherPhones,{
-            stuId: 10000,
-        }).then(response => {
-
-            console.log(response);
-
-            response.data.map((item,index)=>{
-
-                let phoneBean = new PhonesBean()
-                phoneBean.name = item.userName
-                phoneBean.phone = item.UserPhone
-                phoneBean.claName = item.schName
-                phoneBean.children = ['']
-
-                teacherList.push(phoneBean)
-
-
-            })
-
-
-            this.setState({
-
-                isLoading: false,
-                hasMoreData:false
-
-            })
-
-            Toast.hide();
-        }).catch(error => {
-            // Toast.fail(error, 2)
-
-        })
-        fetchGet(API.GET_CLASS_LIST,{
-            userId: 10000,
-        }).then(response => {
-
-            console.log(response);
-
-            response.data.map((item,index)=>{
-
-               parentList.push(item)
-
-
-            })
-
-
-            this.setState({
-                parentList:parentList
-
-            })
-
-            Toast.hide();
-        }).catch(error => {
-            // Toast.fail(error, 2)
-
-        })
-
-        // let parents = ['三年级(4)班', '三年级(6)班', '四年级(12)班', '三年级(4)班']
-        //
-        // for (let i = 0; i < 20; i++) {
-        //     // let phoneBean = new PhonesBean()
-        //     // phoneBean.name = '章晨望'
-        //     // phoneBean.phone = '13632423333'
-        //     // phoneBean.claName = ''
-        //     // phoneBean.children = ['']
-        //     //
-        //     // teacherList.push(phoneBean)
-        // }
-
-        // this.setState({
-        //     teacherList: teacherList,
-        //     parentList: parentList.concat(parents, parents, parents, parents, parents)
-        // })
+        this.getTeacherPhones()
+        this.getClassList()
     }
 
     render() {
-        const {selectIndex, teacherList, parentList} = this.state
+        const {
+            selectIndex, teacherList, parentList
+            , isPhonesLoading, isClassLoading, isRefreshing, height
+        } = this.state
 
-        const teacherItems = <List className='phones-list-layout' dataSource={teacherList}
-                                   renderItem={phonesBean => (
-                                       <List.Item>
-                                           <PhonesItem phonesBean={phonesBean}/>
-                                       </List.Item>
-                                   )}/>
+        const teacherItems =
+            <RefreshLayout
+                refreshing={isRefreshing}
+                onRefresh={this.getTeacherPhones}
+                height={height}>
+                <Skeleton loading={isPhonesLoading} active paragraph={{rows: 3}}>
+                    <List className='phones-list-layout' dataSource={teacherList}
+                          renderItem={phonesBean => (
+                              <List.Item>
+                                  <PhonesItem phonesBean={phonesBean}/>
+                              </List.Item>
+                          )}/>
+                </Skeleton>
+            </RefreshLayout>
 
-        const parentItems = <List dataSource={parentList} renderItem={
-            (item, index) => (
-                <List.Item>
-                    <div className='phoneListItem'
-                         onClick={this.onParentItemClick.bind(this, index)}>
-                        <div
-                            className='phoneItemText'>{item.schName}</div>
-                        <Icon type="right" theme="outlined"/>
-                    </div>
-                </List.Item>
-            )}/>
+        const parentItems = <Skeleton loading={isClassLoading} active paragraph={{rows: 3}}>
+            <List dataSource={parentList} renderItem={
+                (item, index) => (
+                    <List.Item>
+                        <div className='phoneListItem'
+                             onClick={this.onParentItemClick.bind(this, index)}>
+                            <div
+                                className='phoneItemText'>{item.parentName + item.schName}</div>
+                            <Icon type="right" theme="outlined"/>
+                        </div>
+                    </List.Item>
+                )}/>
+        </Skeleton>
 
         return (
             <div className='phone-select-root'>
@@ -164,7 +110,10 @@ export default class PhonesSelect extends Component {
                          onClick={this.onParentClick}>家长
                     </div>
                 </div>
-                <div className="swiper-container">
+                <div className="swiper-container"
+                     ref={el => {
+                         this.contain = el
+                     }}>
                     <div className="swiper-wrapper">
                         <div className="swiper-slide">
                             {teacherItems}
@@ -178,14 +127,98 @@ export default class PhonesSelect extends Component {
         )
     }
 
-    onTeacherItemClick = (index) => {
+    getClassList = () => {
+        const {parentList} = this.state
+
+        fetchGet(API.GET_CLASS_LIST, {
+            userId: 10000,
+        }).then(response => {
+            Toast.hide();
+
+            if (response && response.data) {
+                response.data.map((item, index) => {
+                    parentList.push(item)
+                })
+
+                this.setState({
+                    parentList: parentList,
+                    isPhonesLoading: false
+                })
+            }
+
+        }).catch(error => {
+            Toast.hide();
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            }
+        })
+    }
+
+    getTeacherPhones = () => {
+        mPageIndex++
+        console.log(mPageIndex)
+        try {
+            this.setState({
+                isRefreshing: true
+            })
+        } catch (e) {
+
+        }
+
         const {teacherList} = this.state
-        this.props.history.push('/phonesList/' + teacherList[index])
+        if (mPageIndex === 1) {
+            teacherList.length = 0
+        }
+
+        fetchGet(API.TEACHER_PHONES_LIST, {
+            roleId: 3,
+            pageIndex: mPageIndex,
+            pageSize: mPageSize
+        }).then(response => {
+            Toast.hide();
+
+            if (response && response.data && response.data.length > 0) {
+                response.data.map((item, index) => {
+                    let phoneBean = new PhonesBean()
+                    phoneBean.name = getStrValue(item, 'userName')
+                    phoneBean.phone = getStrValue(item, 'userPhone')
+                    phoneBean.claName = getStrValue(item, 'schName')
+                    phoneBean.children = ['']
+
+                    teacherList.push(phoneBean)
+
+                })
+            } else {
+                if (mPageIndex > 1) {
+                    mPageIndex--
+                }
+            }
+
+            this.setState({
+                isClassLoading: false,
+                isRefreshing: false,
+            })
+
+        }).catch(error => {
+            Toast.hide();
+
+            if (mPageIndex > 1) {
+                mPageIndex--
+            }
+            this.setState({
+                isRefreshing: false
+            })
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            }
+        })
     }
 
     onParentItemClick = (index) => {
         const {parentList} = this.state
-        this.props.history.push('/phonesList/' + parentList[index])
+        let selectItem = parentList[index]
+        this.props.history.push('/phonesList/teacher/' + selectItem.schId + '/' + selectItem.parentName + selectItem.schName)
     }
 
     onTeacherClick = () => {

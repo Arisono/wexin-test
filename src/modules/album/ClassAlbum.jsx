@@ -151,7 +151,7 @@ export default class ClassAlbum extends Component {
             }
             this.props.history.push('/newAlbum/' + classId + '/' + classname)
         } else {
-            this.props.history.push('/pictureList/' + getStrValue(albumList[index], 'albumId')
+            this.props.history.push('/pictureList/' + this.mType + '/' + getStrValue(albumList[index], 'albumId')
                 + '/' + this.state.albumList[index].albumName)
         }
     }

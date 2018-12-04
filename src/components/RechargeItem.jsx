@@ -27,13 +27,13 @@ export default class RechargeItem extends Component {
         const {rechargeBean} = this.state
 
         return (
-            <div style={{padding:'0 10px'}}>
+            <div style={{padding: '0 10px'}}>
                 <div className='recharge-item-root'>
-                    <div className='recharge-item-type'>{rechargeBean.type}</div>
+                    <div className='recharge-item-type'>{rechargeBean.payName}</div>
                     <div className='gray-line' style={{height: '1px', marginBottom: '10px'}}></div>
                     <div className='recharge-item-line'>
                         <div className='recharge-item-caption'>交费对象：</div>
-                        <div className='recharge-item-value'>{rechargeBean.name}</div>
+                        <div className='recharge-item-value'>{rechargeBean.userName}</div>
                     </div>
                     <div className='recharge-item-line'>
                         <div className='recharge-item-caption'>截止日期：</div>
@@ -48,7 +48,7 @@ export default class RechargeItem extends Component {
                         <div className={rechargeBean.status == '去交费' ?
                             'recharge-item-amount-todo' :
                             'recharge-item-amount-done'}>{'￥:' + rechargeBean.amount}</div>
-                        <div className={rechargeBean.status == '去交费' ?
+                        <div className={rechargeBean.statusCode === 4 ?
                             'recharge-item-btn-todo' :
                             'recharge-item-btn-done'}>{rechargeBean.status}</div>
                     </div>

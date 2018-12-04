@@ -52,9 +52,19 @@ export default class UploadEnclosure extends Component {
         })
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log('update',nextProps)
+        this.setState({
+            fileList: nextProps.fileList
+        })
+    }
+
     render() {
         const {fileList} = this.state
-        const {action, listType, count, multiple, title, needPoint, limit, accept} = this.props
+        const {
+            action, listType, count, multiple,
+            title, needPoint, limit, accept
+        } = this.props
 
         const imgs = []
         if (!isObjEmpty(fileList) && fileList !== '[]') {

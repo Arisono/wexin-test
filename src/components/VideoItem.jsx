@@ -23,19 +23,19 @@ export default class VideoItem extends Component {
     }
 
     render() {
-        const {videoInfo} = this.props
+        const {videoInfo, deleteAble} = this.props
 
         return (
             <div className='video-item-root'>
                 <div className='video-item-head'>
                     <div className='video-item-title'>{videoInfo.picName}</div>
-                    <Icon type="close-circle" theme='filled' onClick={this.onDeleteEvent}/>
+                    {deleteAble ? <Icon type="close-circle" theme='filled' onClick={this.onDeleteEvent}/> : ''}
                 </div>
                 <ReactPlayer
                     url={videoInfo.url}
                     controls
                     width='100%'
-                    height='max-content'/>
+                    height='200px'/>
             </div>
         )
     }

@@ -69,12 +69,12 @@ export default class RouteConfig extends Component {
                     <Route path='/uploadImage/:albumId' component={UploadImage}/>
                     <Route path='/uploadVideo/:classId/:name?' component={UploadVideo}/>
                     <Route path='/classAlbum/:type?' component={ClassAlbum}/>
-                    <Route path='/pictureList/:albumId/:title?' component={PictureList}/>
+                    <Route path='/pictureList/:type/:albumId/:title?' component={PictureList}/>
                     <Route path='/videoPlayer/:title?' component={VideoPlayer}/>
                     <Route path='/principalMailbox' component={PrincipalMailbox}/>
                     <Route path='/meetingSignIn' component={MeetingSignIn}/>
                     <Route path='/phonesSelect' component={PhonesSelect}/>
-                    <Route path='/phonesList/:classTitle?' component={PhonesList}/>
+                    <Route path='/phonesList/:type/:classId?/:classTitle?' component={PhonesList}/>
                     <Route path='/systemMessage' component={SystemMessage}/>
                     <Route path='/useHelp' component={UseHelp}/>
                     <Route path='/wonderMoment/:type?' component={WonderMoment}/>
@@ -84,7 +84,7 @@ export default class RouteConfig extends Component {
                     <Route path='/rechargeRelease' component={RechargeRelease}/>
                     <Route path='/announceRelease' component={AnnounceRelease}/>
                     <Route path='/classRechargeList' component={ClassRechargeList}/>
-                    <Route path='/classRechargeDetail' component={ClassRechargeDetail}/>
+                    <Route path='/classRechargeDetail/:payId' component={ClassRechargeDetail}/>
 
                     {/*刘杰*/}
                     <Route path={"/ImageGrid"} component={ImageGrid}/>

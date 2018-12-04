@@ -15,7 +15,6 @@ export default class ClassRechargeItem extends Component {
     }
 
     componentDidMount() {
-        document.title = ''
     }
 
     render() {
@@ -26,9 +25,10 @@ export default class ClassRechargeItem extends Component {
                     <div style={{flex: '1'}}>
                         <span className='class-recharge-detail-title'>{classRecharge.title}</span>
                         <span
-                            className='class-recharge-detail-person'>({classRecharge.paid + '/' + classRecharge.totalPerson}人)</span>
+                            className='class-recharge-detail-person'>({classRecharge.paid.length + '/'
+                        + classRecharge.totalPerson.length}人)</span>
                     </div>
-                    <span className={classRecharge.status === '收款中' ?
+                    <span className={classRecharge.statusCode === 2 ?
                         'class-recharge-detail-status-todo' :
                         'class-recharge-detail-status-done'}>{classRecharge.status}</span>
                 </div>

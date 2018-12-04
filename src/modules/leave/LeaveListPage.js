@@ -11,6 +11,9 @@ import { Button,message,Icon} from 'antd';
 import InfiniteScroll from 'react-infinite-scroller'
 import {setTitle} from "../../utils/constants";
 import LoadingMore from "../../components/LoadingMore";
+import {fetchPost,fetchGet} from "../../utils/fetchRequest";
+import {API} from "../../configs/api.config";
+import {Toast} from 'antd-mobile'
 /**
  * Created by Arison on 11:22.
  */
@@ -41,7 +44,16 @@ class LeaveListPage extends React.Component{
     }
     
     componentDidMount(){
-
+      fetchGet(API.leaveList,{
+                    stuId:'10000',
+                    pageIndex:'1',
+                    pageSize:'5',
+                    voteType:'1',
+                }).then((response)=>{
+                    console.log("response:"+JSON.stringify(response));
+                }).catch((error)=>{
+                    console.log("error:"+JSON.stringify(error));
+                })
     }
 
     loadMoreAction=()=> {

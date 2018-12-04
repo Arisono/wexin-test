@@ -84,16 +84,16 @@ export default class PhonesList extends Component {
                 isRefreshing: true
             })
         } catch (e) {
-
         }
+
         if (this.mType == 'parent') {
-            this.url = API.getTeacherPhones
+            this.url = API.GET_TEACHER_PHONES
             this.params = {
                 stuId: this.classId
             }
             this.getPhones()
         } else if (this.mType == 'teacher') {
-            this.url = API.getParentPhones
+            this.url = API.GET_PARENT_PHONES
             this.params = {
                 schId: this.classId
             }
@@ -154,17 +154,29 @@ export default class PhonesList extends Component {
 
                             phonesList.push(phoneBean)
                         })
+                    } else {
+                        if (mPageIndex > 1) {
+                            mPageIndex--
+                        }
                     }
                 }
-
+            } else {
+                if (mPageIndex > 1) {
+                    mPageIndex--
+                }
             }
 
             this.setState({
                 phonesList,
                 isLoading: false,
+                isRefreshing: false,
             })
         }).catch(error => {
             Toast.hide()
+
+            if (mPageIndex > 1) {
+                mPageIndex--
+            }
             if (typeof error === 'string') {
                 Toast.fail(error, 2)
             } else {
@@ -172,8 +184,8 @@ export default class PhonesList extends Component {
             }
 
             this.setState({
-                phonesList: this.state.phonesList,
                 isLoading: false,
+                isRefreshing: false,
             })
         })
     }

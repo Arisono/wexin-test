@@ -10,7 +10,7 @@ import 'swiper/dist/css/swiper.min.css'
 import 'css/consume-re.css'
 import NotifyBoBean from '../../model/NotifyBoBean'
 import {List, Icon, Skeleton} from 'antd'
-import {Modal, PullToRefresh, Toast} from 'antd-mobile'
+import {Modal, Toast} from 'antd-mobile'
 import RefreshLayout from '../../components/RefreshLayout'
 import NotifyBoardItem from "../../components/NotifyBoardItem";
 import {getArrayValue, getIntValue, getStrValue, isObjEmpty} from "../../utils/common";

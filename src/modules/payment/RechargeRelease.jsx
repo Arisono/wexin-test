@@ -10,6 +10,8 @@ import 'css/payment.css'
 import {API} from 'api'
 import TargetSelect from 'components/TargetSelect'
 import {fetchPost} from "../../utils/fetchRequest";
+import {getStrValue, isObjEmpty} from "../../utils/common";
+import {regExpConfig} from "../../configs/regexp.config";
 
 const {TextArea} = Input
 
@@ -73,6 +75,7 @@ export default class RechargeRelease extends Component {
             classText: '',
             remarks: '',
             endTime: now,
+            percapita: '',
             targetList: ['1-1'],
             targetCount: 1
         }
@@ -85,19 +88,19 @@ export default class RechargeRelease extends Component {
 
         typeList.push({
             label: '学校收费',
-            value: '学校收费'
+            value: '1'
         })
         typeList.push({
             label: '班级收费',
-            value: '班级收费'
+            value: '2'
         })
         typeList.push({
             label: '学杂费',
-            value: '学杂费'
+            value: '3'
         })
         typeList.push({
             label: '书本费',
-            value: '书本费'
+            value: '4'
         })
 
         this.setState({typeList: typeList})
@@ -108,7 +111,10 @@ export default class RechargeRelease extends Component {
     }
 
     render() {
-        const {typeList, classText, remarks, targetCount, targetList} = this.state
+        const {
+            typeList, classText, remarks,
+            targetCount, targetList, percapita
+        } = this.state
 
         const targetProps = {
             targetData: targetData,
@@ -125,8 +131,7 @@ export default class RechargeRelease extends Component {
                 <div className='gray-line'></div>
                 <Picker
                     data={typeList} title='收款类型' extra='请选择'
-                    value={classText} onChange={this.handleClassChange}
-                    onOk={this.handleClassChange} cols={1}>
+                    value={classText} onChange={this.handleClassChange} cols={1}>
                     <List.Item arrow="horizontal">收款类型</List.Item>
                 </Picker>
                 <div className='gray-line'></div>
@@ -138,6 +143,7 @@ export default class RechargeRelease extends Component {
                         type='money' clear
                         moneyKeyboardAlign='left'
                         placeholder='请输入金额'
+                        value={percapita}
                         onChange={this.amountChange}/>
                 </div>
                 <TextArea className='remarks-input' placeholder='请输入备注'
@@ -160,26 +166,64 @@ export default class RechargeRelease extends Component {
     }
 
     onRechargeRelease = () => {
+        const {classText, remarks, percapita, endTime, typeList} = this.state
+        const payType = 1
+
+        console.log('/' + classText + '/' + remarks + '/' + percapita + '/' + endTime.format('yyyy-MM-dd hh:mm:ss'));
+
+
+        if (isObjEmpty(classText, percapita, endTime)) {
+            Toast.fail('存在未填项', 2)
+            return
+        }
+
+        if (!regExpConfig.float.test(percapita)) {
+            Toast.fail('请输入正确的收款金额')
+            return
+        }
         Toast.loading('正在发布...', 0)
 
-        const {} = this.state
-
         const userList = ['10000', '10001', '10002', '10003']
-        console.log(JSON.stringify(userList))
-        fetchPost(API.PAYMENT_PAYFEE, {
-            payName: '',
-            payTotal: '',
-            payStartDate: '',
-            payEndDate: '',
-            payStatus: 1,
-            payRemarks: '',
+
+        const params = {
+            payName: typeList[payType] ? typeList[payType].label : '',
+            payTotal: percapita,
+            payStartDate: now.format('yyyy-MM-dd hh:mm:ss'),
+            payEndDate: endTime.format('yyyy-MM-dd hh:mm:ss'),
+            payStatus: 2,
+            payRemarks: remarks,
+            payType: payType,
             userId: 10001,
-            stuIds: ''
+            stuIds: JSON.stringify(userList)
+        }
+        fetchPost(API.PAYMENT_PAYFEE, {
+            paymentString: JSON.stringify(params)
+        }).then(response => {
+            Toast.hide()
+
+            Toast.success('发布成功')
+
+            this.setState({
+                classText: '',
+                remarks: '',
+                endTime: now,
+                percapita: '',
+            })
+        }).catch(error => {
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('数据请求异常', 2)
+            }
         })
     }
 
     amountChange = (value) => {
-        console.log(value)
+        this.setState({
+            percapita: value
+        })
     }
 
     onTargetChange = (value, label, checkNodes, count) => {
@@ -190,6 +234,7 @@ export default class RechargeRelease extends Component {
     }
 
     handleClassChange = (v) => {
+        console.log(v)
         this.setState({classText: v})
     }
 

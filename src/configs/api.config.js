@@ -46,6 +46,8 @@ export const API = {
     PAYMENT_PAYMENTLIST_TEACHER: _baseURL + '/payment/paymentListByUserId',
     //收费详情
     PAYMENT_PAYMENT_DETAIL: _baseURL + '/payment/paymentDetails',
+    //结束收款
+    PAYMENT_ENTPAY: _baseURL + '/payment/endPay',
 
     //消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
@@ -75,8 +77,8 @@ export const API = {
     homeWorkList: _baseURL + "/notify/getMeetingList",
     homeWorkDetail: _baseURL + "/notify/taskDetail",
     //留言功能
-    messageCreate: _baseURL +"/leaveMessage/messageCreate",
-    messageList:_baseURL +"/leaveMessage/getMessageListByNotifyId",
+    messageCreate: _baseURL + "/leaveMessage/messageCreate",
+    messageList: _baseURL + "/leaveMessage/getMessageListByNotifyId",
     //学生请假
     leaveCreate: _baseURL + "/leave/leaveCreate",
     leaveList: _baseURL + "/leave/leaveList",
@@ -87,9 +89,9 @@ export const API = {
     getScoreByStuId: _baseURL + '/score/getScoreByStuId',
 
     //OA单据创建
-    oaCreate:_baseURL + '/oaApprove/oaCreate',
+    oaCreate: _baseURL + '/oaApprove/oaCreate',
     //审批列表
-    oaApproveList:_baseURL + '/oaApprove/oaList'
+    oaApproveList: _baseURL + '/oaApprove/oaList'
 }
 
 

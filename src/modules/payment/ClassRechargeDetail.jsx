@@ -7,12 +7,14 @@ import React, {Component} from 'react'
 import 'css/payment.css'
 import PhonesItem from "../../components/PhonesItem";
 import {List} from 'antd'
-import {Toast} from 'antd-mobile'
+import {Toast, Modal} from 'antd-mobile'
 import PhonesBean from 'model/PhonesBean'
 import ClassRechargeBean from 'model/ClassRechargeBean'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {getIntValue, getStrValue} from "../../utils/common";
+
+const {alert} = Modal
 
 export default class ClassRechargeDetail extends Component {
 
@@ -69,10 +71,11 @@ export default class ClassRechargeDetail extends Component {
                     <div className='gray-line'></div>
                     <div className='class-recharge-detail-header'>
                         <div style={{flex: '1'}}>
-                            <span className='class-recharge-detail-title'>学费</span>
+                            <span className='class-recharge-detail-title'>{rechargeBean.title}</span>
                             <span className='class-recharge-detail-person'>({payedPerson}/{totalPerson}人)</span>
                         </div>
-                        <span className='class-recharge-detail-status-todo'>收款中</span>
+                        <span className={rechargeBean.statusCode === 2 ?
+                            'class-recharge-detail-status-todo' : ''}>{rechargeBean.status}</span>
                     </div>
                     <div className='gray-line' style={{height: '1px'}}></div>
                     <div className='class-recharge-detail-content'>
@@ -91,7 +94,11 @@ export default class ClassRechargeDetail extends Component {
                     </div>
                     <div className='class-recharge-detail-menu'>
                         <div className='class-recharge-detail-money'>￥{amount}</div>
-                        <div className='class-recharge-detail-stop'>停止收款</div>
+                        {rechargeBean.statusCode === 2 ?
+                            <div className='class-recharge-detail-stop'
+                                 onClick={this.onEndPay}>停止收款
+                            </div> : ''}
+
                     </div>
                     <div className='gray-line'></div>
                     <div className='class-recharge-detail-not'>未付款{totalPerson - payedPerson}人</div>
@@ -155,5 +162,35 @@ export default class ClassRechargeDetail extends Component {
                 Toast.fail('数据请求异常', 2)
             }
         })
+    }
+
+    onEndPay = () => {
+        alert('提示', '确定结束此收费流程吗？', [
+            {
+                text: '取消', onPress: () => {
+                }
+            },
+            {
+                text: '确定', onPress: () => {
+                    Toast.loading('正在停止...', 0)
+                    fetchGet(API.PAYMENT_ENTPAY, {
+                        payId: this.payId
+                    }).then(response => {
+                        Toast.success(response.data)
+
+                        this.getPayDetail()
+                    }).catch(error => {
+                        Toast.hide()
+
+                        if (typeof error === 'string') {
+                            Toast.fail(error, 2)
+                        } else {
+                            Toast.fail('数据请求异常', 2)
+                        }
+                    })
+                }
+            }
+        ])
+
     }
 }

@@ -5,10 +5,12 @@
 
 import React, {Component} from 'react'
 import {Icon, Input, Button, Switch, message} from 'antd'
+import {Toast} from 'antd-mobile'
 import 'css/principal-mailbox.css'
 import {isObjEmpty} from "../../utils/common";
 import UploadEnclosure from 'components/UploadEnclosure'
 import {_baseURL, API} from "../../configs/api.config";
+import {fetchPost} from "../../utils/fetchRequest";
 
 const {TextArea} = Input
 
@@ -66,6 +68,46 @@ export default class PrincipalMailbox extends Component {
                 <span className='common-record-text' onClick={this.principalRecord}>历史投递</span>
             </div>
         )
+    }
+
+    releaseEvent = () => {
+        const {fileList, suggest, isAnonymous} = this.state;
+
+        if (isObjEmpty(suggest)) {
+            Toast.fail('请填写您的意见或建议')
+            return
+        }
+
+        Toast.loading('正在发布...', 0)
+
+        const fileUrls = []
+        if (fileList) {
+            fileList.forEach((value, index) => {
+                fileUrls.push(value.picUrl)
+            })
+        }
+
+        fetchPost(API.PRINCIPAL_MAILBOX, {
+            details: suggest,
+            notifyFiles: JSON.stringify(fileUrls),
+            userId: 10001,
+            schId: 1
+        }).then(response => {
+            Toast.hide()
+            Toast.success('提交成功，谢谢您的建议！')
+
+            this.setState({
+                suggest: '',
+                fileList: []
+            })
+        }).catch(error => {
+            Toast.hide()
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
+        })
     }
 
     suggestChange = e => {

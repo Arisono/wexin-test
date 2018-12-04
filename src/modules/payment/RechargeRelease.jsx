@@ -167,10 +167,8 @@ export default class RechargeRelease extends Component {
 
     onRechargeRelease = () => {
         const {classText, remarks, percapita, endTime, typeList} = this.state
-        const payType = 1
 
-        console.log('/' + classText + '/' + remarks + '/' + percapita + '/' + endTime.format('yyyy-MM-dd hh:mm:ss'));
-
+        console.log(typeList[classText].label + '/' + Number(classText) + '/' + remarks + '/' + percapita + '/' + endTime.format('yyyy-MM-dd hh:mm:ss'));
 
         if (isObjEmpty(classText, percapita, endTime)) {
             Toast.fail('存在未填项', 2)
@@ -186,13 +184,13 @@ export default class RechargeRelease extends Component {
         const userList = ['10000', '10001', '10002', '10003']
 
         const params = {
-            payName: typeList[payType] ? typeList[payType].label : '',
+            payName: typeList[classText] ? typeList[classText].label : '',
             payTotal: percapita,
             payStartDate: now.format('yyyy-MM-dd hh:mm:ss'),
             payEndDate: endTime.format('yyyy-MM-dd hh:mm:ss'),
             payStatus: 2,
             payRemarks: remarks,
-            payType: payType,
+            payType: Number(classText),
             userId: 10001,
             stuIds: JSON.stringify(userList)
         }

@@ -28,10 +28,10 @@ export default class RechargeList extends Component {
     }
 
     componentDidMount() {
-        document.title = '收费通知'
+        document.title = '交费通知'
 
-        mPageIndex = 0
         Toast.loading('努力加载中...', 0)
+        mPageIndex = 0
         this.loadRechargeList()
     }
 

@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react'
-import {Icon, Input, Button, Upload, Switch, message, Modal} from 'antd'
+import {Icon, Input, Button, Switch, message} from 'antd'
 import 'css/principal-mailbox.css'
 import {isObjEmpty} from "../../utils/common";
 import UploadEnclosure from 'components/UploadEnclosure'

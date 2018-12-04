@@ -54,6 +54,8 @@ export const API = {
     GET_TEACHER_PHONES: _baseURL + '/user/getTeacherPhones',
     //获取班级家长手机号
     GET_PARENT_PHONES: _baseURL + '/user/getParentPhones',
+    //会议签到
+    MEETING_SIGN:_baseURL+'/notify/meetingSign',
 
 
 

@@ -28,11 +28,13 @@ export default class ClassRechargeList extends Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         document.title = '班级收费'
+    }
 
-        mPageIndex = 0
+    componentDidMount() {
         Toast.loading('努力加载中...', 1)
+        mPageIndex = 0
         this.loadRechargeList()
     }
 
@@ -93,7 +95,6 @@ export default class ClassRechargeList extends Component {
                 for (let i = 0; i < dataArray.length; i++) {
                     let dataObject = dataArray[i]
                     if (dataObject) {
-
                         let rechargeBean = new ClassRechargeBean()
 
                         rechargeBean.payId = getIntValue(dataObject, 'payId')
@@ -128,7 +129,6 @@ export default class ClassRechargeList extends Component {
                     mPageIndex--
                 }
             }
-
 
             this.setState({
                 rechargeList,

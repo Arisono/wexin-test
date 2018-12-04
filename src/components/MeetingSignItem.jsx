@@ -5,7 +5,10 @@
 
 import React, {Component} from 'react'
 import MeetingBean from "../model/MeetingBean";
+import {Modal} from 'antd-mobile'
 import 'css/meeting.css'
+
+const {alert} = Modal
 
 export default class MeetingSignItem extends Component {
 
@@ -27,12 +30,12 @@ export default class MeetingSignItem extends Component {
         const {meetingBean} = this.state
 
         return (
-            <div className='signItemLayout'>
+            <div className='signItemLayout' onClick={this.onItemClick}>
                 <div className='signCreateTime'>{meetingBean.createTime}</div>
                 <div className='signContentlayout'>
                     <div className='titleLayout'>
                         <div className='titleText'>{meetingBean.title}</div>
-                        <div className={meetingBean.meetStatus == '进行中' ? 'meetStatusRed' : 'meetStatusGray'}>
+                        <div className={meetingBean.meetStatusCode === 3 ? 'meetStatusRed' : 'meetStatusGray'}>
                             {meetingBean.meetStatus}
                         </div>
                     </div>
@@ -49,12 +52,35 @@ export default class MeetingSignItem extends Component {
                         <div className='valueText'>{meetingBean.sponsor}</div>
                     </div>
                     <div className='bottomLayout'>
-                        <span className={meetingBean.signStatus == '签到' ? 'signBtnActive' : 'signBtnEnable'}>
+                        <span className={meetingBean.signStatusCode === 1 ? 'signBtnActive' : 'signBtnEnable'}
+                              onClick={this.onMeetingSign}>
                             {meetingBean.signStatus}
                         </span>
                     </div>
                 </div>
             </div>
         )
+    }
+
+    onMeetingSign = () => {
+        const {meetingBean} = this.state
+
+        if (meetingBean.signStatusCode === 1) {
+            alert('提示', '确定对该会议签到吗？', [
+                {
+                    text: '取消', onPress: () => {
+                    }
+                },
+                {
+                    text: '确定', onPress: () => {
+                        this.props.onMeetingSign(this.props.index)
+                    }
+                }
+            ])
+        }
+    }
+
+    onItemClick = () => {
+        this.props.onItemClick(this.props.index)
     }
 }

@@ -6,15 +6,15 @@
 import React, {Component} from 'react'
 import MeetingSignItem from 'components/MeetingSignItem'
 import MeetingBean from "model/MeetingBean";
-import {isObjEmpty} from "../../utils/common";
-import InfiniteScroll from 'react-infinite-scroller'
-import LoadingMore from 'components/LoadingMore'
-import {fetchPost} from "../../utils/fetchRequest";
+import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {Toast} from 'antd-mobile'
+import {Icon} from 'antd'
+import RefreshLayout from "../../components/RefreshLayout";
 
 const mPageSize = 10
-let mPageIndex = 1
+let mPageIndex = 0
 export default class MeetingSignIn extends Component {
 
     constructor() {
@@ -22,78 +22,166 @@ export default class MeetingSignIn extends Component {
 
         this.state = {
             meetingSignList: [],
-            hasMoreData: true
+            isRefreshing: false,
         }
     }
 
     componentDidMount() {
         document.title = '会议签到'
+
+        Toast.loading('数据加载中...', 0)
+
+        mPageIndex = 0
+        this.loadMeetList()
     }
 
     render() {
-        const {meetingSignList, hasMoreData} = this.state
+        const {meetingSignList, isRefreshing} = this.state
 
         let meetingItems = []
         for (let i = 0; i < meetingSignList.length; i++) {
             let meetingSignBean = meetingSignList[i];
             if (!isObjEmpty(meetingSignBean)) {
-                meetingItems.push(<MeetingSignItem meetingBean={meetingSignBean}/>)
+                meetingItems.push(<MeetingSignItem
+                    meetingBean={meetingSignBean}
+                    index={i}
+                    onMeetingSign={this.onMeetingSign.bind(this)}
+                    onItemClick={this.onItemClick.bind(this)}/>)
             }
         }
 
         return (
             <div style={{background: '#F2F2F2'}}>
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={this.loadMeetList}
-                    hasMore={hasMoreData}
-                    loader={<LoadingMore/>}>
+                <RefreshLayout
+                    refreshing={isRefreshing}
+                    onRefresh={this.loadMeetList}>
                     {meetingItems}
-                </InfiniteScroll>
+                </RefreshLayout>
+                <Icon type="plus-circle" theme='filled' className='common-add-icon'
+                      onClick={this.onAddMeet}/>
             </div>
         )
     }
 
-    loadMeetList = (index) => {
-        setTimeout(() => {
-            const {meetingSignList} = this.state
-            for (let i = 0; i < 8; i++) {
-                let meetBean = new MeetingBean()
-                meetBean.createTime = '2018-10-25 10:20'
-                meetBean.title = '三年级全体教师期末动员大会'
-                if (i % 2 == 0) {
-                    meetBean.meetStatus = '进行中'
-                } else {
-                    meetBean.meetStatus = '已结束'
-                }
-                meetBean.startTime = '2018-10-25 10:20'
-                meetBean.endTime = '2018-10-25 11:20'
-                meetBean.address = '行政楼3楼办公室'
-                meetBean.sponsor = '饶猛'
-                if (i % 2 == 0) {
-                    meetBean.signStatus = '签到'
-                } else {
-                    meetBean.signStatus = '已签到'
-                }
+    loadMeetList = () => {
+        try {
+            this.setState({
+                isRefreshing: true
+            })
+        } catch (e) {
+        }
 
-                meetingSignList.push(meetBean)
+        mPageIndex++
+        console.log(mPageIndex)
+
+        const {meetingSignList} = this.state
+        if (mPageIndex === 1) {
+            meetingSignList.length = 0
+        }
+
+        fetchPost(API.GET_MEETING_LIST, {
+            userId: 10001,
+            notifyType: 6,
+            pageIndex: mPageIndex,
+            pageSize: mPageSize
+        }).then(response => {
+            Toast.hide()
+
+            if (isObjEmpty(response, response.data, response.data.notify)) {
+                if (mPageIndex > 1) {
+                    mPageIndex--
+                }
+            } else {
+                response.data.notify.forEach((item, index) => {
+                    let meetBean = new MeetingBean()
+
+                    meetBean.meetId = getIntValue(item, 'notifyId')
+                    meetBean.title = getStrValue(item, 'notifyName')
+                    meetBean.meetStatusCode = getIntValue(item, 'notifyStatus')
+                    if (meetBean.meetStatusCode === 2) {
+                        meetBean.meetStatus = '未开始'
+                    } else if (meetBean.meetStatusCode === 3) {
+                        meetBean.meetStatus = '进行中'
+                    } else if (meetBean.meetStatusCode === 4) {
+                        meetBean.meetStatus = '已结束'
+                    }
+                    meetBean.meetDetail = getStrValue(item, 'notifyDetails')
+                    meetBean.createTime = getStrValue(item, 'creatDate')
+                    meetBean.startTime = getStrValue(item, 'startDate')
+                    meetBean.endTime = getStrValue(item, 'endDate')
+                    meetBean.remainTime = getStrValue(item, 'reminderDate')
+                    meetBean.address = getStrValue(item, 'notifyAddress')
+                    meetBean.sponsor = getStrValue(item, 'notifyCreatorName')
+                    meetBean.sponsorId = getIntValue(item, 'notifyCreator')
+                    meetBean.signStatusCode = getIntValue(item, 'signStatus')
+                    if (meetBean.signStatusCode === 1) {
+                        meetBean.signStatus = '签到'
+                    } else if (meetBean.signStatusCode === 2) {
+                        meetBean.signStatus = '已签到'
+                    }
+                    meetBean.remarks = getStrValue(item, 'notifyRemarks')
+
+                    meetingSignList.push(meetBean)
+
+                })
             }
 
+
             this.setState({
-                meetingSignList: meetingSignList
+                meetingSignList: meetingSignList,
+                isRefreshing: false,
             })
 
-            fetchPost(API.GET_MEETING_LIST, {
-                userId: 10000,
-                notifyType: 6,
-                pageIndex: mPageIndex,
-                pageSize: mPageSize
-            }).then(response => {
+        }).catch(error => {
+            Toast.hide()
 
-            }).catch(error => {
+            if (mPageIndex > 1) {
+                mPageIndex--
+            }
+            this.setState({
+                isRefreshing: false,
+            })
+
+            if (typeof error === 'string') {
                 Toast.fail(error, 2)
-            })
-        }, 1500)
+            } else {
+                Toast.fail('数据请求异常')
+            }
+        })
+    }
+
+    onMeetingSign = index => {
+        const {meetingSignList} = this.state
+
+        Toast.loading('', 0)
+        fetchGet(API.MEETING_SIGN, {
+            userId: 10001,
+            notifyId: 1,
+        }).then(response => {
+            Toast.hide()
+            Toast.success('签到成功')
+            meetingSignList[index].signStatus = '已签到'
+
+            this.setState({meetingSignList})
+        }).catch(error => {
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('数据请求异常')
+            }
+        })
+    }
+
+    onAddMeet = () => {
+        this.props.history.push('/sendMeetting')
+    }
+
+    onItemClick = index => {
+        const {meetingSignList} = this.state
+
+        this.props.history.push('/meet-detail/'+meetingSignList[index].meetId)
     }
 }
 

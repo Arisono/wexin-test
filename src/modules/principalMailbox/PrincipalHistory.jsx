@@ -10,7 +10,7 @@ import PrincipalItem from 'components/PrincipalItem'
 import {fetchPost} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import RefreshLayout from "../../components/RefreshLayout";
-import {isObjEmpty} from "../../utils/common";
+import {getArrayValue, getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 
 const mPageSize = 10
 let mPageIndex = 0
@@ -85,25 +85,25 @@ export default class PrincipalHistory extends Component {
         }).then(response => {
             Toast.hide()
 
-            if (isObjEmpty(response, response.data, response.creat)) {
+            if (isObjEmpty(response, response.data, response.data.creat)) {
                 if (mPageIndex > 1) {
                     mPageIndex--
                 }
             } else {
-                response.data.creat.map((item, index) => {
+                console.log(response.data.creat)
+                response.data.creat.forEach((item, index) => {
                     let rechargeBean = {}
 
-                    rechargeBean.time = item.creatDate
-                    if (item.isRead == 1) {
+                    rechargeBean.time = getStrValue(item, 'creatDate')
+                    if (getIntValue(item, 'isRead') == 1) {
                         rechargeBean.status = '已查阅'
                     } else {
                         rechargeBean.status = '未查阅'
                     }
-                    rechargeBean.suggest = item.notifyDetails
-                    rechargeBean.enclosure = item.notifyFiles
+                    rechargeBean.suggest = getStrValue(item,'notifyDetails')
+                    rechargeBean.enclosure = getArrayValue(item, 'notifyFiles')
 
-
-                    if (item.leaveMessages.length > 0) {
+                    if (!isObjEmpty(item.leaveMessages)) {
                         rechargeBean.reply = item.leaveMessages[0].messContent
                     }
 

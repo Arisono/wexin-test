@@ -81,7 +81,11 @@ export const API = {
     //OA单据创建
     oaCreate:_baseURL + '/oaApprove/oaCreate',
     //审批列表
-    oaApproveList:_baseURL + '/oaApprove/oaList'
+    oaApproveList:_baseURL + '/oaApprove/oaList',
+    //审批操作
+    doapprove:_baseURL+'/oaApprove/approve',
+    //审批单详情
+    oaDetails:_baseURL + '/oaApprove/oaDetails'
 }
 
 

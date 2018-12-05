@@ -30,7 +30,7 @@ export default class BindMenu extends Component {
                         style={{
                             marginTop: '20px', letterSpacing: '10px',
                             background: '#05DC40', borderRadius: '9px',
-                            fontSize: '14px',border:'none'
+                            fontSize: '14px', border: 'none'
                         }}
                         onClick={this.teacherBind}>我是老师</Button>
             </div>

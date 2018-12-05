@@ -90,7 +90,6 @@ export default class ConsumeRePage extends Component {
                 isLoading: false,
                 isRefreshing: false,
             })
-
         }).catch(error => {
             Toast.hide();
 
@@ -100,14 +99,12 @@ export default class ConsumeRePage extends Component {
             this.setState({
                 isRefreshing: false,
             })
-
             if (typeof error === 'string') {
                 Toast.fail(error, 2)
             } else {
                 Toast.fail('数据请求异常')
             }
         })
-
     }
 
 
@@ -123,11 +120,12 @@ export default class ConsumeRePage extends Component {
                     refreshing={isRefreshing}
                     onRefresh={this.loadReleaseList}>
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
-                        <List className='phones-list-layout' dataSource={consumeList} renderItem={consumeBean => (
-                            <List.Item>
-                                <ConsumeReItem consumeBean={consumeBean}/>
-                            </List.Item>
-                        )}/>
+                        <List className='phones-list-layout' dataSource={consumeList}
+                              renderItem={consumeBean => (
+                                  <List.Item>
+                                      <ConsumeReItem consumeBean={consumeBean}/>
+                                  </List.Item>
+                              )}/>
                     </Skeleton>
                 </RefreshLayout>
             </div>

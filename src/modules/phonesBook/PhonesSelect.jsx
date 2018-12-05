@@ -58,6 +58,7 @@ export default class PhonesSelect extends Component {
             }
         })
 
+        mPageIndex = 0
         this.getTeacherPhones()
         this.getClassList()
     }

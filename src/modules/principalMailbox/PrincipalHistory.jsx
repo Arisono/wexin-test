@@ -11,6 +11,7 @@ import {fetchPost} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import RefreshLayout from "../../components/RefreshLayout";
 import {getArrayValue, getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
+import ImagesViewer from "../../components/imagesVIewer";
 
 const mPageSize = 10
 let mPageIndex = 0
@@ -22,7 +23,7 @@ export default class PrincipalHistory extends Component {
         this.state = {
             principalList: [],
             isRefreshing: false,
-            isLoading: true
+            isLoading: true,
         }
     }
 
@@ -95,13 +96,14 @@ export default class PrincipalHistory extends Component {
                     let rechargeBean = {}
 
                     rechargeBean.time = getStrValue(item, 'creatDate')
-                    if (getIntValue(item, 'isRead') == 1) {
-                        rechargeBean.status = '已查阅'
-                    } else {
+                    if (getIntValue(item, 'isreading') == 1) {
                         rechargeBean.status = '未查阅'
+                    } else {
+                        rechargeBean.status = '已查阅'
                     }
-                    rechargeBean.suggest = getStrValue(item,'notifyDetails')
-                    rechargeBean.enclosure = getArrayValue(item, 'notifyFiles')
+                    rechargeBean.suggest = getStrValue(item, 'notifyDetails')
+                    rechargeBean.enclosure = getArrayValue(item, 'enclosure')
+                    console.log(rechargeBean.enclosure)
 
                     if (!isObjEmpty(item.leaveMessages)) {
                         rechargeBean.reply = item.leaveMessages[0].messContent
@@ -143,4 +145,5 @@ export default class PrincipalHistory extends Component {
         this.setState({principalList})
         Toast.success('删除成功', 2)
     }
+
 }

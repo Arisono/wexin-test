@@ -56,6 +56,8 @@ export const API = {
     GET_PARENT_PHONES: _baseURL + '/user/getParentPhones',
     //会议签到
     MEETING_SIGN:_baseURL+'/notify/meetingSign',
+    //校长信箱提交
+    PRINCIPAL_MAILBOX:_baseURL+'/notify/principalMailbox',
 
 
 

@@ -102,7 +102,8 @@ export default class PrincipalHistory extends Component {
                         rechargeBean.status = '已查阅'
                     }
                     rechargeBean.suggest = getStrValue(item, 'notifyDetails')
-                    rechargeBean.enclosure = getArrayValue(item, 'notifyFiles')
+                    rechargeBean.enclosure = getArrayValue(item, 'enclosure')
+                    console.log(rechargeBean.enclosure)
 
                     if (!isObjEmpty(item.leaveMessages)) {
                         rechargeBean.reply = item.leaveMessages[0].messContent

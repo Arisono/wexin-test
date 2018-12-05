@@ -159,7 +159,7 @@ export default class MeetingSignIn extends Component {
         Toast.loading('', 0)
         fetchGet(API.MEETING_SIGN, {
             userId: 10001,
-            notifyId: 1,
+            notifyId: meetingSignList[index].meetId,
         }).then(response => {
             Toast.hide()
             Toast.success('签到成功')

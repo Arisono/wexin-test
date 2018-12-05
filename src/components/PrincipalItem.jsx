@@ -35,7 +35,7 @@ export default class PrincipalItem extends Component {
         if (!isObjEmpty(principalBean.enclosure) && principalBean.enclosure != '[]') {
             enclosureItem =
                 <div className='principal-enclosure-layout'>
-                    <img src={principalBean.enclosure[0]} className='principal-enclosure-img'
+                    <img src={_baseURL + principalBean.enclosure[0]} className='principal-enclosure-img'
                          onClick={this.handlePreview}/>
                     <span className='principal-enclosure-count'>({principalBean.enclosure.length}张)</span>
                 </div>

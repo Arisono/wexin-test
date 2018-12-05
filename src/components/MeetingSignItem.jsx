@@ -62,7 +62,8 @@ export default class MeetingSignItem extends Component {
         )
     }
 
-    onMeetingSign = () => {
+    onMeetingSign = (e) => {
+        e.stopPropagation();
         const {meetingBean} = this.state
 
         if (meetingBean.signStatusCode === 1) {

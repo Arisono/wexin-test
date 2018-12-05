@@ -6,7 +6,6 @@
 import React,{Component} from 'react';
 import './ApprovelDetail.css';
 import hi_img from '../../../style/imgs/hiimg.png';
-import line_img from '../../../style/imgs/line_img.png';
 import DetailItem from './DetailItem';
 import {isObjEmpty} from "../../../utils/common";
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
@@ -15,12 +14,14 @@ import ItemApprovel from './ItemApprovel';
 import { Button,Modal } from 'antd';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
+import {Toast} from 'antd-mobile';
 
 
 export default class ApprovelDetail extends Component{
     constructor(){
         super();
         this.state = {
+            showButton:false,
             AMvisible: false,
             AMTitle:null,
             detailList:[],
@@ -89,7 +90,7 @@ export default class ApprovelDetail extends Component{
                 <div style={{marginBottom:50}}>
                     {this.state.approvelData.map((itemdata,index) => <ItemApprovel key ={index} itemdata = {itemdata}></ItemApprovel>)}
                 </div>
-                {(!this.state.isMyApply||this.state.docModel.approveStatus == 1) ?  <div style={{display:'flex',flexDirection:'row',marginBottom:20}} >
+                {this.state.showButton ?  <div style={{display:'flex',flexDirection:'row',marginBottom:20}} >
                         <div style={{width:'50%',textAlign:'center'}}>
                             <Button  type="primary" className="agree_sty" onClick={this.handleStatusClick.bind(this,1)}>同意</Button>
                         </div>
@@ -123,7 +124,8 @@ export default class ApprovelDetail extends Component{
          }else if(status == 2){
              statusTitle = '不同意'
          }
-        console.log('您点击了',statusTitle)
+        // console.log('您点击了',statusTitle)
+
         this.setState({
             AMvisible:true,
             AMTitle:statusTitle,
@@ -138,15 +140,23 @@ export default class ApprovelDetail extends Component{
             return
         }
         fetchPost(API.doapprove,{
+            userId:10007,
             approveId:this.state.approveId,
             status:this.state.handleStatus,
             approveOpinion:this.state.approveOpinion
         },{}).then((response)=>{
             if(response.success && response.data){
-
+                Toast.show(response.data,1)
+                this.setState({
+                    showButton:false
+                })
+                setTimeout(()=>{
+                    this.props.history.push("/approvel")
+                },3000)
             }
         }).catch((error) =>{
             console.log('error',error)
+            Toast.show(error.message,1)
         })
     }
     handelValueCom = ()=>{
@@ -227,7 +237,6 @@ export default class ApprovelDetail extends Component{
             approveId:this.props.match.params.approveId,
             isMyApply:this.props.match.params.isMyApply
         },function () {
-            console.log('approveId',this.state.approveId)
             if(this.state.approveId == null || this.state.approveId == ''){
                 return
             }else {
@@ -235,7 +244,17 @@ export default class ApprovelDetail extends Component{
                     approveId:this.state.approveId
                 },{}).then((response)=>{
                     if(response.success && response.data){
-
+                        var approveStatus = response.data.approveStatus
+                        var showbutton = false
+                        if(approveStatus == 1 && this.state.isMyApply== 'false'){
+                            showbutton = true
+                        }else {
+                            showbutton = false
+                        }
+                        this.setState({
+                            showButton:showbutton,
+                            docModel: response.data
+                        })
                     }
                 }).catch((error) =>{
                     console.log('error',error)

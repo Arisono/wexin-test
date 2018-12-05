@@ -24,7 +24,7 @@ function Test(){
 }
 export default class SendMeet extends Component{
     componentWillMount() {
-        document.title = '发起投票'
+        document.title = '发起会议'
     }
     constructor(){
         super();
@@ -195,7 +195,6 @@ export default class SendMeet extends Component{
         // console.log('this.state.earlyTime*1000*60',this.state.earlyTime*1000*60)
         console.log('noticeT',noticeT)
         console.log('noticeT',new Date(noticeT))
-        return
         let params = {
             notifyType:6,
             notifyName:this.state.titleValue,

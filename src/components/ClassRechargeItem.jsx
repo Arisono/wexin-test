@@ -15,7 +15,6 @@ export default class ClassRechargeItem extends Component {
     }
 
     componentDidMount() {
-        document.title = ''
     }
 
     render() {

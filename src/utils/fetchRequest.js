@@ -1,4 +1,4 @@
-import {isObjNull} from "./common";
+import {getStrValue, isObjNull} from "./common";
 
 export function fetchPost(url, params, header) {
     if (isObjNull(header)) {
@@ -11,7 +11,7 @@ export function fetchPost(url, params, header) {
             // if ((typeof params[key]) === 'string') {
             //     formData.append(key, encodeURI(params[key].toString()))
             // } else {
-                formData.append(key, params[key])
+            formData.append(key, params[key])
             // }
         }
     }
@@ -40,7 +40,8 @@ export function fetchGet(url, params, header) {
     if (params) {
         let paramsArray = [];
         //拼接参数
-        Object.keys(params).forEach(key => paramsArray.push(key + '=' + encodeURI(params[key].toString())))
+        Object.keys(params).forEach(key =>
+            paramsArray.push(key + '=' + encodeURI(getStrValue(params, key).toString())))
 
         if (paramsArray.length > 0) {
             if (url.search(/\?/) === -1) {

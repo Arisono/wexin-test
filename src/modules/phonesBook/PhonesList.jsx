@@ -8,10 +8,15 @@ import PhonesBean from 'model/PhonesBean'
 import {List, Skeleton} from 'antd'
 import PhonesItem from "../../components/PhonesItem";
 import 'css/phones.css'
-import {isObjEmpty} from "../../utils/common";
+import {getStrValue, isObjEmpty} from "../../utils/common";
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {Toast} from "antd-mobile";
+import RefreshLayout from "../../components/RefreshLayout";
+
+
+const mPageSize = 10
+let mPageIndex = 0
 
 export default class PhonesList extends Component {
 
@@ -22,6 +27,7 @@ export default class PhonesList extends Component {
             phonesList: [],
             classTitle: '',
             isLoading: true,
+            isRefreshing: false,
         }
     }
 
@@ -29,7 +35,12 @@ export default class PhonesList extends Component {
         document.title = '通讯录'
 
         this.title = this.props.match.params.classTitle;
-        this.classId = this.props.match.params.classId;
+        this.mType = this.props.match.params.type
+        if (this.props.match.params.classId) {
+            this.classId = this.props.match.params.classId;
+        } else {
+            this.classId = 10001
+        }
         if (this.title) {
             this.setState({
                 classTitle: this.title
@@ -37,60 +48,135 @@ export default class PhonesList extends Component {
         }
 
         Toast.loading('', 0)
-        this.getParentPhones()
+
+        mPageIndex = 0
+        this.loadPhones()
     }
 
     render() {
-        const {phonesList, classTitle, isLoading} = this.state
+        const {phonesList, classTitle, isLoading, isRefreshing} = this.state
 
         return (
             <div className='phone-select-root'>
                 <div className={isObjEmpty(classTitle) ? 'displayNone' : 'phones-list-header'}>{classTitle}</div>
                 <div className={isObjEmpty(classTitle) ? 'displayNone' : 'gray-line'}></div>
-                <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
-                    <List className='phones-list-layout'
-                          dataSource={phonesList}
-                          renderItem={phonesBean => (
-                              <List.Item>
-                                  <PhonesItem phonesBean={phonesBean}/>
-                              </List.Item>
-                          )}/>
-                </Skeleton>
+
+                <RefreshLayout
+                    refreshing={isRefreshing}
+                    onRefresh={this.loadPhones}>
+                    <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
+                        <List className='phones-list-layout'
+                              dataSource={phonesList}
+                              renderItem={phonesBean => (
+                                  <List.Item>
+                                      <PhonesItem phonesBean={phonesBean}/>
+                                  </List.Item>
+                              )}/>
+                    </Skeleton>
+                </RefreshLayout>
             </div>
         )
     }
 
-    getParentPhones = () => {
+    loadPhones = () => {
+        try {
+            this.setState({
+                isRefreshing: true
+            })
+        } catch (e) {
+        }
 
-        fetchGet(API.getParentPhones, {
-            schId: this.classId,
+        if (this.mType == 'parent') {
+            this.url = API.GET_TEACHER_PHONES
+            this.params = {
+                stuId: this.classId
+            }
+            this.getPhones()
+        } else if (this.mType == 'teacher') {
+            this.url = API.GET_PARENT_PHONES
+            this.params = {
+                schId: this.classId
+            }
+            this.getPhones()
+        } else {
+            Toast.hide()
+            this.setState({
+                isRefreshing: false
+            })
+        }
+    }
+
+    getPhones = () => {
+        mPageIndex++
+        console.log(mPageIndex)
+
+        const {phonesList} = this.state
+        if (mPageIndex === 1) {
+            phonesList.length = 0
+        }
+
+        fetchGet(this.url, {
+            pageIndex: mPageIndex,
+            pageSize: mPageSize,
+            ...this.params
         }).then(response => {
             Toast.hide();
 
-            response.data.map((item, index) => {
-                let phoneBean = new PhonesBean()
-                let phones = []
-                phoneBean.name = item.stuName
-                phoneBean.claName = this.title
+            if (response && response.data) {
+                if (this.mType == 'parent') {
+                    response.data.forEach((item, index) => {
+                        let phoneBean = new PhonesBean()
+                        phoneBean.name = getStrValue(item, 'userName')
+                        phoneBean.claName = this.title
+                        phoneBean.children = ['']
 
-                item.parents.map((ite, ind) => {
-                    phoneBean.children.push(ite.userName)
-                    phones.push(ite.userPhone)
-                })
+                        phoneBean.phone = getStrValue(item, 'UserPhone')
+                        phonesList.push(phoneBean)
+                    })
+                } else if (this.mType == 'teacher') {
+                    if (response.data.students && response.data.students.length > 0) {
+                        response.data.students.forEach((item, index) => {
+                            let phoneBean = new PhonesBean()
+                            let phones = []
+                            phoneBean.name = getStrValue(item, 'stuName')
+                            phoneBean.claName = this.title
 
-                if (phones.length > 0) {
-                    phoneBean.phone = phones[0]
+                            if (item.parents && item.parents.length > 0) {
+                                item.parents.forEach((ite, ind) => {
+                                    phoneBean.children.push(getStrValue(ite, 'userName'))
+                                    phones.push(getStrValue(ite, 'userPhone'))
+                                })
+                            }
+
+                            if (phones.length > 0) {
+                                phoneBean.phone = phones[0]
+                            }
+
+                            phonesList.push(phoneBean)
+                        })
+                    } else {
+                        if (mPageIndex > 1) {
+                            mPageIndex--
+                        }
+                    }
                 }
-
-                this.state.phonesList.push(phoneBean)
-            })
+            } else {
+                if (mPageIndex > 1) {
+                    mPageIndex--
+                }
+            }
 
             this.setState({
-                phonesList: this.state.phonesList,
+                phonesList,
                 isLoading: false,
+                isRefreshing: false,
             })
         }).catch(error => {
             Toast.hide()
+
+            if (mPageIndex > 1) {
+                mPageIndex--
+            }
             if (typeof error === 'string') {
                 Toast.fail(error, 2)
             } else {
@@ -98,8 +184,8 @@ export default class PhonesList extends Component {
             }
 
             this.setState({
-                phonesList: this.state.phonesList,
                 isLoading: false,
+                isRefreshing: false,
             })
         })
     }

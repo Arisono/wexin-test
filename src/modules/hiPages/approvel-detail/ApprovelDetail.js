@@ -13,6 +13,9 @@ import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import LazyLoad from 'react-lazyload'
 import ItemApprovel from './ItemApprovel';
 import { Button,Modal } from 'antd';
+import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
+import {API} from '../../../configs/api.config';
+
 
 export default class ApprovelDetail extends Component{
     constructor(){
@@ -22,7 +25,10 @@ export default class ApprovelDetail extends Component{
             AMTitle:null,
             detailList:[],
             pictureList:[],
-            approvelData:[]
+            approvelData:[],
+            approveId:null,
+            docModel:null,
+            handleStatus:null //审批操作1:同意，2：不同意
         }
     }
      render(){
@@ -83,89 +89,109 @@ export default class ApprovelDetail extends Component{
                 <div style={{marginBottom:50}}>
                     {this.state.approvelData.map((itemdata,index) => <ItemApprovel key ={index} itemdata = {itemdata}></ItemApprovel>)}
                 </div>
-
-                <div style={{display:'flex',flexDirection:'row',marginBottom:20}}>
-                    <div style={{width:'50%',textAlign:'center'}}>
-                        <Button  type="primary" className="agree_sty" onClick={this.agreeClick}>同意</Button>
-                    </div>
-                    <div style={{width:'50%',textAlign:'center'}}>
-                        <Button className="disagree_sty" onClick={this.disagreeClick}>不同意</Button>
-                    </div>
-                </div>
-
+                {(!this.state.isMyApply||this.state.docModel.approveStatus == 1) ?  <div style={{display:'flex',flexDirection:'row',marginBottom:20}} >
+                        <div style={{width:'50%',textAlign:'center'}}>
+                            <Button  type="primary" className="agree_sty" onClick={this.handleStatusClick.bind(this,1)}>同意</Button>
+                        </div>
+                        <div style={{width:'50%',textAlign:'center'}}>
+                            <Button className="disagree_sty" onClick={this.handleStatusClick.bind(this,2)}>不同意</Button>
+                        </div>
+                    </div> : ''}
                 <Modal
                     title={this.state.AMTitle}
                     visible={this.state.AMvisible}
-                    onOk={this.handleSubmit}
                     okText={'确认'}
+                    onOk={this.doApprovel.bind(this,1)}
                     cancelText={'取消'}
-                    onCancel={this.handleCancel}
+                    onCancel={this.doApprovel.bind(this,0)}
                     // footer={[
                     //     <Button key="back" onClick={this.handleCancel}>取消</Button>,
                     //     <Button key="submit" type="primary" onClick={this.handleSubmit}>提交</Button>,
                     // ]}
                 >
-                   <div>
-                       <textarea autoFocus="autoFocus" ref='voteTitle' className="form-control" rows="5" placeholder="填写意见说明（非必填）" ></textarea>
+                   <div onChange={this.handelValueCom}>
+                       <textarea autoFocus="autoFocus" ref='approveOpinion' className="form-control" rows="5" placeholder="填写意见说明（非必填）" ></textarea>
                    </div>
                 </Modal>
             </div>
         )
     }
-    agreeClick = ()=>{
-      console.log('agreeClick')
+    handleStatusClick = (status)=>{
+         var statusTitle = null
+         if(status == 1){
+             statusTitle = '同意'
+         }else if(status == 2){
+             statusTitle = '不同意'
+         }
+        console.log('您点击了',statusTitle)
         this.setState({
             AMvisible:true,
-            AMTitle:'同意'
+            AMTitle:statusTitle,
+            handleStatus:status
         })
     }
-    disagreeClick = ()=>{
-        console.log('disagreeClick')
-        this.setState({
-            AMvisible:true,
-            AMTitle:'不同意'
-        })
-    }
-
-    handleSubmit = (e) => {
-        console.log(e);
+    doApprovel = (order)=>{
         this.setState({
             AMvisible: false,
         });
-    }
+        if(order == 0){
+            return
+        }
+        fetchPost(API.doapprove,{
+            approveId:this.state.approveId,
+            status:this.state.handleStatus,
+            approveOpinion:this.state.approveOpinion
+        },{}).then((response)=>{
+            if(response.success && response.data){
 
-    handleCancel = (e) => {
-        console.log(e);
+            }
+        }).catch((error) =>{
+            console.log('error',error)
+        })
+    }
+    handelValueCom = ()=>{
+        let approveOpinion = this.refs.approveOpinion.value;
         this.setState({
-            AMvisible: false,
-        });
+            approveOpinion:approveOpinion,
+        })
     }
     componentWillMount() {
+        document.title = '审批详情';
+    }
+    componentWillReceiveProps(newProps) {
+    }
+    shouldComponentUpdate(newProps, newState) {
+        return true;
+    }
+    componentWillUpdate(nextProps, nextState) {
+    }
+    componentDidUpdate(prevProps, prevState) {
+    }
+    componentWillUnmount() {
     }
     componentDidMount() {
-        document.title = '审批详情';
-         let detailList = [
-             {
-                 key:'申请流程',
-                 value:'出差申请'
-             }, {
-                 key:'开始时间',
-                 value:'2018/11/22  14:00'
-             }
-             , {
-                 key:'结束时间',
-                 value:'2018/11/22  18:00'
-             },{
-                 key:'时长（h）',
-                 value:'2'
-             }, {
-                 key:'外出地址',
-                 value:'蜀国与东吴争议之地荆州郡'
-             }, {
-                 key:'外出事由',
-                 value:'奉命驻守城池'
-             }
-         ]
+        let detailList = [
+            {
+                key:'申请流程',
+                value:'出差申请'
+            }, {
+                key:'开始时间',
+                value:'2018/11/22  14:00'
+            }
+            , {
+                key:'结束时间',
+                value:'2018/11/22  18:00'
+            },{
+                key:'时长（h）',
+                value:'2'
+            }, {
+                key:'外出地址',
+                value:'蜀国与东吴争议之地荆州郡'
+            }, {
+                key:'外出事由',
+                value:'奉命驻守城池'
+            }
+        ]
         let pictures = [
             'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543289918586&di=a22036279c9e4a86f03cdd9996a8a0f5&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D0645f21b46086e067ea537086a611181%2F1c950a7b02087bf4b40d39c3f8d3572c11dfcf33.jpg',
             'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543289918584&di=beb8b53a7e5544a0f9f4c24b6c992a4b&imgtype=0&src=http%3A%2F%2Fpic34.photophoto.cn%2F20150311%2F0005018318132246_b.jpg',
@@ -197,18 +223,24 @@ export default class ApprovelDetail extends Component{
         this.setState({
             detailList:detailList,
             pictureList: this.state.pictureList.concat(pictures, pictures),
-            approvelData:approvelData
+            approvelData:approvelData,
+            approveId:this.props.match.params.approveId,
+            isMyApply:this.props.match.params.isMyApply
+        },function () {
+            console.log('approveId',this.state.approveId)
+            if(this.state.approveId == null || this.state.approveId == ''){
+                return
+            }else {
+                fetchGet(API.oaDetails,{
+                    approveId:this.state.approveId
+                },{}).then((response)=>{
+                    if(response.success && response.data){
+
+                    }
+                }).catch((error) =>{
+                    console.log('error',error)
+                })
+            }
         })
-    }
-    componentWillReceiveProps(newProps) {
-    }
-    shouldComponentUpdate(newProps, newState) {
-        return true;
-    }
-    componentWillUpdate(nextProps, nextState) {
-    }
-    componentDidUpdate(prevProps, prevState) {
-    }
-    componentWillUnmount() {
     }
 }

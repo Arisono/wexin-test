@@ -74,7 +74,7 @@ export default class RouteConfig extends Component {
                     <Route path='/principalMailbox' component={PrincipalMailbox}/>
                     <Route path='/meetingSignIn' component={MeetingSignIn}/>
                     <Route path='/phonesSelect' component={PhonesSelect}/>
-                    <Route path='/phonesList/:classId/:classTitle?' component={PhonesList}/>
+                    <Route path='/phonesList/:type/:classId?/:classTitle?' component={PhonesList}/>
                     <Route path='/systemMessage' component={SystemMessage}/>
                     <Route path='/useHelp' component={UseHelp}/>
                     <Route path='/wonderMoment/:type?' component={WonderMoment}/>
@@ -112,7 +112,7 @@ export default class RouteConfig extends Component {
                     <Route path='/class-schedule' component={ClassSchedule}/> {/*//课程表*/}
                     <Route path='/score-inquiry' component={ScoreInquiry}/> {/*//成绩通知*/}
                     <Route path='/approvel' component={Approvel}/>{/*审批*/}
-                    <Route path='/approvel-detail' component={ApprovelDetail}/> {/*审批详情*/}
+                    <Route path='/approvel-detail/:approveId/:isMyApply' component={ApprovelDetail}/> {/*审批详情*/}
                     <Route path='/meet-detail' component={MeetDetail}/> {/*会议签到详情*/}
 
                     {/*刘金龙*/}

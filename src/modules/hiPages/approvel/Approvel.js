@@ -7,14 +7,12 @@ import React,{Component} from 'react';
 import './Approvel.css';
 import Swiper from 'swiper/dist/js/swiper';
 import 'swiper/dist/css/swiper.min.css';
-import {List, Icon} from 'antd'
-import icon_out from '../../../style/imgs/out_img.png';
-import icon_res from '../../../style/imgs/res_img.png';
-import icon_trip from '../../../style/imgs/trip_img.png';
 import ApprovelItem from './ApprovelItem';
 import {Link} from 'react-router-dom';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
+import InfiniteScroll from 'react-infinite-scroller'
+import LoadingMore from "../../../components/LoadingMore";
 
 let mySwiper
 
@@ -23,15 +21,18 @@ export default class Approvel extends Component{
     constructor(){
         super();
         this.state = {
+            pageIndex:1,
+            pageSize:20,
             selectIndex: 0,
-            applyList: [1,2,3],
+            hasMoreData:true,
+            applyList: [],
             approvelList: []
         }
     }
     componentWillMount() {
+        document.title = '审批'
     }
     componentDidMount() {
-        document.title = '审批'
         const that = this
         const {selectIndex, applyList, approvelList} = this.state
 
@@ -46,89 +47,21 @@ export default class Approvel extends Component{
                 }
             }
         })
-        let approvelListData  = [
-            {
-                img:icon_trip,
-                title:'出差申请',
-                date:'2018/11/22   14:00',
-                status:'待处理',
-                statustype:1
-            },{
-                img:icon_res,
-                title:'用品申请',
-                date:'2018/11/22   14:00',
-                status:'已处理',
-                statustype:2
-            },{
-                img:icon_out,
-                title:'外出申请',
-                date:'2018/11/22   14:00',
-                status:'已处理',
-                statustype:2
-            }
-        ]
-        let applyListData  = [
-            {
-                img:icon_res,
-                title:'用品申请',
-                date:'2018/11/22   14:00',
-                status:'已审批',
-                statustype:2
-            },{
-                img:icon_out,
-                title:'外出申请',
-                date:'2018/11/22   14:00',
-                status:'待审批',
-                statustype:1
-            },
-            {
-                img:icon_trip,
-                title:'出差申请',
-                date:'2018/11/22   14:00',
-                status:'待审批',
-                statustype:1
-            }
-        ]
 
-        this.setState({
-            applyList:applyListData,
-            approvelList:approvelListData
-        })
+       this.getHttpData(this.state.pageIndex);
+    }
 
-        fetchGet(API.oaApproveList,{
-            userId:10000,
-            pageIndex:1,
-            pageSize:10
-        },{})
-            .then((response)=>{
-                console.log('response',response)
-            })
-            .catch((error) =>{
-                console.log('error',error)
-            })
-    }
-    componentWillReceiveProps(newProps) {
-    }
-    shouldComponentUpdate(newProps, newState) {
-        return true;
-    }
-    componentWillUpdate(nextProps, nextState) {
-    }
-    componentDidUpdate(prevProps, prevState) {
-    }
-    componentWillUnmount() {
-    }
+
     render(){
-        const {selectIndex, applyList, approvelList} = this.state
         return(
             <div className='phone-select-root'>
                 <div className='gray-line'></div>
                 <div className='identity-select'>
-                    <div className={selectIndex == 0 ?
+                    <div className={this.state.selectIndex == 0 ?
                         'identity-item-select' : 'identity-item-normal'}
                          onClick={this.onMyApplyClick}>我的申请
                     </div>
-                    <div className={selectIndex == 1 ?
+                    <div className={this.state.selectIndex == 1 ?
                         'identity-item-select' : 'identity-item-normal'}
                          onClick={this.onMyApprovelClick}>我的审批
                    </div>
@@ -136,20 +69,54 @@ export default class Approvel extends Component{
                 <div className="swiper-container" style={{backgroundColor:"#F2F2F2",height:"100vh"}}>
                     <div className="swiper-wrapper">
 
-                            <div className="swiper-slide">
-                                <Link to="/approvel-detail">
-                                {this.state.applyList.map((itemdata,index) => <ApprovelItem type={1} index={index} itemata = {itemdata} clickApplyItem ={this.clickApplyItem} ></ApprovelItem>)}
-                                </Link>
-                            </div>
                         <div className="swiper-slide">
-                            <Link to="/approvel-detail">
-                                {this.state.approvelList.map((itemdata,index) => <ApprovelItem type={2} index={index} itemata = {itemdata} clickApprovelItem ={this.clickApprovelItem} ></ApprovelItem>)}
-                            </Link>
+                            {/*<InfiniteScroll*/}
+                                {/*pageStart={0}*/}
+                                {/*loadMore={this.loadMoreAction}*/}
+                                {/*hasMore={this.state.hasMoreData}*/}
+                                {/*loader={<LoadingMore/>}>*/}
+                                {/*<Link to={"/approvel-detail"}>*/}
+                                    {this.state.applyList.map((itemdata,index) => <ApprovelItem isMyApply={true} type={1} index={index} itemata = {itemdata} clickApplyItem ={this.clickApplyItem} ></ApprovelItem>)}
+                                {/*</Link>*/}
+                            {/*</InfiniteScroll>*/}
+                        </div>
+                        <div className="swiper-slide">
+                            {/*<InfiniteScroll*/}
+                                {/*pageStart={0}*/}
+                                {/*loadMore={this.loadMoreAction}*/}
+                                {/*hasMore={this.state.hasMoreData}*/}
+                                {/*loader={<LoadingMore/>}>*/}
+                                {/*<Link to="/approvel-detail">*/}
+                                    {this.state.approvelList.map((itemdata,index) => <ApprovelItem isMyApply={false}  type={2} index={index} itemata = {itemdata} clickApprovelItem ={this.clickApprovelItem} ></ApprovelItem>)}
+                                {/*</Link>*/}
+                            {/*</InfiniteScroll>*/}
                         </div>
                     </div>
                 </div>
             </div>
         )
+    }
+    getHttpData =(pageIndex)=>{
+        fetchGet(API.oaApproveList,{
+            userId:10007,
+            pageIndex:pageIndex,
+            pageSize:this.state.pageSize
+        },{}).then((response)=>{
+            if(response.success && response.data){
+                this.setState({
+                    applyList:response.data.proposes,
+                    approvelList:response.data.approves
+                })
+            }
+        }).catch((error) =>{
+            console.log('error',error)
+        })
+    }
+    loadMoreAction = () =>{
+        setTimeout(()=>{
+            this.state.pageIndex++
+            this.getHttpData(this.state.pageIndex)
+        },1500)
     }
     clickApplyItem = (itemdata) =>{
         console.log('clickApplyItem',itemdata)
@@ -171,5 +138,16 @@ export default class Approvel extends Component{
         }, () => {
             mySwiper.slideTo(this.state.selectIndex, 300, false)
         })
+    }
+    componentWillReceiveProps(newProps) {
+    }
+    shouldComponentUpdate(newProps, newState) {
+        return true;
+    }
+    componentWillUpdate(nextProps, nextState) {
+    }
+    componentDidUpdate(prevProps, prevState) {
+    }
+    componentWillUnmount() {
     }
 }

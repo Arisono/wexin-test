@@ -124,15 +124,17 @@ export default class PhonesList extends Component {
 
             if (response && response.data) {
                 if (this.mType == 'parent') {
-                    response.data.forEach((item, index) => {
-                        let phoneBean = new PhonesBean()
-                        phoneBean.name = getStrValue(item, 'userName')
-                        phoneBean.claName = this.title
-                        phoneBean.children = ['']
+                    if (response.data.teachers && response.data.teachers.length > 0) {
+                        response.data.teachers.forEach((item, index) => {
+                            let phoneBean = new PhonesBean()
+                            phoneBean.name = getStrValue(item, 'userName')
+                            phoneBean.claName = this.title
+                            phoneBean.children = ['']
 
-                        phoneBean.phone = getStrValue(item, 'UserPhone')
-                        phonesList.push(phoneBean)
-                    })
+                            phoneBean.phone = getStrValue(item, 'UserPhone')
+                            phonesList.push(phoneBean)
+                        })
+                    }
                 } else if (this.mType == 'teacher') {
                     if (response.data.students && response.data.students.length > 0) {
                         response.data.students.forEach((item, index) => {

@@ -168,6 +168,8 @@ export default class AnnounceRelease extends Component {
             Toast.hide()
             if (typeof error === 'string') {
                 Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
             }
         })
     }

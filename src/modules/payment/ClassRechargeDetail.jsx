@@ -177,8 +177,8 @@ export default class ClassRechargeDetail extends Component {
                         payId: this.payId
                     }).then(response => {
                         Toast.success(response.data)
-
-                        this.getPayDetail()
+                        this.state.rechargeBean.statusCode = 3
+                        this.state.rechargeBean.status = '已结束'
                     }).catch(error => {
                         Toast.hide()
 

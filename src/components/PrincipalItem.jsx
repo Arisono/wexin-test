@@ -7,6 +7,9 @@ import React, {Component} from 'react'
 import {Modal} from 'antd-mobile'
 import {isObjEmpty} from "../utils/common";
 import 'css/principal-mailbox.css'
+import RefreshLayout from "./RefreshLayout";
+import ImagesViewer from "./imagesVIewer";
+import {_baseURL} from "../configs/api.config";
 
 const {alert} = Modal
 
@@ -15,7 +18,9 @@ export default class PrincipalItem extends Component {
     constructor() {
         super()
 
-        this.state = {}
+        this.state = {
+            previewVisible: false
+        }
     }
 
     componentDidMount() {
@@ -26,12 +31,22 @@ export default class PrincipalItem extends Component {
         const {principalBean} = this.props
 
         let enclosureItem = <div></div>
+        let pictureUrls = []
         if (!isObjEmpty(principalBean.enclosure) && principalBean.enclosure != '[]') {
             enclosureItem =
                 <div className='principal-enclosure-layout'>
-                    <img src={principalBean.enclosure[0]} className='principal-enclosure-img'/>
+                    <img src={_baseURL + principalBean.enclosure[0]} className='principal-enclosure-img'
+                         onClick={this.handlePreview}/>
                     <span className='principal-enclosure-count'>({principalBean.enclosure.length}张)</span>
                 </div>
+
+            try {
+                principalBean.enclosure.forEach((enclosure, index) => {
+                    pictureUrls.push(_baseURL + enclosure)
+                })
+            } catch (e) {
+
+            }
         }
         let replayItem = <span></span>
         if (principalBean.reply) {
@@ -48,23 +63,31 @@ export default class PrincipalItem extends Component {
         }
 
         return (
-            <div style={{padding: '10px'}}>
-                <div className='principal-item-root'>
-                    <div className='principal-item-top'>
-                        <div className='principal-item-time'>{principalBean.time}</div>
-                        <span className={principalBean.status == '已查阅' ?
-                            'principal-item-status-done' :
-                            'principal-item-status-todo'}>{principalBean.status}</span>
-                    </div>
-                    <div className='principal-item-content'>{principalBean.suggest}</div>
-                    {enclosureItem}
-                    <div style={{textAlign: 'right', marginTop: '10px'}}>
+            <div>
+                <div style={{padding: '10px'}}>
+                    <div className='principal-item-root'>
+                        <div className='principal-item-top'>
+                            <div className='principal-item-time'>{principalBean.time}</div>
+                            <span className={principalBean.status == '已查阅' ?
+                                'principal-item-status-done' :
+                                'principal-item-status-todo'}>{principalBean.status}</span>
+                        </div>
+                        <div className='principal-item-content'>{principalBean.suggest}</div>
+                        {enclosureItem}
+                        <div style={{textAlign: 'right', marginTop: '10px'}}>
                         <span className='principal-item-delete'
                               onClick={this.onDeleteEvent}>删除</span>
+                        </div>
+                        {replayItem}
                     </div>
-                    {replayItem}
                 </div>
+
+                {(this.state.previewVisible && pictureUrls.length > 0) ?
+                    <ImagesViewer onClose={this.handleCancel} urls={pictureUrls}
+                                  index={0}
+                                  needPoint={pictureUrls.length <= 9}/> : ""}
             </div>
+
         )
     }
 
@@ -81,4 +104,12 @@ export default class PrincipalItem extends Component {
             }
         ])
     }
+
+    handlePreview = () => {
+        this.setState({
+            previewVisible: true,
+        });
+    }
+
+    handleCancel = () => this.setState({previewVisible: false})
 }

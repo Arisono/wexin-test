@@ -141,6 +141,14 @@ export default class MeetDetail extends Component{
                     meetBean1.endTime = response.data.endDate
                     meetBean1.address = response.data.notifyAddress
                     meetBean1.sponsor = response.data.notifyCreatorName
+                    let status = response.data.notifyStatus
+                    if (status === 2) {
+                        meetBean1.meetStatus = '未开始'
+                    } else if (status === 3) {
+                        meetBean1.meetStatus = '进行中'
+                    } else if (status === 4) {
+                        meetBean1.meetStatus = '已结束'
+                    }
                     this.setState({
                         notifyId:response.data.notifyId,
                         meetingSignData:meetBean1,

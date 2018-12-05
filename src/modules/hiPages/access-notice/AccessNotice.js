@@ -10,6 +10,8 @@ import exit_img from '../../../style/imgs/ic_exit.png';
 import httpRuquest from  '../../../utils/fetchRequest';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
+import LoadingMore from "../../../components/LoadingMore";
+import InfiniteScroll from 'react-infinite-scroller';
 
 function ItemComp() {
     return(

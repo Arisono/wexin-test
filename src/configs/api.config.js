@@ -64,6 +64,10 @@ export const API = {
     CARD_DETAIL: _baseURL + '/payCard/cardDetail',
     //校园卡消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
+    //获取用户是否绑定
+    USER_ISBINDING: _baseURL + '/user/isBinding',
+
+
 
     //根据学号取课程表
     curriculumListByStuId: _baseURL + '/curriculum/curriculumListByStuId',

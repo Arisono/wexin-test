@@ -1,6 +1,6 @@
 /**
  * Created by RaoMeng on 2018/11/14
- * Desc: 缴费发布
+ * Desc: 收费发布
  */
 
 import React, {Component} from 'react'
@@ -82,7 +82,7 @@ export default class RechargeRelease extends Component {
     }
 
     componentDidMount() {
-        document.title = '缴费发布'
+        document.title = '收费发布'
 
         const {typeList} = this.state
 

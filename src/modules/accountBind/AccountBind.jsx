@@ -178,37 +178,46 @@ export default class AccountBind extends Component {
     }
 
     bindEvent = () => {
+        Toast.loading('信息绑定中...')
         const {account, phone, code} = this.state
         if (isObjEmpty(account, phone, code)) {
             Toast.fail('请完善所有输入项！')
-            // return
+            return
         }
         if (mType == 'parents') {
-            this.props.history.push('/homePage?role=parent')
-            /*fetchPost(API.BIND_STUDENTID, {
+            fetchPost(API.BIND_STUDENTID, {
                 stuId: account,
                 userPhone: phone,
                 vcode: code,
-                openid: ''
+                openid: 'raomengbindtest'
             }).then(response => {
                 this.props.history.push('/homePage?role=parent')
             }).catch(error => {
-                this.props.history.push('/homePage?role=parent')
-                Toast.fail(error || '绑定学号失败')
-            })*/
+                Toast.hide()
+
+                if (typeof error === 'string') {
+                    Toast.fail(error, 2)
+                } else {
+                    Toast.fail('绑定学号失败')
+                }
+            })
         } else if (mType == 'teacher') {
-            this.props.history.push('/homePage?role=teacher')
-            /*fetchPost(API.BIND_TEACHERID, {
+            fetchPost(API.BIND_TEACHERID, {
                 userId: account,
                 userPhone: phone,
                 vcode: code,
-                openid: ''
+                openid: 'raomengbindtest'
             }).then(response => {
                 this.props.history.push('/homePage?role=teacher')
             }).catch(error => {
-                this.props.history.push('/homePage?role=teacher')
-                Toast.fail(error || '绑定工号失败')
-            })*/
+                Toast.hide()
+
+                if (typeof error === 'string') {
+                    Toast.fail(error, 2)
+                } else {
+                    Toast.fail('绑定工号失败')
+                }
+            })
         }
     }
 }

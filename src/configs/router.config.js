@@ -63,7 +63,7 @@ export default class RouteConfig extends Component {
                     )}/>
 
                     {/*饶猛*/}
-                    <Route path='/bindMenu' component={BindMenu}/>
+                    <Route path='/bindMenu/:openid?' component={BindMenu}/>
                     <Route path='/accountBind/:type?' component={AccountBind}/>
                     <Route path='/newAlbum/:classId/:name?' component={NewAlbum}/>
                     <Route path='/uploadImage/:albumId' component={UploadImage}/>

@@ -112,8 +112,8 @@ export default class RouteConfig extends Component {
                     <Route path='/class-schedule' component={ClassSchedule}/> {/*//课程表*/}
                     <Route path='/score-inquiry' component={ScoreInquiry}/> {/*//成绩通知*/}
                     <Route path='/approvel' component={Approvel}/>{/*审批*/}
-                    <Route path='/approvel-detail' component={ApprovelDetail}/> {/*审批详情*/}
-                    <Route path='/meet-detail/:meetId' component={MeetDetail}/> {/*会议签到详情*/}
+                    <Route path='/approvel-detail/:approveId/:isMyApply' component={ApprovelDetail}/> {/*审批详情*/}
+                    <Route path='/meet-detail' component={MeetDetail}/> {/*会议签到详情*/}
 
                     {/*刘金龙*/}
                     {/*1:消费记录 2.充值记录*/}

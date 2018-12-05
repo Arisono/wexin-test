@@ -6,7 +6,6 @@
 import React,{Component} from 'react';
 import './ApprovelDetail.css';
 import hi_img from '../../../style/imgs/hiimg.png';
-import line_img from '../../../style/imgs/line_img.png';
 import DetailItem from './DetailItem';
 import {isObjEmpty} from "../../../utils/common";
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
@@ -15,19 +14,21 @@ import ItemApprovel from './ItemApprovel';
 import { Button,Modal } from 'antd';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
+import {Toast} from 'antd-mobile';
 
 
 export default class ApprovelDetail extends Component{
     constructor(){
         super();
         this.state = {
+            showButton:false,
             AMvisible: false,
             AMTitle:null,
             detailList:[],
             pictureList:[],
             approvelData:[],
             approveId:null,
-            docModel:null,
+            docModel:{},
             handleStatus:null //审批操作1:同意，2：不同意
         }
     }
@@ -63,7 +64,7 @@ export default class ApprovelDetail extends Component{
                    <img className="headerImg" src={hi_img} alt=""/>
                    <div style={{marginTop:10}}>
                        <div style={{color:"#000000",fontSize:15}}>吴彦祖</div>
-                       <div style={{color:"#666666",fontSize:12,marginTop:10}}>2018/11/22   14:00</div>
+                       <div style={{color:"#666666",fontSize:12,marginTop:10}}>{this.state.docModel.creatDate}</div>
                    </div>
                </div>
                 <div className="comhline_sty"></div>
@@ -89,7 +90,7 @@ export default class ApprovelDetail extends Component{
                 <div style={{marginBottom:50}}>
                     {this.state.approvelData.map((itemdata,index) => <ItemApprovel key ={index} itemdata = {itemdata}></ItemApprovel>)}
                 </div>
-                {(!this.state.isMyApply||this.state.docModel.approveStatus == 1) ?  <div style={{display:'flex',flexDirection:'row',marginBottom:20}} >
+                {this.state.showButton ?  <div style={{display:'flex',flexDirection:'row',marginBottom:20}} >
                         <div style={{width:'50%',textAlign:'center'}}>
                             <Button  type="primary" className="agree_sty" onClick={this.handleStatusClick.bind(this,1)}>同意</Button>
                         </div>
@@ -123,7 +124,8 @@ export default class ApprovelDetail extends Component{
          }else if(status == 2){
              statusTitle = '不同意'
          }
-        console.log('您点击了',statusTitle)
+        // console.log('您点击了',statusTitle)
+
         this.setState({
             AMvisible:true,
             AMTitle:statusTitle,
@@ -138,15 +140,23 @@ export default class ApprovelDetail extends Component{
             return
         }
         fetchPost(API.doapprove,{
+            userId:10007,
             approveId:this.state.approveId,
             status:this.state.handleStatus,
             approveOpinion:this.state.approveOpinion
         },{}).then((response)=>{
             if(response.success && response.data){
-
+                Toast.show(response.data,1)
+                this.setState({
+                    showButton:false
+                })
+                setTimeout(()=>{
+                    this.props.history.push("/approvel")
+                },3000)
             }
         }).catch((error) =>{
             console.log('error',error)
+            Toast.show(error.message,1)
         })
     }
     handelValueCom = ()=>{
@@ -227,7 +237,6 @@ export default class ApprovelDetail extends Component{
             approveId:this.props.match.params.approveId,
             isMyApply:this.props.match.params.isMyApply
         },function () {
-            console.log('approveId',this.state.approveId)
             if(this.state.approveId == null || this.state.approveId == ''){
                 return
             }else {
@@ -235,7 +244,24 @@ export default class ApprovelDetail extends Component{
                     approveId:this.state.approveId
                 },{}).then((response)=>{
                     if(response.success && response.data){
-
+                        var approveStatus = response.data.oaApprove.approveStatus
+                        var showbutton = false
+                        if(approveStatus == 1 && this.state.isMyApply== 'false'){
+                            showbutton = true
+                            // console.log('showbutton1',1)
+                        }else {
+                            showbutton = false
+                            // console.log('showbutton2',2)
+                        }
+                        this.setState({
+                            showButton:showbutton,
+                            docModel: response.data.oaApprove
+                        },function () {
+                            console.log('docModel',this.state.docModel)
+                        })
+                        // console.log('showbutton',showbutton)
+                        // console.log('approveStatus',approveStatus)
+                        // console.log('this.state.isMyApply',this.state.isMyApply)
                     }
                 }).catch((error) =>{
                     console.log('error',error)

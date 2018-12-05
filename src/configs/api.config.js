@@ -103,7 +103,9 @@ export const API = {
     //审批操作
     doapprove: _baseURL + '/oaApprove/approve',
     //审批单详情
-    oaDetails: _baseURL + '/oaApprove/oaDetails'
+    oaDetails: _baseURL + '/oaApprove/oaDetails',
+    //结束会议
+    endMeeting:_baseURL+'/notify/endMeeting',
 }
 
 

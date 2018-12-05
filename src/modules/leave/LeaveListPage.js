@@ -23,19 +23,15 @@ class LeaveListPage extends React.Component{
         this.state={
             name:'LeaveListPage',
             hasMoreData:true,
+            pageIndex:'1',
+            pageSize:'5',
             role:this.props.match.params.role,
             data:[{
                title:'黎明的请假单',
                 endTime:'2018-09-08 09:00',
                 startTime:'2018-09-09 08:00',
                 content:"感冒发烧"
-            },
-                {
-                    title:'黎明的请假单',
-                    endTime:'2018-09-08 09:00',
-                    startTime:'2018-09-09 08:00',
-                    content:"感冒发烧"
-                }]
+            }]
         };
     }
 
@@ -44,16 +40,55 @@ class LeaveListPage extends React.Component{
     }
     
     componentDidMount(){
-      fetchGet(API.leaveList,{
-                    stuId:'10000',
-                    pageIndex:'1',
-                    pageSize:'5',
-                    voteType:'1',
-                }).then((response)=>{
-                    console.log("response:"+JSON.stringify(response));
-                }).catch((error)=>{
-                    console.log("error:"+JSON.stringify(error));
+        if(this.state.role==="teacher"){
+            fetchGet(API.leaveListTeacher,{
+                userId:'10000',
+                pageIndex:'1',
+                pageSize:'5'
+            }).then((response)=>{
+                this.state.data.length=0;
+                console.log("response:"+JSON.stringify(response));
+                for (let i = 0; i < response.data.length; i++) {
+                    let model={
+                        title:response.data[i].lvName,
+                        endTime:response.data[i].startDate,
+                        startTime:response.data[i].endDate,
+                        content:response.data[i].lvDetails
+                    };
+                    this.state.data.push(model);
+                }
+                this.setState({
+                    data:this.state.data
                 })
+            }).catch((error)=>{
+                console.log("error:"+JSON.stringify(error));
+            })
+        }
+        if(this.state.role==="parent"){
+            fetchGet(API.leaveListParent,{
+                stuId:'10000',
+                pageIndex:'1',
+                pageSize:'5'
+            }).then((response)=>{
+                this.state.data.length=0;
+                console.log("response:"+JSON.stringify(response));
+                for (let i = 0; i < response.data.length; i++) {
+                      let model={
+                          title:response.data[i].lvName,
+                          endTime:response.data[i].startDate,
+                          startTime:response.data[i].endDate,
+                          content:response.data[i].lvDetails
+                      };
+                      this.state.data.push(model);
+                }
+                this.setState({
+                    data:this.state.data
+                })
+            }).catch((error)=>{
+                console.log("error:"+JSON.stringify(error));
+            })
+        }
+
     }
 
     loadMoreAction=()=> {

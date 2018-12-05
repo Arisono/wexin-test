@@ -79,8 +79,9 @@ export const API = {
     messageList:_baseURL +"/leaveMessage/getMessageListByNotifyId",
     //学生请假
     leaveCreate: _baseURL + "/leave/leaveCreate",
-    leaveList: _baseURL + "/leave/leaveList",
-
+    leaveListParent: _baseURL + "/leave/leaveListByStuId",
+    leaveListTeacher: _baseURL + "/leave/leaveListByUserId",
+    leaveDetail:_baseURL+"/leave/lvDetail",
     //发布通知公告/发布作业/创建会议
     issueNotification: _baseURL + '/notify/issueNotification',
     //成绩查询

@@ -74,6 +74,8 @@ class LeaveAddPage extends React.Component {
             role: "parent",
             targetList: ['1-1'],
             targetCount: 1,
+            lvNotifier:[],
+            lvFiles:[],
             lvType:"",
             lvName:"",
             lvDetails:"",
@@ -150,10 +152,20 @@ class LeaveAddPage extends React.Component {
         }
     }
 
-    callback(msg) {
-        console.log("leaveAddPage:callback：" + JSON.stringify(msg));
+    callback=(file,fileList)=>{
+        console.log("leaveAddPage:callback：",fileList);
+        this.state.lvFiles.length=0;
+        for (let i = 0; i < fileList.length; i++) {
+            if(fileList[i].status==="done"){
+                this.state.lvFiles.push(fileList[i].response.data)
+            }
+        }
+        console.log("callback()", this.state.lvFiles);
     }
 
+    handleRemove=(file)=>{
+
+    }
     onTargetChange = (value, label, checkNodes, count) => {
         this.setState({
             targetList: value,
@@ -233,8 +245,12 @@ class LeaveAddPage extends React.Component {
                     <div className="row padding_10 span_15 ">
                         <div><span >附件</span></div>
                         <div>
-                            <PicturesWallItem action={'url路径'} number={4}
-                                              callback={ this.callback.bind(this)}></PicturesWallItem>
+                            <PicturesWallItem
+                                action={API.UPLOAD_FILE}
+                                number={4}
+                                callback = { this.callback.bind(this)}>
+                                handleRemove={this.handleRemove.bind(this)}
+                            </PicturesWallItem>
                         </div>
                         <div className="flex_center margin_top_20">
                             <Button ref={ref=>this.btn_commit=ref}  onClick={this.onClickEvent.bind(this)}  type={'primary'} block> 提交</Button>

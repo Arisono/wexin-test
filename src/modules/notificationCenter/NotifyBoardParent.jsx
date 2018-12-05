@@ -83,7 +83,8 @@ export default class NotifyBoardParent extends Component {
         if (!isObjEmpty(notifyBoBean.enclosure) && notifyBoBean.enclosure != '[]') {
             enclosureItem =
                 <div className='principal-enclosure-layout'>
-                    <img src={_baseURL + notifyBoBean.enclosure[0]} className='principal-enclosure-img'
+                    <img src={_baseURL + notifyBoBean.enclosure[0]}
+                         className='principal-enclosure-img'
                          onClick={this.handlePreview}/>
                     <span className='principal-enclosure-count'>({notifyBoBean.enclosure.length}张)</span>
                 </div>
@@ -174,7 +175,7 @@ export default class NotifyBoardParent extends Component {
         Toast.loading('', 0)
         fetchGet(API.TASK_DETAIL, {
             notifyId: notifyList[index].noId,
-            userId: '10001',
+            userId: 10001,
         }).then(response => {
             Toast.hide()
             if (response && response.data) {
@@ -184,7 +185,7 @@ export default class NotifyBoardParent extends Component {
 
                     notifyBoBean.noId = getIntValue(item, 'notifyId')
                     notifyBoBean.noTitle = getStrValue(item, 'notifyName')
-                    notifyBoBean.enclosure = getArrayValue(item, 'notifyFiles')
+                    notifyBoBean.enclosure = getArrayValue(item, 'enclosure')
                     if (item.notifyRecords) {
                         notifyBoBean.unRead = getArrayValue(item.notifyRecords, 'unReads')
                         notifyBoBean.readed = getArrayValue(item.notifyRecords, 'reads')
@@ -225,7 +226,7 @@ export default class NotifyBoardParent extends Component {
         }
 
         fetchPost(API.notifyMessage, {
-            userId: 10000,
+            userId: 10001,
             notifyType: 4,
             pageIndex: mPageIndex,
             pageSize: mPageSize
@@ -237,7 +238,7 @@ export default class NotifyBoardParent extends Component {
 
                     notifyBoBean.noId = getIntValue(item, 'notifyId')
                     notifyBoBean.noTitle = getStrValue(item, 'notifyName')
-                    notifyBoBean.enclosure = getArrayValue(item, 'notifyFiles')
+                    notifyBoBean.enclosure = getArrayValue(item, 'enclosure')
                     if (item.notifyRecords) {
                         notifyBoBean.unRead = getArrayValue(item.notifyRecords, 'unReads')
                         notifyBoBean.readed = getArrayValue(item.notifyRecords, 'reads')

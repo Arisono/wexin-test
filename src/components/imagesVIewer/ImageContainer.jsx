@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import raf from 'raf';
 import tween from './tween.js';
 import Loading from './Loading';
+import {isObjNull} from "../../utils/common";
 
 /**
  *
@@ -132,6 +133,9 @@ class ImageContainer extends PureComponent {
     }
 
     onLoad = () => {
+        if (isObjNull(this.img)) {
+            this.img = new Image();
+        }
         this.actualWith = this.img.width;
         this.actualHeight = this.img.height;
 

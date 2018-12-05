@@ -5,13 +5,19 @@
 
 import React, {Component} from 'react'
 import {Icon, Button} from 'antd'
-import {Modal, Grid, InputItem, List} from 'antd-mobile'
+import {Modal, Grid, InputItem, List, Toast} from 'antd-mobile'
 import 'css/payment.css'
 import {isObjEmpty} from "../../utils/common";
+import {fetchPost} from "../../utils/fetchRequest";
+import {API} from "../../configs/api.config";
+import {regExpConfig} from "../../configs/regexp.config";
 
 const moneyList = [
     '50元', '100元', '150元', '200元', '300元'
 ]
+
+const amountList = [50, 100, 150, 200, 300]
+let mAmount = 50
 
 export default class CampusCardRecharge extends Component {
 
@@ -108,7 +114,8 @@ export default class CampusCardRecharge extends Component {
                             placeholder='请输入金额'/>
                     </div>
                     <div style={{padding: moneyFocus ? '50px 24px' : '50px 24px'}}>
-                        <Button type="primary" className='commonButton' style={{width: '100%'}}>确认充值</Button>
+                        <Button type="primary" className='commonButton' style={{width: '100%'}}
+                                onClick={this.onRechargeEvent}>确认充值</Button>
                     </div>
                 </div>
             </Modal>
@@ -128,6 +135,8 @@ export default class CampusCardRecharge extends Component {
     }
 
     onMoneyChange = (value) => {
+        console.log(value)
+        mAmount = value
         this.setState({
             money: value,
             moneySelect: -1
@@ -135,6 +144,7 @@ export default class CampusCardRecharge extends Component {
     }
 
     onMoneyItemClick = (el, index) => {
+        mAmount = amountList[index]
         this.setState({
             moneySelect: index,
             money: ''
@@ -158,6 +168,37 @@ export default class CampusCardRecharge extends Component {
     onModalClose = () => {
         this.setState({
             rechargeVisible: false
+        })
+    }
+
+    onRechargeEvent = () => {
+        console.log(mAmount)
+        if (isObjEmpty(mAmount) || mAmount === 0) {
+            Toast.fail('请选择或输入您要充值的正确金额')
+            return
+        }
+        if (!regExpConfig.float.test(mAmount)) {
+            Toast.fail('请输入正确的充值金额')
+            return
+        }
+
+        Toast.loading('正在充值中...', 0)
+
+        fetchPost(API.RECHARGE_FORCARD, {
+            cardId: 10001,
+            amount: mAmount
+        }).then(response => {
+            Toast.hide()
+
+            Toast.success('充值成功')
+        }).catch(error => {
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('数据请求异常', 2)
+            }
         })
     }
 }

@@ -179,6 +179,10 @@ export default class ClassRechargeDetail extends Component {
                         Toast.success(response.data)
                         this.state.rechargeBean.statusCode = 3
                         this.state.rechargeBean.status = '已结束'
+
+                        this.setState({
+                            rechargeBean: this.state.rechargeBean
+                        })
                     }).catch(error => {
                         Toast.hide()
 

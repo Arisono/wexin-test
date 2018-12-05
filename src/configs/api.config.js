@@ -49,16 +49,17 @@ export const API = {
     //结束收款
     PAYMENT_ENTPAY: _baseURL + '/payment/endPay',
     //获取所有老师的电话
-    TEACHER_PHONES_LIST:_baseURL+'/user/getTeacherPhoneList',
+    TEACHER_PHONES_LIST: _baseURL + '/user/getTeacherPhoneList',
     //获取相应班级老师电话号码
     GET_TEACHER_PHONES: _baseURL + '/user/getTeacherPhones',
     //获取班级家长手机号
     GET_PARENT_PHONES: _baseURL + '/user/getParentPhones',
     //会议签到
-    MEETING_SIGN:_baseURL+'/notify/meetingSign',
+    MEETING_SIGN: _baseURL + '/notify/meetingSign',
     //校长信箱提交
-    PRINCIPAL_MAILBOX:_baseURL+'/notify/principalMailbox',
-
+    PRINCIPAL_MAILBOX: _baseURL + '/notify/principalMailbox',
+    //校园卡充值
+    RECHARGE_FORCARD: _baseURL + '/payCard/reChangeForCard',
 
 
     //消费记录/充值记录
@@ -96,11 +97,11 @@ export const API = {
     //OA单据创建
     oaCreate: _baseURL + '/oaApprove/oaCreate',
     //审批列表
-    oaApproveList:_baseURL + '/oaApprove/oaList',
+    oaApproveList: _baseURL + '/oaApprove/oaList',
     //审批操作
-    doapprove:_baseURL+'/oaApprove/approve',
+    doapprove: _baseURL + '/oaApprove/approve',
     //审批单详情
-    oaDetails:_baseURL + '/oaApprove/oaDetails'
+    oaDetails: _baseURL + '/oaApprove/oaDetails'
 }
 
 

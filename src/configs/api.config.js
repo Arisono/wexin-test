@@ -60,17 +60,15 @@ export const API = {
     PRINCIPAL_MAILBOX: _baseURL + '/notify/principalMailbox',
     //校园卡充值
     RECHARGE_FORCARD: _baseURL + '/payCard/reChangeForCard',
-
-
-    //消费记录/充值记录
+    //校园卡详情
+    CARD_DETAIL: _baseURL + '/payCard/cardDetail',
+    //校园卡消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
 
     //根据学号取课程表
     curriculumListByStuId: _baseURL + '/curriculum/curriculumListByStuId',
     //查询学生出入校记录
     RecordOutgoingList: _baseURL + '/recordOutgoing/RecordOutgoingList',
-    //充值，缴费记录
-    rechargeRecord: _baseURL + '/payRank/consumeRecode',
     //分页显示会议 /分页显示作业 /分页显示通知
     notifyMessage: _baseURL + '/notify/getMeetingList',
 

@@ -129,12 +129,10 @@ export default class MeetingSignIn extends Component {
                 })
             }
 
-
             this.setState({
                 meetingSignList: meetingSignList,
                 isRefreshing: false,
             })
-
         }).catch(error => {
             Toast.hide()
 
@@ -164,6 +162,7 @@ export default class MeetingSignIn extends Component {
             Toast.hide()
             Toast.success('签到成功')
             meetingSignList[index].signStatus = '已签到'
+            meetingSignList[index].signStatusCode = 2
 
             this.setState({meetingSignList})
         }).catch(error => {

@@ -4,11 +4,11 @@
  */
 
 import React, {Component} from 'react'
-import {Icon, Button} from 'antd'
+import {Icon, Button, message} from 'antd'
 import {Modal, Grid, InputItem, List, Toast} from 'antd-mobile'
 import 'css/payment.css'
-import {isObjEmpty} from "../../utils/common";
-import {fetchPost} from "../../utils/fetchRequest";
+import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {regExpConfig} from "../../configs/regexp.config";
 
@@ -25,9 +25,9 @@ export default class CampusCardRecharge extends Component {
         super()
 
         this.state = {
-            student: '饶猛',
-            cardNum: '20193839839',
-            balance: '38.00',
+            name: '',
+            cardNum: '',
+            balance: '',
             rechargeVisible: false,
             moneySelect: 0,
             money: '',
@@ -35,18 +35,26 @@ export default class CampusCardRecharge extends Component {
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         document.title = '校园卡充值'
+        if (this.props.match.params.type) {
+            this.mType = this.props.match.params.type
+        }
+    }
+
+    componentDidMount() {
+        Toast.loading('', 0)
+        this.getCardDetail()
     }
 
     render() {
-        const {student, cardNum, balance} = this.state
+        const {name, cardNum, balance} = this.state
         const rechargeModal = this.getRechargeModal()
 
         return (
             <div className='campus-card-root'>
                 <img className='campus-card-img' src={require('imgs/img_campus_card.png')} alt="校园卡"/>
-                <div className='campus-card-student'>{student}</div>
+                <div className='campus-card-student'>{name}</div>
                 <div className='gray-line' style={{height: '1px', marginBottom: '10px'}}></div>
                 <div className='campus-card-line'>
                     <div className='campus-card-caption'>卡号：</div>
@@ -55,14 +63,53 @@ export default class CampusCardRecharge extends Component {
                 <div className='campus-card-line'>
                     <div className='campus-card-caption'>余额：</div>
                     <div className='campus-card-balance'>{balance + '元'}</div>
-                    <span className='campus-card-record' onClick={this.expensesRecord}>消费记录</span>
-                    <Icon type="right" style={{color: '#C1C1C1'}}/>
+                    {isObjEmpty(cardNum) ? '' :
+                        <div>
+                            <span className='campus-card-record' onClick={this.expensesRecord}>消费记录</span>
+                            <Icon type="right" style={{color: '#C1C1C1'}}/>
+                        </div>}
                 </div>
                 <Button type="primary" className='campus-card-btn' onClick={this.onRechargeClick}>去充值</Button>
-                <span className='common-record-text' onClick={this.rechargeRecord}>充值记录</span>
+                {isObjEmpty(cardNum) ? '' :
+                    <span className='common-record-text' onClick={this.rechargeRecord}>充值记录</span>}
+
                 {rechargeModal}
             </div>
         )
+    }
+
+    getCardDetail = () => {
+        const {name, cardNum, balance} = this.state
+        if (this.mType === 'teacher') {
+            this.params = {
+                userId: 10001
+            }
+        } else {
+            this.params = {
+                stuId: 10001
+            }
+        }
+        fetchGet(API.CARD_DETAIL, this.params)
+            .then(response => {
+                Toast.hide()
+
+                if (response && response.data) {
+                    this.setState({
+                        name: getStrValue(response.data, 'stuName'),
+                        cardNum: getStrValue(response.data, 'cardId'),
+                        balance: getIntValue(response.data, 'cardTotal')
+                    })
+                }
+            })
+            .catch(error => {
+                Toast.hide()
+
+                if (typeof error === 'string') {
+                    Toast.fail(error, 2)
+                } else {
+                    Toast.fail('数据请求异常')
+                }
+            })
     }
 
     getRechargeModal = () => {
@@ -152,11 +199,11 @@ export default class CampusCardRecharge extends Component {
     }
     //消费记录
     expensesRecord = () => {
-        this.props.history.push('/consumeRePage/1')
+        this.props.history.push('/consumeRePage/2')
     }
     //充值记录
     rechargeRecord = () => {
-        this.props.history.push('/consumeRePage/2')
+        this.props.history.push('/consumeRePage/1')
     }
 
     onRechargeClick = () => {
@@ -185,12 +232,20 @@ export default class CampusCardRecharge extends Component {
         Toast.loading('正在充值中...', 0)
 
         fetchPost(API.RECHARGE_FORCARD, {
-            cardId: 10001,
+            cardId: this.state.cardNum,
             amount: mAmount
         }).then(response => {
             Toast.hide()
 
-            Toast.success('充值成功')
+            message.success('充值成功')
+            this.setState({
+                rechargeVisible: false,
+                moneySelect: 0,
+                money: '',
+                moneyFocus: false
+            })
+
+            this.getCardDetail()
         }).catch(error => {
             Toast.hide()
 

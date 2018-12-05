@@ -28,7 +28,7 @@ export default class ApprovelDetail extends Component{
             pictureList:[],
             approvelData:[],
             approveId:null,
-            docModel:null,
+            docModel:{},
             handleStatus:null //审批操作1:同意，2：不同意
         }
     }
@@ -64,7 +64,7 @@ export default class ApprovelDetail extends Component{
                    <img className="headerImg" src={hi_img} alt=""/>
                    <div style={{marginTop:10}}>
                        <div style={{color:"#000000",fontSize:15}}>吴彦祖</div>
-                       <div style={{color:"#666666",fontSize:12,marginTop:10}}>2018/11/22   14:00</div>
+                       <div style={{color:"#666666",fontSize:12,marginTop:10}}>{this.state.docModel.creatDate}</div>
                    </div>
                </div>
                 <div className="comhline_sty"></div>
@@ -244,17 +244,24 @@ export default class ApprovelDetail extends Component{
                     approveId:this.state.approveId
                 },{}).then((response)=>{
                     if(response.success && response.data){
-                        var approveStatus = response.data.approveStatus
+                        var approveStatus = response.data.oaApprove.approveStatus
                         var showbutton = false
                         if(approveStatus == 1 && this.state.isMyApply== 'false'){
                             showbutton = true
+                            // console.log('showbutton1',1)
                         }else {
                             showbutton = false
+                            // console.log('showbutton2',2)
                         }
                         this.setState({
                             showButton:showbutton,
-                            docModel: response.data
+                            docModel: response.data.oaApprove
+                        },function () {
+                            console.log('docModel',this.state.docModel)
                         })
+                        // console.log('showbutton',showbutton)
+                        // console.log('approveStatus',approveStatus)
+                        // console.log('this.state.isMyApply',this.state.isMyApply)
                     }
                 }).catch((error) =>{
                     console.log('error',error)

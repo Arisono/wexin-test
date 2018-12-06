@@ -12,6 +12,7 @@ import UploadEnclosure from 'components/UploadEnclosure'
 import {fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
 import {isObjEmpty} from "../../utils/common";
+import {connect} from 'react-redux'
 
 const {TextArea} = Input
 const teacherData = []
@@ -61,7 +62,7 @@ const targetData = [
     }
 ]
 
-export default class AnnounceRelease extends Component {
+class AnnounceRelease extends Component {
 
     constructor() {
         super()
@@ -151,7 +152,7 @@ export default class AnnounceRelease extends Component {
             notifyName: announceTitle,
             notifyType: 4,
             notifyDetails: announceContent,
-            notifyCreator: 10001,
+            notifyCreator: this.props.userInfo.userId,
             notifyStatus: 2,
             notifyFiles: JSON.stringify(fileUrls),
             userIds: JSON.stringify(userList)
@@ -208,3 +209,11 @@ export default class AnnounceRelease extends Component {
         }
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnnounceRelease)

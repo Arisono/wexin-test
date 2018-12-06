@@ -13,8 +13,9 @@ import ClassBean from 'model/ClassBean'
 import AlbumBean from "../../model/AlbumBean";
 import {getStrValue} from "../../utils/common";
 import PictureBean from "../../model/PictureBean";
+import {connect} from 'react-redux'
 
-export default class WonderMoment extends Component {
+class WonderMoment extends Component {
 
     constructor() {
         super()
@@ -84,7 +85,7 @@ export default class WonderMoment extends Component {
         classList.length = 0
 
         fetchGet(API.GET_CLASS_LIST, {
-            userId: 10002,
+            userId: this.props.userInfo.userId,
         }).then(response => {
             Toast.hide()
 
@@ -226,3 +227,11 @@ export default class WonderMoment extends Component {
         this.getVideoList(this.state.classList[v])
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(WonderMoment)

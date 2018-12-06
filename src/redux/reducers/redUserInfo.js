@@ -1,7 +1,7 @@
 import {USER_INFO} from "../constants/actionTypes";
 
 const redUserInfo = (state = {
-    userId: 0,
+    userId: 10001,
     userName: '',
     userOpenid: '',
     userPhone: '',

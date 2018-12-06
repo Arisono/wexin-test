@@ -11,10 +11,11 @@ import {Picker, List, Toast} from 'antd-mobile'
 import {API} from "../../configs/api.config";
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import ClassBean from 'model/ClassBean'
+import {connect} from 'react-redux'
 
 const {TextArea} = Input
 
-export default class UploadVideo extends Component {
+class UploadVideo extends Component {
 
     static state = {
         raomeng: ''
@@ -112,7 +113,7 @@ export default class UploadVideo extends Component {
         classList.length = 0
 
         fetchGet(API.GET_CLASS_LIST, {
-            userId: 10002,
+            userId: this.props.userInfo.userId,
         }).then(response => {
             Toast.hide()
 
@@ -245,3 +246,11 @@ export default class UploadVideo extends Component {
         })
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(UploadVideo)

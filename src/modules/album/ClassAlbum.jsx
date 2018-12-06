@@ -86,7 +86,7 @@ class ClassAlbum extends Component {
         classList.length = 0
 
         fetchGet(API.GET_CLASS_LIST, {
-            userId: 10002,
+            userId: this.props.userInfo.userId,
         }).then(response => {
             Toast.hide()
 
@@ -213,7 +213,6 @@ class ClassAlbum extends Component {
         }
     }
 }
-
 
 let mapStateToProps = (state) => ({
     userInfo: {...state.redUserInfo}

@@ -9,11 +9,12 @@ import {getArrayValue, getIntValue, getStrValue, isObjEmpty, isObjNull} from "..
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
 import ImagesViewer from "../../components/imagesVIewer";
+import {connect} from 'react-redux'
 
 const mPageSize = 10
 let mPageIndex = 0
 
-export default class NotifyBoardParent extends Component {
+class NotifyBoardParent extends Component {
 
     constructor() {
         super()
@@ -175,7 +176,7 @@ export default class NotifyBoardParent extends Component {
         Toast.loading('', 0)
         fetchGet(API.TASK_DETAIL, {
             notifyId: notifyList[index].noId,
-            userId: 10001,
+            userId: this.props.userInfo.userId,
         }).then(response => {
             Toast.hide()
             if (response && response.data) {
@@ -226,7 +227,7 @@ export default class NotifyBoardParent extends Component {
         }
 
         fetchPost(API.notifyMessage, {
-            userId: 10001,
+            userId: this.props.userInfo.userId,
             notifyType: 4,
             pageIndex: mPageIndex,
             pageSize: mPageSize
@@ -290,3 +291,12 @@ export default class NotifyBoardParent extends Component {
 
     handleCancel = () => this.setState({previewVisible: false})
 }
+
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NotifyBoardParent)

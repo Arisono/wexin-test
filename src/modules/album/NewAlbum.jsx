@@ -11,10 +11,11 @@ import {Picker, List, Toast} from 'antd-mobile'
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import ClassBean from 'model/ClassBean'
+import {connect} from 'react-redux'
 
 const {TextArea} = Input
 
-export default class NewAlbum extends Component {
+class NewAlbum extends Component {
 
     componentWillMount() {
         document.title = '新建相册'
@@ -84,7 +85,7 @@ export default class NewAlbum extends Component {
         classList.length = 0
 
         fetchGet(API.GET_CLASS_LIST, {
-            userId: 10002,
+            userId: this.props.userInfo.userId,
         }).then(response => {
             Toast.hide()
 
@@ -189,3 +190,11 @@ export default class NewAlbum extends Component {
         })
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewAlbum)

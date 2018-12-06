@@ -17,9 +17,9 @@ export default class UserItem extends Component{
             <div onChange={this.handelValueCom}>
                 <div style={{display:'flex',flexDirection:'row',backgroundColor:'#F2F2F2'}}>
                     <div className="res_detail">物品明细({this.props.index+1})</div>
-                    <div>
+                    {this.props.index != 0 ?  <div>
                         <img src={delete_img} alt="" style={{height:20,width:20,marginRight:20}} onClick={this.deleteItem.bind(this,this.props.index)}/>
-                    </div>
+                    </div> : ''}
                 </div>
                 <div className="item_sty">
                     <div className="left_title">物品名称</div>

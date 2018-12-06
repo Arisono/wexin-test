@@ -6,8 +6,9 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { List,Button,Checkbox, Progress } from 'antd';
 import './VoteDetailPage.css'
-import {setTitle} from "../../utils/constants";
-
+import {fetchPost,fetchGet} from "../../utils/fetchRequest";
+import {API,_baseURL} from "../../configs/api.config";
+import {Toast} from 'antd-mobile'
 /**
  * Created by Arison on 15:51.
  */
@@ -16,6 +17,7 @@ class VoteDetailPage extends React.Component{
         super(props);
         this.state={
             name:'VoteDetailPage',
+            id: this.props.match.params.id,
             voteState:false,
             data: {
                     title:'三年级2班',
@@ -37,13 +39,20 @@ class VoteDetailPage extends React.Component{
    }
     
     componentDidMount(){
-        // this.state.voteState=this.props.match.params.voteState;
-        console.log("componentWillMount():"+this.props.match.params.voteState);
-        console.log("componentWillMount():"+this.state.voteState);
+        console.log("componentWillMount():id:"+this.state.id);
         document.title = '投票'
         this.setState({
             voteState:this.props.match.params.voteState
         });
+
+        fetchGet(API.voteDetail,{
+                    voteId:this.state.id
+                  }).then((response)=>{
+                      console.log("response:"+JSON.stringify(response));
+                  }).catch((error)=>{
+                      console.log("error:"+JSON.stringify(error));
+                  })
+
     }
 
 
@@ -70,7 +79,7 @@ class VoteDetailPage extends React.Component{
                              <List dataSource={this.state.data.votes}
                                    renderItem={item=>(
                                       <List.Item id="flex_row">
-                                          <Checkbox  style={{marginLeft:"20px",display:"flex",alignItems:"center"}}  >
+                                          <Checkbox  checked={false}  style={{marginLeft:"20px",display:"flex",alignItems:"center"}}  >
                                           </Checkbox>
                                           <div style={{width:"200px",display:"inline",marginRight:"10px"
                                           ,marginLeft:"10px",display:"flex",alignItems:"center",height:"100%"}} >

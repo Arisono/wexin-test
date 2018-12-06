@@ -59,7 +59,8 @@ class VoteListPage extends React.Component{
                     let stateStr=voteObject.voteStatus==1?"进行中":"已结束"
                     let options=voteObject.topics[0].options;
                     let model={
-                      title:voteObject.voteName,
+                      voteId:voteObject.voteId,
+                        title:voteObject.topics[0].topicName,
                       state:stateStr,
                       endTime:voteObject.creatDate,
                       votes:options
@@ -92,7 +93,8 @@ class VoteListPage extends React.Component{
                       let stateStr=voteObject.voteStatus==1?"进行中":"已结束"
                       let options=voteObject.topics[0].options;
                       let model={
-                          title:voteObject.voteName,
+                          voteId:voteObject.voteId,
+                          title:options.topicName,
                           state:stateStr,
                           endTime:voteObject.creatDate,
                           votes:options
@@ -128,11 +130,10 @@ class VoteListPage extends React.Component{
                        loadMore={this.loadMoreAction.bind(this)}
                        hasMore={this.state.hasMoreData}
                        loader={<LoadingMore/>}>
-
                   <List
                       dataSource={this.state.data}
                       renderItem={item=>(
-                        <Link to={"/voteDetail/"+(item.state=='进行中'?true:false)} id="menu_span_normal">
+                        <Link to={"/voteDetail/"+(item.state=='进行中'?true:false)+"/"+item.voteId} id="menu_span_normal">
                             <List.Item className="row " id="row_background"
                                        style={{padding:"10px"}}>
                                 <div className="col-xs-12 ">

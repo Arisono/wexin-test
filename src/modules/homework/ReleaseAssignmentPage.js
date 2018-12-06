@@ -204,7 +204,7 @@ class ReleaseAssignmentPage extends React.Component{
             notifyStatus:'2',//状态
             endDate:this.state.data.endDate,
             userIds:'10001,10002,10003',
-            notifyFiles:this.state.data.notifyFiles
+            notifyFiles:JSON.stringify(this.state.data.notifyFiles)
         }).then((response)=>{
             console.log("response:"+JSON.stringify(response));
             if (response.success){

@@ -66,7 +66,8 @@ export const API = {
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
     //获取用户是否绑定
     USER_ISBINDING: _baseURL + '/user/isBinding',
-
+    //获取组织架构
+    USER_GETOBJECT: _baseURL + '/user/getObject',
 
 
     //根据学号取课程表
@@ -91,7 +92,7 @@ export const API = {
     leaveCreate: _baseURL + "/leave/leaveCreate",
     leaveListParent: _baseURL + "/leave/leaveListByStuId",
     leaveListTeacher: _baseURL + "/leave/leaveListByUserId",
-    leaveDetail:_baseURL+"/leave/lvDetail",
+    leaveDetail: _baseURL + "/leave/lvDetail",
     //发布通知公告/发布作业/创建会议
     issueNotification: _baseURL + '/notify/issueNotification',
     //成绩查询
@@ -106,7 +107,7 @@ export const API = {
     //审批单详情
     oaDetails: _baseURL + '/oaApprove/oaDetails',
     //结束会议
-    endMeeting:_baseURL+'/notify/endMeeting',
+    endMeeting: _baseURL + '/notify/endMeeting',
 }
 
 

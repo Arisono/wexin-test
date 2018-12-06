@@ -9,7 +9,7 @@ import 'css/announce.css'
 import {Toast} from 'antd-mobile'
 import TargetSelect from 'components/TargetSelect'
 import UploadEnclosure from 'components/UploadEnclosure'
-import {fetchPost} from "../../utils/fetchRequest";
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
 import {isObjEmpty} from "../../utils/common";
 import {connect} from 'react-redux'
@@ -82,6 +82,7 @@ class AnnounceRelease extends Component {
     componentDidMount() {
         document.title = '发布通知公告'
 
+        this.getOrganization()
     }
 
     componentWillUnmount() {
@@ -125,6 +126,18 @@ class AnnounceRelease extends Component {
                 {/*<span className='announce-release-history'>历史发布</span>*/}
             </div>
         )
+    }
+
+    getOrganization = () => {
+        Toast.loading('', 0)
+
+        fetchGet(API.USER_GETOBJECT, {
+            userId: this.props.userInfo.userId
+        }).then(response => {
+            Toast.hide()
+        }).catch(error => {
+            Toast.hide()
+        })
     }
 
     releaseAnnounce = () => {

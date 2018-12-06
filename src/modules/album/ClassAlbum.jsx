@@ -216,7 +216,7 @@ class ClassAlbum extends Component {
 
 
 let mapStateToProps = (state) => ({
-    userInfo: {...state}
+    userInfo: {...state.redUserInfo}
 })
 
 let mapDispatchToProps = (dispatch) => ({})

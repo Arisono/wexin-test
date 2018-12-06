@@ -3,4 +3,5 @@ export default function ConsumeBean() {
     this.chargeName = ''
     this.chargeTime = ''
     this.chargeAmount = ''
+    this.chargeStatus = -1
 }

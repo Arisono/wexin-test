@@ -91,7 +91,8 @@ export default class PrincipalMailbox extends Component {
             details: suggest,
             notifyFiles: JSON.stringify(fileUrls),
             userId: 10001,
-            schId: 1
+            schId: 1,
+            isAnonymity: isAnonymous ? 2 : 1
         }).then(response => {
             Toast.hide()
             Toast.success('提交成功，谢谢您的建议！')

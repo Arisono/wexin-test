@@ -11,7 +11,7 @@ import { Checkbox,message} from 'antd';
 import icon_vote_items  from "../../style/imgs/icon_vote_items.png";
 import {Link} from "react-router-dom";
 import LoadingMore from "../../components/LoadingMore";
-import InfiniteScroll from 'react-infinite-scroller'
+import InfiniteScroll from 'react-infinite-scroller';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../utils/fetchRequest';
 import {API} from '../../configs/api.config';
 import {Toast} from 'antd-mobile'

@@ -63,7 +63,7 @@ export default class RouteConfig extends Component {
                     )}/>
 
                     {/*饶猛*/}
-                    <Route path='/bindMenu' component={BindMenu}/>
+                    <Route path='/bindMenu/:openid?' component={BindMenu}/>
                     <Route path='/accountBind/:type?' component={AccountBind}/>
                     <Route path='/newAlbum/:classId/:name?' component={NewAlbum}/>
                     <Route path='/uploadImage/:albumId' component={UploadImage}/>
@@ -79,7 +79,7 @@ export default class RouteConfig extends Component {
                     <Route path='/useHelp' component={UseHelp}/>
                     <Route path='/wonderMoment/:type?' component={WonderMoment}/>
                     <Route path='/principalHistory' component={PrincipalHistory}/>
-                    <Route path='/campusCardRecharge' component={CampusCardRecharge}/>
+                    <Route path='/campusCardRecharge/:type' component={CampusCardRecharge}/>
                     <Route path='/rechargeList' component={RechargeList}/>
                     <Route path='/rechargeRelease' component={RechargeRelease}/>
                     <Route path='/announceRelease' component={AnnounceRelease}/>
@@ -113,7 +113,7 @@ export default class RouteConfig extends Component {
                     <Route path='/score-inquiry' component={ScoreInquiry}/> {/*//成绩通知*/}
                     <Route path='/approvel' component={Approvel}/>{/*审批*/}
                     <Route path='/approvel-detail/:approveId/:isMyApply' component={ApprovelDetail}/> {/*审批详情*/}
-                    <Route path='/meet-detail' component={MeetDetail}/> {/*会议签到详情*/}
+                    <Route path='/meet-detail/:meetId' component={MeetDetail}/> {/*会议签到详情*/}
 
                     {/*刘金龙*/}
                     {/*1:消费记录 2.充值记录*/}

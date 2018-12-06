@@ -3,17 +3,14 @@ import ConsumeBean from 'model/ConsumeBean';
 import {List, Skeleton} from 'antd';
 import ConsumeReItem from "../../components/ConsumeReItem";
 import 'css/consume-re.css';
-import {isObjEmpty} from "../../utils/common";
+import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 import {Toast} from "antd-mobile";
-import InfiniteScroll from "react-infinite-scroller";
-import LoadingMore from 'components/LoadingMore'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
+import RefreshLayout from "../../components/RefreshLayout";
 
-
-let ttype = 1
 const mPageSize = 10
-var mPageIndex = 0
+let mPageIndex = 0
 
 export default class ConsumeRePage extends Component {
 
@@ -23,31 +20,25 @@ export default class ConsumeRePage extends Component {
         this.state = {
             consumeList: [],
             typeTitle: '',
-            hasMoreData: true,
-            isLoading: true
+            isLoading: true,
+            isRefreshing: false,
         }
     }
 
     componentDidMount() {
-
         if (this.props.match.params.type) {
-
-            ttype = this.props.match.params.type
-
+            this.type = this.props.match.params.type
         }
 
-        if (ttype == 1) {
-            console.log(this.props.match.params.type)
-            document.title = '消费记录'
-
-        } else {
-            console.log(this.props.match.params.type)
+        if (this.type == 1) {
             document.title = '充值记录'
-
+        } else {
+            document.title = '消费记录'
         }
 
         Toast.loading('努力加载中...', 0)
-
+        mPageIndex = 0
+        this.loadReleaseList()
     }
 
     componentWillUnmount() {
@@ -55,66 +46,88 @@ export default class ConsumeRePage extends Component {
     }
 
     loadReleaseList = () => {
+        try {
+            this.setState({
+                isRefreshing: true
+            })
+        } catch (e) {
+        }
 
-        const {consumeList} = this.state;
         mPageIndex = mPageIndex + 1;
+        console.log(mPageIndex)
+        const {consumeList} = this.state;
+        if (mPageIndex == 1) {
+            consumeList.length = 0
+        }
 
-        fetchGet(API.rechargeRecord, {
-            stuId: 10000,
-            rankStatus: ttype,
+        fetchGet(API.CONSUME_RECODE, {
+            stuId: 10001,
+            rankStatus: this.type,
             pageIndex: mPageIndex,
             pageSize: mPageSize
         }).then(response => {
+            Toast.hide()
+            if (response && response.data && response.data.length > 0) {
+                response.data.forEach((item, index) => {
+                    let consumeBean = new ConsumeBean()
 
-            console.log(response);
+                    consumeBean.chargeId = getIntValue(item, 'rankId')
+                    consumeBean.chargeName = getStrValue(item, 'rankName')
+                    consumeBean.chargeTime = getStrValue(item, 'rankDate')
+                    consumeBean.chargeAmount = getStrValue(item, 'rankTatal')
+                    consumeBean.chargeStatus = getIntValue(item, 'rankStatus')
 
-            response.data.map((item, index) => {
-                let consumeBean = new ConsumeBean()
-                consumeBean.chargeName = item.rankName
-                consumeBean.chargeTime = item.rankDate
-                consumeBean.chargeAmount = item.rankTatal
-                this.state.consumeList.push(consumeBean)
-            })
+                    this.state.consumeList.push(consumeBean)
+                })
+            } else {
+                if (mPageIndex > 1) {
+                    mPageIndex--
+                }
+            }
 
             this.setState({
                 consumeList,
                 isLoading: false,
-                hasMoreData: false
-
+                isRefreshing: false,
             })
-
-            Toast.hide();
         }).catch(error => {
             Toast.hide();
+
+            if (mPageIndex > 1) {
+                mPageIndex--
+            }
+            this.setState({
+                isRefreshing: false,
+            })
             if (typeof error === 'string') {
                 Toast.fail(error, 2)
+            } else {
+                Toast.fail('数据请求异常')
             }
         })
-
     }
 
 
     render() {
-
-        const {consumeList, typeTitle, hasMoreData, isLoading} = this.state
+        const {consumeList, typeTitle, isLoading, isRefreshing} = this.state
 
         return (
             <div className='consume-select-root'>
                 <div className={isObjEmpty(typeTitle) ? 'displayNone' : 'consume-list-header'}>{typeTitle}</div>
                 <div className={isObjEmpty(typeTitle) ? 'displayNone' : 'gray-line'}></div>
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={this.loadReleaseList}
-                    hasMore={hasMoreData}
-                    loader={<LoadingMore/>}>
+
+                <RefreshLayout
+                    refreshing={isRefreshing}
+                    onRefresh={this.loadReleaseList}>
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
-                        <List className='phones-list-layout' dataSource={consumeList} renderItem={consumeBean => (
-                            <List.Item>
-                                <ConsumeReItem consumeBean={consumeBean}/>
-                            </List.Item>
-                        )}/>
+                        <List className='phones-list-layout' dataSource={consumeList}
+                              renderItem={consumeBean => (
+                                  <List.Item>
+                                      <ConsumeReItem consumeBean={consumeBean}/>
+                                  </List.Item>
+                              )}/>
                     </Skeleton>
-                </InfiniteScroll>
+                </RefreshLayout>
             </div>
         )
     }

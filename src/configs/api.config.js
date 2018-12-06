@@ -3,7 +3,7 @@
  * Desc: 项目接口
  */
 
-export const _baseURL = 'http://192.168.253.130:8099'
+export const _baseURL = 'http://10.1.80.128:8099'
 
 export const API = {
     //获取验证码
@@ -49,27 +49,30 @@ export const API = {
     //结束收款
     PAYMENT_ENTPAY: _baseURL + '/payment/endPay',
     //获取所有老师的电话
-    TEACHER_PHONES_LIST:_baseURL+'/user/getTeacherPhoneList',
+    TEACHER_PHONES_LIST: _baseURL + '/user/getTeacherPhoneList',
     //获取相应班级老师电话号码
     GET_TEACHER_PHONES: _baseURL + '/user/getTeacherPhones',
     //获取班级家长手机号
     GET_PARENT_PHONES: _baseURL + '/user/getParentPhones',
     //会议签到
-    MEETING_SIGN:_baseURL+'/notify/meetingSign',
+    MEETING_SIGN: _baseURL + '/notify/meetingSign',
     //校长信箱提交
-    PRINCIPAL_MAILBOX:_baseURL+'/notify/principalMailbox',
-
-
-
-    //消费记录/充值记录
+    PRINCIPAL_MAILBOX: _baseURL + '/notify/principalMailbox',
+    //校园卡充值
+    RECHARGE_FORCARD: _baseURL + '/payCard/reChangeForCard',
+    //校园卡详情
+    CARD_DETAIL: _baseURL + '/payCard/cardDetail',
+    //校园卡消费记录/充值记录
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
+    //获取用户是否绑定
+    USER_ISBINDING: _baseURL + '/user/isBinding',
+
+
 
     //根据学号取课程表
     curriculumListByStuId: _baseURL + '/curriculum/curriculumListByStuId',
     //查询学生出入校记录
     RecordOutgoingList: _baseURL + '/recordOutgoing/RecordOutgoingList',
-    //充值，缴费记录
-    rechargeRecord: _baseURL + '/payRank/consumeRecode',
     //分页显示会议 /分页显示作业 /分页显示通知
     notifyMessage: _baseURL + '/notify/getMeetingList',
 
@@ -97,11 +100,13 @@ export const API = {
     //OA单据创建
     oaCreate: _baseURL + '/oaApprove/oaCreate',
     //审批列表
-    oaApproveList:_baseURL + '/oaApprove/oaList',
+    oaApproveList: _baseURL + '/oaApprove/oaList',
     //审批操作
-    doapprove:_baseURL+'/oaApprove/approve',
+    doapprove: _baseURL + '/oaApprove/approve',
     //审批单详情
-    oaDetails:_baseURL + '/oaApprove/oaDetails'
+    oaDetails: _baseURL + '/oaApprove/oaDetails',
+    //结束会议
+    endMeeting:_baseURL+'/notify/endMeeting',
 }
 
 

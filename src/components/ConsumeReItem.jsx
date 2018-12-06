@@ -25,7 +25,9 @@ export default class ConsumeReItem extends Component {
             <div className='consume-item-root'>
                 <div className='consume-item-top'>
                     <div className='consume-item-name'>{consumeBean.chargeName}</div>
-                    <div className='consume-item-amount'>{consumeBean.chargeAmount}</div>
+                    <div className={consumeBean.chargeStatus === 1 ?
+                        'consume-item-amount' : 'consume-item-amountBlack'}>
+                        {consumeBean.chargeStatus === 1 ? '+' : '-'}{consumeBean.chargeAmount}</div>
                 </div>
                 <div className='consume-item-time'>{consumeBean.chargeTime}</div>
             </div>

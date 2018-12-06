@@ -24,35 +24,37 @@
 .consume-item-name {
     width: 150px;
     padding: 0px 10px 10px 10px;
-    font-size: 15px;
     font-family: PingFangSC-Regular;
+    font-size: 14px;
     color: #323232;
+    letter-spacing: 1.88px;
 }
 
 .consume-item-time {
     width: 100%;
     padding: 0px 0px 0px 10px;
-    font-size: 12px;
     font-family: PingFangSC-Regular;
+    font-size: 12px;
     color: #666666;
+    letter-spacing: 1.5px;
 }
 
 .consume-item-amount {
-    letter-spacing: 1.38px;
     text-align: right;
     width: 100%;
-    font-size: 15px;
     font-family: PingFangSC-Regular;
-    color: #ca0303;
+    font-size: 14px;
+    color: #CA0303;
+    letter-spacing: 1.88px;
 }
 
 .consume-item-amountBlack {
-    letter-spacing: 1.38px;
     text-align: right;
     width: 100%;
-    font-size: 15px;
     font-family: PingFangSC-Regular;
-    color: #ca0303;
+    font-size: 14px;
+    color: #323232;
+    letter-spacing: 1.88px;
 }
 
 .consume-select-root {
@@ -222,7 +224,7 @@
     overflow-y: scroll;
 }
 
-.notify-detail-modal-content-layout::-webkit-scrollbar{
+.notify-detail-modal-content-layout::-webkit-scrollbar {
     display: none;
 }
 

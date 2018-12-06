@@ -22,8 +22,8 @@ export default class ResApply extends Component{
     constructor(){
         super();
         this.state = {
-            resUser:'这是一个用品申请', //物品用途
-            receivingSays:new Date().toLocaleString(), //领取说明
+            resUser:null, //物品用途
+            receivingSays:null, //领取说明
             Receiver:'程冠希', //接收人
             selectContentArray: [
                     {

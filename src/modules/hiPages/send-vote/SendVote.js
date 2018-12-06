@@ -257,7 +257,7 @@ export default class SendVote extends Component{
                 creator: 10004,
                 voteStatus: 1,
                 voteRemarks: "这是一个调查",
-                voteName: "爱好调查",
+                voteName: this.state.voteTitle,
                 voteFile:approveFiles,
                 voter: this.state.votePerson,
                 voteEndDate:  moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),

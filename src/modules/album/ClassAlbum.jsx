@@ -12,13 +12,14 @@ import {fetchGet} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
 import ClassBean from 'model/ClassBean'
 import AlbumBean from "../../model/AlbumBean";
+import {connect} from 'react-redux'
 
 const uploadItem = new AlbumItem()
 uploadItem.coverImg = 'upload'
 uploadItem.albumName = '新建相册'
 uploadItem.quantity = -1
 
-export default class ClassAlbum extends Component {
+class ClassAlbum extends Component {
 
     constructor() {
         super()
@@ -36,9 +37,11 @@ export default class ClassAlbum extends Component {
         }
 
         this.initAlbumList()
+
     }
 
     componentDidMount() {
+        console.log(this.props.userInfo)
         document.title = '班级相册'
         this.node.scrollIntoView();
 
@@ -210,3 +213,12 @@ export default class ClassAlbum extends Component {
         }
     }
 }
+
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClassAlbum)

@@ -29,6 +29,9 @@ export default class ConsumeRePage extends Component {
         if (this.props.match.params.type) {
             this.type = this.props.match.params.type
         }
+        if (this.props.match.params.cardId) {
+            this.cardId = this.props.match.params.cardId
+        }
 
         if (this.type == 1) {
             document.title = '充值记录'
@@ -61,7 +64,7 @@ export default class ConsumeRePage extends Component {
         }
 
         fetchGet(API.CONSUME_RECODE, {
-            stuId: 10001,
+            cardId: this.cardId,
             rankStatus: this.type,
             pageIndex: mPageIndex,
             pageSize: mPageSize

@@ -40,30 +40,6 @@ class AssignmentDetailPage extends React.Component {
             data: [{
                 name: '张山',
                 content: '陈老师收到'
-            }, {
-                name: '张山',
-                content: '陈老师收到'
-            }, {
-                name: '张山',
-                content: '陈老师收到'
-            }, {
-                name: '张山',
-                content: '陈老师收到'
-            }, {
-                name: '张山',
-                content: '陈老师收到'
-            }, {
-                name: '张山',
-                content: '陈老师收到'
-            }, {
-                name: '张山',
-                content: '陈老师收到'
-            }, {
-                name: '张山',
-                content: '陈老师收到'
-            }, {
-                name: '张山',
-                content: '陈老师收到'
             }]
         };
     }
@@ -78,7 +54,7 @@ class AssignmentDetailPage extends React.Component {
             notifyId: this.state.id,
             userId: 10001
         }).then((response) => {
-            console.log("response:" + JSON.stringify(response));
+            console.log("API.homeWorkDetail response:" + JSON.stringify(response));
             // "notifyId":75,
             //     "notifyName":"作业12",
             //     "notifyType":3,
@@ -97,7 +73,7 @@ class AssignmentDetailPage extends React.Component {
             //     "leaveMessages":null,
             //     "notifyRecords":null
             let images = [];
-            let temps = response.data.notifyFiles.split(",");
+            let temps = response.data.enclosure;
             for (let i = 0; i < temps.length; i++) {
                 images.push(_baseURL + temps[i]);
             }

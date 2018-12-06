@@ -95,7 +95,7 @@ export default class CampusCardRecharge extends Component {
 
                 if (response && response.data) {
                     this.setState({
-                        name: getStrValue(response.data, 'stuName'),
+                        name: getStrValue(response.data, 'stuName')||getStrValue(response.data, 'userName'),
                         cardNum: getStrValue(response.data, 'cardId'),
                         balance: getIntValue(response.data, 'cardTotal')
                     })

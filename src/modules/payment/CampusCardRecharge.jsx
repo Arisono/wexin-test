@@ -95,7 +95,7 @@ export default class CampusCardRecharge extends Component {
 
                 if (response && response.data) {
                     this.setState({
-                        name: getStrValue(response.data, 'stuName')||getStrValue(response.data, 'userName'),
+                        name: getStrValue(response.data, 'stuName') || getStrValue(response.data, 'userName'),
                         cardNum: getStrValue(response.data, 'cardId'),
                         balance: getIntValue(response.data, 'cardTotal')
                     })
@@ -199,11 +199,11 @@ export default class CampusCardRecharge extends Component {
     }
     //消费记录
     expensesRecord = () => {
-        this.props.history.push('/consumeRePage/2')
+        this.props.history.push('/consumeRePage/2/' + this.state.cardNum)
     }
     //充值记录
     rechargeRecord = () => {
-        this.props.history.push('/consumeRePage/1')
+        this.props.history.push('/consumeRePage/1/' + this.state.cardNum)
     }
 
     onRechargeClick = () => {

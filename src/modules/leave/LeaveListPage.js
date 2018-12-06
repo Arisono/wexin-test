@@ -11,7 +11,7 @@ import { Button,message,Icon,Input} from 'antd';
 import InfiniteScroll from 'react-infinite-scroller'
 import LoadingMore from "../../components/LoadingMore";
 import {fetchPost,fetchGet} from "../../utils/fetchRequest";
-import {API} from "../../configs/api.config";
+import {API,_baseURL} from "../../configs/api.config";
 import {Toast,Modal} from 'antd-mobile'
 /**
  * Created by Arison on 11:22.
@@ -62,6 +62,7 @@ class LeaveListPage extends React.Component{
                         endTime: response.data[i].startDate,
                         startTime: response.data[i].endDate,
                         content: response.data[i].lvDetails,
+                        enclosure:response.data[i].enclosure,
                         leaveMessages:response.data[i].leaveMessages
                     };
                     this.state.data.push(model);
@@ -88,6 +89,7 @@ class LeaveListPage extends React.Component{
                         endTime: response.data[i].startDate,
                         startTime: response.data[i].endDate,
                         content: response.data[i].lvDetails,
+                        enclosure:response.data[i].enclosure,
                         leaveMessages:response.data[i].leaveMessages
                     };
                     this.state.data.push(model);
@@ -221,23 +223,25 @@ class LeaveListPage extends React.Component{
                                     <div  className="col-xs-9" id="col-clear-start">{item.content}</div>
                                 </div>
 
-                                <div className="row">
-
+                                <div className="row  margin_bottom_20">
+                                    {item.enclosure.length!=0?(<div >
+                                        <img className="margin_top_bottom_10" src={_baseURL+"/"+item.enclosure[0]}  width={"70%"}  />
+                                    </div>):("")}
                                 </div>
 
-                                <div className="row">
-                                    <div  className="col-xs-12  clear_margin" >
+                                <div className="row ">
+                                    <div  className="col-xs-12 clear_margin" >
                                         {/*    <Button type={"primary"}  size={"small"} id="button_ok">批准</Button>*/}
                                         {this.state.role==="parent"?(
                                             /*家长端*/
-                                            <div className=" bg_white">
+                                            <div className="bg_white">
                                                 {item.leaveMessages.length===0?(<div className="row" style={{height:"15px"}}>
 
                                                 </div>):(
                                                     <div className="">
-                                                        <div className="margin_top_bottom_10"><span>回复</span></div>
+                                                        <div className="padding_5"> 回复</div>
                                                         <div id="page_horizontal_line"></div>
-                                                        <div className="margin_top_bottom_10"><span>{item.leaveMessages[0].messContent}</span></div>
+                                                        <div className="padding_5" id="global_page_title"> {item.leaveMessages[0].messContent}</div>
                                                     {/*<Input  id={index} name={"item."+item.lvId}  disabled={true} size={"small"} value={item.leaveMessages[0].messContent} className="item_flex_1"*/}
                                                             {/*onChange={this.onChangeMessage.bind(this)} placeholder=""  ></Input>*/}
                                                     {/*<Button  style={{backgroundColor:"#C9C9C9",border:"0px"}} size={"small"}    type={"primary"} className="margin_left_10">已回复</Button>*/}

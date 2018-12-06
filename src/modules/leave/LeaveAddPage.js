@@ -125,8 +125,8 @@ class LeaveAddPage extends React.Component {
             // lvRemarks:"",
             // lvType:2,
             // lvStatus:2,
-            lvNotifier:["10002"],
-            lvFiles:[],
+            lvNotifier:[10002],
+            lvFiles:this.state.lvFiles,
             lvDetails:this.state.lvDetails,
             startDate:this.state.startDate,
             endDate:this.state.endDate

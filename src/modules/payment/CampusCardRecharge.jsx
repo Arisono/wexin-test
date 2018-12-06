@@ -79,7 +79,6 @@ export default class CampusCardRecharge extends Component {
     }
 
     getCardDetail = () => {
-        const {name, cardNum, balance} = this.state
         if (this.mType === 'teacher') {
             this.params = {
                 userId: 10001

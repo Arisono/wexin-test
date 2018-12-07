@@ -7,7 +7,6 @@ import './AccessNotice.css';
 import line_img from '../../../style/imgs/line_img.png';
 import enter_img from '../../../style/imgs/ic_enter.png';
 import exit_img from '../../../style/imgs/ic_exit.png';
-import httpRuquest from  '../../../utils/fetchRequest';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
 import LoadingMore from "../../../components/LoadingMore";
@@ -67,13 +66,14 @@ export default class AccessNotice extends Component{
                     </div>
                 {/*</div>*/}
                 <div className="center_sty">
-                    <div style={{width:95,color:"#4087DC",fontSize:"20px",paddingLeft:30,paddingTop:60}}>
+                    <div style={{width:95,color:"#4087DC",fontSize:"20px",paddingLeft:30,paddingTop:60,
+                        position:'fixed'}}>
                         <div>智</div><div>慧</div><div>校</div><div>园</div>
                         <br/>
                         <div>平</div><div>安</div><div>出</div><div>行</div>
                     </div>
-                    <div style={{marginBottom:50}}>
-                        {this.state.out_inData.map((itemata,index) => <ItemComp key ={index} itemata = {itemata} handelSItem={this.handelSItem}></ItemComp>)}
+                    <div style={{marginBottom:50,marginLeft:90}}>
+                        {this.state.out_inData.map((itemdata,index) => <ItemComp key ={index} itemdata = {itemdata} handelSItem={this.handelSItem}></ItemComp>)}
                     </div>
                 </div>
                {/*{ <div className="foot-sty">*/}

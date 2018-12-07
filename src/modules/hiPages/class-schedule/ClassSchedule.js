@@ -8,7 +8,7 @@ import line_img from '../../../style/imgs/line_img.png';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
 
-function HSItem() {
+function HSItem(props) {
     return(
             <div style={{marginTop:0,marginLeft:10}}>
                 <img src={line_img} alt="" style={{width:2,height:25,marginLeft:12}}/>
@@ -24,25 +24,20 @@ function HSItem() {
     )
 }
 export default class ClassSchedule extends Component{
-    componentWillMount() {
-        document.title = '课程表'
-    }
-    componentDidMount() {
-        // console.log('Component DID MOUNT!',API.RecordOutgoingList)
-        fetchGet(API.curriculumListByStuId,{
-            stuId:10000,
-            curStatus:1
-        },{})
-            .then((response)=>{
-                console.log('response',response)
-            })
-            .catch((error) =>{
-                console.log('error',error)
-            })
-    }
+
     constructor(){
         super();
         this.state = {
+            classData:{
+                monday:[],
+                tuesday:[],
+                wednesday:[],
+                thursday:[],
+                friday:[],
+                saturday:[],
+                sunday:[]
+            },
+            curDayData:[],
             Class_SchData:[1,2,3,4],
             CurDay:2
         }
@@ -63,7 +58,7 @@ export default class ClassSchedule extends Component{
                     <div style={{color:"#333333",fontSize:14,marginBottom:10,marginTop:10}}>上午</div>
                     <div className="comhline_sty1" style={{marginBottom:10}}></div>
                     <div>
-                        {this.state.Class_SchData.map((itemata,index) => <HSItem key ={index} itemata = {itemata} handelSItem={this.handelSItem}></HSItem>)}
+                        {this.state.curDayData.map((itemdata,index) => <HSItem key ={index} itemdata = {itemdata} handelSItem={this.handelSItem}></HSItem>)}
                     </div>
                 </div>
 
@@ -82,8 +77,41 @@ export default class ClassSchedule extends Component{
 
     selectDayClick = (value)=>{
         console.log("value",value)
+        var Cdata = null
+        if(value == 1){
+            Cdata = this.state.classData.monday
+        }else if(value == 2){
+            Cdata = this.state.classData.tuesday
+        }else if(value ==3){
+            Cdata = this.state.classData.wednesday
+        }else if(value ==4){
+            Cdata = this.state.classData.thursday
+        }else if(value == 5){
+            Cdata = this.state.classData.friday
+        }
         this.setState({
-            CurDay:value
+            CurDay:value,
+            curDayData:Cdata
+        },function (){
+          console.log("curDayData",this.state.curDayData)
+        })
+    }
+
+    componentWillMount() {
+        document.title = '课程表'
+    }
+    componentDidMount() {
+        fetchGet(API.curriculumListByStuId,{
+            stuId:10000,
+            curStatus:1
+        },{}).then((response)=>{
+            if(response.success && response.data){
+                this.setState({
+                    classData:response.data
+                })
+            }
+        }).catch((error) =>{
+            console.log('error',error)
         })
     }
 }

@@ -297,12 +297,13 @@ export function getDirFiles(directory, useSubdirectories, regExp) {
 }
 
 export const getCheckedNodes = (extra) => {
-    console.log('targetExtra', extra)
     let checkedNodes = extra.allCheckedNodes
     let count = getCheckedCount(checkedNodes)
     if (isObjEmpty(checkedNodes)) {
         checkedNodes = []
     }
+    checkedNodes = getNodes(checkedNodes)
+    console.log('childNodes', checkedNodes)
     return {checkedNodes, count}
 }
 
@@ -334,6 +335,39 @@ export const getCheckedCount = (checkedNodes) => {
         return quantity
     } else {
         return 0
+    }
+}
+
+export const getNodes = (checkedNodes) => {
+    if (!isObjEmpty(checkedNodes)) {
+        let childNodes = []
+        for (let i = 0; i < checkedNodes.length; i++) {
+            let checkedNode = checkedNodes[i]
+            if (checkedNode.node && checkedNode.node.props) {
+                const checkProps = checkedNode.node.props
+                if (!isObjEmpty(checkProps.children)) {
+                    checkedNode = checkProps.children
+                    childNodes = childNodes.concat(getNodes(checkedNode))
+                } else {
+                    childNodes.push(checkProps)
+                    continue
+                }
+            } else {
+                if (checkedNode.props) {
+                    const checkProps = checkedNode.props
+                    if (!isObjEmpty(checkProps.children)) {
+                        checkedNode = checkProps.children
+                        childNodes = childNodes.concat(getNodes(checkedNode))
+                    } else {
+                        childNodes.push(checkProps)
+                        continue
+                    }
+                }
+            }
+        }
+        return childNodes
+    } else {
+        return []
     }
 }
 

@@ -25,7 +25,7 @@ export default class FieldTrip extends Component{
             endValue: null,
             Tdurntion:null,
             tripsHours:null,
-            tripsReason:new Date().toLocaleString(),
+            tripsReason:null,
             Receiver:'吴彦祖',
             previewVisible: false,
             previewImage: '',

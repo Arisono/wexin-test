@@ -26,19 +26,7 @@ class VoteListPage extends React.Component{
             hasMoreData:true,
             pageIndex:1,
             pageSize:10,
-            data:[
-                {
-                    title:'三年级2班',
-                    state:'进行中',
-                    endTime:'2018-11-15 08:00',
-                    votes:[
-                        '深圳南山',
-                        '深圳宝安',
-                        '深圳福田'
-                    ]
-
-                }
-            ]
+            data:[]
         };
     }
 
@@ -48,7 +36,7 @@ class VoteListPage extends React.Component{
 
     componentDidMount(){
           fetchGet(API.voteList,{
-              stuId:'10000',//学号ID
+              userId:'10000',//学号ID
               pageIndex:this.state.pageIndex,
               pageSize:this.state.pageSize,
               voteType:'1',
@@ -56,7 +44,7 @@ class VoteListPage extends React.Component{
               this.state.data.length=0;
               for (let i = 0; i < response.data.length; i++) {
                     let  voteObject  = response.data[i];
-                    let stateStr=voteObject.voteStatus==1?"进行中":"已结束"
+                    let stateStr=voteObject.voteStatus==1?"进行中":"已投票"
                     let options=voteObject.topics[0].options;
                     let model={
                       voteId:voteObject.voteId,

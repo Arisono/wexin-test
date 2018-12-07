@@ -77,9 +77,11 @@ export const API = {
     notifyMessage: _baseURL + '/notify/getMeetingList',
 
     //创建投票单
-    voteCreate: _baseURL + '/vote/voteCreate',
-    voteList: _baseURL + "/vote/voteList",
-    voteDetail: _baseURL + "/vote/voteDetail",
+    voteCreate: _baseURL + '/vote/voteCreate',//投票创建
+    voteList: _baseURL + "/vote/voteList",//家长端
+    voteListTeacher:_baseURL+"vote/voteListForTeacher",//教师端
+    voteDetail: _baseURL + "/vote/voteDetail",//投票详情
+    voteAction:_baseURL+"/vote/voteAction",//投票
     //发布作业
     homeWorkAdd: _baseURL + "/notify/issueNotification",
     homeWorkList: _baseURL + "/notify/getMeetingList",

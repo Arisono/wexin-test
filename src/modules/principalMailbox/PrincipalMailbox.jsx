@@ -11,10 +11,10 @@ import {isObjEmpty} from "../../utils/common";
 import UploadEnclosure from 'components/UploadEnclosure'
 import {_baseURL, API} from "../../configs/api.config";
 import {fetchPost} from "../../utils/fetchRequest";
+import {connect} from 'react-redux'
 
 const {TextArea} = Input
-
-export default class PrincipalMailbox extends Component {
+class PrincipalMailbox extends Component {
 
     constructor() {
         super()
@@ -90,7 +90,7 @@ export default class PrincipalMailbox extends Component {
         fetchPost(API.PRINCIPAL_MAILBOX, {
             details: suggest,
             notifyFiles: JSON.stringify(fileUrls),
-            userId: 10001,
+            userId: this.props.userInfo.userId,
             schId: 1,
             isAnonymity: isAnonymous ? 2 : 1
         }).then(response => {
@@ -147,3 +147,11 @@ export default class PrincipalMailbox extends Component {
         this.props.history.push('/principalHistory')
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PrincipalMailbox)

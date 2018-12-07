@@ -11,6 +11,7 @@ import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {regExpConfig} from "../../configs/regexp.config";
+import {connect} from 'react-redux'
 
 const moneyList = [
     '50元', '100元', '150元', '200元', '300元'
@@ -19,7 +20,7 @@ const moneyList = [
 const amountList = [50, 100, 150, 200, 300]
 let mAmount = 50
 
-export default class CampusCardRecharge extends Component {
+class CampusCardRecharge extends Component {
 
     constructor() {
         super()
@@ -79,14 +80,13 @@ export default class CampusCardRecharge extends Component {
     }
 
     getCardDetail = () => {
-        const {name, cardNum, balance} = this.state
         if (this.mType === 'teacher') {
             this.params = {
-                userId: 10001
+                userId: this.props.userInfo.userId
             }
         } else {
             this.params = {
-                stuId: 10001
+                stuId: this.props.userInfo.userId
             }
         }
         fetchGet(API.CARD_DETAIL, this.params)
@@ -95,7 +95,7 @@ export default class CampusCardRecharge extends Component {
 
                 if (response && response.data) {
                     this.setState({
-                        name: getStrValue(response.data, 'stuName'),
+                        name: getStrValue(response.data, 'stuName') || getStrValue(response.data, 'userName'),
                         cardNum: getStrValue(response.data, 'cardId'),
                         balance: getIntValue(response.data, 'cardTotal')
                     })
@@ -199,11 +199,11 @@ export default class CampusCardRecharge extends Component {
     }
     //消费记录
     expensesRecord = () => {
-        this.props.history.push('/consumeRePage/2')
+        this.props.history.push('/consumeRePage/2/' + this.state.cardNum)
     }
     //充值记录
     rechargeRecord = () => {
-        this.props.history.push('/consumeRePage/1')
+        this.props.history.push('/consumeRePage/1/' + this.state.cardNum)
     }
 
     onRechargeClick = () => {
@@ -257,3 +257,11 @@ export default class CampusCardRecharge extends Component {
         })
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(CampusCardRecharge)

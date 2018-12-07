@@ -90,7 +90,7 @@ export default class RouteConfig extends Component {
                     <Route path={"/ImageGrid"} component={ImageGrid}/>
                     <Route path={"/TestImagesViewer"} component={TestImagesViewer}/>
                     <Route path={'/picturesWall'} component={PicturesWallItem}/>
-                    <Route path="/voteDetail/:voteState" component={VoteDetailPage}/>
+                    <Route path="/voteDetail/:voteState/:id" component={VoteDetailPage}/>
                     <Route path="/homePage" component={AppHomePage}/>
                     <Route path='/voteList' component={VoteListPage}/>
                     <Route path='/voteListTab' component={VoteListTabPage}/>
@@ -117,7 +117,7 @@ export default class RouteConfig extends Component {
 
                     {/*刘金龙*/}
                     {/*1:消费记录 2.充值记录*/}
-                    <Route path='/consumeRePage/:type' component={ConsumeRePage}/>
+                    <Route path='/consumeRePage/:type/:cardId' component={ConsumeRePage}/>
                     <Route path='/notifyBoard/parent' component={NotifyBoardParent}/>
                     <Route path='/notifyBoard/teacher' component={NotifyBoardTeacher}/>
                     {/*龚鹏明*/}

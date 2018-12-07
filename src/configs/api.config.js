@@ -66,7 +66,8 @@ export const API = {
     CONSUME_RECODE: _baseURL + '/payRank/consumeRecode',
     //获取用户是否绑定
     USER_ISBINDING: _baseURL + '/user/isBinding',
-
+    //获取组织架构
+    USER_GETOBJECT: _baseURL + '/user/getObject',
 
 
     //根据学号取课程表
@@ -77,9 +78,11 @@ export const API = {
     notifyMessage: _baseURL + '/notify/getMeetingList',
 
     //创建投票单
-    voteCreate: _baseURL + '/vote/voteCreate',
-    voteList: _baseURL + "/vote/voteList",
-    voteDetail: _baseURL + "/vote/voteList",
+    voteCreate: _baseURL + '/vote/voteCreate',//投票创建
+    voteList: _baseURL + "/vote/voteList",//家长端
+    voteListTeacher:_baseURL+"vote/voteListForTeacher",//教师端
+    voteDetail: _baseURL + "/vote/voteDetail",//投票详情
+    voteAction:_baseURL+"/vote/voteAction",//投票
     //发布作业
     homeWorkAdd: _baseURL + "/notify/issueNotification",
     homeWorkList: _baseURL + "/notify/getMeetingList",
@@ -89,8 +92,9 @@ export const API = {
     messageList: _baseURL + "/leaveMessage/getMessageListByNotifyId",
     //学生请假
     leaveCreate: _baseURL + "/leave/leaveCreate",
-    leaveList: _baseURL + "/leave/leaveList",
-
+    leaveListParent: _baseURL + "/leave/leaveListByStuId",
+    leaveListTeacher: _baseURL + "/leave/leaveListByUserId",
+    leaveDetail: _baseURL + "/leave/lvDetail",
     //发布通知公告/发布作业/创建会议
     issueNotification: _baseURL + '/notify/issueNotification',
     //成绩查询

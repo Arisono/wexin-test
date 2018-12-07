@@ -12,10 +12,12 @@ import RefreshLayout from '../../components/RefreshLayout'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {getIntValue, getStrValue} from "../../utils/common";
+import {connect} from 'react-redux'
 
 const mPageSize = 10
 let mPageIndex = 0
-export default class RechargeList extends Component {
+
+class RechargeList extends Component {
 
     constructor() {
         super()
@@ -75,7 +77,7 @@ export default class RechargeList extends Component {
         }
 
         fetchGet(API.PAYMENT_PAYMENTLIST, {
-            stuId: 10001,
+            stuId: this.props.userInfo.userId,
             pageIndex: mPageIndex,
             pageSize: mPageSize
         }).then(response => {
@@ -136,5 +138,12 @@ export default class RechargeList extends Component {
         })
 
     }
-
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(RechargeList)

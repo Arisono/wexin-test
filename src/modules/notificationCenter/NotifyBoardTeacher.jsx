@@ -17,13 +17,14 @@ import {getArrayValue, getIntValue, getStrValue, isObjEmpty} from "../../utils/c
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
 import ImagesViewer from "../../components/imagesVIewer";
-
+import NotifyBoardParent from "./NotifyBoardParent";
+import {connect} from 'react-redux'
 
 const mPageSize = 10
 let mReleaseIndex = 0
 let mReceiveIndex = 0
 
-export default class NotifyBoardTeacher extends Component {
+class NotifyBoardTeacher extends Component {
 
     constructor() {
         super()
@@ -329,7 +330,7 @@ export default class NotifyBoardTeacher extends Component {
         }
 
         fetchPost(API.notifyMessage, {
-            userId: 10001,
+            userId: this.props.userInfo.userId,
             notifyType: 4,
             pageIndex: mReleaseIndex,
             pageSize: mPageSize
@@ -400,7 +401,7 @@ export default class NotifyBoardTeacher extends Component {
         }
 
         fetchPost(API.notifyMessage, {
-            userId: 10001,
+            userId: this.props.userInfo.userId,
             notifyType: 4,
             pageIndex: mReceiveIndex,
             pageSize: mPageSize
@@ -483,3 +484,11 @@ export default class NotifyBoardTeacher extends Component {
 
     handleCancel = () => this.setState({previewVisible: false})
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NotifyBoardTeacher)

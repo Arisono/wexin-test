@@ -76,7 +76,7 @@ class VoteDetailPage extends React.Component{
                     optionId: response.data.topics[0].options[i].optionId,
                     topicId: response.data.topics[0].options[i].topicId,
                     count: response.data.topics[0].options[i].count,
-                    percent: response.data.topics[0].options[i].percent,
+                    percent: parseInt(response.data.topics[0].options[i].percent),
                     name: response.data.topics[0].options[i].optionName,
                     checked: false
                 }

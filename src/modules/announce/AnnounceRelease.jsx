@@ -87,6 +87,8 @@ class AnnounceRelease extends Component {
 
     componentWillUnmount() {
         Toast.hide()
+
+        clearTimeout(this.backTask)
     }
 
     render() {
@@ -135,8 +137,21 @@ class AnnounceRelease extends Component {
             userId: this.props.userInfo.userId
         }).then(response => {
             Toast.hide()
+
+            if (response && response.data) {
+                const schoolArray = response.data.schools
+                const teacherArray = response.data.teachers
+
+
+            }
         }).catch(error => {
             Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
         })
     }
 
@@ -178,6 +193,9 @@ class AnnounceRelease extends Component {
                 announceContent: '',
                 fileList: []
             })
+            this.backTask = setTimeout(() => {
+                this.props.history.goBack()
+            }, 2000)
         }).catch(error => {
             Toast.hide()
             if (typeof error === 'string') {

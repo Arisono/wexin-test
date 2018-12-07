@@ -47,11 +47,15 @@ class NewAlbum extends Component {
         }
     }
 
-
     componentDidMount() {
-
         Toast.loading('', 0)
         this.getClassList()
+    }
+
+    componentWillUnmount() {
+        Toast.hide()
+
+        clearTimeout(this.backTask)
     }
 
     render() {
@@ -182,6 +186,10 @@ class NewAlbum extends Component {
                 albumTitle: '',
                 albumdescription: ''
             })
+
+            this.backTask = setTimeout(() => {
+                this.props.history.goBack()
+            }, 2000)
         }).catch(error => {
             Toast.hide()
             if (typeof error === 'string') {

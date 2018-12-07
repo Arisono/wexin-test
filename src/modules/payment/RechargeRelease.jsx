@@ -108,6 +108,8 @@ class RechargeRelease extends Component {
 
     componentWillUnmount() {
         Toast.hide()
+
+        clearTimeout(this.backTask)
     }
 
     render() {
@@ -207,6 +209,10 @@ class RechargeRelease extends Component {
                 endTime: now,
                 percapita: '',
             })
+
+            this.backTask = setTimeout(() => {
+                this.props.history.goBack()
+            }, 2000)
         }).catch(error => {
             Toast.hide()
 

@@ -60,6 +60,12 @@ class UploadVideo extends Component {
         this.getClassList()
     }
 
+    componentWillUnmount() {
+        Toast.hide()
+
+        clearTimeout(this.backTask)
+    }
+
     render() {
         const {classValue, videoTitle, fileList, classList} = this.state
 
@@ -238,6 +244,9 @@ class UploadVideo extends Component {
         }).then(response => {
             Toast.hide()
             Toast.success('视频发布成功')
+            this.backTask = setTimeout(() => {
+                this.props.history.goBack()
+            }, 2000)
         }).catch(error => {
             Toast.hide()
             if (typeof error === 'string') {

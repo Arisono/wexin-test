@@ -69,7 +69,8 @@ class AnnounceRelease extends Component {
         return (
             <div className='common-column-layout'>
                 <div className='gray-line'></div>
-                {targetData.length > 0 ? <TargetSelect {...targetProps}/> : <TargetSelect {...defaultTargetProps}/>}
+                {targetData.length > 0 ? <TargetSelect {...targetProps}/>
+                    : <TargetSelect {...defaultTargetProps}/>}
                 <div className='gray-line'></div>
                 <input className='titleInput' placeholder='请输入通知标题'
                        value={announceTitle} onChange={this.titleChange}/>
@@ -202,7 +203,13 @@ class AnnounceRelease extends Component {
                 fileUrls.push(value.picUrl)
             })
         }
-        const userList = ['10000', '10001', '10002', '10003']
+        const userList = []
+        if (!isObjEmpty(this.checkNodes)) {
+            this.checkNodes.forEach((node, index) => {
+                userList.push(node.userId)
+            })
+        }
+        console.log(userList)
 
         fetchPost(API.ISSUE_NOTIFICATION, {
             notifyName: announceTitle,
@@ -241,6 +248,7 @@ class AnnounceRelease extends Component {
     }
 
     onTargetChange = (value, label, checkNodes, count) => {
+        this.checkNodes = checkNodes
         this.setState({
             targetList: value,
             targetCount: count

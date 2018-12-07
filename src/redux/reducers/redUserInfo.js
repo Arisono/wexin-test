@@ -13,10 +13,10 @@ const redUserInfo = (state = {
     switch (action.type) {
         case USER_INFO:
             return {
-                userId: action.userId,
-                userName: action.userName,
-                userOpenid: action.userOpenid,
-                userPhone: action.userPhone,
+                userId: action.userId || state.userId,
+                userName: action.userName || state.userName,
+                userOpenid: action.userOpenid || state.userOpenid,
+                userPhone: action.userPhone || state.userPhone,
             }
         default:
             return state

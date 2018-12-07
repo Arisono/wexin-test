@@ -28,7 +28,15 @@ export default class ClassSchedule extends Component{
     constructor(){
         super();
         this.state = {
-            classData:null,
+            classData:{
+                monday:[],
+                tuesday:[],
+                wednesday:[],
+                thursday:[],
+                friday:[],
+                saturday:[],
+                sunday:[]
+            },
             curDayData:[],
             Class_SchData:[1,2,3,4],
             CurDay:2

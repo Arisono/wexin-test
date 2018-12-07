@@ -106,6 +106,8 @@ export const API = {
     oaDetails: _baseURL + '/oaApprove/oaDetails',
     //结束会议
     endMeeting:_baseURL+'/notify/endMeeting',
+    //
+    getObject:_baseURL + '/user/getObject',
 }
 
 

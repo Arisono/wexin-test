@@ -28,7 +28,13 @@ export default class ApprovelDetail extends Component{
             pictureList:[],
             approvelData:[],
             approveId:null,
-            docModel:{},
+            docModel:{
+                approveFiles:{},
+                approver:{},
+                basic:[],
+                oaApprove:{},
+                proposer:{}
+            },
             handleStatus:null //审批操作1:同意，2：不同意
         }
     }
@@ -63,14 +69,14 @@ export default class ApprovelDetail extends Component{
                <div className="headerDiv">
                    <img className="headerImg" src={hi_img} alt=""/>
                    <div style={{marginTop:10}}>
-                       <div style={{color:"#000000",fontSize:15}}>吴彦祖</div>
-                       <div style={{color:"#666666",fontSize:12,marginTop:10}}>{this.state.docModel.creatDate}</div>
+                       <div style={{color:"#000000",fontSize:15}}>{this.state.docModel.proposer.value}</div>
+                       <div style={{color:"#666666",fontSize:12,marginTop:10}}>{this.state.docModel.oaApprove.creatDate}</div>
                    </div>
                </div>
                 <div className="comhline_sty"></div>
 
                 <div style={{marginTop:10}}>
-                    {this.state.detailList.map((itemdata,index) =>
+                    {this.state.docModel.basic.map((itemdata,index) =>
                         <DetailItem index = {index} itemdata = {itemdata}></DetailItem>
                     )}
                 </div>
@@ -255,9 +261,9 @@ export default class ApprovelDetail extends Component{
                         }
                         this.setState({
                             showButton:showbutton,
-                            docModel: response.data.oaApprove
+                            docModel: response.data
                         },function () {
-                            console.log('docModel',this.state.docModel)
+                            // console.log('docModel',this.state.docModel)
                         })
                         // console.log('showbutton',showbutton)
                         // console.log('approveStatus',approveStatus)

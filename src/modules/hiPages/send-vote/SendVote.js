@@ -23,7 +23,15 @@ export default class SendVote extends Component{
         document.title = '发起投票'
     }
      componentDidMount() {
-        console.log('Component DID MOUNT!')
+         fetchGet(API.getObject,{
+             userId:10001,
+             stuId:10001
+         },{}).then((response)=>{
+
+         }).catch((error) =>{
+             console.log('error',error)
+             Toast.show(error.message,1)
+         })
     }
     constructor(props){
         super(props);

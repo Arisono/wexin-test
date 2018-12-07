@@ -13,13 +13,26 @@ export default class TargetSelect extends Component {
 
     constructor() {
         super()
+        // this.state = {
+        //     targetData: []
+        // }
     }
 
     componentDidMount() {
+        // this.setState({
+        //     targetData: this.props.targetData
+        // })
     }
 
     componentWillUnmount() {
 
+    }
+
+    componentWillReceiveProps(nextProps) {
+        // console.log('nextProps', JSON.stringify(nextProps.targetData))
+        // this.setState({
+        //     targetData: nextProps.targetData
+        // })
     }
 
     render() {
@@ -50,10 +63,16 @@ export default class TargetSelect extends Component {
                     <span className='announce-release-target-count'>(共{targetCount}人)</span>
                 </div>
                 <div className='announce-release-target-layout'>
-                    <TreeSelect {...targetProps}/>
+                    <TreeSelect {...targetProps} onFocus={this.onTargetFocus}/>
                 </div>
             </div>
         )
+    }
+
+    onTargetFocus = (e) => {
+        if (this.props.onTargetFocus) {
+            this.props.onTargetFocus(e)
+        }
     }
 
     onTargetChange = (value, label, extra) => {

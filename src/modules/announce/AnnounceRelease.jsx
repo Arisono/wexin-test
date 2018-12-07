@@ -11,56 +11,10 @@ import TargetSelect from 'components/TargetSelect'
 import UploadEnclosure from 'components/UploadEnclosure'
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
-import {isObjEmpty} from "../../utils/common";
+import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 import {connect} from 'react-redux'
 
 const {TextArea} = Input
-const teacherData = []
-const parentData = []
-
-for (let i = 1; i < 6; i++) {
-    parentData.push({
-        title: `三年级${i}班`,
-        value: `0-${i}`,
-        key: `0-${i}`,
-        children: [{
-            title: `饶猛`,
-            value: `0-${i}-0`,
-            key: `0-${i}-0`
-        }, {
-            title: `李泞`,
-            value: `0-${i}-1`,
-            key: `0-${i}-1`,
-        }, {
-            title: `章晨望`,
-            value: `0-${i}-2`,
-            key: `0-${i}-2`,
-        }],
-    })
-}
-
-for (let i = 1; i < 10; i++) {
-    teacherData.push({
-        title: `老师${i}`,
-        value: `1-${i}`,
-        key: `1-${i}`,
-    })
-}
-
-const targetData = [
-    {
-        title: `全体家长`,
-        value: `0`,
-        key: `0`,
-        children: parentData,
-    },
-    {
-        title: `全体老师`,
-        value: `1`,
-        key: `1`,
-        children: teacherData,
-    }
-]
 
 class AnnounceRelease extends Component {
 
@@ -74,8 +28,9 @@ class AnnounceRelease extends Component {
             previewVisible: false,
             previewImage: '',
             fileList: [],
-            targetList: ['1-1'],
-            targetCount: 1
+            targetList: [],
+            targetCount: 0,
+            targetData: [],
         }
     }
 
@@ -92,19 +47,29 @@ class AnnounceRelease extends Component {
     }
 
     render() {
-        const {announceTitle, announceContent, targetCount, targetList, fileList} = this.state
+        const {announceTitle, announceContent, targetCount, targetList, fileList, targetData} = this.state
 
         const targetProps = {
             targetData: targetData,
             targetValues: targetList,
             title: '发布对象',
             targetCount: targetCount,
-            onTargetChange: this.onTargetChange.bind(this)
+            onTargetChange: this.onTargetChange.bind(this),
+            onTargetFocus: this.onTargetFocus.bind(this)
+        }
+
+        const defaultTargetProps = {
+            targetData: [],
+            targetValues: targetList,
+            title: '发布对象',
+            targetCount: targetCount,
+            onTargetChange: this.onTargetChange.bind(this),
+            onTargetFocus: this.onTargetFocus.bind(this)
         }
         return (
             <div className='common-column-layout'>
                 <div className='gray-line'></div>
-                <TargetSelect {...targetProps}/>
+                {targetData.length > 0 ? <TargetSelect {...targetProps}/> : <TargetSelect {...defaultTargetProps}/>}
                 <div className='gray-line'></div>
                 <input className='titleInput' placeholder='请输入通知标题'
                        value={announceTitle} onChange={this.titleChange}/>
@@ -137,13 +102,76 @@ class AnnounceRelease extends Component {
             userId: this.props.userInfo.userId
         }).then(response => {
             Toast.hide()
-
+            const {targetData} = this.state
+            targetData.length = 0
             if (response && response.data) {
                 const schoolArray = response.data.schools
                 const teacherArray = response.data.teachers
 
+                if (!isObjEmpty(teacherArray)) {
+                    const teacherData = []
+                    teacherArray.forEach((teacherObj, index) => {
+                        if (teacherObj) {
+                            teacherData.push({
+                                title: getStrValue(teacherObj, 'userName'),
+                                userId: getIntValue(teacherObj, 'userId'),
+                                userPhone: getStrValue(teacherObj, 'userPhone'),
+                                value: getStrValue(teacherObj, 'userName') + `-1-${index}`,
+                                key: `1-${index}`,
+                            })
+                        }
+                    })
 
+                    targetData.push({
+                        title: `全体老师`,
+                        value: `1`,
+                        key: `1`,
+                        children: teacherData,
+                    })
+                }
+
+                if (!isObjEmpty(schoolArray)) {
+                    const classData = []
+
+                    schoolArray.forEach((schoolObj, sIndex) => {
+                        if (schoolObj) {
+                            const parentArray = schoolObj.parents
+
+                            const parentData = []
+                            if (!isObjEmpty(parentArray)) {
+                                parentArray.forEach((parentObj, pIndex) => {
+                                    parentData.push({
+                                        title: getStrValue(parentObj, 'userName'),
+                                        userId: getIntValue(parentObj, 'userId'),
+                                        userPhone: getStrValue(parentObj, 'userPhone'),
+                                        value: getStrValue(parentObj, 'userName') + `-0-${sIndex}-${pIndex}`,
+                                        key: `0-${sIndex}-${pIndex}`,
+                                    })
+                                })
+
+                                classData.push({
+                                    title: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName'),
+                                    value: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName') + `-0-${sIndex}`,
+                                    key: `0-${sIndex}`,
+                                    children: parentData,
+                                })
+                            }
+                        }
+                    })
+
+                    targetData.push({
+                        title: `全体家长`,
+                        value: `0`,
+                        key: `0`,
+                        children: classData,
+                    })
+                }
             }
+
+            console.log('targetData', targetData)
+            this.setState({
+                targetData,
+            })
         }).catch(error => {
             Toast.hide()
 
@@ -204,6 +232,12 @@ class AnnounceRelease extends Component {
                 Toast.fail('请求异常', 2)
             }
         })
+    }
+
+    onTargetFocus = (e) => {
+        if (isObjEmpty(this.state.targetData)) {
+            this.getOrganization()
+        }
     }
 
     onTargetChange = (value, label, checkNodes, count) => {

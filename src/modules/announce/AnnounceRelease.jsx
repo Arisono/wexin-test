@@ -9,9 +9,10 @@ import 'css/announce.css'
 import {Toast} from 'antd-mobile'
 import TargetSelect from 'components/TargetSelect'
 import UploadEnclosure from 'components/UploadEnclosure'
-import {fetchPost} from "../../utils/fetchRequest";
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
 import {isObjEmpty} from "../../utils/common";
+import {connect} from 'react-redux'
 
 const {TextArea} = Input
 const teacherData = []
@@ -61,7 +62,7 @@ const targetData = [
     }
 ]
 
-export default class AnnounceRelease extends Component {
+class AnnounceRelease extends Component {
 
     constructor() {
         super()
@@ -81,10 +82,13 @@ export default class AnnounceRelease extends Component {
     componentDidMount() {
         document.title = '发布通知公告'
 
+        this.getOrganization()
     }
 
     componentWillUnmount() {
         Toast.hide()
+
+        clearTimeout(this.backTask)
     }
 
     render() {
@@ -126,6 +130,31 @@ export default class AnnounceRelease extends Component {
         )
     }
 
+    getOrganization = () => {
+        Toast.loading('', 0)
+
+        fetchGet(API.USER_GETOBJECT, {
+            userId: this.props.userInfo.userId
+        }).then(response => {
+            Toast.hide()
+
+            if (response && response.data) {
+                const schoolArray = response.data.schools
+                const teacherArray = response.data.teachers
+
+
+            }
+        }).catch(error => {
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
+        })
+    }
+
     releaseAnnounce = () => {
         const {announceTitle, announceContent, fileList} = this.state
 
@@ -151,7 +180,7 @@ export default class AnnounceRelease extends Component {
             notifyName: announceTitle,
             notifyType: 4,
             notifyDetails: announceContent,
-            notifyCreator: 10001,
+            notifyCreator: this.props.userInfo.userId,
             notifyStatus: 2,
             notifyFiles: JSON.stringify(fileUrls),
             userIds: JSON.stringify(userList)
@@ -164,6 +193,9 @@ export default class AnnounceRelease extends Component {
                 announceContent: '',
                 fileList: []
             })
+            this.backTask = setTimeout(() => {
+                this.props.history.goBack()
+            }, 2000)
         }).catch(error => {
             Toast.hide()
             if (typeof error === 'string') {
@@ -208,3 +240,11 @@ export default class AnnounceRelease extends Component {
         }
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnnounceRelease)

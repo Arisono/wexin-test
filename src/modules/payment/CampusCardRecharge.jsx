@@ -11,6 +11,7 @@ import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {regExpConfig} from "../../configs/regexp.config";
+import {connect} from 'react-redux'
 
 const moneyList = [
     '50元', '100元', '150元', '200元', '300元'
@@ -19,7 +20,7 @@ const moneyList = [
 const amountList = [50, 100, 150, 200, 300]
 let mAmount = 50
 
-export default class CampusCardRecharge extends Component {
+class CampusCardRecharge extends Component {
 
     constructor() {
         super()
@@ -81,11 +82,11 @@ export default class CampusCardRecharge extends Component {
     getCardDetail = () => {
         if (this.mType === 'teacher') {
             this.params = {
-                userId: 10001
+                userId: this.props.userInfo.userId
             }
         } else {
             this.params = {
-                stuId: 10001
+                stuId: this.props.userInfo.userId
             }
         }
         fetchGet(API.CARD_DETAIL, this.params)
@@ -256,3 +257,11 @@ export default class CampusCardRecharge extends Component {
         })
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(CampusCardRecharge)

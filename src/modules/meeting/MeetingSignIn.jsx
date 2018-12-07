@@ -12,10 +12,12 @@ import {API} from "../../configs/api.config";
 import {Toast} from 'antd-mobile'
 import {Icon} from 'antd'
 import RefreshLayout from "../../components/RefreshLayout";
+import {connect} from 'react-redux'
 
 const mPageSize = 10
 let mPageIndex = 0
-export default class MeetingSignIn extends Component {
+
+class MeetingSignIn extends Component {
 
     constructor() {
         super()
@@ -80,7 +82,7 @@ export default class MeetingSignIn extends Component {
         }
 
         fetchPost(API.GET_MEETING_LIST, {
-            userId: 10001,
+            userId: this.props.userInfo.userId,
             notifyType: 6,
             pageIndex: mPageIndex,
             pageSize: mPageSize
@@ -156,7 +158,7 @@ export default class MeetingSignIn extends Component {
 
         Toast.loading('', 0)
         fetchGet(API.MEETING_SIGN, {
-            userId: 10001,
+            userId: this.props.userInfo.userId,
             notifyId: meetingSignList[index].meetId,
         }).then(response => {
             Toast.hide()
@@ -186,4 +188,12 @@ export default class MeetingSignIn extends Component {
         this.props.history.push('/meet-detail/' + meetingSignList[index].meetId)
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(MeetingSignIn)
 

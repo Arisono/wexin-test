@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom'
 import Swiper from 'swiper/dist/js/swiper'
 import 'swiper/dist/css/swiper.min.css'
 import 'css/phones.css'
-import {List, Icon, Skeleton} from 'antd'
+import {List, Icon, Skeleton, message} from 'antd'
 import PhonesItem from "components/PhonesItem";
 import PhonesBean from 'model/PhonesBean'
 import {fetchGet} from "../../utils/fetchRequest";
@@ -16,13 +16,14 @@ import {API} from "../../configs/api.config";
 import {Toast} from "antd-mobile";
 import RefreshLayout from "../../components/RefreshLayout";
 import {getStrValue} from "../../utils/common";
+import {connect} from 'react-redux'
 
 let mySwiper
 
 const mPageSize = 10
 let mPageIndex = 0
 
-export default class PhonesSelect extends Component {
+class PhonesSelect extends Component {
 
     constructor() {
         super()
@@ -132,7 +133,7 @@ export default class PhonesSelect extends Component {
         const {parentList} = this.state
 
         fetchGet(API.GET_CLASS_LIST, {
-            userId: 10000,
+            userId: this.props.userInfo.userId,
         }).then(response => {
             Toast.hide();
 
@@ -142,8 +143,8 @@ export default class PhonesSelect extends Component {
                 })
 
                 this.setState({
-                    parentList: parentList,
-                    isPhonesLoading: false
+                    parentList,
+                    isClassLoading: false
                 })
             }
 
@@ -151,8 +152,12 @@ export default class PhonesSelect extends Component {
             Toast.hide();
 
             if (typeof error === 'string') {
-                Toast.fail(error, 2)
+                message.error(error)
             }
+
+            this.setState({
+                isClassLoading: false
+            })
         })
     }
 
@@ -197,7 +202,8 @@ export default class PhonesSelect extends Component {
             }
 
             this.setState({
-                isClassLoading: false,
+                teacherList,
+                isPhonesLoading: false,
                 isRefreshing: false,
             })
 
@@ -208,10 +214,11 @@ export default class PhonesSelect extends Component {
                 mPageIndex--
             }
             this.setState({
-                isRefreshing: false
+                isRefreshing: false,
+                isPhonesLoading: false,
             })
             if (typeof error === 'string') {
-                Toast.fail(error, 2)
+                message.error(error)
             }
         })
     }
@@ -238,3 +245,11 @@ export default class PhonesSelect extends Component {
         })
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PhonesSelect)

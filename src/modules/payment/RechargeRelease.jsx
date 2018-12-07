@@ -12,9 +12,9 @@ import TargetSelect from 'components/TargetSelect'
 import {fetchPost} from "../../utils/fetchRequest";
 import {getStrValue, isObjEmpty} from "../../utils/common";
 import {regExpConfig} from "../../configs/regexp.config";
+import {connect} from 'react-redux'
 
 const {TextArea} = Input
-
 const teacherData = []
 const parentData = []
 
@@ -65,7 +65,7 @@ for (let i = 1; i < 10; i++) {
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
 
-export default class RechargeRelease extends Component {
+class RechargeRelease extends Component {
 
     constructor() {
         super()
@@ -88,19 +88,19 @@ export default class RechargeRelease extends Component {
 
         typeList.push({
             label: '学校收费',
-            value: '1'
+            value: '0'
         })
         typeList.push({
             label: '班级收费',
-            value: '2'
+            value: '1'
         })
         typeList.push({
             label: '学杂费',
-            value: '3'
+            value: '2'
         })
         typeList.push({
             label: '书本费',
-            value: '4'
+            value: '3'
         })
 
         this.setState({typeList: typeList})
@@ -108,6 +108,8 @@ export default class RechargeRelease extends Component {
 
     componentWillUnmount() {
         Toast.hide()
+
+        clearTimeout(this.backTask)
     }
 
     render() {
@@ -191,7 +193,7 @@ export default class RechargeRelease extends Component {
             payStatus: 2,
             payRemarks: remarks,
             payType: Number(classText),
-            userId: 10001,
+            userId: this.props.userInfo.userId,
             stuIds: JSON.stringify(userList)
         }
         fetchPost(API.PAYMENT_PAYFEE, {
@@ -207,6 +209,10 @@ export default class RechargeRelease extends Component {
                 endTime: now,
                 percapita: '',
             })
+
+            this.backTask = setTimeout(() => {
+                this.props.history.goBack()
+            }, 2000)
         }).catch(error => {
             Toast.hide()
 
@@ -251,3 +257,10 @@ export default class RechargeRelease extends Component {
 
 }
 
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(RechargeRelease)

@@ -12,10 +12,12 @@ import {API} from "../../configs/api.config";
 import RefreshLayout from "../../components/RefreshLayout";
 import {getArrayValue, getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 import ImagesViewer from "../../components/imagesVIewer";
+import {connect} from 'react-redux'
 
 const mPageSize = 10
 let mPageIndex = 0
-export default class PrincipalHistory extends Component {
+
+class PrincipalHistory extends Component {
 
     constructor() {
         super()
@@ -79,7 +81,7 @@ export default class PrincipalHistory extends Component {
         }
 
         fetchPost(API.GET_MEETING_LIST, {
-            userId: 10001,
+            userId: this.props.userInfo.userId,
             notifyType: 5,
             pageIndex: mPageIndex,
             pageSize: mPageSize
@@ -145,5 +147,12 @@ export default class PrincipalHistory extends Component {
         this.setState({principalList})
         Toast.success('删除成功', 2)
     }
-
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PrincipalHistory)

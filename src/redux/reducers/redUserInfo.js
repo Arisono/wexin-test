@@ -1,7 +1,7 @@
 import {USER_INFO} from "../constants/actionTypes";
 
 const redUserInfo = (state = {
-    userId: 0,
+    userId: 10001,
     userName: '',
     userOpenid: '',
     userPhone: '',
@@ -15,10 +15,10 @@ const redUserInfo = (state = {
         case USER_INFO:
             console.log("redUserInfo()",action);
             return {
-                userId: action.userId,
-                userName: action.userName,
-                userOpenid: action.userOpenid,
-                userPhone: action.userPhone,
+                userId: action.userId || state.userId,
+                userName: action.userName || state.userName,
+                userOpenid: action.userOpenid || state.userOpenid,
+                userPhone: action.userPhone || state.userPhone,
                 userRole:action.userRole
             }
         default:

@@ -8,11 +8,12 @@ import {Toast} from "antd-mobile";
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import RefreshLayout from "../../components/RefreshLayout";
+import {connect} from 'react-redux'
 
 const mPageSize = 10
 let mPageIndex = 0
 
-export default class ConsumeRePage extends Component {
+class ConsumeRePage extends Component {
 
     constructor() {
         super()
@@ -135,3 +136,11 @@ export default class ConsumeRePage extends Component {
         )
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConsumeRePage)

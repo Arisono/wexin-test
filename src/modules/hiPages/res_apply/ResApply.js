@@ -24,7 +24,7 @@ export default class ResApply extends Component{
         this.state = {
             resUser:null, //物品用途
             receivingSays:null, //领取说明
-            Receiver:'程冠希', //接收人
+            Receiver:null, //接收人
             selectContentArray: [
                     {
                         artName:null,
@@ -37,13 +37,13 @@ export default class ResApply extends Component{
             fileList: [], //附件，
             receiverPerson:[{
                 label: '吴彦祖',
-                value: '吴彦祖'
+                value: '1'
             },{
                 label: '陈冠希',
-                value: '陈冠希'
+                value: '2'
             },{
                 label: '古天乐',
-                value: '古天乐'
+                value: '3'
             }]
         }
     }
@@ -204,6 +204,7 @@ export default class ResApply extends Component{
     }
 
     handleSelectChange =(value) =>{
+        console.log('value',value)
         this.setState({
             Receiver:value
         })

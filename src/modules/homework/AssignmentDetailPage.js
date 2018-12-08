@@ -204,7 +204,7 @@ class AssignmentDetailPage extends React.Component {
             <div className="row" id="page_block_min"></div>
             <div className="row">
                 <div className="col-xs-12 margin_bottom_50">
-                    <div className="margin_top_bottom_15">留言(20/40)</div>
+                    <div className="margin_top_bottom_15">留言</div>
                     <div id="page_horizontal_line"></div>
                     <div>
                         <List dataSource={this.state.data} renderItem={item => (

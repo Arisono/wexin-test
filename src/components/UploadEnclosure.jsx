@@ -53,7 +53,6 @@ export default class UploadEnclosure extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('update',nextProps)
         this.setState({
             fileList: nextProps.fileList
         })

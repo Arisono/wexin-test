@@ -5,7 +5,7 @@ const redUserInfo = (state = {
     userName: '',
     userOpenid: '',
     userPhone: '',
-    userRole:0
+    userRole: 0
 }, action) => {
     if (action === undefined) {
         return state
@@ -13,13 +13,13 @@ const redUserInfo = (state = {
 
     switch (action.type) {
         case USER_INFO:
-            console.log("redUserInfo()",action);
+            console.log("redUserInfo()", action);
             return {
                 userId: action.userId || state.userId,
                 userName: action.userName || state.userName,
                 userOpenid: action.userOpenid || state.userOpenid,
                 userPhone: action.userPhone || state.userPhone,
-                userRole:action.userRole
+                userRole: action.userRole || state.userRole
             }
         default:
             return state

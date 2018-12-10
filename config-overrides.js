@@ -47,7 +47,8 @@ module.exports = function override(config, env) {
         'utils': path.join(__dirname, './src/utils'),
         'css': path.join(__dirname, './src/style/css'),
         'imgs': path.join(__dirname, './src/style/imgs'),
-        'api': path.join(__dirname, './src/configs/api.config.js')
+        'api': path.join(__dirname, './src/configs/api.config.js'),
+        'action': path.join(__dirname, './src/redux/actions')
     }
 
     return config;

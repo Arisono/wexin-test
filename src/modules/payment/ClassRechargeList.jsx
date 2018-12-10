@@ -14,6 +14,7 @@ import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {getIntValue, getStrValue} from "../../utils/common";
 import {connect} from 'react-redux'
+import {saveListState} from 'action/listState'
 
 const mPageSize = 10
 let mPageIndex = 0
@@ -35,9 +36,15 @@ class ClassRechargeList extends Component {
     }
 
     componentDidMount() {
+        if (this.container)
+            this.container.addEventListener('scroll', this.handleScroll.bind(this))
+        console.log(this.props.listState)
         Toast.loading('努力加载中...', 1)
         mPageIndex = 0
         this.loadRechargeList()
+    }
+
+    componentWillReceiveProps(newProps) {
     }
 
     componentWillUnmount() {
@@ -54,6 +61,9 @@ class ClassRechargeList extends Component {
                     onRefresh={this.loadRechargeList}>
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
                         <List dataSource={rechargeList}
+                              ref={el => {
+                                  this.container = el
+                              }}
                               renderItem={(item, index) => (
                                   <ClassRechargeItem
                                       classRecharge={item}
@@ -156,17 +166,32 @@ class ClassRechargeList extends Component {
     }
 
     onAddRecharge = () => {
+        saveListState({
+            scrollTop: document.body.scrollTop,
+            listData: this.state.rechargeList,
+            pageIndex: mPageIndex,
+        })()
         this.props.history.push('/rechargeRelease')
     }
 
     onItemClick = index => {
+        saveListState({
+            scrollTop: document.body.scrollTop,
+            listData: this.state.rechargeList,
+            pageIndex: mPageIndex,
+        })()
         const {rechargeList} = this.state
         this.props.history.push('/classRechargeDetail/' + rechargeList[index].payId)
+    }
+
+    handleScroll() {
+        console.log(this.container.scrollY)
     }
 }
 
 let mapStateToProps = (state) => ({
-    userInfo: {...state.redUserInfo}
+    userInfo: {...state.redUserInfo},
+    listState: {...state.redListState}
 })
 
 let mapDispatchToProps = (dispatch) => ({})

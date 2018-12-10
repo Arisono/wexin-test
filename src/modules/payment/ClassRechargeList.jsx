@@ -4,6 +4,7 @@
  */
 
 import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
 import 'css/payment.css'
 import {Toast} from 'antd-mobile'
 import {List, Icon, Skeleton} from 'antd'
@@ -12,7 +13,7 @@ import ClassRechargeBean from 'model/ClassRechargeBean'
 import RefreshLayout from '../../components/RefreshLayout'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
-import {getIntValue, getStrValue} from "../../utils/common";
+import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 import {connect} from 'react-redux'
 import {saveListState} from 'action/listState'
 
@@ -36,12 +37,20 @@ class ClassRechargeList extends Component {
     }
 
     componentDidMount() {
-        if (this.container)
-            this.container.addEventListener('scroll', this.handleScroll.bind(this))
         console.log(this.props.listState)
-        Toast.loading('努力加载中...', 1)
-        mPageIndex = 0
-        this.loadRechargeList()
+        if (this.props.listState && !isObjEmpty(this.props.listState.listData)) {
+            this.setState({
+                rechargeList: this.props.listState.listData,
+                isLoading: false,
+            }, () => {
+                ReactDOM.findDOMNode(this.container).scrollTop = this.props.listState.scrollTop
+            })
+            mPageIndex = this.props.listState.pageIndex
+        } else {
+            Toast.loading('努力加载中...', 1)
+            mPageIndex = 0
+            this.loadRechargeList()
+        }
     }
 
     componentWillReceiveProps(newProps) {
@@ -58,12 +67,12 @@ class ClassRechargeList extends Component {
             <div className='recharge-page-layout' style={{background: '#F2F2F2', padding: '0 10px'}}>
                 <RefreshLayout
                     refreshing={isRefreshing}
+                    ref={el => {
+                        this.container = el
+                    }}
                     onRefresh={this.loadRechargeList}>
                     <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
                         <List dataSource={rechargeList}
-                              ref={el => {
-                                  this.container = el
-                              }}
                               renderItem={(item, index) => (
                                   <ClassRechargeItem
                                       classRecharge={item}
@@ -167,7 +176,7 @@ class ClassRechargeList extends Component {
 
     onAddRecharge = () => {
         saveListState({
-            scrollTop: document.body.scrollTop,
+            scrollTop: ReactDOM.findDOMNode(this.container).scrollTop,
             listData: this.state.rechargeList,
             pageIndex: mPageIndex,
         })()
@@ -176,16 +185,12 @@ class ClassRechargeList extends Component {
 
     onItemClick = index => {
         saveListState({
-            scrollTop: document.body.scrollTop,
+            scrollTop: ReactDOM.findDOMNode(this.container).scrollTop,
             listData: this.state.rechargeList,
             pageIndex: mPageIndex,
         })()
         const {rechargeList} = this.state
         this.props.history.push('/classRechargeDetail/' + rechargeList[index].payId)
-    }
-
-    handleScroll() {
-        console.log(this.container.scrollY)
     }
 }
 

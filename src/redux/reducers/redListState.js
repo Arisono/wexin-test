@@ -3,7 +3,8 @@ import {LIST_STATE} from "../constants/actionTypes";
 const redListState = (state = {
     scrollTop: 0,
     listData: [],
-    pageIndex: 0,
+    pageIndex: 1,
+    itemIndex: -1,
 }, action) => {
     if (action === undefined) {
         return state
@@ -15,6 +16,7 @@ const redListState = (state = {
                 scrollTop: action.scrollTop || state.scrollTop,
                 listData: action.listData || state.listData,
                 pageIndex: action.pageIndex || state.pageIndex,
+                itemIndex: action.itemIndex || state.itemIndex,
             }
         default:
             return state

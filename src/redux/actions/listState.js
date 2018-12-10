@@ -16,7 +16,8 @@ export const clearListState = () => {
             type: LIST_STATE,
             scrollTop: 0,
             listData: [],
-            pageIndex: 0,
+            pageIndex: 1,
+            itemIndex: -1,
         })
     }
 }

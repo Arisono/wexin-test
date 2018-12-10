@@ -188,6 +188,7 @@ class ClassRechargeList extends Component {
             scrollTop: ReactDOM.findDOMNode(this.container).scrollTop,
             listData: this.state.rechargeList,
             pageIndex: mPageIndex,
+            itemIndex: index,
         })()
         const {rechargeList} = this.state
         this.props.history.push('/classRechargeDetail/' + rechargeList[index].payId)

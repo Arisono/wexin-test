@@ -1,4 +1,5 @@
 import {USER_INFO} from "../constants/actionTypes";
+import {getVisibleObj} from "../../utils/common";
 
 const redUserInfo = (state = {
     userId: 10001,
@@ -13,13 +14,12 @@ const redUserInfo = (state = {
 
     switch (action.type) {
         case USER_INFO:
-            console.log("redUserInfo()", action);
             return {
-                userId: action.userId || state.userId,
-                userName: action.userName || state.userName,
-                userOpenid: action.userOpenid || state.userOpenid,
-                userPhone: action.userPhone || state.userPhone,
-                userRole: action.userRole || state.userRole
+                userId: getVisibleObj(action.userId || state.userId),
+                userName: getVisibleObj(action.userName || state.userName),
+                userOpenid: getVisibleObj(action.userOpenid || state.userOpenid),
+                userPhone: getVisibleObj(action.userPhone || state.userPhone),
+                userRole: getVisibleObj(action.userRole || state.userRole),
             }
         default:
             return state

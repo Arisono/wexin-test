@@ -11,7 +11,7 @@ import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest'
 import {API} from '../../../configs/api.config';
 import LoadingMore from "../../../components/LoadingMore";
 import InfiniteScroll from 'react-infinite-scroller';
-
+import {Toast} from 'antd-mobile';
 function ItemComp() {
     return(
         <div>
@@ -43,6 +43,11 @@ export default class AccessNotice extends Component{
             })
             .catch((error) =>{
                 console.log('error',error)
+                if (typeof error === 'string') {
+                    Toast.fail(error, 2)
+                } else {
+                    Toast.fail('请求异常', 2)
+                }
             })
     }
     constructor(){

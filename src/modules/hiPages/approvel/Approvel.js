@@ -13,6 +13,7 @@ import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest'
 import {API} from '../../../configs/api.config';
 import InfiniteScroll from 'react-infinite-scroller'
 import LoadingMore from "../../../components/LoadingMore";
+import {Toast} from 'antd-mobile';
 
 let mySwiper
 
@@ -109,7 +110,11 @@ export default class Approvel extends Component{
                 })
             }
         }).catch((error) =>{
-            console.log('error',error)
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
         })
     }
     loadMoreAction = () =>{

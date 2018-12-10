@@ -7,6 +7,8 @@ import  './ClassSchedule.css';
 import line_img from '../../../style/imgs/line_img.png';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
+import {Toast} from 'antd-mobile';
+import moment from 'moment'
 
 function HSItem(props) {
     return(
@@ -14,10 +16,10 @@ function HSItem(props) {
                 <img src={line_img} alt="" style={{width:2,height:25,marginLeft:12}}/>
                 <div className="sch_hang_sty">
                     <div className="green_point"></div>
-                    <div className="sch_time_sty">08:00–8:45</div>
-                    <div className="sch_class_sty">体育</div>
+                    <div className="sch_time_sty">{moment(props.itemdata.curStartTime).format('HH:mm')}–{moment(props.itemdata.curEndTime).format('HH:mm')}</div>
+                    <div className="sch_class_sty">{props.itemdata.curName}</div>
                     <img className="teach_img" src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"}alt=""/>
-                    <div className="sch_teacher_sty">陈冠希</div>
+                    <div className="sch_teacher_sty">{props.itemdata.userName}</div>
                 </div>
                 {/*<img src={line_img} alt="" style={{width:2,height:15,marginLeft:12}}/>*/}
             </div>
@@ -28,6 +30,7 @@ export default class ClassSchedule extends Component{
     constructor(){
         super();
         this.state = {
+            curDay:new Date().getDay(),
             classData:{
                 monday:[],
                 tuesday:[],
@@ -55,7 +58,8 @@ export default class ClassSchedule extends Component{
                 {/*<div className="comhline_sty1"></div>*/}
                 {/*<div style={{fontSize:14,color:"#333333",margin:20}}>11月12日，<span style={{fontSize:12}}>2018年</span></div>*/}
                 <div className="scheedule_sty1">
-                    <div style={{color:"#333333",fontSize:14,marginBottom:10,marginTop:10}}>上午</div>
+                    {/*<div style={{color:"#333333",fontSize:14,marginBottom:10,marginTop:10}}>上午</div>*/}
+                    <p>{this.state.curWeek}</p>
                     <div className="comhline_sty1" style={{marginBottom:10}}></div>
                     <div>
                         {this.state.curDayData.map((itemdata,index) => <HSItem key ={index} itemdata = {itemdata} handelSItem={this.handelSItem}></HSItem>)}
@@ -64,13 +68,13 @@ export default class ClassSchedule extends Component{
 
                 <div className="comhline_sty"></div>
 
-              <div className="scheedule_sty1">
-                    <div style={{color:"#333333",fontSize:14,marginBottom:10,marginTop:10}}>下午</div>
-                    <div className="comhline_sty1" style={{marginBottom:10}}></div>
-                  <div>
-                      {this.state.Class_SchData.map((itemata,index) => <HSItem key ={index} itemata = {itemata} handelSItem={this.handelSItem}></HSItem>)}
-                  </div>
-              </div>
+              {/*<div className="scheedule_sty1">*/}
+                    {/*<div style={{color:"#333333",fontSize:14,marginBottom:10,marginTop:10}}>下午</div>*/}
+                    {/*<div className="comhline_sty1" style={{marginBottom:10}}></div>*/}
+                  {/*<div>*/}
+                      {/*{this.state.Class_SchData.map((itemata,index) => <HSItem key ={index} itemata = {itemata} handelSItem={this.handelSItem}></HSItem>)}*/}
+                  {/*</div>*/}
+              {/*</div>*/}
             </div>
         )
     }
@@ -109,9 +113,15 @@ export default class ClassSchedule extends Component{
                 this.setState({
                     classData:response.data
                 })
+                this.selectDayClick(this.state.curDay)
             }
         }).catch((error) =>{
             console.log('error',error)
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
         })
     }
 }

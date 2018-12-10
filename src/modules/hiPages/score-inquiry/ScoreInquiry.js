@@ -8,6 +8,7 @@ import { Select  } from 'antd';
 import ScoreData from './ScoreData';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
+import {Toast} from 'antd-mobile';
 
 const Option = Select.Option;
 
@@ -68,7 +69,7 @@ export default class ScoreInquiry extends Component{
         let params = {
             stuId:10000,
             scoreDate:'',
-            scoreName:''
+            scoreName:'语文'
         }
         fetchGet(API.getScoreByStuId,params,{})
             .then((response)=>{
@@ -79,6 +80,11 @@ export default class ScoreInquiry extends Component{
             })
             .catch((error) =>{
                 console.log('error',error)
+                if (typeof error === 'string') {
+                    Toast.fail(error, 2)
+                } else {
+                    Toast.fail('请求异常', 2)
+                }
             })
     }
 }

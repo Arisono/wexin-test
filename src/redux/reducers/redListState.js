@@ -20,15 +20,8 @@ const redListState = (state = {
     switch (action.type) {
         case LIST_STATE:
             return {
-                scrollTop: getVisibleObj(action.scrollTop, state.scrollTop),
-                listData: getVisibleObj(action.listData, state.listData),
-                pageIndex: getVisibleObj(action.pageIndex, state.pageIndex),
-                itemIndex: getVisibleObj(action.itemIndex, state.itemIndex),
-                tabIndex: getVisibleObj(action.tabIndex, state.tabIndex),
-                scrollTop2: getVisibleObj(action.scrollTop2, state.scrollTop2),
-                listData2: getVisibleObj(action.listData2, state.listData2),
-                pageIndex2: getVisibleObj(action.pageIndex2, state.pageIndex2),
-                itemIndex2: getVisibleObj(action.itemIndex2, state.itemIndex2),
+                ...state,
+                ...action
             }
         default:
             return state

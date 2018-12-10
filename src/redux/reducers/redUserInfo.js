@@ -15,11 +15,8 @@ const redUserInfo = (state = {
     switch (action.type) {
         case USER_INFO:
             return {
-                userId: getVisibleObj(action.userId || state.userId),
-                userName: getVisibleObj(action.userName || state.userName),
-                userOpenid: getVisibleObj(action.userOpenid || state.userOpenid),
-                userPhone: getVisibleObj(action.userPhone || state.userPhone),
-                userRole: getVisibleObj(action.userRole || state.userRole),
+                ...state,
+                ...action
             }
         default:
             return state

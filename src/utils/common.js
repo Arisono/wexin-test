@@ -380,3 +380,7 @@ export const getFileType = (filePath) => {
     }
 }
 
+export const getVisibleObj = (obj1, obj2) => {
+    return isObjNull(obj1) ? obj2 : obj1
+}
+

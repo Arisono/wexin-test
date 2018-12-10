@@ -58,9 +58,12 @@ class VoteDetailPage extends React.Component{
             this.state.data.voter = response.data.userName;
 
             this.state.data.files.length=0;
-            for (let i = 0; i < response.data.enclosure.length; i++) {
-                this.state.data.files.push(_baseURL+response.data.enclosure[i]);
+            if(response.data.enclosure!=null){
+                for (let i = 0; i < response.data.enclosure.length; i++) {
+                    this.state.data.files.push(_baseURL+response.data.enclosure[i]);
+                }
             }
+
             this.state.data.endTime = response.data.voteEndDate;
             this.state.data.voterPhoto = response.data.userPhoto
             this.state.data.selectState = response.data.voteType === 1 ? 0 : 1
@@ -198,11 +201,14 @@ class VoteDetailPage extends React.Component{
                              )
                          }
                      </div>
-                     <div className="row" id="page_block_min"></div>
-                     <div className="row margin_left_right_20">
-                         <div className="margin_top_20"><span className="span_15">附件</span></div>
-                        <ImageGrid images={this.state.data.files}/>
-                     </div>
+                     {this.state.data.files.length===0?(""):(<div>
+                         <div className="row" id="page_block_min"></div>
+                         <div className="row margin_left_right_20">
+                             <div className="margin_top_20"><span className="span_15">附件</span></div>
+                             <ImageGrid images={this.state.data.files}/>
+                         </div>
+                     </div>)}
+
                   </div>
               </div>
         </div>

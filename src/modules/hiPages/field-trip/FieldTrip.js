@@ -8,8 +8,8 @@ import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import './FieldTrip.css';
 import {Toast,Picker,List,DatePicker} from 'antd-mobile';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
-import {API} from '../../../configs/api.config';
-
+import {_baseURL,API} from '../../../configs/api.config';
+import UploadEnclosure from '../../../components/UploadEnclosure';
 import moment from 'moment'
 const  nowTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
 const Option = Select.Option;
@@ -114,24 +114,16 @@ export default class FieldTrip extends Component{
                         <List.Item arrow="horizontal" >接收人</List.Item>
                     </Picker>
                 </div>
-
                 <div className="comhline_sty"></div>
 
-                <div className="clearfix" style={{margin:10}}>
-                    <Upload
-                        action={API.UPLOAD_FILE}
-                        listType="picture-card"
-                        fileList={this.state.fileList}
-                        onPreview={this.handlePreview}
-                        onChange={this.handleChange}
-                        multiple={true}
-                    >
-                        {this.state.fileList.length >= 4 ? null : uploadButton}
-                    </Upload>
-                    <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
-                        <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
-                    </Modal>
-                </div>
+                <UploadEnclosure
+                    action={API.UPLOAD_FILE}
+                    fileList={this.state.fileList}
+                    count={4}
+                    multiple={true}
+                    beforeUpload={this.beforeUpload.bind(this)}
+                    handleChange={this.handleChange.bind(this)}
+                />
 
                 <center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSaveClick}>发布</button></center>
 
@@ -143,43 +135,37 @@ export default class FieldTrip extends Component{
         console.log('state',this.state)
         // console.log('startValue',this.state.startValue)
         if(this.state.tripType == null || this.state.tripType == ''){
-            Toast.show('请选择出差类型',1)
+            Toast.fail('请选择出差类型')
             return
         }
         if(this.state.startValue == null || this.state.startValue == ''){
-            Toast.show('请选择开始时间',1)
+            Toast.fail('请选择开始时间')
             return
         }
         if(this.state.endValue == null || this.state.endValue == ''){
-            Toast.show('请选择结束时间',1)
+            Toast.fail('请选择结束时间')
             return
         }
         var startT = new Date(this.state.startValue).getTime()
         var endT = new Date(this.state.endValue).getTime()
         // console.log('startT',startT)
         if(startT > endT){
-            Toast.show('结束时间不可小于开始时间',1)
+            Toast.fail('结束时间不可小于开始时间')
             return
         }
         if(this.state.tripsReason == null || this.state.tripsReason == ''){
-            Toast.show('请输入出差事由',1)
+            Toast.fail('请输入出差事由')
             return
         }
         if(this.state.Receiver == null || this.state.Receiver == ''){
-            Toast.show('请选择接收人',1)
+            Toast.fail('请选择接收人')
             return
         }
-        var approveFiles = []
-        for(let i=0;i<this.state.fileList.length;i++){
-            if(this.state.fileList[i].response && this.state.fileList[i].response.success){
-                approveFiles.push(this.state.fileList[i].response.data)
-                if(i==this.state.fileList.length-1){
-                    this.setState({
-                        approveFiles:approveFiles
-                    })
-                    console.log('approveFiles',approveFiles)
-                }
-            }
+        const approveFiles = []
+        if (this.state.fileList) {
+            this.state.fileList.forEach((value, index) => {
+                approveFiles.push(value.picUrl)
+            })
         }
 
         var params = {
@@ -207,6 +193,11 @@ export default class FieldTrip extends Component{
             })
             .catch((error) =>{
                 console.log('error',error)
+                if (typeof error === 'string') {
+                    Toast.fail(error, 2)
+                } else {
+                    Toast.fail('请求异常', 2)
+                }
             })
     }
     setStartDate = (value) =>{
@@ -253,49 +244,26 @@ export default class FieldTrip extends Component{
             tripsReason:tripsReason
         })
     }
-    disabledEndDate = (endValue) => {
-        const startValue = this.state.startValue;
-        if (!endValue || !startValue) {
-            return false;
-        }
-        return endValue.valueOf() <= startValue.valueOf();
-    }
+
     onChange = (field, value) => {
         this.setState({
             [field]: value,
         });
     }
 
-    onStartChange = (value) => {
-        this.onChange('startValue', value);
+    beforeUpload = (file, fileList) => {
+
     }
+    handleChange = fileList => {
+        if (fileList) {
+            fileList.forEach((value, index) => {
+                value.url = value.response ? (_baseURL + value.response.data) : value.url
+                value.picUrl = value.response ? value.response.data : value.picUrl
+            })
 
-    onEndChange = (value) => {
-        this.onChange('endValue', value);
-        if(this.state.startValue != null){
-
+            this.setState({fileList})
         }
     }
 
-    handleStartOpenChange = (open) => {
-        if (!open) {
-            this.setState({ endOpen: true });
-        }
-    }
-
-    handleEndOpenChange = (open) => {
-        this.setState({ endOpen: open });
-    }
-    handleChange = ({fileList} ) => {
-        this.setState({
-            fileList:fileList,
-        })
-    }
-    handlePreview = (file) => {
-        this.setState({
-            previewImage: file.url || file.thumbUrl,
-            previewVisible: true,
-        });
-    }
     handleCancel = () => this.setState({ previewVisible: false })
 }

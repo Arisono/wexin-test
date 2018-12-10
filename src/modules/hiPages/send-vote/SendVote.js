@@ -10,11 +10,13 @@ import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import moment from 'moment'
 import 'antd/dist/antd.css';
 import SelectItem from './SelectItem';
-import {isObjEmpty} from "../../../utils/common";
 import {Toast,Picker,List,DatePicker} from 'antd-mobile';
-
+import TargetSelect from '../../../components/TargetSelect';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
-import {API} from '../../../configs/api.config';
+import {_baseURL,API} from '../../../configs/api.config';
+import {getIntValue, getStrValue, isObjEmpty} from "../../../utils/common";
+import UploadEnclosure from '../../../components/UploadEnclosure';
+
 const Option = Select.Option;
 
 
@@ -23,15 +25,95 @@ export default class SendVote extends Component{
         document.title = '发起投票'
     }
      componentDidMount() {
-         fetchGet(API.getObject,{
-             userId:10001,
-             stuId:10001
-         },{}).then((response)=>{
+         this.getOrganization()
+    }
+    getOrganization = () => {
+        Toast.loading('', 0)
 
-         }).catch((error) =>{
-             console.log('error',error)
-             Toast.show(error.message,1)
-         })
+        fetchGet(API.USER_GETOBJECT, {
+            userId:10001,
+            stuId:10001
+        }).then(response => {
+            Toast.hide()
+            const {targetData} = this.state
+            targetData.length = 0
+            if (response && response.data) {
+                const schoolArray = response.data.schools
+                const teacherArray = response.data.teachers
+
+                if (!isObjEmpty(teacherArray)) {
+                    const teacherData = []
+                    teacherArray.forEach((teacherObj, index) => {
+                        if (teacherObj) {
+                            teacherData.push({
+                                title: getStrValue(teacherObj, 'userName'),
+                                userId: getIntValue(teacherObj, 'userId'),
+                                userPhone: getStrValue(teacherObj, 'userPhone'),
+                                value: getStrValue(teacherObj, 'userName') + `-1-${index}`,
+                                key: `1-${index}`,
+                            })
+                        }
+                    })
+
+                    targetData.push({
+                        title: `全体老师`,
+                        value: `1`,
+                        key: `1`,
+                        children: teacherData,
+                    })
+                }
+
+                if (!isObjEmpty(schoolArray)) {
+                    const classData = []
+
+                    schoolArray.forEach((schoolObj, sIndex) => {
+                        if (schoolObj) {
+                            const parentArray = schoolObj.parents
+
+                            const parentData = []
+                            if (!isObjEmpty(parentArray)) {
+                                parentArray.forEach((parentObj, pIndex) => {
+                                    parentData.push({
+                                        title: getStrValue(parentObj, 'userName'),
+                                        userId: getIntValue(parentObj, 'userId'),
+                                        userPhone: getStrValue(parentObj, 'userPhone'),
+                                        value: getStrValue(parentObj, 'userName') + `-0-${sIndex}-${pIndex}`,
+                                        key: `0-${sIndex}-${pIndex}`,
+                                    })
+                                })
+
+                                classData.push({
+                                    title: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName'),
+                                    value: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName') + `-0-${sIndex}`,
+                                    key: `0-${sIndex}`,
+                                    children: parentData,
+                                })
+                            }
+                        }
+                    })
+
+                    targetData.push({
+                        title: `全体家长`,
+                        value: `0`,
+                        key: `0`,
+                        children: classData,
+                    })
+                }
+            }
+
+            console.log('targetData', targetData)
+            this.setState({
+                targetData,
+            })
+        }).catch(error => {
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
+        })
     }
     constructor(props){
         super(props);
@@ -41,7 +123,9 @@ export default class SendVote extends Component{
             voteType:null,
             nonameVote:false,
             voteOptionss: [null,null],
-
+            targetList: [],
+            targetCount: 0,
+            targetData: [],
             previewVisible: false,
             previewImage: '',
             fileList: [],
@@ -58,64 +142,7 @@ export default class SendVote extends Component{
     }
 
     render(){
-        const SHOW_PARENT = TreeSelect.SHOW_PARENT;
 
-        const treeData = [
-            {
-                title: '研发部',
-                value: 1000,
-                key: 1000,
-                children: [{
-                    title: '吴彦祖',
-                    value: 10000,
-                    key: 10000,
-                },{
-                    title: '陈冠希',
-                    value: 10001,
-                    key: 10001,
-                },{
-                    title: '古天乐',
-                    value: 10002,
-                    key: 10002,
-                },{
-                    title: '黄宗伟',
-                    value: 10003,
-                    key: 10003,
-                }],
-            }, {
-                title: '测试部',
-                value: 1001,
-                key: 1001,
-                children: [{
-                    title: '关之琳',
-                    value: 10010,
-                    key: 10010,
-                }, {
-                    title: '林青霞',
-                    value: 10011,
-                    key: 10011,
-                }, {
-                    title: '张曼玉',
-                    value: 10012,
-                    key: 10012,
-                },{
-                    title: '王祖贤',
-                    value: 10013,
-                    key: 10013,
-                }],
-            }];
-        const tProps = {
-            treeData,
-            value: this.state.votePerson,
-            onChange: this.selectPersononChange,
-            treeCheckable: true,
-            showCheckedStrategy: SHOW_PARENT,
-            searchPlaceholder: '请选择投票对象',
-            allowClear:true,
-            style: {
-                width: '100%',
-            },
-        };
         //添加附件按钮
         const uploadButton = (
             <div>
@@ -123,15 +150,28 @@ export default class SendVote extends Component{
                 <div className="ant-upload-text">Upload</div>
             </div>
         );
+        const targetProps = {
+            targetData: this.state.targetData,
+            targetValues: this.state.targetList,
+            title: '发布对象',
+            targetCount: this.state.targetCount,
+            onTargetChange: this.onTargetChange.bind(this),
+            onTargetFocus: this.onTargetFocus.bind(this)
+        }
 
+        const defaultTargetProps = {
+            targetData: [],
+            targetValues: this.state.targetList,
+            title: '发布对象',
+            targetCount: this.state.targetCount,
+            onTargetChange: this.onTargetChange.bind(this),
+            onTargetFocus: this.onTargetFocus.bind(this)
+        }
         return(
 
             <div onChange={this.handelValueCom}>
-
-                <div style={{color:"#333333",fontSize:15,margin:10}}>投票对象 <span style={{color:"#666666"}}>(共{this.state.votePerson.length}人)</span>  </div>
-                <div className="comhline_sty1"></div>
-
-                <TreeSelect {...tProps} />
+                {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
+                    : <TargetSelect {...defaultTargetProps}/>}
                 <div className="comhline_sty"></div>
                 <textarea autoFocus="autoFocus" ref='voteTitle' className="form-control textarea_sty" rows="2" placeholder="请填写投票主题…" ></textarea>
                 <div className="comhline_sty"></div>
@@ -173,59 +213,65 @@ export default class SendVote extends Component{
                 </div>
                 <div className="comhline_sty1"></div>
 
-                <div  className="item_sty">
-                    <div style={{width:150,fontSize:15,color:"#666666"}}>附件:</div>
-                    <div className="text-right" style={{width:"100%",}}>{this.state.fileList.length}/4张</div>
-                </div>
-
-
-                <div className="clearfix" style={{margin:10}}>
-                    <Upload
-                        action={API.UPLOAD_FILE}
-                        listType="picture-card"
-                        fileList={this.state.fileList}                        o
-                        nPreview={this.handlePreview}
-                        onChange={this.handleChange}
-                        multiple={true}>
-                        {this.state.fileList.length >= 4 ? null : uploadButton}
-                    </Upload>
-                    <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
-                        <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
-                    </Modal>
-                </div>
+                <UploadEnclosure
+                    action={API.UPLOAD_FILE}
+                    fileList={this.state.fileList}
+                    count={4}
+                    multiple={true}
+                    beforeUpload={this.beforeUpload.bind(this)}
+                    handleChange={this.handleChange.bind(this)}
+                />
 
                 <center><Button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSendVote}>提交</Button></center>
             </div>
         )
     }
+    onTargetFocus = (e) => {
+        if (isObjEmpty(this.state.targetData)) {
+            this.getOrganization()
+        }
+    }
+
+    onTargetChange = (value, label, checkNodes, count) => {
+        this.checkNodes = checkNodes
+        this.setState({
+            targetList: value,
+            targetCount: count
+        });
+    }
     //发布提交
     doSendVote = (event)=>{
+        if (!isObjEmpty(this.checkNodes)) {
+            this.checkNodes.forEach((node, index) => {
+                this.state.votePerson.push(node.userId)
+            })
+        }
         console.log('state',this.state)
         if (this.state.votePerson.length == 0){
-            Toast.show('请选择投票对象...',1)
+            Toast.fail('请选择投票对象...')
             return
         }
         if(this.state.voteTitle == '' || this.state.voteTitle == null){
-            Toast.show('请填写投票主题...',1)
+            Toast.fail('请填写投票主题...',1)
             return
         }
         if(this.state.voteOptionss.length < 2){
-            Toast.show('请输入选项内容...',1)
+            Toast.show('请输入选项内容...')
             return
         }
         if(this.state.voteType == null || this.state.voteType == ''){
-            Toast.show('请选择投票类型...',1)
+            Toast.fail('请选择投票类型...')
             return
         }
         if(this.state.endValue == null || this.state.endValue == ''){
-            Toast.show('请选择正确结束时间...',1)
+            Toast.fail('请选择正确结束时间...')
             return
         }
 
         var nowT = new Date().getTime()
         var endT = new Date(this.state.endValue).getTime()
         if(nowT > endT){
-            Toast.show('当前时间不可大于结束时间',1)
+            Toast.fail('当前时间不可大于结束时间',1)
             return
         }
 
@@ -237,29 +283,13 @@ export default class SendVote extends Component{
             }
             options[i]=item
         }
-        var approveFiles = []
-        for(let i=0;i<this.state.fileList.length;i++){
-            if(this.state.fileList[i].response && this.state.fileList[i].response.success){
-                approveFiles.push(this.state.fileList[i].response.data)
-                if(i==this.state.fileList.length-1){
-                    this.setState({
-                        approveFiles:approveFiles
-                    })
-                    console.log('approveFiles',approveFiles)
-                }
-            }
-        }
-        var approveFiles = []
-        for(let i=0;i<this.state.fileList.length;i++){
-            if(this.state.fileList[i].response.success){
-                approveFiles.push(this.state.fileList[i].response.data)
-                if(i==this.state.fileList.length-1){
-                    this.setState({
-                        approveFiles:approveFiles
-                    })
-                    console.log('approveFiles',approveFiles)
-                }
-            }
+
+
+        const approveFiles = []
+        if (this.state.fileList) {
+            this.state.fileList.forEach((value, index) => {
+                approveFiles.push(value.picUrl)
+            })
         }
         var params = {
                 creator: 10004,
@@ -293,12 +323,14 @@ export default class SendVote extends Component{
             })
             .catch((error) =>{
                 console.log('error',error)
+                if (typeof error === 'string') {
+                    Toast.fail(error, 2)
+                } else {
+                    Toast.fail('请求异常', 2)
+                }
             })
     }
-    selectPersononChange = (value) => {
-        // console.log('selectPersononChange ', value);
-        this.setState({votePerson:value });
-    }
+
     removeSItem = (index)=>{
         if(this.state.voteOptionss.length == 2){
             return
@@ -358,11 +390,18 @@ export default class SendVote extends Component{
             previewVisible: true,
         });
     }
+    beforeUpload = (file, fileList) => {
 
-    handleChange = ({fileList} ) => {
-        this.setState({
-            fileList:fileList,
-        })
+    }
+    handleChange = fileList => {
+        if (fileList) {
+            fileList.forEach((value, index) => {
+                value.url = value.response ? (_baseURL + value.response.data) : value.url
+                value.picUrl = value.response ? value.response.data : value.picUrl
+            })
+
+            this.setState({fileList})
+        }
     }
 
 }

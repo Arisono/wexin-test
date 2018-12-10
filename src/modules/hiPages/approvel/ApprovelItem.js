@@ -15,7 +15,7 @@ export default class ApprovelItem extends Component{
         super(props);
         this.state={
             // imgheader:this.props.itemata.approveType == 1 ? icon_trip : (this.props.itemata.approveType == 2 ? icon_res : icon_out),
-            isMyApply:this.props.isMyApply,
+            isMyApply:props.isMyApply,
             // status:this.props.itemata.approveStatus == 1 ? "待审批" :"已审批"
         }
     }

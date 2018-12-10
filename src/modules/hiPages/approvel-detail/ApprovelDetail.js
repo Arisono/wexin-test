@@ -13,7 +13,7 @@ import LazyLoad from 'react-lazyload'
 import ItemApprovel from './ItemApprovel';
 import { Button,Modal } from 'antd';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
-import {API} from '../../../configs/api.config';
+import {API,_baseURL} from '../../../configs/api.config';
 import {Toast} from 'antd-mobile';
 
 
@@ -63,7 +63,6 @@ export default class ApprovelDetail extends Component{
                  )
              }
          }
-
         return(
             <div>
                <div className="headerDiv">
@@ -94,7 +93,10 @@ export default class ApprovelDetail extends Component{
                 <div className="comhline_sty"></div>
 
                 <div style={{marginBottom:50}}>
-                    {this.state.approvelData.map((itemdata,index) => <ItemApprovel key ={index} itemdata = {itemdata}></ItemApprovel>)}
+                    {/*{this.state.docModel.approver.map((itemdata,index) => <ItemApprovel key ={index} itemdata = {itemdata}></ItemApprovel>)}*/}
+                    <ItemApprovel itemdata ={this.state.docModel.approver} approveStatus = {this.state.docModel.oaApprove.approveStatus}
+                                  approveDate = {this.state.docModel.oaApprove.approveDate}
+                    ></ItemApprovel>
                 </div>
                 {this.state.showButton ?  <div style={{display:'flex',flexDirection:'row',marginBottom:20}} >
                         <div style={{width:'50%',textAlign:'center'}}>
@@ -161,8 +163,11 @@ export default class ApprovelDetail extends Component{
                 },3000)
             }
         }).catch((error) =>{
-            console.log('error',error)
-            Toast.show(error.message,1)
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
         })
     }
     handelValueCom = ()=>{
@@ -186,60 +191,16 @@ export default class ApprovelDetail extends Component{
     componentWillUnmount() {
     }
     componentDidMount() {
-        let detailList = [
-            {
-                key:'申请流程',
-                value:'出差申请'
-            }, {
-                key:'开始时间',
-                value:'2018/11/22  14:00'
-            }
-            , {
-                key:'结束时间',
-                value:'2018/11/22  18:00'
-            },{
-                key:'时长（h）',
-                value:'2'
-            }, {
-                key:'外出地址',
-                value:'蜀国与东吴争议之地荆州郡'
-            }, {
-                key:'外出事由',
-                value:'奉命驻守城池'
-            }
-        ]
-        let pictures = [
-            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543289918586&di=a22036279c9e4a86f03cdd9996a8a0f5&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D0645f21b46086e067ea537086a611181%2F1c950a7b02087bf4b40d39c3f8d3572c11dfcf33.jpg',
-            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543289918584&di=beb8b53a7e5544a0f9f4c24b6c992a4b&imgtype=0&src=http%3A%2F%2Fpic34.photophoto.cn%2F20150311%2F0005018318132246_b.jpg',
-            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543289918579&di=d579d076328b42dac2924ce2a2524bc8&imgtype=0&src=http%3A%2F%2Fpic25.photophoto.cn%2F20121230%2F0010023534858256_b.jpg',
-            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543289918576&di=33bc85167aca41998561827abee641c7&imgtype=0&src=http%3A%2F%2Fpic25.photophoto.cn%2F20121230%2F0044040929574945_b.jpg'
-        ]
-        let approvelData = [
-            {
-                img:hi_img,
-                name:'陈冠希1',
-                date:'2018/11/22   14:00',
-                status:'已审批',
-                statustype:2
-            },{
-                img:hi_img,
-                name:'陈冠希2',
-                date:'',
-                status:'待审批',
-                statustype:1
-            },
-            {
-                img:hi_img,
-                name:'陈冠希3',
-                date:'',
-                status:'待审批',
-                statustype:1
-            }
-        ]
+
+        // let pictures = [
+        //     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543289918586&di=a22036279c9e4a86f03cdd9996a8a0f5&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D0645f21b46086e067ea537086a611181%2F1c950a7b02087bf4b40d39c3f8d3572c11dfcf33.jpg',
+        //     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543289918584&di=beb8b53a7e5544a0f9f4c24b6c992a4b&imgtype=0&src=http%3A%2F%2Fpic34.photophoto.cn%2F20150311%2F0005018318132246_b.jpg',
+        //     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543289918579&di=d579d076328b42dac2924ce2a2524bc8&imgtype=0&src=http%3A%2F%2Fpic25.photophoto.cn%2F20121230%2F0010023534858256_b.jpg',
+        //     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543289918576&di=33bc85167aca41998561827abee641c7&imgtype=0&src=http%3A%2F%2Fpic25.photophoto.cn%2F20121230%2F0044040929574945_b.jpg'
+        // ]
+
         this.setState({
-            detailList:detailList,
-            pictureList: this.state.pictureList.concat(pictures, pictures),
-            approvelData:approvelData,
+           // pictureList: this.state.pictureList.concat(pictures, pictures),
             approveId:this.props.match.params.approveId,
             isMyApply:this.props.match.params.isMyApply
         },function () {
@@ -259,11 +220,20 @@ export default class ApprovelDetail extends Component{
                             showbutton = false
                             // console.log('showbutton2',2)
                         }
+                        let approveFiles = response.data.approveFiles.value
+                        const pictureList = []
+                        console.log('approveFiles',approveFiles)
+                        if (approveFiles) {
+                            approveFiles.forEach((value, index) => {
+                                pictureList.push(_baseURL + value)
+                            })
+                        }
                         this.setState({
                             showButton:showbutton,
-                            docModel: response.data
+                            docModel: response.data,
+                            pictureList:pictureList
                         },function () {
-                            // console.log('docModel',this.state.docModel)
+                             console.log('pictureList',this.state.pictureList)
                         })
                         // console.log('showbutton',showbutton)
                         // console.log('approveStatus',approveStatus)

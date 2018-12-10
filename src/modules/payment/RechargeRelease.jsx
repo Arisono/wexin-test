@@ -149,16 +149,16 @@ class RechargeRelease extends Component {
 
                     schoolArray.forEach((schoolObj, sIndex) => {
                         if (schoolObj) {
-                            const parentArray = schoolObj.parents
+                            const studentArray = schoolObj.students
 
-                            const parentData = []
-                            if (!isObjEmpty(parentArray)) {
-                                parentArray.forEach((parentObj, pIndex) => {
-                                    parentData.push({
-                                        title: getStrValue(parentObj, 'userName'),
-                                        userId: getIntValue(parentObj, 'userId'),
-                                        userPhone: getStrValue(parentObj, 'userPhone'),
-                                        value: getStrValue(parentObj, 'userName') + `-0-${sIndex}-${pIndex}`,
+                            const studentData = []
+                            if (!isObjEmpty(studentArray)) {
+                                studentArray.forEach((studentObj, pIndex) => {
+                                    studentData.push({
+                                        title: getStrValue(studentObj, 'stuName'),
+                                        userId: getIntValue(studentObj, 'stuId'),
+                                        userPhone: getStrValue(studentObj, 'userPhone'),
+                                        value: getStrValue(studentObj, 'stuName') + `-0-${sIndex}-${pIndex}`,
                                         key: `0-${sIndex}-${pIndex}`,
                                     })
                                 })
@@ -167,14 +167,14 @@ class RechargeRelease extends Component {
                                     title: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName'),
                                     value: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName') + `-0-${sIndex}`,
                                     key: `0-${sIndex}`,
-                                    children: parentData,
+                                    children: studentData,
                                 })
                             }
                         }
                     })
 
                     targetData.push({
-                        title: `全体家长`,
+                        title: `全体学生`,
                         value: `0`,
                         key: `0`,
                         children: classData,

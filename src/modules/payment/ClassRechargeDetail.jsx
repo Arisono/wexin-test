@@ -12,11 +12,13 @@ import PhonesBean from 'model/PhonesBean'
 import ClassRechargeBean from 'model/ClassRechargeBean'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
-import {getIntValue, getStrValue} from "../../utils/common";
+import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
+import {connect} from 'react-redux'
+import {saveListState} from 'action/listState'
 
 const {alert} = Modal
 
-export default class ClassRechargeDetail extends Component {
+class ClassRechargeDetail extends Component {
 
     constructor() {
         super()
@@ -151,6 +153,15 @@ export default class ClassRechargeDetail extends Component {
                     rechargeBean.unPay = userUnPay
                 }
 
+                if (this.props.listState && !isObjEmpty(this.props.listState.listData)) {
+                    if (this.props.listState.itemIndex >= 0) {
+                        this.props.listState.listData[this.props.listState.itemIndex] = rechargeBean
+                    }
+                }
+                saveListState({
+                    listData: this.props.listState.listData,
+                })()
+
                 this.setState({rechargeBean})
             }
         }).catch(error => {
@@ -198,3 +209,11 @@ export default class ClassRechargeDetail extends Component {
 
     }
 }
+
+let mapStateToProps = (state) => ({
+    listState: {...state.redListState}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClassRechargeDetail)

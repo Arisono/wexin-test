@@ -19,6 +19,7 @@ import {_baseURL, API} from "../../configs/api.config";
 import ImagesViewer from "../../components/imagesVIewer";
 import NotifyBoardParent from "./NotifyBoardParent";
 import {connect} from 'react-redux'
+import {saveListState} from 'action/listState'
 
 const mPageSize = 10
 let mReleaseIndex = 0
@@ -44,8 +45,6 @@ class NotifyBoardTeacher extends Component {
     }
 
     componentDidMount() {
-        mReleaseIndex = 0
-        mReceiveIndex = 0
         const hei = this.state.height - ReactDOM.findDOMNode(this.contain).offsetTop;
         this.setState({
             height: hei
@@ -53,11 +52,13 @@ class NotifyBoardTeacher extends Component {
         document.title = '通知公告'
 
         const that = this
+        console.log(this.props.listState)
 
         this.mySwiper = new Swiper('.swiper-container', {
             autoplay: false,
             loop: false,
             noSwiping: true,
+            initialSlide: that.state.selectIndex,
             on: {
                 slideChangeTransitionEnd: function () {
                     that.setState({
@@ -67,8 +68,42 @@ class NotifyBoardTeacher extends Component {
             }
         })
 
-        this.loadReceiveList()
-        this.loadReleaseList()
+        if (this.props.listState.tabIndex >= 0) {
+            this.setState({
+                selectIndex: this.props.listState.tabIndex
+            }, () => {
+                this.mySwiper.slideTo(this.state.selectIndex, 0, false)
+            })
+        }
+
+        if (this.props.listState && !isObjEmpty(this.props.listState.listData)) {
+            this.setState({
+                releaseList: this.props.listState.listData,
+                isReleaseLoading: false,
+            }, () => {
+                ReactDOM.findDOMNode(this.releaseTab).scrollTop =
+                    this.props.listState.scrollTop
+            })
+            mReleaseIndex = this.props.listState.pageIndex
+        } else {
+            mReleaseIndex = 0
+            this.loadReleaseList()
+        }
+
+        if (this.props.listState && !isObjEmpty(this.props.listState.listData2)) {
+            this.setState({
+                receiveList: this.props.listState.listData2,
+                isReceiveLoading: false,
+            }, () => {
+                ReactDOM.findDOMNode(this.receiveTab).scrollTop =
+                    this.props.listState.scrollTop2
+            })
+            mReceiveIndex = this.props.listState.pageIndex2
+        } else {
+            mReceiveIndex = 0
+            this.loadReceiveList()
+        }
+
     }
 
     componentWillUnmount() {
@@ -111,9 +146,6 @@ class NotifyBoardTeacher extends Component {
                 <Icon type="plus-circle" theme='filled' className='common-add-icon'
                       onClick={this.onAddNotify}/>
                 {detailModal}
-
-                <Icon type="plus-circle" theme='filled' className='common-add-icon'
-                      onClick={this.onAddNotify}/>
             </div>
         )
     }
@@ -218,6 +250,9 @@ class NotifyBoardTeacher extends Component {
     getReleaseItems = () => (
         <div className='notify-bg-root'>
             <RefreshLayout
+                ref={el => {
+                    this.releaseTab = el
+                }}
                 refreshing={this.state.isReleaseRefreshing}
                 onRefresh={this.loadReleaseList}
                 height={this.state.height}>
@@ -237,6 +272,9 @@ class NotifyBoardTeacher extends Component {
     getReceiveItems = () => (
         <div className='notify-bg-root'>
             <RefreshLayout
+                ref={el => {
+                    this.receiveTab = el
+                }}
                 refreshing={this.state.isReceiveRefreshing}
                 onRefresh={this.loadReceiveList}
                 height={this.state.height}>
@@ -473,6 +511,17 @@ class NotifyBoardTeacher extends Component {
     }
 
     onAddNotify = () => {
+        console.log('scrolltop1',ReactDOM.findDOMNode(this.releaseTab).scrollTop)
+        console.log('scrolltop2',ReactDOM.findDOMNode(this.receiveTab).scrollTop)
+        saveListState({
+            scrollTop: ReactDOM.findDOMNode(this.releaseTab).scrollTop,
+            listData: this.state.releaseList,
+            pageIndex: mReleaseIndex,
+            tabIndex: this.state.selectIndex,
+            scrollTop2: ReactDOM.findDOMNode(this.receiveTab).scrollTop,
+            listData2: this.state.receiveList,
+            pageIndex2: mReceiveIndex,
+        })()
         this.props.history.push('/announceRelease')
     }
 
@@ -486,7 +535,8 @@ class NotifyBoardTeacher extends Component {
 }
 
 let mapStateToProps = (state) => ({
-    userInfo: {...state.redUserInfo}
+    userInfo: {...state.redUserInfo},
+    listState: {...state.redListState}
 })
 
 let mapDispatchToProps = (dispatch) => ({})

@@ -57,6 +57,7 @@ import '../../style/css/app-gloal.css'
 import {constants} from '../../utils/constants'
 import {switchUser} from '../../redux/actions/userInfo'
 import {connect} from "react-redux";
+import {clearListState} from 'action/listState'
 
 
 /**
@@ -132,6 +133,8 @@ class AppHomePage extends React.Component {
      }*/
 
     componentDidMount() {
+        //清除列表缓存数据
+        clearListState()()
         document.title = "智慧校园";
         const query = this.props.location.search;
         const params = query.split('&');

@@ -13,6 +13,7 @@ import {_baseURL, API} from "../../configs/api.config";
 import ClassBean from 'model/ClassBean'
 import AlbumBean from "../../model/AlbumBean";
 import {connect} from 'react-redux'
+import {saveClassData} from "../../redux/actions/classData";
 
 const uploadItem = new AlbumItem()
 uploadItem.coverImg = 'upload'
@@ -27,7 +28,7 @@ class ClassAlbum extends Component {
         this.state = {
             albumList: [],
             classList: [],
-            classText: []
+            classValue: []
         }
     }
 
@@ -45,12 +46,26 @@ class ClassAlbum extends Component {
         document.title = '班级相册'
         this.node.scrollIntoView();
 
-        Toast.loading('', 0)
-        this.getClassList()
+        if (isObjEmpty(this.props.classData.classList)) {
+            Toast.loading('', 0)
+            this.getClassList()
+        } else {
+            const {classValue} = this.state
+            if (isObjEmpty(this.props.classData.classValue)) {
+                classValue.push(this.props.classData.classList[0].value)
+            }
+            this.setState({
+                classList: this.props.classData.classList,
+                classValue: this.props.classData.classValue,
+            }, () => {
+                Toast.loading('获取相册中...', 0)
+                this.getAlbumList(this.state.classList[this.state.classValue])
+            })
+        }
     }
 
     render() {
-        const {albumList, classList, classText} = this.state
+        const {albumList, classList, classValue} = this.state
 
         let albumItems = []
         if (!isObjEmpty(albumList)) {
@@ -70,7 +85,7 @@ class ClassAlbum extends Component {
             <div ref={node => this.node = node}>
                 <div className='gray-line'></div>
                 <Picker data={classList} title='选择班级' extra='请选择'
-                        value={classText} onChange={this.handleClassChange} cols={1}>
+                        value={classValue} onChange={this.handleClassChange} cols={1}>
                     <List.Item arrow="horizontal">选择班级</List.Item>
                 </Picker>
                 <div className='gray-line'></div>
@@ -82,7 +97,7 @@ class ClassAlbum extends Component {
     }
 
     getClassList = () => {
-        const {classList, classText} = this.state
+        const {classList, classValue} = this.state
         classList.length = 0
 
         fetchGet(API.GET_CLASS_LIST, {
@@ -144,13 +159,17 @@ class ClassAlbum extends Component {
     }
 
     onItemClick = (index) => {
-        const {classList, classText, albumList} = this.state
+        const {classList, classValue, albumList} = this.state
         if (index == 0 && this.mType == 'teacher') {
+            saveClassData({
+                classList: classList,
+                classValue: classValue,
+            })()
             let classId = -1
             let classname = ''
-            if (classList[classText]) {
-                classId = classList[classText].schId
-                classname = classList[classText].label
+            if (classList[classValue]) {
+                classId = classList[classValue].schId
+                classname = classList[classValue].label
             }
             this.props.history.push('/newAlbum/' + classId + '/' + classname)
         } else {
@@ -160,7 +179,7 @@ class ClassAlbum extends Component {
     }
 
     handleClassChange = (v) => {
-        this.setState({classText: v})
+        this.setState({classValue: v})
         this.getAlbumList(this.state.classList[v])
     }
 
@@ -176,9 +195,9 @@ class ClassAlbum extends Component {
     }
 
     analysisClassList = response => {
-        const {classList, classText} = this.state
+        const {classList, classValue} = this.state
         classList.length = 0
-        classText.length = 0
+        classValue.length = 0
 
         let dataArray = response.data
         if (dataArray) {
@@ -201,10 +220,10 @@ class ClassAlbum extends Component {
             }
 
             if (classList.length > 0) {
-                classText.push(classList[0].value)
+                classValue.push(classList[0].value)
                 this.setState({
                     classList,
-                    classText
+                    classValue
                 })
 
                 Toast.loading('获取相册中...', 0)
@@ -215,7 +234,8 @@ class ClassAlbum extends Component {
 }
 
 let mapStateToProps = (state) => ({
-    userInfo: {...state.redUserInfo}
+    userInfo: {...state.redUserInfo},
+    classData: {...state.redClassData}
 })
 
 let mapDispatchToProps = (dispatch) => ({})

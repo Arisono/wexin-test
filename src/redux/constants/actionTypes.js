@@ -1,2 +1,5 @@
-export const USER_INFO ='USER_INFO'
-export const LIST_STATE ='LIST_STATE'
+export const USER_INFO = 'USER_INFO'
+export const LIST_STATE = 'LIST_STATE'
+export const CLEAR_LIST_STATE = 'CLEAR_LIST_STATE'
+export const CLASS_DATA = 'CLASS_DATA'
+export const CLEAR_CLASS_DATA = 'CLEAR_CLASS_DATA'

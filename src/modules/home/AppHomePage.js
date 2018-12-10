@@ -8,57 +8,57 @@ import {Menu, Dropdown, Icon} from 'antd';
 import "slick-carousel/slick/slick-theme.css"
 import "slick-carousel/slick/slick.css"
 
-import  icon_group from '../../style/imgs/icon_group.png'
-import  icon_home_menu_dengji from '../../style/imgs/icon_home_menu_dengji.png'
-import  icon_home_menu_2 from '../../style/imgs/icon_home_menu_2.png'
-import  icon_home_menu_3 from '../../style/imgs/icon_home_menu_3.png'
-import  icon_home_menu_4 from '../../style/imgs/icon_home_menu_4.png'
-import  icon_home_menu_5 from '../../style/imgs/icon_home_menu_5.png'
-import  icon_home_menu_6 from '../../style/imgs/icon_home_menu_6.png'
-import  icon_home_menu_7 from '../../style/imgs/icon_home_menu_7.png'
-import  icon_home_menu_8 from '../../style/imgs/icon_home_menu_8.png'
+import icon_group from '../../style/imgs/icon_group.png'
+import icon_home_menu_dengji from '../../style/imgs/icon_home_menu_dengji.png'
+import icon_home_menu_2 from '../../style/imgs/icon_home_menu_2.png'
+import icon_home_menu_3 from '../../style/imgs/icon_home_menu_3.png'
+import icon_home_menu_4 from '../../style/imgs/icon_home_menu_4.png'
+import icon_home_menu_5 from '../../style/imgs/icon_home_menu_5.png'
+import icon_home_menu_6 from '../../style/imgs/icon_home_menu_6.png'
+import icon_home_menu_7 from '../../style/imgs/icon_home_menu_7.png'
+import icon_home_menu_8 from '../../style/imgs/icon_home_menu_8.png'
 
 
-import  icon_home_menu_9 from '../../style/imgs/icon_home_menu_9.png'
-import  icon_home_menu_10 from '../../style/imgs/icon_home_menu_10.png'
-import  icon_home_menu_11 from '../../style/imgs/icon_home_menu_11.png'
-import  icon_home_menu_12 from '../../style/imgs/icon_home_menu_12.png'
-import  icon_home_menu_13 from '../../style/imgs/icon_home_menu_13.png'
-import  icon_home_menu_14 from '../../style/imgs/icon_home_menu_14.png'
-import  icon_home_menu_15 from '../../style/imgs/icon_home_menu_15.png'
+import icon_home_menu_9 from '../../style/imgs/icon_home_menu_9.png'
+import icon_home_menu_10 from '../../style/imgs/icon_home_menu_10.png'
+import icon_home_menu_11 from '../../style/imgs/icon_home_menu_11.png'
+import icon_home_menu_12 from '../../style/imgs/icon_home_menu_12.png'
+import icon_home_menu_13 from '../../style/imgs/icon_home_menu_13.png'
+import icon_home_menu_14 from '../../style/imgs/icon_home_menu_14.png'
+import icon_home_menu_15 from '../../style/imgs/icon_home_menu_15.png'
 
 
-import  icon_home_menu_21 from '../../style/imgs/icon_home_menu21.png'
-import  icon_home_menu_22 from '../../style/imgs/icon_home_menu22.png'
-import  icon_home_menu_23 from '../../style/imgs/icon_home_menu23.png'
-import  icon_home_menu_24 from '../../style/imgs/icon_home_menu24.png'
-import  icon_home_menu_25 from '../../style/imgs/icon_home_menu25.png'
-import  icon_home_menu_26 from '../../style/imgs/icon_home_menu26.png'
-import  icon_home_menu_27 from '../../style/imgs/icon_home_menu27.png'
-import  icon_home_menu_28 from '../../style/imgs/icon_home_menu28.png'
-import  icon_home_change from '../../style/imgs/icon_home_change.png'
-import  icon_home_menu_30 from '../../style/imgs/icon_home_menu30.png'
-import  icon_home_menu_31 from '../../style/imgs/icon_home_menu31.png'
-import  icon_home_menu_32 from '../../style/imgs/icon_home_menu32.png'
-import  icon_home_menu_33 from '../../style/imgs/icon_home_menu33.png'
-import  icon_home_menu_34 from '../../style/imgs/icon_home_menu34.png'
-import  icon_home_menu_35 from '../../style/imgs/icon_home_menu35.png'
+import icon_home_menu_21 from '../../style/imgs/icon_home_menu21.png'
+import icon_home_menu_22 from '../../style/imgs/icon_home_menu22.png'
+import icon_home_menu_23 from '../../style/imgs/icon_home_menu23.png'
+import icon_home_menu_24 from '../../style/imgs/icon_home_menu24.png'
+import icon_home_menu_25 from '../../style/imgs/icon_home_menu25.png'
+import icon_home_menu_26 from '../../style/imgs/icon_home_menu26.png'
+import icon_home_menu_27 from '../../style/imgs/icon_home_menu27.png'
+import icon_home_menu_28 from '../../style/imgs/icon_home_menu28.png'
+import icon_home_change from '../../style/imgs/icon_home_change.png'
+import icon_home_menu_30 from '../../style/imgs/icon_home_menu30.png'
+import icon_home_menu_31 from '../../style/imgs/icon_home_menu31.png'
+import icon_home_menu_32 from '../../style/imgs/icon_home_menu32.png'
+import icon_home_menu_33 from '../../style/imgs/icon_home_menu33.png'
+import icon_home_menu_34 from '../../style/imgs/icon_home_menu34.png'
+import icon_home_menu_35 from '../../style/imgs/icon_home_menu35.png'
 
 
-import  icon_home_help from '../../style/imgs/icon_home_help.png'
-import  icon_home_message from '../../style/imgs/icon_home_message.png'
-import  icon_home_oa from '../../style/imgs/icon_home_menu_oa.png'
+import icon_home_help from '../../style/imgs/icon_home_help.png'
+import icon_home_message from '../../style/imgs/icon_home_message.png'
+import icon_home_oa from '../../style/imgs/icon_home_menu_oa.png'
 
 
 import {Carousel} from 'antd';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
-import  './AppHomePage.css'
+import './AppHomePage.css'
 import '../../style/css/app-gloal.css'
 import {constants} from '../../utils/constants'
 import {switchUser} from '../../redux/actions/userInfo'
 import {connect} from "react-redux";
 import {clearListState} from 'action/listState'
-
+import {clearClassData} from "../../redux/actions/classData";
 
 /**
  * Created by Arison on 2018/11/1.
@@ -80,15 +80,15 @@ class AppHomePage extends React.Component {
         switch (key) {
             case "2":
                 switchUser({
-                    userId: 0,
+                    userId: 10001,
                     userName: '',
                     userOpenid: '',
                     userPhone: '',
-                    userRole:2
+                    userRole: 2
                 })();
 
-               // console.log("componentDidMount() userRole:",this.props.userInfo);
-               // console.log("onChangeRole() 教师");
+                // console.log("componentDidMount() userRole:",this.props.userInfo);
+                // console.log("onChangeRole() 教师");
                 constants.isTeacher = true;
                 this.setState({
                     isTeacher: true
@@ -99,11 +99,11 @@ class AppHomePage extends React.Component {
                 break;
             case "1":
                 switchUser({
-                    userId: 0,
+                    userId: 10001,
                     userName: '',
                     userOpenid: '',
                     userPhone: '',
-                    userRole:1
+                    userRole: 1
                 })();
                 // console.log("componentDidMount() userRole:",this.props.userInfo);
                 //console.log("onChangeRole() 家长");
@@ -120,10 +120,10 @@ class AppHomePage extends React.Component {
     roleMenu = (
         <Menu onClick={this.onChangeRole.bind(this)}>
             <Menu.Item key="1" style={{width: "90px", fontSize: "15px"}}>
-                <span  >家长</span>
+                <span>家长</span>
             </Menu.Item>
             <Menu.Item key="2" style={{width: "90px", fontSize: "15px"}}>
-                <span  >教师</span>
+                <span>教师</span>
             </Menu.Item>
         </Menu>
     );
@@ -135,6 +135,7 @@ class AppHomePage extends React.Component {
     componentDidMount() {
         //清除列表缓存数据
         clearListState()()
+        clearClassData()()
         document.title = "智慧校园";
         const query = this.props.location.search;
         const params = query.split('&');
@@ -172,7 +173,7 @@ class AppHomePage extends React.Component {
             slidesToShow: 3,
             speed: 500
         };
-        console.log(" render() userRole:",this.props.userInfo);
+        console.log(" render() userRole:", this.props.userInfo);
         return <div className="container-fluid">
             {/*顶部Header*/}
             <div className="row">
@@ -222,7 +223,7 @@ class AppHomePage extends React.Component {
                                         </Dropdown>
                                     </div>
 
-                                    {this.state.isTeacher ? ("") : ( <div>
+                                    {this.state.isTeacher ? ("") : (<div>
                                         <img
                                             src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"}
                                             style={{margin: "10px"}} width={25} height={25} class="img-circle"/>
@@ -299,7 +300,7 @@ class AppHomePage extends React.Component {
                             <div className="row">
                                 <div className="col-xs-12" style={{margin: "0px", padding: "0px"}}>
                                     <Carousel autoplay={true} dots={false}>
-                                        <div >
+                                        <div>
                                             <img
                                                 src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
                                                 style={{margin: "5px 0px 5px 5px", display: "inline"}}
@@ -313,7 +314,7 @@ class AppHomePage extends React.Component {
                                                 style={{margin: "5px 0px 5px 5px", display: "inline"}}
                                                 width={"31%"}/>
                                         </div>
-                                        <div >
+                                        <div>
                                             <img
                                                 src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
                                                 style={{margin: "5px 0px 5px 5px", display: "inline"}}
@@ -327,7 +328,7 @@ class AppHomePage extends React.Component {
                                                 style={{margin: "5px 0px 5px 5px", display: "inline"}}
                                                 width={"31%"}/>
                                         </div>
-                                        <div >
+                                        <div>
                                             <img
                                                 src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
                                                 style={{margin: "5px 0px 5px 5px", display: "inline"}}
@@ -392,7 +393,7 @@ class AppHomePage extends React.Component {
                             <div className="row">
                                 <div className="col-xs-12" style={{margin: "0px", padding: "0px"}}>
                                     <Carousel autoplay={true} dots={false}>
-                                        <div >
+                                        <div>
                                             <img
                                                 src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
                                                 style={{margin: "5px 0px 5px 5px", display: "inline"}}
@@ -406,7 +407,7 @@ class AppHomePage extends React.Component {
                                                 style={{margin: "5px 0px 5px 5px", display: "inline"}}
                                                 width={"31%"}/>
                                         </div>
-                                        <div >
+                                        <div>
                                             <img
                                                 src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
                                                 style={{margin: "5px 0px 5px 5px", display: "inline"}}
@@ -420,7 +421,7 @@ class AppHomePage extends React.Component {
                                                 style={{margin: "5px 0px 5px 5px", display: "inline"}}
                                                 width={"31%"}/>
                                         </div>
-                                        <div >
+                                        <div>
                                             <img
                                                 src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
                                                 style={{margin: "5px 0px 5px 5px", display: "inline"}}
@@ -811,8 +812,8 @@ function ParentMenu() {
                         justifyContent: "center",
                         alignItems: "center"
                     }}><Link className="flex_column flex_center" to="/score-inquiry" id="menu_span_normal">
-                        <div ><img src={icon_home_menu_23} style={{margin: "20px 20px 8px 20px"}} width={20}
-                                   height={20}/>
+                        <div><img src={icon_home_menu_23} style={{margin: "20px 20px 8px 20px"}} width={20}
+                                  height={20}/>
                         </div>
                         <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
 
@@ -1044,8 +1045,8 @@ let mapStateToProps = (state) => ({
 })
 
 let mapDispatchToProps = (dispatch) => {
-    console.log("mapDispatchToProps()",dispatch);
-    return {switchUser:()=>dispatch(switchUser())}
+    console.log("mapDispatchToProps()", dispatch);
+    return {switchUser: () => dispatch(switchUser())}
 }
 
 

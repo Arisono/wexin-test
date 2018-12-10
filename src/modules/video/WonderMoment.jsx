@@ -11,9 +11,10 @@ import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
 import ClassBean from 'model/ClassBean'
 import AlbumBean from "../../model/AlbumBean";
-import {getStrValue} from "../../utils/common";
+import {getStrValue, isObjEmpty} from "../../utils/common";
 import PictureBean from "../../model/PictureBean";
 import {connect} from 'react-redux'
+import {saveClassData} from "../../redux/actions/classData";
 
 class WonderMoment extends Component {
 
@@ -36,9 +37,23 @@ class WonderMoment extends Component {
 
     componentDidMount() {
         document.title = '精彩瞬间'
-
-        Toast.loading('', 0)
-        this.getClassList()
+        console.log(this.props.classData)
+        if (isObjEmpty(this.props.classData.classList)) {
+            Toast.loading('', 0)
+            this.getClassList()
+        } else {
+            const {classValue} = this.state
+            if (isObjEmpty(this.props.classData.classValue)) {
+                classValue.push(this.props.classData.classList[0].value)
+            }
+            this.setState({
+                classList: this.props.classData.classList,
+                classValue: this.props.classData.classValue,
+            }, () => {
+                Toast.loading('获取视频中...', 0)
+                this.getVideoList(this.state.classList[this.state.classValue])
+            })
+        }
     }
 
     render() {
@@ -213,6 +228,10 @@ class WonderMoment extends Component {
 
     onAddVideo = () => {
         const {classList, classValue} = this.state
+        saveClassData({
+            classList: classList,
+            classValue: classValue,
+        })()
         let classId = -1
         let classname = ''
         if (classList[classValue]) {
@@ -229,7 +248,8 @@ class WonderMoment extends Component {
 }
 
 let mapStateToProps = (state) => ({
-    userInfo: {...state.redUserInfo}
+    userInfo: {...state.redUserInfo},
+    classData: {...state.redClassData}
 })
 
 let mapDispatchToProps = (dispatch) => ({})

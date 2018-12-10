@@ -160,11 +160,12 @@ class ClassAlbum extends Component {
 
     onItemClick = (index) => {
         const {classList, classValue, albumList} = this.state
+
+        saveClassData({
+            classList: classList,
+            classValue: classValue,
+        })()
         if (index == 0 && this.mType == 'teacher') {
-            saveClassData({
-                classList: classList,
-                classValue: classValue,
-            })()
             let classId = -1
             let classname = ''
             if (classList[classValue]) {

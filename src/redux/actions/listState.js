@@ -1,4 +1,9 @@
-import {LIST_STATE} from "../constants/actionTypes";
+/**
+ * Created by RaoMeng on 2018/12/10
+ * Desc: 列表数据缓存
+ */
+
+import {CLEAR_LIST_STATE, LIST_STATE} from "../constants/actionTypes";
 import store from '../store/store'
 
 export const saveListState = (data) => {
@@ -13,17 +18,7 @@ export const saveListState = (data) => {
 export const clearListState = () => {
     return () => {
         store.dispatch({
-            type: LIST_STATE,
-            scrollTop: 0,
-            listData: [],
-            pageIndex: 1,
-            itemIndex: -1,
-
-            tabIndex: 0,
-            scrollTop2: 0,
-            listData2: [],
-            pageIndex2: 1,
-            itemIndex2: -1,
+            type: CLEAR_LIST_STATE
         })
     }
 }

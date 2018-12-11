@@ -1,7 +1,6 @@
-import {LIST_STATE} from "../constants/actionTypes";
-import {getVisibleObj} from "../../utils/common";
+import {CLEAR_LIST_STATE, LIST_STATE} from "../constants/actionTypes";
 
-const redListState = (state = {
+const initListState = {
     scrollTop: 0,
     listData: [],
     pageIndex: 1,
@@ -12,7 +11,9 @@ const redListState = (state = {
     listData2: [],
     pageIndex2: 1,
     itemIndex2: -1,
-}, action) => {
+}
+
+const redListState = (state = initListState, action) => {
     if (action === undefined) {
         return state
     }
@@ -23,6 +24,8 @@ const redListState = (state = {
                 ...state,
                 ...action
             }
+        case CLEAR_LIST_STATE:
+            return initListState
         default:
             return state
     }

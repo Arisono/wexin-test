@@ -67,6 +67,8 @@ export const API = {
     USER_ISBINDING: _baseURL + '/user/isBinding',
     //获取组织架构
     USER_GETOBJECT: _baseURL + '/user/getObject',
+    //删除校长信箱历史投递
+    NOTIFY_DELETEMAIL: _baseURL + '/notify/deleteMail',
 
 
     //根据学号取课程表
@@ -79,9 +81,9 @@ export const API = {
     //创建投票单
     voteCreate: _baseURL + '/vote/voteCreate',//投票创建
     voteList: _baseURL + "/vote/voteList",//家长端
-    voteListTeacher:_baseURL+"/vote/voteListForTeacher",//教师端
+    voteListTeacher: _baseURL + "/vote/voteListForTeacher",//教师端
     voteDetail: _baseURL + "/vote/voteDetail",//投票详情
-    voteAction:_baseURL+"/vote/voteAction",//投票
+    voteAction: _baseURL + "/vote/voteAction",//投票
     //发布作业
     homeWorkAdd: _baseURL + "/notify/issueNotification",
     homeWorkList: _baseURL + "/notify/getMeetingList",

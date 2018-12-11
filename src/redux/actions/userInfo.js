@@ -1,3 +1,8 @@
+/**
+ * Created by RaoMeng on 2018/12/10
+ * Desc: 用户信息缓存
+ */
+
 import {USER_INFO} from "../constants/actionTypes";
 import store from '../store/store'
 

@@ -12,6 +12,8 @@ import add_newimg from '../../../style/imgs/add_new.png';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
 import {Toast,Picker,List,DatePicker} from 'antd-mobile';
+import {getIntValue, getStrValue, isObjEmpty} from "../../../utils/common";
+import TargetSelect from '../../../components/TargetSelect';
 
 const Option = Select.Option;
 
@@ -26,9 +28,103 @@ export default class SendMeet extends Component{
     componentWillMount() {
         document.title = '发起会议'
     }
+    componentDidMount() {
+        this.getOrganization()
+    }
+    getOrganization = () => {
+        Toast.loading('', 0)
+
+        fetchGet(API.USER_GETOBJECT, {
+            userId:10001,
+            stuId:10001
+        }).then(response => {
+            Toast.hide()
+            const {targetData} = this.state
+            targetData.length = 0
+            if (response && response.data) {
+                const schoolArray = response.data.schools
+                const teacherArray = response.data.teachers
+
+                if (!isObjEmpty(teacherArray)) {
+                    const teacherData = []
+                    teacherArray.forEach((teacherObj, index) => {
+                        if (teacherObj) {
+                            teacherData.push({
+                                title: getStrValue(teacherObj, 'userName'),
+                                userId: getIntValue(teacherObj, 'userId'),
+                                userPhone: getStrValue(teacherObj, 'userPhone'),
+                                value: getStrValue(teacherObj, 'userName') + `-1-${index}`,
+                                key: `1-${index}`,
+                            })
+                        }
+                    })
+
+                    targetData.push({
+                        title: `全体老师`,
+                        value: `1`,
+                        key: `1`,
+                        children: teacherData,
+                    })
+                }
+
+                if (!isObjEmpty(schoolArray)) {
+                    const classData = []
+
+                    schoolArray.forEach((schoolObj, sIndex) => {
+                        if (schoolObj) {
+                            const parentArray = schoolObj.parents
+
+                            const parentData = []
+                            if (!isObjEmpty(parentArray)) {
+                                parentArray.forEach((parentObj, pIndex) => {
+                                    parentData.push({
+                                        title: getStrValue(parentObj, 'userName'),
+                                        userId: getIntValue(parentObj, 'userId'),
+                                        userPhone: getStrValue(parentObj, 'userPhone'),
+                                        value: getStrValue(parentObj, 'userName') + `-0-${sIndex}-${pIndex}`,
+                                        key: `0-${sIndex}-${pIndex}`,
+                                    })
+                                })
+
+                                classData.push({
+                                    title: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName'),
+                                    value: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName') + `-0-${sIndex}`,
+                                    key: `0-${sIndex}`,
+                                    children: parentData,
+                                })
+                            }
+                        }
+                    })
+
+                    targetData.push({
+                        title: `全体家长`,
+                        value: `0`,
+                        key: `0`,
+                        children: classData,
+                    })
+                }
+            }
+
+            console.log('targetData', targetData)
+            this.setState({
+                targetData,
+            })
+        }).catch(error => {
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
+        })
+    }
     constructor(){
         super();
         this.state = {
+            targetList: [],
+            targetCount: 0,
+            targetData: [],
             startValue:null,
             endValue: null,
             endOpen: false,
@@ -58,59 +154,23 @@ export default class SendMeet extends Component{
 
     }
     render(){
-        const SHOW_PARENT = TreeSelect.SHOW_PARENT;
+        const targetProps = {
+            targetData: this.state.targetData,
+            targetValues: this.state.targetList,
+            title: '发布对象',
+            targetCount: this.state.targetCount,
+            onTargetChange: this.onTargetChange.bind(this),
+            onTargetFocus: this.onTargetFocus.bind(this)
+        }
 
-        const treeData = [
-            {
-                title: '研发部',
-                value: 1000,
-                key: 1000,
-                children: [{
-                    title: '吴彦祖',
-                    value: 10000,
-                    key: 10000,
-                },{
-                    title: '陈冠希',
-                    value: 10001,
-                    key: 10001,
-                },{
-                    title: '古天乐',
-                    value: 10002,
-                    key: 10002,
-                },{
-                    title: '黄宗伟',
-                    value: 10003,
-                    key: 10003,
-                },{
-                    title: '关之琳',
-                    value: 10004,
-                    key: 10004,
-                }, {
-                    title: '林青霞',
-                    value: 10005,
-                    key: 10005,
-                }, {
-                    title: '张曼玉',
-                    value: 10006,
-                    key: 10006,
-                },{
-                    title: '王祖贤',
-                    value: 10007,
-                    key: 10007,
-                }],
-            }];
-        const tProps = {
-            treeData,
-            value: this.state.meetPerson,
-            onChange: this.selectPersononChange,
-            treeCheckable: true,
-            showCheckedStrategy: SHOW_PARENT,
-            searchPlaceholder: '请选择与会人',
-            allowClear:true,
-            style: {
-                width: '100%',
-            },
-        };
+        const defaultTargetProps = {
+            targetData: [],
+            targetValues: this.state.targetList,
+            title: '发布对象',
+            targetCount: this.state.targetCount,
+            onTargetChange: this.onTargetChange.bind(this),
+            onTargetFocus: this.onTargetFocus.bind(this)
+        }
         return(
                 <div onChange={this.handelValueCom}>
                     {/*<p>{new Date().getTime()}</p>*/}
@@ -145,37 +205,32 @@ export default class SendMeet extends Component{
                         {/*{this.state.headerArray.map((itemata,index) => <Test key={index} itemata = {itemata}></Test>)}*/}
                         {/*<img onClick={this.addPerson} className="meet_penson_img img-circle" style={{height: 40,width: 40,marginTop:10,marginLeft:5}} src={add_newimg}/>*/}
                     {/*<div> <textarea className="form-control textarea_sty" >ww</textarea></div>*/}
-                    <TreeSelect {...tProps} />
+                    {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
+                        : <TargetSelect {...defaultTargetProps}/>}
                     <center><Button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSaveClick}>创建</Button></center>
                 </div >
         )
     }
     doSaveClick = (event)=>{
-        let titleValue = this.state.titleValue;
-        let contentValue = this.state.contentValue;
-        let startValue = moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss');
-        let endValue = moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss');
-        let earlyTime = this.state.earlyTime
-
         console.log('state',this.state)
         if (this.state.titleValue == null || this.state.titleValue == ''){
-            Toast.show('请填写会议主题...',1)
+            Toast.fail('请填写会议主题...')
             return
         }
         if (this.state.meetAddress == null || this.state.meetAddress == ''){
-            Toast.show('请填写会议地址...',1)
+            Toast.fail('请填写会议地址...')
             return
         }
         if (this.state.startValue == null || this.state.startValue == ''){
-            Toast.show('请选择开始时间...',1)
+            Toast.fail('请选择开始时间...')
             return
         }
         if (this.state.endValue == null || this.state.endValue == ''){
-            Toast.show('请选择结束时间...',1)
+            Toast.fail('请选择结束时间...')
             return
         }
         if (this.state.meetPerson.length == 0){
-            Toast.show('请选择与会人...',1)
+            Toast.fail('请选择与会人...')
             return
         }
         var nowT = new Date().getTime()
@@ -190,6 +245,11 @@ export default class SendMeet extends Component{
         if(startT > endT){
             Toast.show('结束时间不可小于开始时间',1)
             return
+        }
+        if (!isObjEmpty(this.checkNodes)) {
+            this.checkNodes.forEach((node, index) => {
+                this.state.meetPerson.push(node.userId)
+            })
         }
         var noticeT = startT - this.state.earlyTime*1000*60
         // console.log('this.state.earlyTime*1000*60',this.state.earlyTime*1000*60)
@@ -215,7 +275,30 @@ export default class SendMeet extends Component{
             })
             .catch((error) =>{
                 console.log('error',error)
+                console.log('error',error)
+                if (typeof error === 'string') {
+                    Toast.fail(error, 2)
+                } else {
+                    if (typeof error === 'string') {
+                        Toast.fail(error, 2)
+                    } else {
+                        Toast.fail('请求异常', 2)
+                    }
+                }
             })
+    }
+    onTargetFocus = (e) => {
+        if (isObjEmpty(this.state.targetData)) {
+            this.getOrganization()
+        }
+    }
+
+    onTargetChange = (value, label, checkNodes, count) => {
+        this.checkNodes = checkNodes
+        this.setState({
+            targetList: value,
+            targetCount: count
+        });
     }
     selectPersononChange = (value) => {
         console.log('selectPersononChange ', value);

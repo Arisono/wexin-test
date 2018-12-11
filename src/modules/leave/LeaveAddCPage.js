@@ -85,7 +85,9 @@ class LeaveAddCPage extends React.Component{
     componentDidMount(){
 
     }
-
+    componentWillMount() {
+        document.title = '成绩查询'
+    }
 
     callback(msg){
         console.log("leaveAddPage:callback："+JSON.stringify(msg));

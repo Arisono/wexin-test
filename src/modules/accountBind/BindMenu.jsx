@@ -35,7 +35,7 @@ export default class BindMenu extends Component {
 
         setTimeout(() => {
             this.obtainBindStatus()
-        }, 2500)
+        }, 1500)
 
     }
 

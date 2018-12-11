@@ -174,6 +174,7 @@ class VoteListTabPage extends React.Component{
                 onRefresh={this.loadReleaseList}
                 height={this.state.height}>
                 <List
+                    locale={"  "}
                     dataSource={this.state.data}
                     renderItem={item=>(
                         <Link to={"/voteDetail/"+(item.state=='进行中'?true:false)+"/"+item.voteId} id="menu_span_normal">

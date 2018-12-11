@@ -364,7 +364,7 @@ export default class SendVote extends Component{
     handleSelectChange =(value) =>{
         console.log('voteType',value)
         this.setState({
-            voteType:value[0]
+            voteType:value
         })
     }
     handelValueCom = (event)=>{

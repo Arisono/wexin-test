@@ -10,6 +10,7 @@ import {Avatar, Input, Icon, Button} from 'antd'
 import {Toast} from 'antd-mobile'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
+import {switchUser} from 'action/userInfo'
 
 export default class BindMenu extends Component {
 
@@ -18,25 +19,31 @@ export default class BindMenu extends Component {
 
         this.state = {
             bindStatus: 0,
-            errorMsg: '获取绑定信息中...'
+            errorMsg: ''
         }
     }
 
     componentWillMount() {
-        if (this.props.match.params.openid) {
-            this.openid = this.props.match.params.openid
-        } else {
-            this.openid = 'raomengbindtest'
-        }
+
     }
 
     componentDidMount() {
         document.title = '账号绑定'
+        if (this.props.match.params.openid) {
+            this.setState({
+                errorMsg: '获取绑定信息中...'
+            })
+            this.openid = this.props.match.params.openid
 
-        setTimeout(() => {
-            this.obtainBindStatus()
-        }, 1500)
-
+            setTimeout(() => {
+                this.obtainBindStatus()
+            }, 1000)
+        } else {
+            this.setState({
+                errorMsg: ''
+            })
+            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbc1f8607137d3b8a&redirect_uri=https%3a%2f%2fwww.akuiguoshu.com%2fschool%2fuser%2fuserLogin&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect'
+        }
     }
 
     render() {
@@ -59,6 +66,12 @@ export default class BindMenu extends Component {
                 this.setState({
                     bindStatus: 2
                 })
+                switchUser({
+                    userId: 10001,
+                    userName: '',
+                    userOpenid: '',
+                    userPhone: '',
+                })()
             } else {
                 this.setState({
                     bindStatus: 1

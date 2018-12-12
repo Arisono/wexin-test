@@ -3,8 +3,8 @@
  * Desc: 项目接口
  */
 
-// export const _baseURL = 'http://10.1.80.128:8099'
-export const _baseURL = 'http://39.108.3.245:8099'
+export const _baseURL = 'http://10.1.80.128:8080/school'
+// export const _baseURL = 'https://www.akuiguoshu.com/school/'
 
 export const API = {
     //获取验证码

@@ -7,7 +7,7 @@ import React, {Component} from 'react'
 import {Toast} from 'antd-mobile'
 import {List, Skeleton} from 'antd'
 import PrincipalItem from 'components/PrincipalItem'
-import {fetchPost} from "../../utils/fetchRequest";
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import RefreshLayout from "../../components/RefreshLayout";
 import {getArrayValue, getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
@@ -97,6 +97,7 @@ class PrincipalHistory extends Component {
                 response.data.creat.forEach((item, index) => {
                     let rechargeBean = {}
 
+                    rechargeBean.notifyId = getIntValue(item, 'notifyId')
                     rechargeBean.time = getStrValue(item, 'creatDate')
                     if (getIntValue(item, 'isreading') == 1) {
                         rechargeBean.status = '未查阅'
@@ -105,7 +106,6 @@ class PrincipalHistory extends Component {
                     }
                     rechargeBean.suggest = getStrValue(item, 'notifyDetails')
                     rechargeBean.enclosure = getArrayValue(item, 'enclosure')
-                    console.log(rechargeBean.enclosure)
 
                     if (!isObjEmpty(item.leaveMessages)) {
                         rechargeBean.reply = item.leaveMessages[0].messContent
@@ -143,9 +143,22 @@ class PrincipalHistory extends Component {
 
     onDeleteItem = index => {
         const {principalList} = this.state
-        principalList.splice(index, 1)
-        this.setState({principalList})
-        Toast.success('删除成功', 2)
+
+        Toast.loading('', 0)
+        fetchGet(API.NOTIFY_DELETEMAIL, {
+            notifyId: principalList[index].notifyId,
+            userId: this.props.userInfo.userId
+        }).then(response => {
+            principalList.splice(index, 1)
+            this.setState({principalList})
+            Toast.success('删除成功', 2)
+        }).catch(error => {
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('数据请求异常')
+            }
+        })
     }
 }
 

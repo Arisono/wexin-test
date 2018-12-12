@@ -10,10 +10,11 @@ import {Toast,Picker,List,DatePicker} from 'antd-mobile';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {_baseURL,API} from '../../../configs/api.config';
 import UploadEnclosure from '../../../components/UploadEnclosure';
-import moment from 'moment'
+import moment from 'moment';
+import {connect} from 'react-redux';
 const  nowTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
 const Option = Select.Option;
-export default class FieldTrip extends Component{
+class FieldTrip extends Component{
     componentWillMount() {
         document.title = '外勤出差'
     }
@@ -173,8 +174,8 @@ export default class FieldTrip extends Component{
             approveName: "这是一个出差",
             approveDetails:this.state.tripsReason,
             approveType: 1,
-            proposer: 10000,
-            approver: 10007,
+            proposer: this.props.userInfo.userId,
+            // approver: 10007,
             startDate: moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
             endDate: moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
             approveFiles:approveFiles
@@ -273,3 +274,10 @@ export default class FieldTrip extends Component{
 
     handleCancel = () => this.setState({ previewVisible: false })
 }
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(FieldTrip)

@@ -6,12 +6,13 @@ import React,{Component} from 'react';
 import './AccessNotice.css';
 import line_img from '../../../style/imgs/line_img.png';
 import enter_img from '../../../style/imgs/ic_enter.png';
-import exit_img from '../../../style/imgs/ic_exit.png';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
 import LoadingMore from "../../../components/LoadingMore";
 import InfiniteScroll from 'react-infinite-scroller';
 import {Toast} from 'antd-mobile';
+import {connect} from 'react-redux';
+
 function ItemComp() {
     return(
         <div>
@@ -27,14 +28,14 @@ function ItemComp() {
     )
 }
 
-export default class AccessNotice extends Component{
+class AccessNotice extends Component{
     componentWillMount() {
         document.title = '进出校通知'
     }
     componentDidMount() {
         // console.log('Component DID MOUNT!',API.RecordOutgoingList)
         fetchGet(API.RecordOutgoingList,{
-            stuId:10000,
+            stuId:this.props.userInfo.userId,
             pageIndex:1,
             pageSize:10
         },{})
@@ -104,3 +105,11 @@ export default class AccessNotice extends Component{
         console.log('nextDataClick')
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccessNotice)

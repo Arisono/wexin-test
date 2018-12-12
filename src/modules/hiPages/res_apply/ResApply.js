@@ -11,11 +11,11 @@ import {Toast,Picker,List} from 'antd-mobile';
 import {isObjEmpty} from "../../../utils/common";
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
-
+import {connect} from 'react-redux';
 const Option = Select.Option;
 
 
-export default class ResApply extends Component{
+class ResApply extends Component{
     componentWillMount() {
         document.title = '用品申请'
     }
@@ -146,8 +146,8 @@ export default class ResApply extends Component{
             approveDetails:this.state.receivingSays,
             approveType: 2,
             appType:1,
-            proposer: 10000,
-            approver: 10007,
+            proposer: this.props.userInfo.userId,
+            // approver: 10007,
             approveFiles:approveFiles,
             articles:this.state.selectContentArray
         }
@@ -221,5 +221,11 @@ export default class ResApply extends Component{
         });
     }
     handleCancel = () => this.setState({ previewVisible: false })
-
 }
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ResApply)

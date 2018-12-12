@@ -14,11 +14,12 @@ import {API} from '../../../configs/api.config';
 import InfiniteScroll from 'react-infinite-scroller'
 import LoadingMore from "../../../components/LoadingMore";
 import {Toast} from 'antd-mobile';
+import {connect} from 'react-redux';
 
-let mySwiper
+let mySwiper;
 
 
-export default class Approvel extends Component{
+class Approvel extends Component{
     constructor(){
         super();
         this.state = {
@@ -99,7 +100,7 @@ export default class Approvel extends Component{
     }
     getHttpData =(pageIndex)=>{
         fetchGet(API.oaApproveList,{
-            userId:10007,
+            userId:this.props.userInfo.userId,
             pageIndex:pageIndex,
             pageSize:this.state.pageSize
         },{}).then((response)=>{
@@ -156,3 +157,11 @@ export default class Approvel extends Component{
     componentWillUnmount() {
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Approvel)

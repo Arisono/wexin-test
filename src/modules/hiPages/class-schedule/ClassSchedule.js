@@ -9,6 +9,7 @@ import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest'
 import {API} from '../../../configs/api.config';
 import {Toast} from 'antd-mobile';
 import moment from 'moment'
+import {connect} from 'react-redux';
 
 function HSItem(props) {
     return(
@@ -25,7 +26,7 @@ function HSItem(props) {
             </div>
     )
 }
-export default class ClassSchedule extends Component{
+class ClassSchedule extends Component{
 
     constructor(){
         super();
@@ -106,7 +107,7 @@ export default class ClassSchedule extends Component{
     }
     componentDidMount() {
         fetchGet(API.curriculumListByStuId,{
-            stuId:10000,
+            stuId:this.props.userInfo.userId,
             curStatus:1
         },{}).then((response)=>{
             if(response.success && response.data){
@@ -125,3 +126,10 @@ export default class ClassSchedule extends Component{
         })
     }
 }
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ClassSchedule)

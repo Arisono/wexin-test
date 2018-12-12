@@ -16,11 +16,11 @@ import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest'
 import {_baseURL,API} from '../../../configs/api.config';
 import {getIntValue, getStrValue, isObjEmpty} from "../../../utils/common";
 import UploadEnclosure from '../../../components/UploadEnclosure';
-
+import {connect} from 'react-redux';
 const Option = Select.Option;
 
 
-export default class SendVote extends Component{
+class SendVote extends Component{
     componentWillMount() {
         document.title = '发起投票'
     }
@@ -31,8 +31,8 @@ export default class SendVote extends Component{
         Toast.loading('', 0)
 
         fetchGet(API.USER_GETOBJECT, {
-            userId:10001,
-            stuId:10001
+            userId:this.props.userInfo.userId,
+            stuId:this.props.userInfo.userId
         }).then(response => {
             Toast.hide()
             const {targetData} = this.state
@@ -292,14 +292,14 @@ export default class SendVote extends Component{
             })
         }
         var params = {
-                creator: 10004,
+                creator: this.props.userInfo.userId,
                 voteStatus: 1,
                 voteRemarks: "这是一个调查",
                 voteName: this.state.voteTitle,
                 voteFile:approveFiles,
                 voter: this.state.votePerson,
                 voteEndDate:  moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
-                voteType: this.state.voteType,
+                voteType: this.state.voteType[0],
                 topics:[
                     {
                         topicName: this.state.voteTitle,
@@ -364,7 +364,7 @@ export default class SendVote extends Component{
     handleSelectChange =(value) =>{
         console.log('voteType',value)
         this.setState({
-            voteType:value[0]
+            voteType:value
         })
     }
     handelValueCom = (event)=>{
@@ -405,3 +405,10 @@ export default class SendVote extends Component{
     }
 
 }
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SendVote)

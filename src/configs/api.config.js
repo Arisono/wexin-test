@@ -2,9 +2,8 @@
  * Created by RaoMeng on 2018/11/21
  * Desc: 项目接口
  */
-
-export const _baseURL = 'http://10.1.80.128:8080/school'
-// export const _baseURL = 'https://www.akuiguoshu.com/school/'
+export const _baseURL = 'https://www.akuiguoshu.com/school'
+// export const _baseURL = 'http://10.1.80.128:8080/school'
 
 export const API = {
     //获取验证码
@@ -112,9 +111,9 @@ export const API = {
     //审批单详情
     oaDetails: _baseURL + '/oaApprove/oaDetails',
     //结束会议
-    endMeeting: _baseURL + '/notify/endMeeting',
-    //
-    getObject: _baseURL + '/user/getObject',
+    endMeeting:_baseURL+'/notify/endMeeting',
+    //获取分值条件
+    getCurr : _baseURL + '/score/getCurr',
 }
 
 

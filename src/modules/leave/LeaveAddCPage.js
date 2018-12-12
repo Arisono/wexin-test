@@ -1,180 +1,159 @@
 /**
- * Created by Arison on 2018/11/22.
- */
-/**
- * Created by Arison on 2018/11/12.
- */
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
+*   Created by FANGlh on 2018/12/12 11:45.
+*   Desc:
+*/
+
+import React,{Component} from 'react';
 import '../../style/css/app-gloal.css'
 import  './LeaveApprovalPage.css'
 import  './LeaveAddPage.css'
+import {Toast,Picker,List,DatePicker} from 'antd-mobile';
+import UploadEnclosure from '../../components/UploadEnclosure';
+import {fetchPost,fetchGet,fetchGetNoSession} from '../../utils/fetchRequest';
+import {_baseURL,API} from '../../configs/api.config';
 import { Input,Button } from 'antd';
-import {Select,DatePicker } from 'antd';
-import PicturesWallItem from "../../components/upload/PicturesWallItem";
-import TargetSelect from "../../components/TargetSelect";
-const { TextArea } = Input;
-const Option = Select.Option;
 
-
-const teacherData = []
-const parentData = []
-
-for (let i = 1; i < 6; i++) {
-    parentData.push({
-        title: `三年级${i}班`,
-        value: `0-${i}`,
-        key: `0-${i}`,
-        children: [{
-            title: `饶猛`,
-            value: `0-${i}-0`,
-            key: `0-${i}-0`
-        }, {
-            title: `李泞`,
-            value: `0-${i}-1`,
-            key: `0-${i}-1`,
-        }, {
-            title: `章晨望`,
-            value: `0-${i}-2`,
-            key: `0-${i}-2`,
-        }],
-    })
-}
-
-for (let i = 1; i < 10; i++) {
-    teacherData.push({
-        title: `老师${i}`,
-        value: `1-${i}`,
-        key: `1-${i}`,
-    })
-}
-
-
-const targetData = [
-    {
-        title: `全体家长`,
-        value: `0`,
-        key: `0`,
-        children: parentData,
-    },
-    {
-        title: `全体老师`,
-        value: `1`,
-        key: `1`,
-        children: teacherData,
-    }
-]
-/**
- * Created by Arison on 14:39.
- */
-class LeaveAddCPage extends React.Component{
-    constructor(props){
+export default class LeaveAddCPage extends Component{
+   constructor(props){
         super(props);
-        this.state={
-            name:'LeaveAddPage',
-            targetList: ['1-1'],
-            targetCount: 1
-        };
+        this.state = {
+            fileList: [],
+            typeLeave:[
+                {
+                    label: '病假',
+                    value: '1'
+                },{
+                    label: '年假',
+                    value: '2'
+                },{
+                    label: '事假',
+                    value: '3'
+                }
+            ],
+            leaveReason:null,
+            leaveType:null,
+            startValue:null,
+            endValue:null,
+        }
+    }
+     render(){
+        return(
+            <div>
+                <Picker
+                    data={this.state.typeLeave} title='请假类型' extra='请选择'
+                    value={this.state.leaveType}
+                    onChange={this.handleSelectChange}
+                    onOk={this.handleSelectChange} cols={1}>
+                    <List.Item arrow="horizontal" >请假类型</List.Item>
+                </Picker>
+                <div className="comhline_sty1"></div>
+
+                <DatePicker
+                    value={this.state.startValue}
+                    onChange={date => this.setState({startValue:date})}>
+                    <List.Item arrow="horizontal">开始时间</List.Item>
+                </DatePicker>
+
+                <div className="comhline_sty1"></div>
+
+                <DatePicker
+                    value={this.state.endValue}
+                    onChange={date => this.setState({endValue:date})}>
+                    <List.Item arrow="horizontal">结束时间</List.Item>
+                </DatePicker>
+
+                <div className="comhline_sty"></div>
+               <div onChange={this.handelValueCom}>
+                    <textarea autoFocus="autoFocus" ref='leaveReason' className="form-control textarea_sty" rows="4" placeholder="请填写请假理由…"></textarea>
+               </div>
+                <div className="comhline_sty"></div>
+
+
+                <UploadEnclosure
+                    action={API.UPLOAD_FILE}
+                    fileList={this.state.fileList}
+                    count={9}
+                    multiple={true}
+                    beforeUpload={this.beforeUpload.bind(this)}
+                    handleChange={this.handleChange.bind(this)}
+                />
+
+                <div className="flex_center margin_top_20">
+                    <center><Button type="button" className="btn btn-primary comBtn_sty"  onClick={this.onSubmitClick}>提交</Button></center>
+                </div>
+                <div   onClick={this.clickLeaveList.bind(this)} className="leave-history flex_center text_underline">请假记录</div>
+            </div>
+        )
     }
 
+    onSubmitClick = (event)=>{
+         console.log('state',this.state)
+        if(this.state.leaveType == null || this.state.leaveType == ''){
+            Toast.fail('请选择请假类型')
+            return
+        }
+        if(this.state.startValue == null || this.state.startValue == ''){
+            Toast.fail('请选择开始时间')
+            return
+        }
+        if(this.state.endValue == null || this.state.endValue == ''){
+            Toast.fail('请选择结束时间')
+            return
+        }
+        var startT = new Date(this.state.startValue).getTime()
+        var endT = new Date(this.state.endValue).getTime()
+        // console.log('startT',startT)
+        if(startT > endT){
+            Toast.fail('结束时间不可小于开始时间')
+            return
+        }
+        if(this.state.leaveReason == null || this.state.leaveReason == ''){
+            Toast.fail('请填写请假理由')
+            return
+        }
+        const params = {}
+        fetchPost(API.oaCreate,params,{}).then((response)=>{
+                console.log('response',response)
+                if(response.success){
+                    Toast.show(response.data,1)
+                }
+            }).catch((error) =>{
+                console.log('error',error)
+                if (typeof error === 'string') {
+                    Toast.fail(error, 2)
+                } else {
+                    Toast.fail('请求异常', 2)
+                }
+            })
+    }
+
+    beforeUpload = (file, fileList) => {
+
+    }
     clickLeaveList(){
         this.props.history.push("/leaveList")
     }
-
-    componentDidMount(){
-
-    }
-
-
-    callback(msg){
-        console.log("leaveAddPage:callback："+JSON.stringify(msg));
-    }
-
-    onTargetChange = (value, label, checkNodes, count) => {
-        this.setState({
-            targetList: value,
-            targetCount: count
-        });
-    }
-
-     handleChange(value) {
-    console.log(`selected ${value}`);
-     }
-
-    render(){
-
-        const { targetCount, targetList} = this.state
-        const targetProps = {
-            placeholder: '请选择抄送对象',
-            targetData: targetData,
-            targetValues: targetList,
-            title: '抄送对象',
-            targetCount: targetCount,
-            onTargetChange: this.onTargetChange.bind(this)
+    handleChange = fileList => {
+        if (fileList) {
+            fileList.forEach((value, index) => {
+                value.url = value.response ? (_baseURL + value.response.data) : value.url
+                value.picUrl = value.response ? value.response.data : value.picUrl
+            })
+            this.setState({fileList})
         }
-        return <div className="container-fluid ">
-            <div className="row">
-                <div className="col-xs-12">
-                    <div className="row " id="page_block_min"></div>
-                    <div className="row leave-input flex_row padding_10
-                           flex_center_vertical">
-                        <span>请假类型：</span>
-                        <Select className="item_flex  flex_row_right"
-                                defaultValue="调休" style={{ width: 120 }} onChange={this.handleChange.bind(this)}>
-                            <Option value="事假">事假</Option>
-                            <Option value="病假">病假</Option>
-                            <Option value="年假" >年假</Option>
-                            <Option value="其它">其它</Option>
-                        </Select>
-                    </div>
-
-                    <div className="row leave-input  flex_row padding_10
-                           flex_center_vertical">
-                        <span>开始时间：</span>
-                        <div class="item_flex  flex_row_right">
-                            <DatePicker style={{width:"100%"}} showTime format="YYYY-MM-DD HH:mm:ss"
-                                        placeholder="请选择开始时间"/>
-                        </div>
-                    </div>
-                    <div className="row" id="page_horizontal_line"></div>
-                    <div className="row leave-input flex_row padding_10
-                           flex_center_vertical">
-                        <span>结束时间：</span>
-                        <div class="item_flex  flex_row_right">
-                            <DatePicker
-                                style={{width:"100%"}}
-                                showTime
-                                format="YYYY-MM-DD HH:mm:ss"
-                                placeholder="请选择结束时间"/></div>
-
-                    </div>
-                    <div id="page_horizontal_line"></div>
-                    <div className="row" >
-                        <TextArea id="input_no_border" rows={4} placeholder="请填写请假理由"></TextArea>
-                    </div>
-                    <div  className="row"  id="page_horizontal_line"></div>
-                    <div className="row">
-                        {/*  <span>        抄送对象：</span>*/}
-                            <TargetSelect   {...targetProps}></TargetSelect>
-                        {/*  <Icon type="right"/>*/}
-                    </div>
-                    <div className="row" id="page_block_min"></div>
-                    <div className="row padding_10 span_15 ">
-                        <div>  <span >附件</span></div>
-                        <div>
-                            <PicturesWallItem action={'url路径'} number={1} callback = { this.callback.bind(this)}></PicturesWallItem>
-                        </div>
-                        <div className="flex_center margin_top_20">
-                            <Button   type={'primary'}  block> 提交</Button>
-                        </div>
-
-                        <div   onClick={this.clickLeaveList.bind(this)} className="leave-history flex_center text_underline">请假记录</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    }
+    handleSelectChange =(value) =>{
+        console.log('leaveType',value)
+        this.setState({
+            leaveType:value
+        })
+    }
+    handelValueCom = (event)=>{
+        //获取用户名的值
+        let leaveReason = this.refs.leaveReason.value;
+        //获得内容的值
+        this.setState({
+            leaveReason:leaveReason,
+        })
     }
 }
-
-export  default LeaveAddCPage;

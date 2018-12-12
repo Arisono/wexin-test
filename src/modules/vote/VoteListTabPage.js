@@ -104,7 +104,7 @@ class VoteListTabPage extends React.Component{
         console.log("loadMoreAction()");
         setTimeout(()=>{
             fetchGet(API.voteListTeacher,{
-                          userId:'10001',
+                          userId:'10004',
                           pageIndex:'1',
                           pageSize:'5',
                           voteType:'1',
@@ -139,7 +139,7 @@ class VoteListTabPage extends React.Component{
         console.log("loadMoreRightAction()");
         setTimeout(()=>{
             fetchGet(API.voteListTeacher,{
-                userId:'10001',
+                userId:'10004',
                 pageIndex:'1',
                 pageSize:'5',
                 voteType:'1',
@@ -174,6 +174,7 @@ class VoteListTabPage extends React.Component{
                 onRefresh={this.loadReleaseList}
                 height={this.state.height}>
                 <List
+                    locale={{emptyText: ''}}
                     dataSource={this.state.data}
                     renderItem={item=>(
                         <Link to={"/voteDetail/"+(item.state=='进行中'?true:false)+"/"+item.voteId} id="menu_span_normal">
@@ -221,6 +222,7 @@ class VoteListTabPage extends React.Component{
             onRefresh={this.loadReceiveList}
             height={this.state.height}>
             <List
+                locale={{emptyText: ''}}
                 dataSource={this.state.dataRight}
                 renderItem={item=>(
                     <Link to={"/voteDetail/"+(item.state=='进行中'?true:false)+"/"+item.voteId} id="menu_span_normal">

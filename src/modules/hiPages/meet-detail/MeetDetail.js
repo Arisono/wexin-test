@@ -11,6 +11,7 @@ import {Button} from 'antd';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
 import {Toast} from 'antd-mobile'
+import {connect} from 'react-redux';
 
 function SignItem(props) {
     return(
@@ -21,15 +22,15 @@ function SignItem(props) {
     )
 }
 
-export default class MeetDetail extends Component{
+class MeetDetail extends Component{
    constructor(props){
         super(props);
         this.state = {
             meetId:null,
             meetingBean: new MeetingBean(),
             meetingSignData:{},
-            signList:[1,2,3,4,5,6,7,8,9,1,2,3,4,5,6,7,],
-            unsignList:[1,2,3],
+            signList:[],
+            unsignList:[],
             notifyStatus:null,//1是草稿 2是已发布 3是进行中 4结束
         }
     }
@@ -89,7 +90,7 @@ export default class MeetDetail extends Component{
     }
     EndMeetting =()=>{
         fetchGet(API.endMeeting,{
-            userId:10007,
+            userId:this.props.userInfo.userId,
             notifyId:this.state.notifyId
         },{}).then((response)=>{
             console.log('response',response)
@@ -175,3 +176,11 @@ export default class MeetDetail extends Component{
     }
 
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(MeetDetail)

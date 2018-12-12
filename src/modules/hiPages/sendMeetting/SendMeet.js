@@ -14,6 +14,7 @@ import {API} from '../../../configs/api.config';
 import {Toast,Picker,List,DatePicker} from 'antd-mobile';
 import {getIntValue, getStrValue, isObjEmpty} from "../../../utils/common";
 import TargetSelect from '../../../components/TargetSelect';
+import {connect} from 'react-redux';
 
 const Option = Select.Option;
 
@@ -24,7 +25,7 @@ function Test(){
         </div>
     )
 }
-export default class SendMeet extends Component{
+class SendMeet extends Component{
     componentWillMount() {
         document.title = '发起会议'
     }
@@ -35,8 +36,8 @@ export default class SendMeet extends Component{
         Toast.loading('', 0)
 
         fetchGet(API.USER_GETOBJECT, {
-            userId:10001,
-            stuId:10001
+            userId:this.props.userInfo.userId,
+            stuId:this.props.userInfo.userId
         }).then(response => {
             Toast.hide()
             const {targetData} = this.state
@@ -331,3 +332,11 @@ export default class SendMeet extends Component{
         })
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SendMeet)

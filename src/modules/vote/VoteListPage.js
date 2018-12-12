@@ -119,6 +119,7 @@ class VoteListPage extends React.Component{
                        hasMore={this.state.hasMoreData}
                        loader={<LoadingMore/>}>
                   <List
+                      locale={{emptyText: ''}}
                       dataSource={this.state.data}
                       renderItem={item=>(
                         <Link to={"/voteDetail/"+(item.state=='进行中'?true:false)+"/"+item.voteId} id="menu_span_normal">

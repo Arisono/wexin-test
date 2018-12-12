@@ -15,9 +15,10 @@ import { Button,Modal } from 'antd';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API,_baseURL} from '../../../configs/api.config';
 import {Toast} from 'antd-mobile';
+import {connect} from 'react-redux';
 
 
-export default class ApprovelDetail extends Component{
+ class ApprovelDetail extends Component{
     constructor(){
         super();
         this.state = {
@@ -148,7 +149,7 @@ export default class ApprovelDetail extends Component{
             return
         }
         fetchPost(API.doapprove,{
-            userId:10007,
+            userId:this.props.userInfo.userId,
             approveId:this.state.approveId,
             status:this.state.handleStatus,
             approveOpinion:this.state.approveOpinion
@@ -246,3 +247,10 @@ export default class ApprovelDetail extends Component{
         })
     }
 }
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ApprovelDetail)

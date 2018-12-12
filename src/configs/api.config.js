@@ -2,8 +2,8 @@
  * Created by RaoMeng on 2018/11/21
  * Desc: 项目接口
  */
-// export const _baseURL = 'http://10.1.80.128:8099'
-export const _baseURL = 'http://123.56.28.19:8099'
+export const _baseURL = 'http://10.1.80.128:8099'
+// export const _baseURL = 'http://123.56.28.19:8099'
 export const API = {
     //获取验证码
     SEND_CODE: _baseURL + '/user/sendCode',

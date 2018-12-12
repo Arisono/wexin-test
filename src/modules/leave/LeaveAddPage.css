@@ -18,3 +18,6 @@ button.ant-btn.ant-btn-primary.ant-btn-block{
     font-size: 15px;
     width: 90%;
 }
+.comhline_sty {background-color:#F2F2F2;width:100%;height:10px}
+.comhline_sty1{background-color:#F2F2F2;width:100%;height:1px;}
+.comBtn_sty{width:302px;height:36px;font-size:14px;background: #4197Fc; margin: 20px auto;color: white;border-radius: 9px;letter-spacing: 10px;}

@@ -299,7 +299,7 @@ export default class SendVote extends Component{
                 voteFile:approveFiles,
                 voter: this.state.votePerson,
                 voteEndDate:  moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
-                voteType: this.state.voteType,
+                voteType: this.state.voteType[0],
                 topics:[
                     {
                         topicName: this.state.voteTitle,

@@ -20,40 +20,40 @@ export default class FieldTrip extends Component{
     constructor(){
         super();
         this.state = {
-            tripType:'666',
+            tripType:null,
             startValue: null,
             endValue: null,
             Tdurntion:null,
             tripsHours:null,
             tripsReason:null,
-            Receiver:'吴彦祖',
+            Receiver:null,
             previewVisible: false,
             previewImage: '',
             fileList: [], //附件
             typeList:[
                 {
                     label: '类型1',
-                    value: '类型1'
+                    value:1
                 },{
                     label: '类型2',
-                    value: '类型2'
+                    value:2
                 },{
                     label: '类型3',
-                    value: '类型3'
+                    value: 3
                 },{
                     label: '类型4',
-                    value: '类型4'
+                    value:4
                 }
             ],
             receiverPerson:[{
                 label: '吴彦祖',
-                value: '吴彦祖'
+                value: 5
             },{
                 label: '陈冠希',
-                value: '陈冠希'
+                value:6
             },{
                 label: '古天乐',
-                value: '古天乐'
+                value:7
             }]
         };
 
@@ -227,13 +227,19 @@ export default class FieldTrip extends Component{
        })
     }
     handleSelectChange =(value) =>{
+        console.log('handleSelectChange',value)
         this.setState({
             tripType:value
+        },function () {
+            console.log('tripType',this.state.tripType)
         })
     }
     handleSelectChange1 =(value) =>{
+        console.log('handleSelectChange1',value)
         this.setState({
             Receiver:value
+        },function () {
+            console.log('Receiver',this.state.Receiver)
         })
     }
     handelValueCom = (event)=>{

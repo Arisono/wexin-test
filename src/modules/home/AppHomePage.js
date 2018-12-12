@@ -76,43 +76,21 @@ class AppHomePage extends React.Component {
     }
 
     onChangeRole({key}) {
-        console.log("onChangeRole():" + key);
         switch (key) {
             case "2":
-                switchUser({
-                    userId: 10001,
-                    userName: '',
-                    userOpenid: '',
-                    userPhone: '',
-                    userRole: 2
-                })();
-
-                // console.log("componentDidMount() userRole:",this.props.userInfo);
-                // console.log("onChangeRole() 教师");
-                constants.isTeacher = true;
+                switchUser({userRole: 2})();
                 this.setState({
                     isTeacher: true
                 })
                 this.props.location.search = "?role=teacher"
-                //console.log("onChangeRole():" + this.props.location.search);
-                //this.props.history.push("/homePage" + this.props.location.search);
                 break;
             case "1":
                 switchUser({
-                    userId: 10001,
-                    userName: '',
-                    userOpenid: '',
-                    userPhone: '',
                     userRole: 1
                 })();
-                // console.log("componentDidMount() userRole:",this.props.userInfo);
-                //console.log("onChangeRole() 家长");
-                constants.isTeacher = false;
                 this.setState({
                     isTeacher: false
                 })
-                this.props.location.search = "?role=parent"
-                //this.props.history.push("/homePage" + this.props.location.search);
                 break;
         }
     }
@@ -137,23 +115,11 @@ class AppHomePage extends React.Component {
         clearListState()()
         clearClassData()()
         document.title = "智慧校园";
-        const query = this.props.location.search;
-        const params = query.split('&');
-        const role = params[0].substr(5, params[0].length - 1);
-        if (role != null) {
-            if (role.search("teacher") != -1) {
-                constants.isTeacher = true;
-            } else {
-                constants.isTeacher = false;
-            }
-        }
-        console.log("componentDidMount() role:" + role);
-        console.log("componentDidMount() path:" + this.props.location.pathname);
-        if (constants.isTeacher) {
+        if (this.props.userInfo.userRole===2) {//教师
             this.setState({
                 isTeacher: true
             })
-        } else {
+        } else {//家长
             this.setState({
                 isTeacher: false
             })

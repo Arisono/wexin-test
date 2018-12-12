@@ -11,6 +11,7 @@ import {Toast} from 'antd-mobile'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {switchUser} from 'action/userInfo'
+import {getIntValue, getStrValue} from "../../utils/common";
 
 export default class BindMenu extends Component {
 
@@ -63,15 +64,24 @@ export default class BindMenu extends Component {
             userOpenid: this.openid
         }).then(response => {
             if (response.data) {
+                let role = 1//1:家长2:老师
+                const userStation = getStrValue(response.data, 'userStation')
+                if (userStation === '家长') {
+                    role = 1
+                } else {
+                    role = 2
+                }
+                switchUser({
+                    userId: getIntValue(response.data, 'userId'),
+                    userName: getStrValue(response.data, 'userName'),
+                    userOpenid: getStrValue(response.data, 'userOpenid'),
+                    userPhone: getStrValue(response.data, 'userPhone'),
+                    userRole: role
+                })()
+
                 this.setState({
                     bindStatus: 2
                 })
-                switchUser({
-                    userId: 10001,
-                    userName: '',
-                    userOpenid: '',
-                    userPhone: '',
-                })()
             } else {
                 this.setState({
                     bindStatus: 1

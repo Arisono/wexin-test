@@ -11,11 +11,12 @@ import {API} from "../../configs/api.config";
 import {isObjEmpty} from "../../utils/common";
 import {Toast} from 'antd-mobile'
 import {regExpConfig} from "../../configs/regexp.config";
+import {connect} from 'react-redux'
 
 let mType = 'parents'
 let mSeconds = 0
 
-export default class AccountBind extends Component {
+class AccountBind extends Component {
 
     componentWillMount() {
         this.bodyHeight = document.documentElement.clientHeight
@@ -189,7 +190,7 @@ export default class AccountBind extends Component {
                 stuId: account,
                 userPhone: phone,
                 vcode: code,
-                openid: 'raomengbindtest'
+                openid: this.props.userInfo.userOpenid
             }).then(response => {
                 this.props.history.push('/homePage?role=parent')
             }).catch(error => {
@@ -206,7 +207,7 @@ export default class AccountBind extends Component {
                 userId: account,
                 userPhone: phone,
                 vcode: code,
-                openid: 'raomengbindtest'
+                openid: this.props.userInfo.userOpenid
             }).then(response => {
                 this.props.history.push('/homePage?role=teacher')
             }).catch(error => {
@@ -221,3 +222,11 @@ export default class AccountBind extends Component {
         }
     }
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountBind)

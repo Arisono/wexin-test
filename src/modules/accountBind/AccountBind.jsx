@@ -192,6 +192,8 @@ class AccountBind extends Component {
                 vcode: code,
                 openid: this.props.userInfo.userOpenid
             }).then(response => {
+                Toast.hide()
+
                 this.props.history.push('/homePage?role=parent')
             }).catch(error => {
                 Toast.hide()
@@ -209,6 +211,8 @@ class AccountBind extends Component {
                 vcode: code,
                 openid: this.props.userInfo.userOpenid
             }).then(response => {
+                Toast.hide()
+
                 this.props.history.push('/homePage?role=teacher')
             }).catch(error => {
                 Toast.hide()

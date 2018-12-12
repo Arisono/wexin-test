@@ -83,6 +83,9 @@ export default class BindMenu extends Component {
                     bindStatus: 2
                 })
             } else {
+                switchUser({
+                    userOpenid: this.openid
+                })()
                 this.setState({
                     bindStatus: 1
                 })

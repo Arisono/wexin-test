@@ -10,6 +10,8 @@ import {Avatar, Input, Icon, Button} from 'antd'
 import {Toast} from 'antd-mobile'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
+import {switchUser} from 'action/userInfo'
+import {getIntValue, getStrValue} from "../../utils/common";
 
 export default class BindMenu extends Component {
 
@@ -18,25 +20,31 @@ export default class BindMenu extends Component {
 
         this.state = {
             bindStatus: 0,
-            errorMsg: '获取绑定信息中...'
+            errorMsg: ''
         }
     }
 
     componentWillMount() {
-        if (this.props.match.params.openid) {
-            this.openid = this.props.match.params.openid
-        } else {
-            this.openid = 'raomengbindtest'
-        }
+
     }
 
     componentDidMount() {
         document.title = '账号绑定'
+        if (this.props.match.params.openid) {
+            this.setState({
+                errorMsg: '获取绑定信息中...'
+            })
+            this.openid = this.props.match.params.openid
 
-        setTimeout(() => {
-            this.obtainBindStatus()
-        }, 1500)
-
+            setTimeout(() => {
+                this.obtainBindStatus()
+            }, 1000)
+        } else {
+            this.setState({
+                errorMsg: ''
+            })
+            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbc1f8607137d3b8a&redirect_uri=https%3a%2f%2fwww.akuiguoshu.com%2fschool%2fuser%2fuserLogin&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect'
+        }
     }
 
     render() {
@@ -56,10 +64,28 @@ export default class BindMenu extends Component {
             userOpenid: this.openid
         }).then(response => {
             if (response.data) {
+                let role = 1//1:家长2:老师
+                const userStation = getStrValue(response.data, 'userStation')
+                if (userStation === '家长') {
+                    role = 1
+                } else {
+                    role = 2
+                }
+                switchUser({
+                    userId: getIntValue(response.data, 'userId'),
+                    userName: getStrValue(response.data, 'userName'),
+                    userOpenid: getStrValue(response.data, 'userOpenid'),
+                    userPhone: getStrValue(response.data, 'userPhone'),
+                    userRole: role
+                })()
+
                 this.setState({
                     bindStatus: 2
                 })
             } else {
+                switchUser({
+                    userOpenid: this.openid
+                })()
                 this.setState({
                     bindStatus: 1
                 })

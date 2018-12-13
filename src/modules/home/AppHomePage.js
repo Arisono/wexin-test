@@ -80,10 +80,6 @@ class AppHomePage extends React.Component {
         switch (key) {
             case "2":
                 switchUser({
-                    userId: 10001,
-                    userName: '',
-                    userOpenid: '',
-                    userPhone: '',
                     userRole: 2
                 })();
 
@@ -99,10 +95,6 @@ class AppHomePage extends React.Component {
                 break;
             case "1":
                 switchUser({
-                    userId: 10001,
-                    userName: '',
-                    userOpenid: '',
-                    userPhone: '',
                     userRole: 1
                 })();
                 // console.log("componentDidMount() userRole:",this.props.userInfo);

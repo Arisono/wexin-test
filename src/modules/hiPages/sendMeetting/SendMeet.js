@@ -202,7 +202,7 @@ class SendMeet extends Component{
 
                     <div className="comhline_sty1"></div>
 
-                    <span className="item_sty">与会人</span>
+                    {/*<span className="item_sty">与会人</span>*/}
                         {/*{this.state.headerArray.map((itemata,index) => <Test key={index} itemata = {itemata}></Test>)}*/}
                         {/*<img onClick={this.addPerson} className="meet_penson_img img-circle" style={{height: 40,width: 40,marginTop:10,marginLeft:5}} src={add_newimg}/>*/}
                     {/*<div> <textarea className="form-control textarea_sty" >ww</textarea></div>*/}
@@ -230,8 +230,8 @@ class SendMeet extends Component{
             Toast.fail('请选择结束时间...')
             return
         }
-        if (this.state.meetPerson.length == 0){
-            Toast.fail('请选择与会人...')
+        if (this.state.targetList.length == 0){
+            Toast.fail('请选择发布对象...')
             return
         }
         var nowT = new Date().getTime()

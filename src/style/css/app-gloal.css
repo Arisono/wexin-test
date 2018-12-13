@@ -175,6 +175,20 @@
     color:black ;
 }
 
+.border-radius-50{
+    border: 1px solid white;
+    border-radius:50%
+}
+
+.border-radius-50-blue{
+    border: 1px solid #0098FD;
+    border-radius:50%
+}
+
+.color_blue{
+    color: #0098FD;
+}
+
 .text_underline{
     color: #0098FD;
     text-decoration: underline;
@@ -264,6 +278,10 @@
     padding: 10px;
 }
 
+.margin_10{
+    margin: 10px;
+}
+
 .padding_5{
     padding: 5px;
 }
@@ -273,11 +291,14 @@
 }
 
 .padding_left{
-    padding: 15px 7px 15px 15px;
+    padding: 10px 5px 5px 5px;
 }
 
 .padding_right{
-    padding: 15px 15px 15px 7px;
+    padding: 10px 5px 5px 5px;
+}
+.padding_right_10{
+    padding: 0px 10px 0px 0px;
 }
 
 .padding_20{
@@ -318,8 +339,12 @@
  }
 
 .margin_right_5{
-     margin: 0px 5px 0px 0px;
- }
+      margin: 0px 5px 0px 0px;
+  }
+
+.margin_right_15{
+    margin: 0px 15px 0px 0px;
+}
 
 .margin_left_5{
     margin: 0px 0px 0px 5px;

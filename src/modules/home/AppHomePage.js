@@ -189,6 +189,7 @@ class AppHomePage extends React.Component {
                                         </Dropdown>
                                     </div>
 
+                                    {/*孩子列表*/}
                                     {this.state.isTeacher ? ("") : (<div>
                                         <img
                                             src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"}

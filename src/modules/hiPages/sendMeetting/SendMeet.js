@@ -264,12 +264,13 @@ class SendMeet extends Component{
         console.log('noticeT',new Date(noticeT))
         let params = {
             // notifyCreator:this.props.userInfo.userId,
-            notifyCreator:10004,
+            notifyCreator:this.props.userInfo.userId,
             notifyType:6,
+            notifyStatus:2,
             notifyName:this.state.titleValue,
             notifyAddress:this.state.meetAddress,
-            startDate:this.state.startValue,
-            endDate:this.state.endValue,
+            startDate: moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
+            endDate:moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
             reminderDate:new Date(noticeT),
             userIds:JSON.stringify(userList)
         }

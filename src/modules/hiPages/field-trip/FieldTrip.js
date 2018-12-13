@@ -10,50 +10,51 @@ import {Toast,Picker,List,DatePicker} from 'antd-mobile';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {_baseURL,API} from '../../../configs/api.config';
 import UploadEnclosure from '../../../components/UploadEnclosure';
-import moment from 'moment'
+import moment from 'moment';
+import {connect} from 'react-redux';
 const  nowTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
 const Option = Select.Option;
-export default class FieldTrip extends Component{
+class FieldTrip extends Component{
     componentWillMount() {
         document.title = '外勤出差'
     }
     constructor(){
         super();
         this.state = {
-            tripType:'666',
+            tripType:null,
             startValue: null,
             endValue: null,
             Tdurntion:null,
             tripsHours:null,
             tripsReason:null,
-            Receiver:'吴彦祖',
+            Receiver:null,
             previewVisible: false,
             previewImage: '',
             fileList: [], //附件
             typeList:[
                 {
                     label: '类型1',
-                    value: '类型1'
+                    value:1
                 },{
                     label: '类型2',
-                    value: '类型2'
+                    value:2
                 },{
                     label: '类型3',
-                    value: '类型3'
+                    value: 3
                 },{
                     label: '类型4',
-                    value: '类型4'
+                    value:4
                 }
             ],
             receiverPerson:[{
                 label: '吴彦祖',
-                value: '吴彦祖'
+                value: 5
             },{
                 label: '陈冠希',
-                value: '陈冠希'
+                value:6
             },{
                 label: '古天乐',
-                value: '古天乐'
+                value:7
             }]
         };
 
@@ -173,8 +174,8 @@ export default class FieldTrip extends Component{
             approveName: "这是一个出差",
             approveDetails:this.state.tripsReason,
             approveType: 1,
-            proposer: 10000,
-            approver: 10007,
+            proposer: this.props.userInfo.userId,
+            // approver: 10007,
             startDate: moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
             endDate: moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
             approveFiles:approveFiles
@@ -227,13 +228,19 @@ export default class FieldTrip extends Component{
        })
     }
     handleSelectChange =(value) =>{
+        console.log('handleSelectChange',value)
         this.setState({
             tripType:value
+        },function () {
+            console.log('tripType',this.state.tripType)
         })
     }
     handleSelectChange1 =(value) =>{
+        console.log('handleSelectChange1',value)
         this.setState({
             Receiver:value
+        },function () {
+            console.log('Receiver',this.state.Receiver)
         })
     }
     handelValueCom = (event)=>{
@@ -267,3 +274,10 @@ export default class FieldTrip extends Component{
 
     handleCancel = () => this.setState({ previewVisible: false })
 }
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(FieldTrip)

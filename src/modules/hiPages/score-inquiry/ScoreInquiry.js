@@ -9,6 +9,8 @@ import ScoreData from './ScoreData';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
 import {Toast,Picker,List} from 'antd-mobile';
+import {connect} from 'react-redux';
+
 const Option = Select.Option;
 function OptionS(props) {
     return(
@@ -17,13 +19,15 @@ function OptionS(props) {
         </div>
     )
 }
-export default class ScoreInquiry extends Component{
+class ScoreInquiry extends Component{
     constructor(){
         super();
         this.state = {
             selectClass:null,
             selectTime:null,
-            ScoreDataList:[1,2,3,4,5,6,7,8,9],
+            ScoreDataList:[
+
+            ],
             scoreNames:[],
             scoreTypes:[]
         }
@@ -34,7 +38,7 @@ export default class ScoreInquiry extends Component{
                <div className="header_select_sty">
                    <div style={{width:"50%",}}>
                        <Select defaultValue="单科查询-请选择" style={{ width:'100%'}} onChange={this.handleSelectClass}>
-                           <Option value={null} >清空</Option>
+                           <Option value={null} >该项不选</Option>
                            <Option value={this.state.scoreNames[0]} >{this.state.scoreNames[0]}</Option>
                            <Option value={this.state.scoreNames[1]} >{this.state.scoreNames[1]}</Option>
                            <Option value={this.state.scoreNames[2]} >{this.state.scoreNames[2]}</Option>
@@ -50,7 +54,7 @@ export default class ScoreInquiry extends Component{
                    </div>
                    <div style={{width:"50%"}}>
                        <Select defaultValue="阶段查询-请选择" style={{width:"100%"}} onChange={this.handleSelectTime}>
-                           <Option value={null}>清空</Option>
+                           <Option value={null}>该项不选</Option>
                            <Option value={this.state.scoreTypes[0]} >{this.state.scoreTypes[0]}</Option>
                            <Option value={this.state.scoreTypes[1]} >{this.state.scoreTypes[1]}</Option>
                            <Option value={this.state.scoreTypes[2]} >{this.state.scoreTypes[2]}</Option>
@@ -69,7 +73,7 @@ export default class ScoreInquiry extends Component{
                 <div style={{marginTop:20}}>
                     <div style={{width:'100%',height:10,backgroundColor:'#F2F2F2'}}></div>
                     <div>
-                        {this.state.ScoreDataList.map((itemata,index) => <ScoreData key={index} itemata = {itemata}></ScoreData>)}
+                        {this.state.ScoreDataList.map((itemdata,index) => <ScoreData key={index} itemdata = {itemdata}></ScoreData>)}
                     </div>
                 </div>
             </div>
@@ -77,18 +81,21 @@ export default class ScoreInquiry extends Component{
     }
     getScoreData =(selectClas,selectTime)=>{
         let params = {
-            stuId:10000,
+            stuId:this.props.userInfo.userId,
             scoreType:selectTime,
             scoreName:selectClas
         }
         fetchGet(API.getScoreByStuId,params,{})
             .then((response)=>{
                 console.log('response',response)
-                if(response.success){
-
+                if(response.success && response.data[0].schoolAverage !=  "NaN"){
+                    this.setState({
+                        ScoreDataList:response.data
+                    })
+                }else {
+                    Toast.fail('请求异常', 2)
                 }
-            })
-            .catch((error) =>{
+            }).catch((error) =>{
                 console.log('error',error)
                 if (typeof error === 'string') {
                     Toast.fail(error, 2)
@@ -102,7 +109,7 @@ export default class ScoreInquiry extends Component{
         this.setState({
             selectClass:value
         },function () {
-            this.getScoreData(this.state.selectClas,this.state.selectTime)
+            this.getScoreData(this.state.selectClass,this.state.selectTime)
         })
     }
     handleSelectTime =(value) =>{
@@ -110,7 +117,7 @@ export default class ScoreInquiry extends Component{
         this.setState({
            selectTime:value
         },function () {
-            this.getScoreData(this.state.selectClas,this.state.selectTime)
+            this.getScoreData(this.state.selectClass,this.state.selectTime)
         })
     }
     componentWillMount() {
@@ -118,7 +125,7 @@ export default class ScoreInquiry extends Component{
     }
     componentDidMount() {
         let params = {
-            stuId:10000
+            stuId:this.props.userInfo.userId
         }
         fetchGet(API.getCurr,params,{})
             .then((response)=>{
@@ -164,6 +171,12 @@ export default class ScoreInquiry extends Component{
                 }
             })
     }
-
-
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ScoreInquiry)

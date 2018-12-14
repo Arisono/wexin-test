@@ -158,7 +158,7 @@ class SendMeet extends Component{
         const targetProps = {
             targetData: this.state.targetData,
             targetValues: this.state.targetList,
-            title: '发布对象',
+            title: '与会人',
             targetCount: this.state.targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this)
@@ -167,7 +167,7 @@ class SendMeet extends Component{
         const defaultTargetProps = {
             targetData: [],
             targetValues: this.state.targetList,
-            title: '发布对象',
+            title: '与会人',
             targetCount: this.state.targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this)
@@ -231,8 +231,14 @@ class SendMeet extends Component{
             return
         }
         if (this.state.targetList.length == 0){
-            Toast.fail('请选择发布对象...')
+            Toast.fail('请选择与会人...')
             return
+        }
+        const userList = []
+        if (!isObjEmpty(this.checkNodes)) {
+            this.checkNodes.forEach((node, index) => {
+                userList.push(node.userId)
+            })
         }
         var nowT = new Date().getTime()
         var startT = new Date(this.state.startValue).getTime()
@@ -257,13 +263,16 @@ class SendMeet extends Component{
         console.log('noticeT',noticeT)
         console.log('noticeT',new Date(noticeT))
         let params = {
+            // notifyCreator:this.props.userInfo.userId,
+            notifyCreator:this.props.userInfo.userId,
             notifyType:6,
+            notifyStatus:2,
             notifyName:this.state.titleValue,
             notifyAddress:this.state.meetAddress,
-            startDate:this.state.startValue,
-            endDate:this.state.endValue,
+            startDate: moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
+            endDate:moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
             reminderDate:new Date(noticeT),
-            userIds:this.state.meetPerson
+            userIds:JSON.stringify(userList)
         }
 
         console.log('params',params)

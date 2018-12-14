@@ -297,7 +297,7 @@ class SendVote extends Component{
                 voteRemarks: "这是一个调查",
                 voteName: this.state.voteTitle,
                 voteFile:approveFiles,
-                voter: this.state.votePerson,
+                voter: JSON.stringify(this.state.votePerson),
                 voteEndDate:  moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
                 voteType: this.state.voteType[0],
                 topics:[

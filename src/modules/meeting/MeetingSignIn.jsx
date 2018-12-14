@@ -41,15 +41,22 @@ class MeetingSignIn extends Component {
         const {meetingSignList, isRefreshing} = this.state
 
         let meetingItems = []
-        for (let i = 0; i < meetingSignList.length; i++) {
-            let meetingSignBean = meetingSignList[i];
-            if (!isObjEmpty(meetingSignBean)) {
-                meetingItems.push(<MeetingSignItem
-                    meetingBean={meetingSignBean}
-                    index={i}
-                    onMeetingSign={this.onMeetingSign.bind(this)}
-                    onItemClick={this.onItemClick.bind(this)}/>)
+        if (meetingSignList.length > 0) {
+            for (let i = 0; i < meetingSignList.length; i++) {
+                let meetingSignBean = meetingSignList[i];
+                if (!isObjEmpty(meetingSignBean)) {
+                    meetingItems.push(<MeetingSignItem
+                        meetingBean={meetingSignBean}
+                        index={i}
+                        onMeetingSign={this.onMeetingSign.bind(this)}
+                        onItemClick={this.onItemClick.bind(this)}/>)
+                }
             }
+        } else {
+            meetingItems = <div className='common-column-layout'
+                                style={{height: '100vh', alignItems: 'center', justifyContent: 'center'}}>
+                会议列表为空
+            </div>
         }
 
         return (

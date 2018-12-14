@@ -53,7 +53,8 @@ class MeetingSignIn extends Component {
                 }
             }
         } else {
-            meetingItems = <div className='common-column-layout' style={{height:'100vh',alignItems:'center',justifyContent:'center'}}>
+            meetingItems = <div className='common-column-layout'
+                                style={{height: '100vh', alignItems: 'center', justifyContent: 'center'}}>
                 会议列表为空
             </div>
         }
@@ -88,7 +89,7 @@ class MeetingSignIn extends Component {
         }
 
         fetchPost(API.GET_MEETING_LIST, {
-            userId: 10008,
+            userId: this.props.userInfo.userId,
             notifyType: 6,
             pageIndex: mPageIndex,
             pageSize: mPageSize

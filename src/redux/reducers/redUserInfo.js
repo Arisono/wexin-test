@@ -5,7 +5,8 @@ const redUserInfo = (state = {
     userId: 10001,
     userName: '',
     userOpenid: '',
-    userPhone: '',
+    userPhone: '13266699268',
+    stuId:'',
     userRole: 0
 }, action) => {
     if (action === undefined) {

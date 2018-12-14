@@ -4,7 +4,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Menu, Dropdown, Icon,Carousel,List} from 'antd';
+import {Menu, Dropdown,message, Icon,Carousel,List} from 'antd';
 import ReactPlayer from 'react-player'
 import "slick-carousel/slick/slick-theme.css"
 import "slick-carousel/slick/slick.css"
@@ -60,6 +60,7 @@ import {clearClassData} from "../../redux/actions/classData";
 import {fetchPost,fetchGet} from "../../utils/fetchRequest";
 import {API,_baseURL} from "../../configs/api.config";
 import {Toast} from 'antd-mobile'
+import {isObjEmpty} from '../../utils/common'
 
 
 /**
@@ -77,6 +78,7 @@ class AppHomePage extends React.Component {
             isTeacher: false,
             pictures:{},
             roles:["家长"],
+            studentIndex:0,
             students:[
                 {
                     isSelected:true,
@@ -108,15 +110,20 @@ class AppHomePage extends React.Component {
              let items=[];
              for (let i = 0; i < arrays.length; i++) {
                  items.push(arrays[i]);
-                 if(i%3==0){
+                 if(i%3===2){
                      let model={
                          index:i,
-                         datas:items
+                         data:[...items]
                      };
-                     items.length=0;
                      newArrays.push(model);
+                     items.length=0;
                  }
              }
+             let model={
+                 index:arrays.length+1,
+                 data:[...items]
+             };
+             newArrays.push(model);
          }
         return newArrays;
     }
@@ -149,18 +156,20 @@ class AppHomePage extends React.Component {
         clearClassData()()
         document.title = "智慧校园";
 
+        console.log("componentDidMount()",this.props.userInfo);
+
         //获取首页接口
         fetchGet(API.homeIndex,{
-                      userOpenid:'gfdudidejfdhfdlfklfdf',
-                      userPhone:'13025449611'
+                      userOpenid: isObjEmpty(this.props.userInfo.userOpenid)?"1":this.props.userInfo.userOpenid,
+                      userPhone:isObjEmpty(this.props.userInfo.userPhone)?"1":this.props.userInfo.userPhone
                   }).then((response)=>{
                       console.log("response:"+JSON.stringify(response));
                       this.state.userId=  response.data.userId;
                       this.state.userName= response.data.userName;
                       let student=response.data.students[0];
-                     let student1={isSelected:true,...student};
-                     response.data.students.splice(0,1,student1);
-                     response.data.students.splice(1,1,{isSelected:false,...student});
+                      let student1={isSelected:true,...student};
+                      response.data.students.splice(0,1,student1);
+                      // response.data.students.splice(1,1,{isSelected:false,...student});
                       this.state.students=response.data.students ;
 
 
@@ -178,6 +187,13 @@ class AppHomePage extends React.Component {
                           }
                       }
 
+                      switchUser({
+                            userId: this.state.userId,
+                            userName: this.state.userName,
+                            userOpenid: this.state.userOpenid,
+                            userPhone: this.state.userPhone,
+                            stuId:response.data.students[0].stuId,
+                        })();
 
                     this.setState({
                         userPhoto:this.state.userPhone,
@@ -213,11 +229,18 @@ class AppHomePage extends React.Component {
                           this.state.students[i].isSelected=false;
                       }else{
                           this.state.students[i].isSelected=true;
+                          //更改全局状态
+                          switchUser({
+                              stuId:this.state.students[i].stuId
+                          })()
+                          //刷新相册和视频
+                         this.state.studentIndex=i;
                       }
          }
-
+           console.log("onItemClick()",this.props.userInfo);
          this.setState({
-             students: this.state.students
+             students: this.state.students,
+             studentIndex: this.state.studentIndex
          });
     }
 
@@ -299,7 +322,6 @@ class AppHomePage extends React.Component {
                                     {/*孩子列表*/}
                                     {this.state.isTeacher ? ("") : (<div className="margin_top_10 padding_right_10">
                                         <List
-
                                             grid={{ gutter: 16, column: 3 }}
                                             dataSource={this.state.students}
                                             renderItem={(item,index) => (
@@ -373,6 +395,7 @@ class AppHomePage extends React.Component {
 
                 </div>
             </div>
+            {/*固定菜单*/}
             {this.state.isTeacher ? (<TeacherMenu/>) : (<ParentMenu/>)}
 
             {this.state.isTeacher ? (
@@ -479,28 +502,25 @@ class AppHomePage extends React.Component {
                             <div className="row" style={borderLine}></div>
                             <div className="row">
                                 <div className="col-xs-12" style={{margin: "0px", padding: "0px"}}>
+                                    {console.log("spliceArrayPicture:",this.spliceArrayPicture(this.state.students[0].albums))}
                                     <Carousel autoplay={true} dots={false}>
-                                        {this.state.students[0].albums.map((item,index)=>(
-                                            <div>
-                                                <img
-                                                    src={_baseURL+item.picUrl}
-                                                    style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                    width={"31%"}/>
-                                                <img
-                                                    src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                    style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                    width={"31%"}/>
-                                                <img
-                                                    src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                    style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                    width={"31%"}/>
+                                        {this.spliceArrayPicture(this.state.students[this.state.studentIndex].albums).map((item,index)=>(
+                                            <div>{
+
+                                                    item.data.map((model,index)=>{
+                                                        console.log("imageUrl():",_baseURL+model.picUrl);
+                                                        let image_url=_baseURL+model.picUrl;
+                                                        if(model.picUrl===null){
+                                                            image_url="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=54924110,1820388093&fm=173&app=25&f=JPEG?w=218&h=146&s=32809D4D4E6250131F8058B203001012";
+                                                        }
+                                                        return <img
+                                                            src={image_url}
+                                                            style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                            width={"31%"}/>
+                                                    })
+                                                }
                                             </div>
                                             ))}
-
-
-
-
-
                                     </Carousel>
 
                                 </div>
@@ -1122,7 +1142,6 @@ let mapStateToProps = (state) => ({
 })
 
 let mapDispatchToProps = (dispatch) => {
-    console.log("mapDispatchToProps()", dispatch);
     return {switchUser: () => dispatch(switchUser())}
 }
 

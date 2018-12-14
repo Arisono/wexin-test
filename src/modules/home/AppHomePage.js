@@ -4,7 +4,8 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Menu, Dropdown, Icon} from 'antd';
+import {Menu, Dropdown, Icon,Carousel,List} from 'antd';
+import ReactPlayer from 'react-player'
 import "slick-carousel/slick/slick-theme.css"
 import "slick-carousel/slick/slick.css"
 
@@ -49,16 +50,17 @@ import icon_home_help from '../../style/imgs/icon_home_help.png'
 import icon_home_message from '../../style/imgs/icon_home_message.png'
 import icon_home_oa from '../../style/imgs/icon_home_menu_oa.png'
 
-
-import {Carousel} from 'antd';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import './AppHomePage.css'
 import '../../style/css/app-gloal.css'
-import {constants} from '../../utils/constants'
 import {switchUser} from '../../redux/actions/userInfo'
 import {connect} from "react-redux";
 import {clearListState} from 'action/listState'
 import {clearClassData} from "../../redux/actions/classData";
+import {fetchPost,fetchGet} from "../../utils/fetchRequest";
+import {API,_baseURL} from "../../configs/api.config";
+import {Toast} from 'antd-mobile'
+
 
 /**
  * Created by Arison on 2018/11/1.
@@ -67,7 +69,32 @@ class AppHomePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isTeacher: false
+            userPhoto:'',
+            userId:'',
+            userName:'',
+            userPhone:'',
+            userOpenid:'',
+            isTeacher: false,
+            pictures:{},
+            roles:["家长"],
+            students:[
+                {
+                    isSelected:true,
+                    stuId:10000,
+                    stuName:"饶一",
+                    stuPhoto:"",
+                    videos:[],
+                    albums:[]
+                },
+                {
+                    isSelected:false,
+                    stuId:10000,
+                    stuName:"饶一",
+                    stuPhoto:"",
+                    videos:[],
+                    albums:[]
+                }
+            ]
         }
     }
 
@@ -75,81 +102,123 @@ class AppHomePage extends React.Component {
 
     }
 
+    spliceArrayPicture=(arrays)=>{
+         let newArrays=[];
+         if (arrays.length!=0){
+             let items=[];
+             for (let i = 0; i < arrays.length; i++) {
+                 items.push(arrays[i]);
+                 if(i%3==0){
+                     let model={
+                         index:i,
+                         datas:items
+                     };
+                     items.length=0;
+                     newArrays.push(model);
+                 }
+             }
+         }
+        return newArrays;
+    }
+
     onChangeRole({key}) {
-        console.log("onChangeRole():" + key);
         switch (key) {
             case "2":
-                switchUser({
-                    userRole: 2
-                })();
-
-                // console.log("componentDidMount() userRole:",this.props.userInfo);
-                // console.log("onChangeRole() 教师");
-                constants.isTeacher = true;
+                switchUser({userRole: 2})();
                 this.setState({
                     isTeacher: true
                 })
                 this.props.location.search = "?role=teacher"
-                //console.log("onChangeRole():" + this.props.location.search);
-                //this.props.history.push("/homePage" + this.props.location.search);
                 break;
             case "1":
                 switchUser({
                     userRole: 1
                 })();
-                // console.log("componentDidMount() userRole:",this.props.userInfo);
-                //console.log("onChangeRole() 家长");
-                constants.isTeacher = false;
                 this.setState({
                     isTeacher: false
                 })
-                this.props.location.search = "?role=parent"
-                //this.props.history.push("/homePage" + this.props.location.search);
                 break;
         }
     }
 
-    roleMenu = (
-        <Menu onClick={this.onChangeRole.bind(this)}>
-            <Menu.Item key="1" style={{width: "90px", fontSize: "15px"}}>
-                <span>家长</span>
-            </Menu.Item>
-            <Menu.Item key="2" style={{width: "90px", fontSize: "15px"}}>
-                <span>教师</span>
-            </Menu.Item>
-        </Menu>
-    );
 
-    /*  onChange(a, b, c) {
-     console.log(a, b, c);
-     }*/
 
     componentDidMount() {
         //清除列表缓存数据
         clearListState()()
         clearClassData()()
         document.title = "智慧校园";
-        const query = this.props.location.search;
-        const params = query.split('&');
-        const role = params[0].substr(5, params[0].length - 1);
-        if (role != null) {
-            if (role.search("teacher") != -1) {
-                constants.isTeacher = true;
-            } else {
-                constants.isTeacher = false;
-            }
-        }
-        console.log("componentDidMount() role:" + role);
-        console.log("componentDidMount() path:" + this.props.location.pathname);
-        if (constants.isTeacher) {
+
+        //获取首页接口
+        fetchGet(API.homeIndex,{
+                      userOpenid:'gfdudidejfdhfdlfklfdf',
+                      userPhone:'13025449611'
+                  }).then((response)=>{
+                      console.log("response:"+JSON.stringify(response));
+                      this.state.userId=  response.data.userId;
+                      this.state.userName= response.data.userName;
+                      let student=response.data.students[0];
+                     let student1={isSelected:true,...student};
+                     response.data.students.splice(0,1,student1);
+                     response.data.students.splice(1,1,{isSelected:false,...student});
+                      this.state.students=response.data.students ;
+
+
+                      this.state.pictures=response.data.pictures;
+                      this.state.roles=response.data.roles;
+                      this.state.userPhoto=response.data.userPhoto;
+                      this.state.userOpenid=response.data.userOpenid;
+                      this.state.userPhone=response.data.userPhone;
+                      if(response.data.roles.length===1){
+                          if(response.data.roles[0]==="家长"){
+                             this.state.isTeacher=false;
+                          }
+                          if(response.data.roles[0]==="教师"){
+                              this.state.isTeacher=true;
+                          }
+                      }
+
+
+                    this.setState({
+                        userPhoto:this.state.userPhone,
+                        userId:this.state.userId,
+                        userName:this.state.userName,
+                        userPhone:this.state.userPhone,
+                        userOpenid:this.state.userOpenid,
+                        pictures:this.state.pictures,
+                        roles:this.state.roles,
+                        students:this.state.students
+                    })
+
+
+                  }).catch((error)=>{
+                      console.log("error:"+JSON.stringify(error));
+                  })
+
+        if (this.props.userInfo.userRole===2) {//教师
             this.setState({
                 isTeacher: true
             })
-        } else {
+        } else {//家长
             this.setState({
                 isTeacher: false
             })
         }
+    }
+
+    onItemClick=(index)=>{
+         console.log("onItemClick()",index);
+         for (let i = 0; i < this.state.students.length; i++) {
+                      if(i!=index){
+                          this.state.students[i].isSelected=false;
+                      }else{
+                          this.state.students[i].isSelected=true;
+                      }
+         }
+
+         this.setState({
+             students: this.state.students
+         });
     }
 
 
@@ -165,6 +234,18 @@ class AppHomePage extends React.Component {
             slidesToShow: 3,
             speed: 500
         };
+
+        let   roleMenu = (
+            <Menu onClick={this.onChangeRole.bind(this)}>
+                <Menu.Item key="1" style={{width: "90px", fontSize: "15px"}}>
+                    <span>家长</span>
+                </Menu.Item>
+                <Menu.Item key="2" style={{width: "90px", fontSize: "15px"}}>
+                    <span>教师</span>
+                </Menu.Item>
+            </Menu>
+        );
+
         console.log(" render() userRole:", this.props.userInfo);
         return <div className="container-fluid">
             {/*顶部Header*/}
@@ -201,30 +282,44 @@ class AppHomePage extends React.Component {
                                 </div>
                                 <div className="col-xs-9" id="global-clear">
                                     <div style={{marginTop: "30px", marginLeft: "0px"}}><span
-                                        style={{fontSize: "16px", color: "black"}}>尊敬的陈小明
+                                        style={{fontSize: "16px", color: "black"}}>尊敬的{this.state.userName}
                                         {
                                             this.state.isTeacher ? ('老师') : ('家长')
                                         }
                                 </span>
-                                        <Dropdown overlay={this.roleMenu} trigger={['click']}>
+                                        {this.state.roles.length===2?(<Dropdown overlay={roleMenu} trigger={['click']}>
                                             <a className="ant-dropdown-link" href="#">
                                                 {/* <Icon type="down" style={{fontSize:"20px"}}/>*/}
                                                 <img style={{marginLeft: "5px"}} src={icon_home_change} width={15}
                                                      height={15}/>
                                             </a>
-                                        </Dropdown>
+                                        </Dropdown>):("")}
                                     </div>
 
-                                    {this.state.isTeacher ? ("") : (<div>
-                                        <img
-                                            src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"}
-                                            style={{margin: "10px"}} width={25} height={25} class="img-circle"/>
-                                        <span>王涵</span>
+                                    {/*孩子列表*/}
+                                    {this.state.isTeacher ? ("") : (<div className="margin_top_10 padding_right_10">
+                                        <List
 
-                                        <img
-                                            src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"}
-                                            style={{margin: "10px"}} width={25} height={25} class="img-circle"/>
-                                        <span>王涵</span>
+                                            grid={{ gutter: 16, column: 3 }}
+                                            dataSource={this.state.students}
+                                            renderItem={(item,index) => (
+                                                <List.Item className="flex clear_margin" onClick={this.onItemClick.bind(this,index)}>
+
+                                                    {item.isSelected===true?(<div>
+                                                        <img className="border-radius-50-blue"
+                                                             src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"}
+                                                             width={25} height={25} />
+                                                        <span className="margin_left_5 color_blue text_bold">{item.stuName}</span>
+                                                    </div>):(<div>
+                                                        <img className="border-radius-50"
+                                                             src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"}
+                                                             width={25} height={25}/>
+                                                        <span className="margin_left_5">{item.stuName}</span>
+                                                    </div>)}
+
+                                                </List.Item>
+                                            )}
+                                        />,
                                     </div>)}
 
 
@@ -385,48 +480,27 @@ class AppHomePage extends React.Component {
                             <div className="row">
                                 <div className="col-xs-12" style={{margin: "0px", padding: "0px"}}>
                                     <Carousel autoplay={true} dots={false}>
-                                        <div>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                        </div>
-                                        <div>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                        </div>
-                                        <div>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                        </div>
+                                        {this.state.students[0].albums.map((item,index)=>(
+                                            <div>
+                                                <img
+                                                    src={_baseURL+item.picUrl}
+                                                    style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                    width={"31%"}/>
+                                                <img
+                                                    src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
+                                                    style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                    width={"31%"}/>
+                                                <img
+                                                    src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
+                                                    style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                    width={"31%"}/>
+                                            </div>
+                                            ))}
+
+
+
+
+
                                     </Carousel>
 
                                 </div>
@@ -447,18 +521,29 @@ class AppHomePage extends React.Component {
                             <div className="row" id="page_horizontal_line"></div>
 
                             <div className="row flex_row">
+                                <ReactPlayer
+                                    playing={true}
+                                    className="margin_10 border_normal"
+                                    url={"https://www.akuiguoshu.com/school/files/363b63ac-f335-49d2-a484-819a8993ccf6.MOV"}
+                                    controls
+                                    width={'60%'} height={"254px"}/>
 
-                                <img className=" padding_left"
-                                     src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                     width={'60%'} height={"220px"}/>
 
                                 <div style={{width: "40%"}} className="padding_right">
-                                    <div className="margin_bottom_5"><img
-                                        src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                        width={"100%"} height={"92px"}/></div>
-                                    <div><img
-                                        src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                        width={"100%"} height={"92px"}/></div>
+                                    <div className="margin_bottom_10 ">
+                                        <ReactPlayer
+                                            playing={true}
+                                        url={"https://media.w3.org/2010/05/sintel/trailer_hd.mp4"}
+                                        className="border_normal padding_left"
+                                        controls
+                                        width={"100%"} height={"120px"}/></div>
+                                    <div>
+                                        <ReactPlayer
+                                            playing={true}
+                                        url={"https://media.w3.org/2010/05/sintel/trailer_hd.mp4"}
+                                        className="border_normal padding_left"
+                                        controls
+                                        width={"100%"} height={"120px"}/></div>
                                 </div>
                             </div>
 

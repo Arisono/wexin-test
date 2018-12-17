@@ -90,7 +90,7 @@ export default class RouteConfig extends Component {
                     <Route path={"/ImageGrid"} component={ImageGrid}/>
                     <Route path={"/TestImagesViewer"} component={TestImagesViewer}/>
                     <Route path={'/picturesWall'} component={PicturesWallItem}/>
-                    <Route path="/voteDetail/:voteState/:id" component={VoteDetailPage}/>
+                    <Route path="/voteDetail/:id" component={VoteDetailPage}/>
                     <Route path="/homePage" component={AppHomePage}/>
                     <Route path='/voteList' component={VoteListPage}/>
                     <Route path='/voteListTab' component={VoteListTabPage}/>

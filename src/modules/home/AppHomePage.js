@@ -506,7 +506,6 @@ class AppHomePage extends React.Component {
                                     <Carousel autoplay={true} dots={false}>
                                         {this.spliceArrayPicture(this.state.students[this.state.studentIndex].albums).map((item,index)=>(
                                             <div>{
-
                                                     item.data.map((model,index)=>{
                                                         console.log("imageUrl():",_baseURL+model.picUrl);
                                                         let image_url=_baseURL+model.picUrl;

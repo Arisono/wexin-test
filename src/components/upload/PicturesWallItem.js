@@ -47,7 +47,9 @@ class PicturesWallItem extends React.Component{
     }
 
     onRemove=(file)=>{
-        this.props.handleRemove(file);
+        if (this.props.handleRemove) {
+            return this.props.handleRemove(file)
+        }
     }
 
     handleCancel = () => this.setState({ previewVisible: false })
@@ -66,20 +68,20 @@ class PicturesWallItem extends React.Component{
                 <div className="ant-upload-text">Upload</div>
             </div>);
 
-        return <div className="container-fluid padding_10">
+        return <div className="container-fluid  padding_5">
             {/*上传组件*/}
-            <Upload
-                action={this.state.action}
-                listType="picture-card"
-                fileList={fileList}
-                onPreview={this.handlePreview}
-                onRemove={this.onRemove}
-                onChange={this.handleChange}
-            >
-
-                {fileList.length >= this.state.fileSize ? null : uploadButton}
-            </Upload>
-
+            <div className="row">
+                <div className="col-xs-12">
+                    <Upload
+                    action={this.state.action}
+                    listType="picture-card"
+                    fileList={fileList}
+                    onPreview={this.handlePreview}
+                    onRemove={this.onRemove}
+                    onChange={this.handleChange}>
+                    {fileList.length >= this.state.fileSize ? null : uploadButton}
+                </Upload></div>
+            </div>
             <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                 <img alt="example" style={{ width: '100%' }} src={previewImage} />
             </Modal>

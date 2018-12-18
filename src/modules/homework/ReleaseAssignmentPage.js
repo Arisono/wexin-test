@@ -12,6 +12,9 @@ import TargetSelect from "../../components/TargetSelect";
 import {fetchPost,fetchGet} from '../../utils/fetchRequest';
 import {API} from '../../configs/api.config';
 import {isObjEmpty} from  '../../utils/common';
+import {Toast} from 'antd-mobile'
+
+import {connect} from 'react-redux'
 
 
 const { TextArea } = Input;
@@ -79,7 +82,7 @@ class ReleaseAssignmentPage extends React.Component{
                 notifyDetails: '',//内容
                 notifyCreator: '10000',//创建者
                 notifyStatus: '2',//状态  2发布  1草稿
-                userIds: '10001,10002,10003',//通知
+                userIds: ['10001','10000','10002','10003'],//通知
                 notifyFiles: [],
                 startDate: '',//当前时间
                 endDate: null//截止时间
@@ -93,18 +96,17 @@ class ReleaseAssignmentPage extends React.Component{
          }
 
     callback=(file,fileList)=>{
-        console.log("leaveAddPage:callback：",fileList);
         this.state.data.notifyFiles.length=0;
         for (let i = 0; i < fileList.length; i++) {
             if(fileList[i].status==="done"){
                 this.state.data.notifyFiles.push(fileList[i].response.data)
             }
         }
-        console.log("callback()", this.state.data.notifyFiles);
     }
 
     handleRemove=(file)=>{
 
+          return true;
     }
 
     componentDidMount(){
@@ -121,7 +123,7 @@ class ReleaseAssignmentPage extends React.Component{
                         notifyDetails: this.state.data.notifyDetails,//内容
                         notifyCreator: '10000',//创建者
                         notifyStatus: '2',//状态  2发布  1草稿
-                        userIds: '10001,10002,10003',//通知
+                        userIds: ['10001','10000','10002','10003'],//通知
                         notifyFiles: [],
                         startDate: '',//当前时间
                         endDate: this.state.data.endDate//截止时间
@@ -140,7 +142,7 @@ class ReleaseAssignmentPage extends React.Component{
                 notifyType: '3',//作业发布
                 notifyCreator: '10000',//创建者
                 notifyStatus: '2',//状态  2发布  1草稿
-                userIds: '10001,10002,10003',//通知
+                userIds: ['10001','10000','10002','10003'],//通知
                 notifyFiles: [],
                 startDate: '',//当前时间
                 endDate: this.state.data.endDate//截止时间
@@ -165,7 +167,7 @@ class ReleaseAssignmentPage extends React.Component{
                 notifyType: '3',//作业发布
                 notifyCreator: '10000',//创建者
                 notifyStatus: '2',//状态  2发布  1草稿
-                userIds: '10001,10002,10003',//通知
+                userIds: JSON.stringify([10001,10000,10002,10003]),//通知
                 notifyFiles: [],
                 startDate: '',//当前时间
                 endDate: dateString,//标题
@@ -185,32 +187,36 @@ class ReleaseAssignmentPage extends React.Component{
         console.log("commitAction()"+this.state.data.notifyDetails);
         console.log("commitAction()"+this.state.data.endDate);
          if(isObjEmpty(this.state.data.notifyName)){
-              message.info("请输入作业名称");
+             Toast.fail("请输入作业名称");
              return;
          }
         if(isObjEmpty(this.state.data.notifyDetails)){
-            message.info("请输入作业内容");
+            Toast.fail('请输入作业内容...')
             return;
         }
         if(isObjEmpty(this.state.data.endDate)){
-            message.info("请输入截止时间");
+            Toast.fail("请输入截止时间");
             return;
         }
+        Toast.loading("");
+        console.log("commitAction()",this.state.data.notifyDetails);
         fetchPost(API.homeWorkAdd,{
             notifyName:this.state.data.notifyName,//标题
             notifyType:'3',//作业发布
             notifyDetails:this.state.data.notifyDetails,//内容
-            notifyCreator:'10000',//创建者
+            notifyCreator:this.props.userInfo.userId,//创建者
             notifyStatus:'2',//状态
             endDate:this.state.data.endDate,
-            userIds:'10001,10002,10003',
+            userIds: JSON.stringify([10001,10000,10002,10003]),//通知
             notifyFiles:JSON.stringify(this.state.data.notifyFiles)
         }).then((response)=>{
+            Toast.hide();
             console.log("response:"+JSON.stringify(response));
             if (response.success){
-                 message.info("发布成功！")
+                Toast.success("发布成功！")
             }
         }).catch((error)=>{
+            Toast.fail("系统异常！")
             console.log("error:"+JSON.stringify(error));
         })
     }
@@ -242,7 +248,7 @@ class ReleaseAssignmentPage extends React.Component{
             <div className="row">
                 <div className="col-xs-12">
                     <div className="row flex_center_vertical"  >
-                        <div className="margin_left_right_10"><span   id="page_tile">截止时间</span></div>
+                        <div className=""><span   id="page_tile">截止时间</span></div>
                         <div className="item_flex
                         flex_row_right
                         margin_top_bottom_10
@@ -263,7 +269,7 @@ class ReleaseAssignmentPage extends React.Component{
                 <div className="col-xs-12">
                     <div className="row">
                     <Input placeholder="请输入作业名称"  defaultValue={this.state.data.notifyName}
-                           style={{paddingLeft:"28px",fontSize:"18px"}}
+                           style={{paddingLeft:"10px",fontSize:"18px"}}
                            onChange={this.changeName}
                            id="input_no_border"/>
                     </div>
@@ -274,7 +280,7 @@ class ReleaseAssignmentPage extends React.Component{
                         <TextArea rows={4}
                                   value={this.state.data.notifyDetails}
                                   onChange={this.changeContent}
-                                  style={{paddingLeft:"28px",paddingTop:"20px"}}
+                                  style={{paddingLeft:"10px",paddingTop:"20px"}}
                                   placeholder="请输入作业内容"
                                   id="input_no_border"/>
                     </div>
@@ -283,7 +289,7 @@ class ReleaseAssignmentPage extends React.Component{
             <div className="row" id="page_block_min"></div>
             <div className="row">
                     <div className="col-xs-12">
-                        <div className="row"><div className="col-xs-6" id="page_tile">附件</div></div>
+                        <div className="row"><div className="" id="page_tile">附件</div></div>
                         <div className="row" id="row_padding_with" >
                             <PicturesWallItem
                                 action={API.UPLOAD_FILE}
@@ -311,4 +317,10 @@ class ReleaseAssignmentPage extends React.Component{
     }
 }
 
-export  default ReleaseAssignmentPage;
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo},
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReleaseAssignmentPage)

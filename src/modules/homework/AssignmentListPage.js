@@ -13,6 +13,8 @@ import {isObjEmpty} from  '../../utils/common';
 import InfiniteScroll from 'react-infinite-scroller'
 import LoadingMore from "../../components/LoadingMore";
 
+import {connect} from 'react-redux'
+
 /**
  * 作业列表
  * Created by Arison on 17:48.
@@ -27,15 +29,6 @@ class AssignmentListPage extends React.Component{
             pageSize:'5',
             hasMoreData:true,
             data:[
-                {
-                    title: '语文作业',
-                    state:'未读',
-                    content:'背诵课文',
-                    end_time:'2018-08-23 16:00',
-                    publisher:'陈莉莉',
-                    models:{}
-                }
-
             ]
         };
 
@@ -55,7 +48,7 @@ class AssignmentListPage extends React.Component{
            role:this.props.match.params.role
         })
         fetchPost(API.homeWorkList,{
-            userId:'10000',
+            userId:this.props.userInfo.userId,
             notifyType:'3',
             pageIndex:this.state.pageIndex,
             pageSize:this.state.pageSize
@@ -86,7 +79,7 @@ class AssignmentListPage extends React.Component{
         setTimeout(()=>{
             this.state.pageIndex++
             fetchPost(API.homeWorkList,{
-                userId:'10000',
+                userId:this.props.userInfo.userId,
                 notifyType:'3',
                 pageIndex:this.state.pageIndex,
                 pageSize:this.state.pageSize
@@ -180,4 +173,10 @@ class AssignmentListPage extends React.Component{
     }
 }
 
-export  default AssignmentListPage;
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo},
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AssignmentListPage)

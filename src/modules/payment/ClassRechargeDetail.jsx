@@ -51,7 +51,12 @@ class ClassRechargeDetail extends Component {
         const totalPerson = rechargeBean.totalPerson.length
         const payedPerson = rechargeBean.paid.length
         const unpayPerson = rechargeBean.unPay
-        const amount = percapita * totalPerson
+        let amount = 0
+        try {
+            amount = (percapita * totalPerson).toFixed(2)
+        }catch (e) {
+            amount = (percapita * totalPerson)
+        }
 
         const phonesList = []
         if (unpayPerson && unpayPerson.length > 0) {

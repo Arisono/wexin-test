@@ -13,6 +13,7 @@ import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 import {regExpConfig} from "../../configs/regexp.config";
 import {connect} from 'react-redux'
+import {clearListState} from "../../redux/actions/listState";
 
 const {TextArea} = Input
 const nowTimeStamp = Date.now();
@@ -238,6 +239,8 @@ class RechargeRelease extends Component {
             Toast.hide()
 
             Toast.success('发布成功')
+
+            clearListState()()
 
             this.setState({
                 classText: '',

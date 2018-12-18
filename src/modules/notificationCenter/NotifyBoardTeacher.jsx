@@ -511,16 +511,35 @@ class NotifyBoardTeacher extends Component {
     }
 
     onAddNotify = () => {
-        console.log('scrolltop1',ReactDOM.findDOMNode(this.releaseTab).scrollTop)
-        console.log('scrolltop2',ReactDOM.findDOMNode(this.receiveTab).scrollTop)
+        console.log('scrolltop1', ReactDOM.findDOMNode(this.releaseTab).scrollTop)
+        console.log('scrolltop2', ReactDOM.findDOMNode(this.receiveTab).scrollTop)
+        const {releaseList, receiveList} = this.state
+        let releaseScroll = 0, receiveScroll = 0, releaseIndex = 0, receiveIndex = 0
+
+        if (releaseList.length <= 10) {
+            releaseList.length = 0
+            releaseIndex = 0
+            releaseScroll = 0
+        } else {
+            releaseIndex = mReleaseIndex
+            releaseScroll = ReactDOM.findDOMNode(this.releaseTab).scrollTop
+        }
+        if (receiveList.length <= 10) {
+            receiveList.length = 0
+            receiveIndex = 0
+            receiveScroll = 0
+        } else {
+            receiveIndex = mReceiveIndex
+            receiveScroll = ReactDOM.findDOMNode(this.receiveTab).scrollTop
+        }
         saveListState({
-            scrollTop: ReactDOM.findDOMNode(this.releaseTab).scrollTop,
-            listData: this.state.releaseList,
-            pageIndex: mReleaseIndex,
+            scrollTop: releaseScroll,
+            listData: releaseList,
+            pageIndex: releaseIndex,
             tabIndex: this.state.selectIndex,
-            scrollTop2: ReactDOM.findDOMNode(this.receiveTab).scrollTop,
-            listData2: this.state.receiveList,
-            pageIndex2: mReceiveIndex,
+            scrollTop2: receiveScroll,
+            listData2: receiveList,
+            pageIndex2: receiveIndex,
         })()
         this.props.history.push('/announceRelease')
     }

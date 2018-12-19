@@ -50,6 +50,8 @@ import LeaveAddCPage from "../modules/leave/LeaveAddCPage";
 import VoteListTabPage from "../modules/vote/VoteListTabPage";
 import TestImagesViewer from "../modules/demo/TestImagesViewer";
 import ImageGrid from "../components/image/ImageGrid";
+import MobileUpload from "../components/upload/MobileUpload";
+import MobileUploadDemo from "../modules/demo/MobileUploadDemo";
 
 
 export default class RouteConfig extends Component {
@@ -87,6 +89,9 @@ export default class RouteConfig extends Component {
                     <Route path='/classRechargeDetail/:payId' component={ClassRechargeDetail}/>
 
                     {/*刘杰*/}
+
+                    <Route path={"/MobileUploadDemo"} component={MobileUploadDemo}/>
+                    <Route path={"/MobileUpload"} component={MobileUpload}/>
                     <Route path={"/ImageGrid"} component={ImageGrid}/>
                     <Route path={"/TestImagesViewer"} component={TestImagesViewer}/>
                     <Route path={'/picturesWall'} component={PicturesWallItem}/>

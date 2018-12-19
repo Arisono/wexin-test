@@ -6,13 +6,14 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './LeaveListPage.css'
 import '../../style/css/app-gloal.css'
-import { List} from 'antd';
-import { Button,message,Icon,Input} from 'antd';
+import {List} from 'antd';
+import {Button,Icon,Input} from 'antd';
 import InfiniteScroll from 'react-infinite-scroller'
 import LoadingMore from "../../components/LoadingMore";
 import {fetchPost,fetchGet} from "../../utils/fetchRequest";
 import {API,_baseURL} from "../../configs/api.config";
 import {Toast,Modal} from 'antd-mobile'
+import {connect} from 'react-redux'
 /**
  * Created by Arison on 11:22.
  */
@@ -47,9 +48,10 @@ class LeaveListPage extends React.Component{
     }
 
     getLeaveListData() {
+        console.log("getLeaveListData() userId:",this.props.userInfo.userId);
         if (this.state.role === "teacher") {
             fetchGet(API.leaveListTeacher, {
-                userId: '10002',
+                userId: this.props.userInfo.userId,
                 pageIndex: this.state.pageIndex,
                 pageSize: this.state.pageSize
             }).then((response) => {
@@ -76,7 +78,7 @@ class LeaveListPage extends React.Component{
         }
         if (this.state.role === "parent") {
             fetchGet(API.leaveListParent, {
-                stuId: '10000',
+                stuId: this.props.userInfo.stuId,
                 pageIndex: this.state.pageIndex,
                 pageSize: this.state.pageSize
             }).then((response) => {
@@ -152,11 +154,12 @@ class LeaveListPage extends React.Component{
         console.log("onMessageSend()",model.leaveMessages[0]);
         if(model.leaveMessages.length===0){
             Toast.info("请输入留言内容")
+            return;
         }
         fetchPost(API.messageCreate,{
             messName:'这是留言',
             messContent:model.leaveMessages[0],
-            userId:'10002',
+            userId: this.props.userInfo.userId,
             lvId:model.lvId,
         }).then((response)=>{
             console.log("response:"+JSON.stringify(response));
@@ -318,8 +321,18 @@ class LeaveListPage extends React.Component{
                                                      {item.leaveMessages.length===0?(<div className="row" style={{height:"15px"}}>
 
                                                      </div>):(<div className="flex padding_10">
-                                                         <Input  id={index} name={"item."+item.lvId}  disabled={true} size={"small"} value={item.leaveMessages[0].messContent} className="item_flex_1"
-                                                                 onChange={this.onChangeMessage.bind(this)} placeholder=""  ></Input>
+                                                         {
+                                                             item.leaveMessages.map((item)=>(
+                                                                 <div className="flex">
+                                                                     <span className="text_underline">{item.userName}</span>老师：
+                                                                     <Input  id={index} name={"item."+item.lvId}  disabled={true} size={"small"}
+                                                                      value={item.messContent} className="item_flex_1"
+                                                                             onChange={this.onChangeMessage.bind(this)} placeholder="">
+                                                                     </Input>
+                                                                 </div>
+                                                             ))
+                                                         }
+
                                                          {/*<Button  style={{backgroundColor:"#C9C9C9",border:"0px"}} size={"small"}    type={"primary"} className="margin_left_10">已回复</Button>*/}
                                                      </div>)}
                                                  </div>
@@ -355,4 +368,10 @@ class LeaveListPage extends React.Component{
     }
 }
 
-export  default LeaveListPage;
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo},
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeaveListPage)

@@ -10,10 +10,11 @@ import  './LeaveAddPage.css'
 import {Input, Button,Upload, Icon, message,DatePicker} from 'antd';
 import PicturesWallItem from "../../components/upload/PicturesWallItem";
 import TargetSelect from "../../components/TargetSelect";
-import {fetchPost} from "../../utils/fetchRequest";
+import {fetchPost,fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {Toast} from 'antd-mobile'
-import {isObjEmpty} from '../../utils/common'
+import {isObjEmpty,getIntValue, getStrValue} from  '../../utils/common';
+import {connect} from 'react-redux'
 
 const {TextArea} = Input;
 const teacherData = []
@@ -72,8 +73,10 @@ class LeaveAddPage extends React.Component {
         this.state = {
             name: 'LeaveAddPage',
             role: "parent",
-            targetList: ['1-1'],
             targetCount: 1,
+            targetList: [],
+            targetData: [],
+            checkNodes:[],
             lvNotifier:[],
             lvFiles:[],
             lvType:"",
@@ -94,10 +97,107 @@ class LeaveAddPage extends React.Component {
     }
 
     componentDidMount() {
-
+         this.getOrganization();
     }
+
+    getOrganization = () => {
+        Toast.loading('', 0)
+
+        fetchGet(API.USER_GETOBJECT, {
+            userId:this.props.userInfo.userId,
+            stuId:this.props.userInfo.userId
+        }).then(response => {
+            Toast.hide()
+            const {targetData} = this.state
+            targetData.length = 0
+            if (response && response.data) {
+                const schoolArray = response.data.schools
+                const teacherArray = response.data.teachers
+
+                if (!isObjEmpty(teacherArray)) {
+                    const teacherData = []
+                    teacherArray.forEach((teacherObj, index) => {
+                        if (teacherObj) {
+                            teacherData.push({
+                                title: getStrValue(teacherObj, 'userName'),
+                                userId: getIntValue(teacherObj, 'userId'),
+                                userPhone: getStrValue(teacherObj, 'userPhone'),
+                                value: getStrValue(teacherObj, 'userName') + `-1-${index}`,
+                                key: `1-${index}`,
+                            })
+                        }
+                    })
+
+                    targetData.push({
+                        title: `全体老师`,
+                        value: `1`,
+                        key: `1`,
+                        children: teacherData,
+                    })
+                }
+
+                if (!isObjEmpty(schoolArray)) {
+                    const classData = []
+
+                    schoolArray.forEach((schoolObj, sIndex) => {
+                        if (schoolObj) {
+                            const parentArray = schoolObj.parents
+
+                            const parentData = []
+                            if (!isObjEmpty(parentArray)) {
+                                parentArray.forEach((parentObj, pIndex) => {
+                                    parentData.push({
+                                        title: getStrValue(parentObj, 'userName'),
+                                        userId: getIntValue(parentObj, 'userId'),
+                                        userPhone: getStrValue(parentObj, 'userPhone'),
+                                        value: getStrValue(parentObj, 'userName') + `-0-${sIndex}-${pIndex}`,
+                                        key: `0-${sIndex}-${pIndex}`,
+                                    })
+                                })
+
+                                classData.push({
+                                    title: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName'),
+                                    value: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName') + `-0-${sIndex}`,
+                                    key: `0-${sIndex}`,
+                                    children: parentData,
+                                })
+                            }
+                        }
+                    })
+
+                    targetData.push({
+                        title: `全体家长`,
+                        value: `0`,
+                        key: `0`,
+                        children: classData,
+                    })
+                }
+            }
+
+            console.log('targetData', targetData)
+            this.setState({
+                targetData
+            })
+        }).catch(error => {
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
+        })
+    }
+
+
+    onTargetFocus = (e) => {
+        if (isObjEmpty(this.state.targetData)) {
+            this.getOrganization()
+        }
+    }
+
     onClickEvent(){
-      let commit=   this.btn_commit;
+      //let commit=   this.btn_commit;
       if(isObjEmpty(this.state.lvDetails)){
           Toast.info("请输入请假理由！")
           return
@@ -110,32 +210,37 @@ class LeaveAddPage extends React.Component {
             Toast.info("请输入请假结束时间！")
             return
         }
-
-        // "lvName":"病假",
-        //     "lvDetails":"请假详情",
-        //     "lvType":2,
-        //     "lvProposer":10000,
-        //     "lvStatus":2,
-        //     "startDate":"Date类型的",
-        //     "endDate":"Date类型",
-        //     "lvRemarks":"备注"
+        if(isObjEmpty(this.state.targetList)){
+            Toast.fail("请选择抄送对象");
+            return;
+        }
+        let personArrays=[];
+        if (!isObjEmpty(this.state.checkNodes)) {
+            this.state.checkNodes.forEach((node) => {
+                personArrays.push(node.userId)
+            })
+        }
         let param={
-            lvProposer:'10000',
-            lvName:"陈小春的请假条",
+            lvProposer:this.props.userInfo.stuId,
+            lvName:this.props.userInfo.userName+"的请假条",
             // lvRemarks:"",
             // lvType:2,
             // lvStatus:2,
-            lvNotifier:[10002],
+            lvNotifier:JSON.stringify(personArrays),
             lvFiles:this.state.lvFiles,
             lvDetails:this.state.lvDetails,
             startDate:this.state.startDate,
             endDate:this.state.endDate
         }
-            console.log("onClickEvent()",JSON.stringify(param));
+        console.log("onClickEvent()",JSON.stringify(param));
+        Toast.loading("");
         fetchPost(API.leaveCreate,{
                      leaveString:JSON.stringify(param)
                   }).then((response)=>{
                       console.log("response:"+JSON.stringify(response));
+                      if(response.success){
+                          Toast.success("提交成功！");
+                      }
                   }).catch((error)=>{
                       console.log("error:"+JSON.stringify(error));
                   })
@@ -169,19 +274,31 @@ class LeaveAddPage extends React.Component {
     onTargetChange = (value, label, checkNodes, count) => {
         this.setState({
             targetList: value,
-            targetCount: count
+            targetCount: count,
+            checkNodes:checkNodes
         });
     }
 
     render() {
-        const {targetCount, targetList} = this.state
+        const { targetCount, targetList,targetData} = this.state
+        console.log("render()",targetData);
         const targetProps = {
             placeholder: '请选择抄送对象',
             targetData: targetData,
             targetValues: targetList,
             title: '抄送对象',
             targetCount: targetCount,
-            onTargetChange: this.onTargetChange.bind(this)
+            onTargetChange: this.onTargetChange.bind(this),
+            onTargetFocus: this.onTargetFocus.bind(this)
+        }
+
+        const defaultTargetProps = {
+            targetData: [],
+            targetValues: this.state.targetList,
+            title: '发布对象',
+            targetCount: this.state.targetCount,
+            onTargetChange: this.onTargetChange.bind(this),
+            onTargetFocus: this.onTargetFocus.bind(this)
         }
         return <div className="container-fluid ">
             <div className="row">
@@ -232,11 +349,10 @@ class LeaveAddPage extends React.Component {
                                   id="input_no_border" rows={4} placeholder="请填写请假理由"></TextArea>
                     </div>
                     <div className="row" id="page_horizontal_line"></div>
-                    <div className="row leave-input flex_row
-                           flex_center">
-                        <div style={{width: "100%"}}>
-                            <TargetSelect className="flex_row flex_center"
-                                          style={{width: "310px"}} {...targetProps}></TargetSelect>
+                    <div className="row ">
+                        <div>
+                            {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
+                                : <TargetSelect {...defaultTargetProps}/>}
 
                         </div>
                         {/*  <Icon type="right"/>*/}
@@ -266,4 +382,10 @@ class LeaveAddPage extends React.Component {
     }
 }
 
-export  default LeaveAddPage;
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo},
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeaveAddPage)

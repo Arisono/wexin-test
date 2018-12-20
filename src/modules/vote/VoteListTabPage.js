@@ -28,6 +28,10 @@ class VoteListTabPage extends React.Component {
         super(props);
         this.state = {
             selectIndex: 0,
+            pageIndex:1,
+            pageSize:5,
+            pageIndexR:1,
+            pageSizeR:5,
             name: 'VoteListPage',
             hasMoreData: true,
             hasMoreRightData: true,
@@ -105,28 +109,33 @@ class VoteListTabPage extends React.Component {
         setTimeout(() => {
             fetchGet(API.voteListTeacher, {
                 userId: this.props.userInfo.userId,
-                pageIndex: '1',
-                pageSize: '5',
+                pageIndex: this.state.pageIndex++,
+                pageSize: this.state.pageSize,
                 voteType: '1',
             }).then((response) => {
                 Toast.hide();
-                console.log("response:" + JSON.stringify(response));
-                for (let i = 0; i < response.data.create.length; i++) {
-                    let voteObject = response.data.create[i];
-                    let stateStr = voteObject.voteStatus == 1 ? "进行中" : "已投票"
-                    let options = voteObject.topics[0].options;
-                    let model = {
-                        voteId: voteObject.voteId,
-                        title: voteObject.topics[0].topicName,
-                        state: stateStr,
-                        endTime: voteObject.creatDate,
-                        votes: options
-                    };
-                    this.state.data.push(model);
-                }
-                this.setState({
-                    data: this.state.data
-                });
+                console.log(this.state.pageIndex+"response:");
+                // if(response.data.create.length>0){
+                    for (let i = 0; i < response.data.create.length; i++) {
+                        let voteObject = response.data.create[i];
+                        let stateStr = voteObject.voteStatus == 1 ? "进行中" : "已投票"
+                        let options = voteObject.topics[0].options;
+                        let model = {
+                            voteId: voteObject.voteId,
+                            title: voteObject.topics[0].topicName,
+                            state: stateStr,
+                            endTime: voteObject.creatDate,
+                            votes: options
+                        };
+                        this.state.data.push(model);
+                    }
+                    this.setState({
+                        data: this.state.data
+                    });
+                // }else{
+                //
+                // }
+
             }).catch((error) => {
                Toast.info("数据加载异常！")
 
@@ -142,11 +151,11 @@ class VoteListTabPage extends React.Component {
         setTimeout(() => {
             fetchGet(API.voteListTeacher, {
                 userId: this.props.userInfo.userId,
-                pageIndex: '1',
-                pageSize: '5',
+                pageIndex: this.state.pageIndexR++,
+                pageSize: this.state.pageSizeR,
                 voteType: '1',
             }).then((response) => {
-                console.log("response:" + JSON.stringify(response));
+                console.log(this.state.pageIndexR+"response:");
                 for (let i = 0; i < response.data.notify.length; i++) {
                     let voteObject = response.data.notify[i];
                     let stateStr = voteObject.voteStatus == 1 ? "进行中" : "已投票"

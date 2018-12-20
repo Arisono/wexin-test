@@ -3,7 +3,8 @@ import {getVisibleObj} from "../../utils/common";
 
 const redUserInfo = (state = {
     userId: 10001,
-    userName: '',
+    userName: '刘杰',
+    stuName:"",
     userOpenid: '',
     userPhone: '13266699268',
     stuId:'10003',

@@ -180,6 +180,7 @@ class ReleaseAssignmentPage extends React.Component{
             console.log("response:"+JSON.stringify(response));
             if (response.success){
                 Toast.success("发布成功！")
+                this.props.history.goBack();
             }
         }).catch((error)=>{
             Toast.fail("系统异常！")
@@ -188,7 +189,8 @@ class ReleaseAssignmentPage extends React.Component{
     }
 
     goListAction=()=>{
-        this.props.history.push("/assignmentList/teacher");
+      //  this.props.history.push("/assignmentList/teacher");
+        this.props.history.goBack();
     }
 
     onTargetFocus = (e) => {

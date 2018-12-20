@@ -14,6 +14,7 @@ import {fetchPost,fetchGet} from "../../utils/fetchRequest";
 import {API,_baseURL} from "../../configs/api.config";
 import {Toast,Modal} from 'antd-mobile'
 import {connect} from 'react-redux'
+import ImageGrid from "../../components/image/ImageGrid";
 /**
  * Created by Arison on 11:22.
  */
@@ -24,8 +25,8 @@ class LeaveListPage extends React.Component{
             name:'LeaveListPage',
             detailVisible: false,
             hasMoreData:true,
-            pageIndex:'1',
-            pageSize:'5',
+            pageIndex:1,
+            pageSize:5,
             listItem:null,
             index:null,
             role:this.props.match.params.role,
@@ -48,7 +49,6 @@ class LeaveListPage extends React.Component{
     }
 
     getLeaveListData() {
-        console.log("getLeaveListData() userId:",this.props.userInfo.userId);
         if (this.state.role === "teacher") {
             fetchGet(API.leaveListTeacher, {
                 userId: this.props.userInfo.userId,
@@ -56,7 +56,6 @@ class LeaveListPage extends React.Component{
                 pageSize: this.state.pageSize
             }).then((response) => {
                 this.state.data.length = 0;
-                console.log("response:" + JSON.stringify(response));
                 for (let i = 0; i < response.data.length; i++) {
                     let model = {
                         lvId:response.data[i].lvId,
@@ -68,6 +67,11 @@ class LeaveListPage extends React.Component{
                         leaveMessages:response.data[i].leaveMessages
                     };
                     this.state.data.push(model);
+                }
+                if(response.data.length<this.state.pageSize){
+                    this.setState({
+                        hasMoreData:false,
+                    })
                 }
                 this.setState({
                     data: this.state.data
@@ -83,7 +87,6 @@ class LeaveListPage extends React.Component{
                 pageSize: this.state.pageSize
             }).then((response) => {
                 this.state.data.length = 0;
-                console.log("response:" + JSON.stringify(response));
                 for (let i = 0; i < response.data.length; i++) {
                     let model = {
                         lvId:response.data[i].lvId,
@@ -96,6 +99,11 @@ class LeaveListPage extends React.Component{
                     };
                     this.state.data.push(model);
                 }
+                if(response.data.length<this.state.pageSize){
+                    this.setState({
+                        hasMoreData:false,
+                    })
+                }
                 this.setState({
                     data: this.state.data
                 })
@@ -107,28 +115,73 @@ class LeaveListPage extends React.Component{
 
     loadMoreAction=()=> {
         setTimeout(() => {
-            // if (this.state.data.length>60){
-            //     this.setState({
-            //         hasMoreData:false
-            //     })
-            //     message.info("没有更多数据！")
-            //     return;
-            // }
-            // for (let i = 0; i < 10; i++) {
-            //     let model = {
-            //         title: '黎明的请假单',
-            //         endTime: '2018-09-08 09:00',
-            //         startTime: '2018-09-09 08:00',
-            //         content: "感冒发烧"
-            //     };
-            //     this.state.data.push(model);
-            // }
-            //
-            // this.setState({
-            //     data: this.state.data
-            // })
+            console.log("load more()-------加载更多");
+            this.state.pageIndex++;
+            if (this.state.role === "teacher") {
+                fetchGet(API.leaveListTeacher, {
+                    userId: this.props.userInfo.userId,
+                    pageIndex: this.state.pageIndex,
+                    pageSize: this.state.pageSize
+                }).then((response) => {
+                     if(response.data.length>0){
+                         for (let i = 0; i < response.data.length; i++) {
+                             let model = {
+                                 lvId:response.data[i].lvId,
+                                 title: response.data[i].lvName,
+                                 endTime: response.data[i].startDate,
+                                 startTime: response.data[i].endDate,
+                                 content: response.data[i].lvDetails,
+                                 enclosure:response.data[i].enclosure,
+                                 leaveMessages:response.data[i].leaveMessages
+                             };
+                             this.state.data.push(model);
+                         }
+                         this.setState({
+                             data: this.state.data
+                         })
+                     }else{
+                         this.setState({
+                             hasMoreData:false,
+                         })
+                     }
 
+                }).catch((error) => {
+                    console.log("error:" + JSON.stringify(error));
+                })
+            }
+            if (this.state.role === "parent") {
+                fetchGet(API.leaveListParent, {
+                    stuId: this.props.userInfo.stuId,
+                    pageIndex: this.state.pageIndex,
+                    pageSize: this.state.pageSize
+                }).then((response) => {
+                    console.log("response:" + JSON.stringify(response));
+                    if(response.data.length>0){
+                        for (let i = 0; i < response.data.length; i++) {
+                            let model = {
+                                lvId:response.data[i].lvId,
+                                title: response.data[i].lvName,
+                                endTime: response.data[i].startDate,
+                                startTime: response.data[i].endDate,
+                                content: response.data[i].lvDetails,
+                                enclosure:response.data[i].enclosure,
+                                leaveMessages:response.data[i].leaveMessages
+                            };
+                            this.state.data.push(model);
+                        }
+                        this.setState({
+                            data: this.state.data
+                        })
+                    }else{
+                        this.setState({
+                            hasMoreData:false,
+                        })
+                    }
 
+                }).catch((error) => {
+                    console.log("error:" + JSON.stringify(error));
+                })
+            }
         }, 1000)
 
     }
@@ -190,7 +243,11 @@ class LeaveListPage extends React.Component{
     getDetailModal=()=>{
         let {index}=this.state;
         let item=this.state.listItem;
+
         if(item!=null&&index!=null){
+            for (let i = 0; i < item.enclosure.length; i++) {
+                item.enclosure[i]=_baseURL+item.enclosure[i];
+            }
             return <div>
                 <Modal
                     popup
@@ -227,9 +284,13 @@ class LeaveListPage extends React.Component{
                                 </div>
 
                                 <div className="row  margin_bottom_20">
+
                                     {item.enclosure.length!=0?(<div >
-                                        <img className="margin_top_bottom_10" src={_baseURL+"/"+item.enclosure[0]}  width={"70%"}  />
+                                        <ImageGrid images={item.enclosure}/>
+                                       {/* <img className="margin_top_bottom_10" src={_baseURL+"/"+item.enclosure[0]}  width={"70%"}  />*/}
                                     </div>):("")}
+
+
                                 </div>
 
                                 <div className="row ">
@@ -244,7 +305,14 @@ class LeaveListPage extends React.Component{
                                                     <div className="">
                                                         <div className="padding_5"> 回复</div>
                                                         <div id="page_horizontal_line"></div>
-                                                        <div className="padding_5" id="global_page_title"> {item.leaveMessages[0].messContent}</div>
+
+                                                        {item.leaveMessages.map((item)=>{
+
+                                                            return  <div className="padding_5" id="global_page_title">
+                                                                <span className="text_underline">{item.userName}</span>老师：{item.messContent}
+                                                            </div>
+                                                        })}
+
                                                     {/*<Input  id={index} name={"item."+item.lvId}  disabled={true} size={"small"} value={item.leaveMessages[0].messContent} className="item_flex_1"*/}
                                                             {/*onChange={this.onChangeMessage.bind(this)} placeholder=""  ></Input>*/}
                                                     {/*<Button  style={{backgroundColor:"#C9C9C9",border:"0px"}} size={"small"}    type={"primary"} className="margin_left_10">已回复</Button>*/}
@@ -287,6 +355,7 @@ class LeaveListPage extends React.Component{
                 <div  className="col-xs-12 clear_margin" >
                      <InfiniteScroll
                          pageStart={0}
+                         initialLoad={false}
                          loadMore={this.loadMoreAction}
                          hasMore={this.state.hasMoreData}
                          loader={<LoadingMore/>}>

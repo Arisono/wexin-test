@@ -120,6 +120,7 @@ export default class RouteConfig extends Component {
                     <Route path='/approvel-detail/:approveId/:isMyApply' component={ApprovelDetail}/> {/*审批详情*/}
                     <Route path='/meet-detail/:meetId' component={MeetDetail}/> {/*会议签到详情*/}
 
+
                     {/*刘金龙*/}
                     {/*1:消费记录 2.充值记录*/}
                     <Route path='/consumeRePage/:type/:cardId' component={ConsumeRePage}/>

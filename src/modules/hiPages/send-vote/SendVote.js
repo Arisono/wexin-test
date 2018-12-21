@@ -5,7 +5,7 @@
 
 import React,{Component} from 'react';
 import  './SendVote.css';
-import { Select,Switch,Upload, Icon, Modal,TreeSelect,Button} from 'antd';
+import { Select,Switch,Upload, Icon, Modal,TreeSelect,Button,Input} from 'antd';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import moment from 'moment'
 import 'antd/dist/antd.css';
@@ -18,7 +18,7 @@ import {getIntValue, getStrValue, isObjEmpty} from "../../../utils/common";
 import UploadEnclosure from '../../../components/UploadEnclosure';
 import {connect} from 'react-redux';
 const Option = Select.Option;
-
+const {TextArea} = Input;
 
 class SendVote extends Component{
     componentWillMount() {
@@ -196,11 +196,11 @@ class SendVote extends Component{
                         {/*</Select>*/}
                         {/*<img src={nextArrowimg} className="nextarr_sty"/>*/}
                     <div className="comhline_sty1"></div>
-                    <DatePicker
-                        value={this.state.endValue}
-                        onChange={date => this.setState({endValue:date})}>
-                        <List.Item arrow="horizontal">结束时间</List.Item>
-                    </DatePicker>
+                        <DatePicker
+                            value={this.state.endValue}
+                            onChange={date => this.setState({endValue:date})}>
+                            <List.Item arrow="horizontal" >结束时间</List.Item>
+                        </DatePicker>
                 </div>
 
                 <div className="comhline_sty1"></div>
@@ -319,6 +319,9 @@ class SendVote extends Component{
                 console.log('response',response)
                 if(response.success){
                     Toast.show('提交成功',1)
+                    setTimeout(()=>{
+                        this.props.history.push("/voteListTab")
+                    },3000)
                 }
             })
             .catch((error) =>{

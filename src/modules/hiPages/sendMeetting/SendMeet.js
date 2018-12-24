@@ -7,7 +7,7 @@ import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import './SendMeet.css';
 import 'antd/dist/antd.css';
 import { Select, TreeSelect,Icon,Button} from 'antd';
-import moment from 'moment'
+import moment from 'moment';
 import add_newimg from '../../../style/imgs/add_new.png';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
@@ -281,6 +281,7 @@ class SendMeet extends Component{
                 console.log('response',response)
                 if(response.success){
                     Toast.show('创建成功',1)
+                    this.props.history.push("/meetingSignIn" )
                 }
             })
             .catch((error) =>{

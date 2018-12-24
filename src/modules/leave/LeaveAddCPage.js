@@ -12,8 +12,11 @@ import UploadEnclosure from '../../components/UploadEnclosure';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../utils/fetchRequest';
 import {_baseURL,API} from '../../configs/api.config';
 import { Input,Button } from 'antd';
+import moment from 'moment'
+import {connect} from 'react-redux';
 
-export default class LeaveAddCPage extends Component{
+
+class LeaveAddCPage extends Component{
    constructor(props){
         super(props);
         this.state = {
@@ -39,13 +42,13 @@ export default class LeaveAddCPage extends Component{
      render(){
         return(
             <div>
-                <Picker
-                    data={this.state.typeLeave} title='请假类型' extra='请选择'
-                    value={this.state.leaveType}
-                    onChange={this.handleSelectChange}
-                    onOk={this.handleSelectChange} cols={1}>
-                    <List.Item arrow="horizontal" >请假类型</List.Item>
-                </Picker>
+                {/*<Picker*/}
+                    {/*data={this.state.typeLeave} title='请假类型' extra='请选择'*/}
+                    {/*value={this.state.leaveType}*/}
+                    {/*onChange={this.handleSelectChange}*/}
+                    {/*onOk={this.handleSelectChange} cols={1}>*/}
+                    {/*<List.Item arrow="horizontal" >请假类型</List.Item>*/}
+                {/*</Picker>*/}
                 <div className="comhline_sty1"></div>
 
                 <DatePicker
@@ -88,10 +91,10 @@ export default class LeaveAddCPage extends Component{
 
     onSubmitClick = (event)=>{
          console.log('state',this.state)
-        if(this.state.leaveType == null || this.state.leaveType == ''){
-            Toast.fail('请选择请假类型')
-            return
-        }
+        // if(this.state.leaveType == null || this.state.leaveType == ''){
+        //     Toast.fail('请选择请假类型')
+        //     return
+        // }
         if(this.state.startValue == null || this.state.startValue == ''){
             Toast.fail('请选择开始时间')
             return
@@ -111,11 +114,27 @@ export default class LeaveAddCPage extends Component{
             Toast.fail('请填写请假理由')
             return
         }
-        const params = {}
+        const approveFiles = []
+        if (this.state.fileList) {
+            this.state.fileList.forEach((value, index) => {
+                approveFiles.push(value.picUrl)
+            })
+        }
+        const params = {
+            lvPro:this.props.userInfo.stuId,
+            lvName:this.props.userInfo.userName+"的请假条",
+
+            // lvNotifier:JSON.stringify(personArrays),
+            lvFiles:approveFiles,
+            lvDetails:this.state.leaveReason,
+            startDate:moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
+            endDate:moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss')
+        }
         fetchPost(API.oaCreate,params,{}).then((response)=>{
                 console.log('response',response)
                 if(response.success){
                     Toast.show(response.data,1)
+                    this.props.history.push("/leaveList/" + this.props.match.params.role)
                 }
             }).catch((error) =>{
                 console.log('error',error)
@@ -131,7 +150,7 @@ export default class LeaveAddCPage extends Component{
 
     }
     clickLeaveList(){
-        this.props.history.push("/leaveList")
+        this.props.history.push("/leaveList/" + this.props.match.params.role)
     }
     handleChange = fileList => {
         if (fileList) {
@@ -157,3 +176,10 @@ export default class LeaveAddCPage extends Component{
         })
     }
 }
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo}
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeaveAddCPage)

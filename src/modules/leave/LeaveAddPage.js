@@ -17,53 +17,7 @@ import {isObjEmpty,getIntValue, getStrValue} from  '../../utils/common';
 import {connect} from 'react-redux'
 
 const {TextArea} = Input;
-const teacherData = []
-const parentData = []
 
-for (let i = 1; i < 6; i++) {
-    parentData.push({
-        title: `三年级${i}班`,
-        value: `0-${i}`,
-        key: `0-${i}`,
-        children: [{
-            title: `饶猛`,
-            value: `0-${i}-0`,
-            key: `0-${i}-0`
-        }, {
-            title: `李泞`,
-            value: `0-${i}-1`,
-            key: `0-${i}-1`,
-        }, {
-            title: `章晨望`,
-            value: `0-${i}-2`,
-            key: `0-${i}-2`,
-        }],
-    })
-}
-
-for (let i = 1; i < 10; i++) {
-    teacherData.push({
-        title: `老师${i}`,
-        value: `1-${i}`,
-        key: `1-${i}`,
-    })
-}
-
-
-const targetData = [
-    {
-        title: `全体家长`,
-        value: `0`,
-        key: `0`,
-        children: parentData,
-    },
-    {
-        title: `全体老师`,
-        value: `1`,
-        key: `1`,
-        children: teacherData,
-    }
-]
 /**
  * Created by Arison on 14:39.
  */
@@ -222,7 +176,7 @@ class LeaveAddPage extends React.Component {
         }
         let param={
             lvProposer:this.props.userInfo.stuId,
-            lvName:this.props.userInfo.userName+"的请假条",
+            lvName:this.props.userInfo.stuName+"的请假条",
             // lvRemarks:"",
             // lvType:2,
             // lvStatus:2,
@@ -240,6 +194,7 @@ class LeaveAddPage extends React.Component {
                       console.log("response:"+JSON.stringify(response));
                       if(response.success){
                           Toast.success("提交成功！");
+                          this.props.history.goBack();
                       }
                   }).catch((error)=>{
                       console.log("error:"+JSON.stringify(error));
@@ -307,7 +262,7 @@ class LeaveAddPage extends React.Component {
                         <img class="img-circle" id="margin_top_bottom_15"
                              src={"http://img5.imgtn.bdimg.com/it/u=1494163297,265276102&fm=26&gp=0.jpg"} width={60}
                              height={60}/>
-                        <span class="span_17 text_bold " id="row_margin">陈小韩的请假条</span>
+                        <span class="span_17 text_bold " id="row_margin">{this.props.userInfo.stuName}的请假条</span>
                     </div>
                     <div className="row" id="page_block_min"></div>
                     <div className="row leave-input  flex_row padding_10

@@ -2,8 +2,9 @@ import {USER_INFO} from "../constants/actionTypes";
 import {getVisibleObj} from "../../utils/common";
 
 const redUserInfo = (state = {
-    userId: 10008,
-    userName: '',
+    userId: 10001,
+    userName: '刘杰',
+    stuName:"",
     userOpenid: '',
     userPhone: '13266699268',
     stuId:'10003',

@@ -11,57 +11,12 @@ import PicturesWallItem from "../../components/upload/PicturesWallItem";
 import TargetSelect from "../../components/TargetSelect";
 import {fetchPost,fetchGet} from '../../utils/fetchRequest';
 import {API} from '../../configs/api.config';
-import {isObjEmpty} from  '../../utils/common';
+import {isObjEmpty,getIntValue, getStrValue} from  '../../utils/common';
 
-
+import {Toast} from 'antd-mobile'
+import {connect} from 'react-redux'
 const { TextArea } = Input;
-const teacherData = []
-const parentData = []
 
-for (let i = 1; i < 6; i++) {
-    parentData.push({
-        title: `三年级${i}班`,
-        value: `0-${i}`,
-        key: `0-${i}`,
-        children: [{
-            title: `饶猛`,
-            value: `0-${i}-0`,
-            key: `0-${i}-0`
-        }, {
-            title: `李泞`,
-            value: `0-${i}-1`,
-            key: `0-${i}-1`,
-        }, {
-            title: `章晨望`,
-            value: `0-${i}-2`,
-            key: `0-${i}-2`,
-        }],
-    })
-}
-
-for (let i = 1; i < 10; i++) {
-    teacherData.push({
-        title: `老师${i}`,
-        value: `1-${i}`,
-        key: `1-${i}`,
-    })
-}
-
-
-const targetData = [
-    {
-        title: `全体家长`,
-        value: `0`,
-        key: `0`,
-        children: parentData,
-    },
-    {
-        title: `全体老师`,
-        value: `1`,
-        key: `1`,
-        children: teacherData,
-    }
-]
 /**
  * 发布作业
  * Created by Arison on 17:47.
@@ -71,15 +26,17 @@ class ReleaseAssignmentPage extends React.Component{
         super(props);
         this.state = {
             name: 'ReleaseAssignmentPage',
-            targetList: ['1-1'],
+            targetList: [],
             targetCount: 1,
+            targetData: [],
+            checkNodes:[],
             data:{
                 notifyName: '',//标题
                 notifyType: '3',//作业发布
                 notifyDetails: '',//内容
                 notifyCreator: '10000',//创建者
                 notifyStatus: '2',//状态  2发布  1草稿
-                userIds: '10001,10002,10003',//通知
+                userIds: ['10001','10000','10002','10003'],//通知
                 notifyFiles: [],
                 startDate: '',//当前时间
                 endDate: null//截止时间
@@ -88,27 +45,24 @@ class ReleaseAssignmentPage extends React.Component{
         }
     }
 
-      componentWillMount(){
-              document.title ="发布作业";
-         }
+    componentWillMount(){
+          document.title ="发布作业";
+     }
 
     callback=(file,fileList)=>{
-        console.log("leaveAddPage:callback：",fileList);
         this.state.data.notifyFiles.length=0;
         for (let i = 0; i < fileList.length; i++) {
             if(fileList[i].status==="done"){
                 this.state.data.notifyFiles.push(fileList[i].response.data)
             }
         }
-        console.log("callback()", this.state.data.notifyFiles);
     }
 
     handleRemove=(file)=>{
-
     }
 
     componentDidMount(){
-
+        this.getOrganization();
     }
 
 
@@ -121,7 +75,7 @@ class ReleaseAssignmentPage extends React.Component{
                         notifyDetails: this.state.data.notifyDetails,//内容
                         notifyCreator: '10000',//创建者
                         notifyStatus: '2',//状态  2发布  1草稿
-                        userIds: '10001,10002,10003',//通知
+                        userIds: ['10001','10000','10002','10003'],//通知
                         notifyFiles: [],
                         startDate: '',//当前时间
                         endDate: this.state.data.endDate//截止时间
@@ -140,7 +94,7 @@ class ReleaseAssignmentPage extends React.Component{
                 notifyType: '3',//作业发布
                 notifyCreator: '10000',//创建者
                 notifyStatus: '2',//状态  2发布  1草稿
-                userIds: '10001,10002,10003',//通知
+                userIds: ['10001','10000','10002','10003'],//通知
                 notifyFiles: [],
                 startDate: '',//当前时间
                 endDate: this.state.data.endDate//截止时间
@@ -165,7 +119,7 @@ class ReleaseAssignmentPage extends React.Component{
                 notifyType: '3',//作业发布
                 notifyCreator: '10000',//创建者
                 notifyStatus: '2',//状态  2发布  1草稿
-                userIds: '10001,10002,10003',//通知
+                userIds: JSON.stringify([10001,10000,10002,10003]),//通知
                 notifyFiles: [],
                 startDate: '',//当前时间
                 endDate: dateString,//标题
@@ -176,7 +130,8 @@ class ReleaseAssignmentPage extends React.Component{
     onTargetChange = (value, label, checkNodes, count) => {
         this.setState({
             targetList: value,
-            targetCount: count
+            targetCount: count,
+            checkNodes:checkNodes
         });
     }
 
@@ -184,57 +139,96 @@ class ReleaseAssignmentPage extends React.Component{
         console.log("commitAction()"+this.state.data.notifyName);
         console.log("commitAction()"+this.state.data.notifyDetails);
         console.log("commitAction()"+this.state.data.endDate);
+        console.log("commitAction() targetList:",this.state.targetList);
+        console.log("commitAction() checkNodes:",this.state.checkNodes);
          if(isObjEmpty(this.state.data.notifyName)){
-              message.info("请输入作业名称");
+             Toast.fail("请输入作业名称");
              return;
          }
         if(isObjEmpty(this.state.data.notifyDetails)){
-            message.info("请输入作业内容");
+            Toast.fail('请输入作业内容...')
             return;
         }
         if(isObjEmpty(this.state.data.endDate)){
-            message.info("请输入截止时间");
+            Toast.fail("请输入截止时间");
             return;
         }
+        if(isObjEmpty(this.state.targetList)){
+            Toast.fail("请选择抄送对象");
+            return;
+        }
+        let personArrays=[];
+        if (!isObjEmpty(this.state.checkNodes)) {
+            this.state.checkNodes.forEach((node) => {
+                personArrays.push(node.userId)
+            })
+        }
+        console.log("commitAction() personArrays:",personArrays);
+        Toast.loading("");
+        console.log("commitAction()",this.state.data.notifyDetails);
         fetchPost(API.homeWorkAdd,{
             notifyName:this.state.data.notifyName,//标题
             notifyType:'3',//作业发布
             notifyDetails:this.state.data.notifyDetails,//内容
-            notifyCreator:'10000',//创建者
+            notifyCreator:this.props.userInfo.userId,//创建者
             notifyStatus:'2',//状态
             endDate:this.state.data.endDate,
-            userIds:'10001,10002,10003',
+            userIds: JSON.stringify(personArrays),//通知
             notifyFiles:JSON.stringify(this.state.data.notifyFiles)
         }).then((response)=>{
+            Toast.hide();
             console.log("response:"+JSON.stringify(response));
             if (response.success){
-                 message.info("发布成功！")
+                Toast.success("发布成功！")
+                this.props.history.goBack();
             }
         }).catch((error)=>{
+            Toast.fail("系统异常！")
             console.log("error:"+JSON.stringify(error));
         })
     }
 
     goListAction=()=>{
-        this.props.history.push("/assignmentList/teacher");
+      //  this.props.history.push("/assignmentList/teacher");
+        this.props.history.goBack();
     }
 
+    onTargetFocus = (e) => {
+        if (isObjEmpty(this.state.targetData)) {
+            this.getOrganization()
+        }
+    }
+
+
     render(){
-        const { targetCount, targetList} = this.state
+        const { targetCount, targetList,targetData} = this.state
+        console.log("render()",targetData);
         const targetProps = {
             placeholder: '请选择抄送对象',
             targetData: targetData,
             targetValues: targetList,
             title: '抄送对象',
             targetCount: targetCount,
-            onTargetChange: this.onTargetChange.bind(this)
+            onTargetChange: this.onTargetChange.bind(this),
+            onTargetFocus: this.onTargetFocus.bind(this)
         }
+
+        const defaultTargetProps = {
+            targetData: [],
+            targetValues: this.state.targetList,
+            title: '发布对象',
+            targetCount: this.state.targetCount,
+            onTargetChange: this.onTargetChange.bind(this),
+            onTargetFocus: this.onTargetFocus.bind(this)
+        }
+
         return <div className="container-fluid">
             <div className="row">
                 <div className="col-md-12">
                     <div className="row" id="page_block_min"></div>
                     <div className="row">
-                        <TargetSelect   {...targetProps}></TargetSelect>
+                        {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
+                            : <TargetSelect {...defaultTargetProps}/>}
                     </div>
                 </div>
             </div>
@@ -242,7 +236,7 @@ class ReleaseAssignmentPage extends React.Component{
             <div className="row">
                 <div className="col-xs-12">
                     <div className="row flex_center_vertical"  >
-                        <div className="margin_left_right_10"><span   id="page_tile">截止时间</span></div>
+                        <div className=""><span   id="page_tile">截止时间</span></div>
                         <div className="item_flex
                         flex_row_right
                         margin_top_bottom_10
@@ -263,7 +257,7 @@ class ReleaseAssignmentPage extends React.Component{
                 <div className="col-xs-12">
                     <div className="row">
                     <Input placeholder="请输入作业名称"  defaultValue={this.state.data.notifyName}
-                           style={{paddingLeft:"28px",fontSize:"18px"}}
+                           style={{paddingLeft:"10px",fontSize:"18px"}}
                            onChange={this.changeName}
                            id="input_no_border"/>
                     </div>
@@ -274,7 +268,7 @@ class ReleaseAssignmentPage extends React.Component{
                         <TextArea rows={4}
                                   value={this.state.data.notifyDetails}
                                   onChange={this.changeContent}
-                                  style={{paddingLeft:"28px",paddingTop:"20px"}}
+                                  style={{paddingLeft:"10px",paddingTop:"20px"}}
                                   placeholder="请输入作业内容"
                                   id="input_no_border"/>
                     </div>
@@ -283,7 +277,7 @@ class ReleaseAssignmentPage extends React.Component{
             <div className="row" id="page_block_min"></div>
             <div className="row">
                     <div className="col-xs-12">
-                        <div className="row"><div className="col-xs-6" id="page_tile">附件</div></div>
+                        <div className="row"><div className="" id="page_tile">附件</div></div>
                         <div className="row" id="row_padding_with" >
                             <PicturesWallItem
                                 action={API.UPLOAD_FILE}
@@ -309,6 +303,102 @@ class ReleaseAssignmentPage extends React.Component{
             <div className="row"></div>
         </div>
     }
+
+
+    getOrganization = () => {
+        Toast.loading('', 0)
+
+        fetchGet(API.USER_GETOBJECT, {
+            userId:this.props.userInfo.userId,
+            stuId:this.props.userInfo.userId
+        }).then(response => {
+            Toast.hide()
+            const {targetData} = this.state
+            targetData.length = 0
+            if (response && response.data) {
+                const schoolArray = response.data.schools
+                const teacherArray = response.data.teachers
+
+                if (!isObjEmpty(teacherArray)) {
+                    const teacherData = []
+                    teacherArray.forEach((teacherObj, index) => {
+                        if (teacherObj) {
+                            teacherData.push({
+                                title: getStrValue(teacherObj, 'userName'),
+                                userId: getIntValue(teacherObj, 'userId'),
+                                userPhone: getStrValue(teacherObj, 'userPhone'),
+                                value: getStrValue(teacherObj, 'userName') + `-1-${index}`,
+                                key: `1-${index}`,
+                            })
+                        }
+                    })
+
+                    targetData.push({
+                        title: `全体老师`,
+                        value: `1`,
+                        key: `1`,
+                        children: teacherData,
+                    })
+                }
+
+                if (!isObjEmpty(schoolArray)) {
+                    const classData = []
+
+                    schoolArray.forEach((schoolObj, sIndex) => {
+                        if (schoolObj) {
+                            const parentArray = schoolObj.parents
+
+                            const parentData = []
+                            if (!isObjEmpty(parentArray)) {
+                                parentArray.forEach((parentObj, pIndex) => {
+                                    parentData.push({
+                                        title: getStrValue(parentObj, 'userName'),
+                                        userId: getIntValue(parentObj, 'userId'),
+                                        userPhone: getStrValue(parentObj, 'userPhone'),
+                                        value: getStrValue(parentObj, 'userName') + `-0-${sIndex}-${pIndex}`,
+                                        key: `0-${sIndex}-${pIndex}`,
+                                    })
+                                })
+
+                                classData.push({
+                                    title: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName'),
+                                    value: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName') + `-0-${sIndex}`,
+                                    key: `0-${sIndex}`,
+                                    children: parentData,
+                                })
+                            }
+                        }
+                    })
+
+                    targetData.push({
+                        title: `全体家长`,
+                        value: `0`,
+                        key: `0`,
+                        children: classData,
+                    })
+                }
+            }
+
+            console.log('targetData', targetData)
+            this.setState({
+                targetData
+            })
+        }).catch(error => {
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
+        })
+    }
 }
 
-export  default ReleaseAssignmentPage;
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo},
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReleaseAssignmentPage)

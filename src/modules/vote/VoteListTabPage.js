@@ -4,47 +4,50 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { List} from 'antd';
+import {List} from 'antd';
 import '../../style/css/app-gloal.css'
 import './VoteListPage.css'
-import { Checkbox,message,Icon} from 'antd';
+import {Checkbox, message, Icon} from 'antd';
 import icon_vote_items  from "../../style/imgs/icon_vote_items.png";
 import {Link} from "react-router-dom";
-import LoadingMore from "../../components/LoadingMore";
-import InfiniteScroll from 'react-infinite-scroller'
 import Swiper from 'swiper/dist/js/swiper'
 import 'swiper/dist/css/swiper.min.css'
 import RefreshLayout from '../../components/RefreshLayout'
-import {fetchPost,fetchGet} from "../../utils/fetchRequest";
+import {fetchPost, fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {Toast} from 'antd-mobile'
+import {connect} from 'react-redux'
+
 let mySwiper;
+
 /**
  * Created by Arison on 20:14.
  */
-class VoteListTabPage extends React.Component{
-    constructor(props){
+class VoteListTabPage extends React.Component {
+    constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             selectIndex: 0,
-            name:'VoteListPage',
-            hasMoreData:true,
-            hasMoreRightData:true,
+            pageIndex:1,
+            pageSize:5,
+            pageIndexR:1,
+            pageSizeR:5,
+            name: 'VoteListPage',
+            hasMoreData: true,
+            hasMoreRightData: true,
             isReleaseRefreshing: false,
             isReceiveRefreshing: false,
             height: document.documentElement.clientHeight,
-            data:[
-            ],
-            dataRight:[
-            ]
+            data: [],
+            dataRight: []
         };
     }
 
-      componentWillMount(){
-              document.title ="投票";
-      }
+    componentWillMount() {
+        document.title = "投票";
+    }
 
-    componentDidMount(){
+    componentDidMount() {
         const that = this
         this.loadReleaseList();
         this.loadReceiveList();
@@ -61,13 +64,13 @@ class VoteListTabPage extends React.Component{
         })
     }
 
-    onAddAction=()=>{
+    onAddAction = () => {
         this.props.history.push("/send-vote")
     }
 
-    render(){
-         const created= this.getReleaseItems() ;
-         const receive=this.getReceiveItems();
+    render() {
+        const created = this.getReleaseItems();
+        const receive = this.getReceiveItems();
 
         return <div className="container-fluid" id="global_background">
             <div className="row">
@@ -84,87 +87,95 @@ class VoteListTabPage extends React.Component{
                     </div>
                     <div className="swiper-container" id="global_background">
                         <div className="swiper-wrapper">
-                            <div   className="swiper-slide">
-                                    {created}
+                            <div className="swiper-slide">
+                                {created}
                             </div>
-                            <div   className="swiper-slide">
-                                    {receive}
+                            <div className="swiper-slide">
+                                {receive}
                             </div>
 
                         </div>
                         <Icon type="plus-circle" theme='filled' className='common-add-icon'
-                              onClick={this.onAddAction} />
+                              onClick={this.onAddAction}/>
                     </div>
                 </div>
             </div>
         </div>;
     }
 
-    loadReleaseList=()=>{
-        console.log("loadMoreAction()");
-        setTimeout(()=>{
-            fetchGet(API.voteListTeacher,{
-                          userId:'10004',
-                          pageIndex:'1',
-                          pageSize:'5',
-                          voteType:'1',
-                      }).then((response)=>{
-                          console.log("response:"+JSON.stringify(response));
-                          for (let i = 0; i <response.data.create.length; i++) {
-                              let  voteObject  = response.data.create[i];
-                              let stateStr=voteObject.voteStatus==1?"进行中":"已投票"
-                              let options=voteObject.topics[0].options;
-                              let model={
-                                  voteId:voteObject.voteId,
-                                  title:voteObject.topics[0].topicName,
-                                  state:stateStr,
-                                  endTime:voteObject.creatDate,
-                                  votes:options
-                              };
-                              this.state.data.push(model);
-                          }
-                        this.setState({
-                            data:this.state.data
-                        });
-                      }).catch((error)=>{
-                          console.log("error:"+JSON.stringify(error));
-                      })
+    loadReleaseList = () => {
+        console.log("loadMoreAction() userId：",this.props.userInfo.userId);
+        Toast.loading("",0)
+        setTimeout(() => {
+            fetchGet(API.voteListTeacher, {
+                userId: this.props.userInfo.userId,
+                pageIndex: this.state.pageIndex++,
+                pageSize: this.state.pageSize,
+                voteType: '1',
+            }).then((response) => {
+                Toast.hide();
+                console.log(this.state.pageIndex+"response:");
+                // if(response.data.create.length>0){
+                    for (let i = 0; i < response.data.create.length; i++) {
+                        let voteObject = response.data.create[i];
+                        let stateStr = voteObject.voteStatus == 1 ? "进行中" : "已投票"
+                        let options = voteObject.topics[0].options;
+                        let model = {
+                            voteId: voteObject.voteId,
+                            title: voteObject.topics[0].topicName,
+                            state: stateStr,
+                            endTime: voteObject.creatDate,
+                            votes: options
+                        };
+                        this.state.data.push(model);
+                    }
+                    this.setState({
+                        data: this.state.data
+                    });
+                // }else{
+                //
+                // }
+
+            }).catch((error) => {
+               Toast.info("数据加载异常！")
+
+                console.log("error:" + JSON.stringify(error));
+            })
 
 
-
-        },1500);
+        }, 1500);
     }
 
-    loadReceiveList=()=>{
+    loadReceiveList = () => {
         console.log("loadMoreRightAction()");
-        setTimeout(()=>{
-            fetchGet(API.voteListTeacher,{
-                userId:'10004',
-                pageIndex:'1',
-                pageSize:'5',
-                voteType:'1',
-            }).then((response)=>{
-                console.log("response:"+JSON.stringify(response));
-                for (let i = 0; i <response.data.notify.length; i++) {
-                    let  voteObject  = response.data.notify[i];
-                    let stateStr=voteObject.voteStatus==1?"进行中":"已投票"
-                    let options=voteObject.topics[0].options;
-                    let model={
-                        voteId:voteObject.voteId,
-                        title:voteObject.topics[0].topicName,
-                        state:stateStr,
-                        endTime:voteObject.creatDate,
-                        votes:options
+        setTimeout(() => {
+            fetchGet(API.voteListTeacher, {
+                userId: this.props.userInfo.userId,
+                pageIndex: this.state.pageIndexR++,
+                pageSize: this.state.pageSizeR,
+                voteType: '1',
+            }).then((response) => {
+                console.log(this.state.pageIndexR+"response:");
+                for (let i = 0; i < response.data.notify.length; i++) {
+                    let voteObject = response.data.notify[i];
+                    let stateStr = voteObject.voteStatus == 1 ? "进行中" : "已投票"
+                    let options = voteObject.topics[0].options;
+                    let model = {
+                        voteId: voteObject.voteId,
+                        title: voteObject.topics[0].topicName,
+                        state: stateStr,
+                        endTime: voteObject.creatDate,
+                        votes: options
                     };
                     this.state.dataRight.push(model);
                 }
                 this.setState({
-                    data:this.dataRight.data
+                    data: this.dataRight.data
                 });
-            }).catch((error)=>{
-                console.log("error:"+JSON.stringify(error));
+            }).catch((error) => {
+                console.log("error:" + JSON.stringify(error));
             })
-        },2500);
+        }, 2500);
     }
 
     getReleaseItems = () => (
@@ -176,28 +187,32 @@ class VoteListTabPage extends React.Component{
                 <List
                     locale={{emptyText: ''}}
                     dataSource={this.state.data}
-                    renderItem={item=>(
-                        <Link to={"/voteDetail/"+(item.state=='进行中'?true:false)+"/"+item.voteId} id="menu_span_normal">
+                    renderItem={item => (
+                        <Link to={"/voteDetail/" + item.voteId} id="menu_span_normal">
                             <List.Item className="row " id="row_background"
-                                       style={{padding:"10px"}}>
+                                       style={{padding: "10px"}}>
                                 <div className="col-xs-12 ">
                                     <div className="row">
-                                        <div className="col-xs-6" id="row_left"> <span id="span_18">{item.title}</span></div>
+                                        <div className="col-xs-6" id="row_left"><span id="span_18">{item.title}</span>
+                                        </div>
                                         <div className="col-xs-6" id="row_right">
-                                            {item.state=="进行中"?(<span style={{color:"red"}}>{item.state}</span>):(<span>{item.state}</span>)}
+                                            {item.state == "进行中" ? (
+                                                <span style={{color: "red"}}>{item.state}</span>) : (
+                                                <span>{item.state}</span>)}
 
                                         </div>
                                     </div>
                                     <div className="row" id="row_center_align">
-                                        <div className="col-xs-12 flex_row flex_center_vertical" >
+                                        <div className="col-xs-12 flex_row flex_center_vertical">
                                             <List dataSource={item.votes}
-                                                  renderItem={item=>(
-                                                      <List.Item style={{width:"120px"}}>
+                                                  renderItem={item => (
+                                                      <List.Item style={{width: "120px"}}>
                                                           <Checkbox >{item.optionName}</Checkbox>
                                                       </List.Item>
                                                   )}/>
                                             <div className="flex_center item_flex">
-                                                <img  style={{marginLeft:"30px"}} src={icon_vote_items}  width={60} height={60} /></div>
+                                                <img style={{marginLeft: "30px"}} src={icon_vote_items} width={60}
+                                                     height={60}/></div>
                                         </div>
 
 
@@ -217,48 +232,52 @@ class VoteListTabPage extends React.Component{
 
     getReceiveItems = () => (
         <div className='notify-bg-root'>
-        <RefreshLayout
-            refreshing={this.state.isReceiveRefreshing}
-            onRefresh={this.loadReceiveList}
-            height={this.state.height}>
-            <List
-                locale={{emptyText: ''}}
-                dataSource={this.state.dataRight}
-                renderItem={item=>(
-                    <Link to={"/voteDetail/"+(item.state=='进行中'?true:false)+"/"+item.voteId} id="menu_span_normal">
-                        <List.Item className="row " id="row_background"
-                                   style={{padding:"10px"}}>
-                            <div className="col-xs-12 ">
-                                <div className="row">
-                                    <div className="col-xs-6" id="row_left"> <span id="span_18">{item.title}</span></div>
-                                    <div className="col-xs-6" id="row_right">
-                                        {item.state=="进行中"?(<span style={{color:"red"}}>{item.state}</span>):(<span>{item.state}</span>)}
+            <RefreshLayout
+                refreshing={this.state.isReceiveRefreshing}
+                onRefresh={this.loadReceiveList}
+                height={this.state.height}>
+                <List
+                    locale={{emptyText: ''}}
+                    dataSource={this.state.dataRight}
+                    renderItem={item => (
+                        <Link to={"/voteDetail/" + item.voteId} id="menu_span_normal">
+                            <List.Item className="row " id="row_background"
+                                       style={{padding: "10px"}}>
+                                <div className="col-xs-12 ">
+                                    <div className="row">
+                                        <div className="col-xs-6" id="row_left"><span id="span_18">{item.title}</span>
+                                        </div>
+                                        <div className="col-xs-6" id="row_right">
+                                            {item.state == "进行中" ? (
+                                                <span style={{color: "red"}}>{item.state}</span>) : (
+                                                <span>{item.state}</span>)}
+                                        </div>
+                                    </div>
+                                    <div className="row" id="row_center_align">
+                                        <div className="col-xs-12 flex_row flex_center_vertical">
+                                            <List dataSource={item.votes}
+                                                  renderItem={item => (
+                                                      <List.Item style={{width: "120px"}}>
+                                                          <Checkbox >{item.optionName}</Checkbox>
+                                                      </List.Item>
+                                                  )}/>
+                                            <div className="flex_center item_flex">
+                                                <img style={{marginLeft: "30px"}} src={icon_vote_items} width={60}
+                                                     height={60}/></div>
+                                        </div>
+
+
+                                    </div>
+                                    <div className="row">
+                                        <span>截止时间：</span>
+                                        <span>{item.endTime}</span>
                                     </div>
                                 </div>
-                                <div className="row" id="row_center_align">
-                                    <div className="col-xs-12 flex_row flex_center_vertical" >
-                                        <List dataSource={item.votes}
-                                              renderItem={item=>(
-                                                  <List.Item style={{width:"120px"}}>
-                                                      <Checkbox >{item.optionName}</Checkbox>
-                                                  </List.Item>
-                                              )}/>
-                                        <div className="flex_center item_flex">
-                                            <img  style={{marginLeft:"30px"}} src={icon_vote_items}  width={60} height={60} /></div>
-                                    </div>
+                            </List.Item>
+                        </Link>
+                    )}/>
 
-
-                                </div>
-                                <div className="row">
-                                    <span>截止时间：</span>
-                                    <span>{item.endTime}</span>
-                                </div>
-                            </div>
-                        </List.Item>
-                    </Link>
-                )}/>
-
-        </RefreshLayout>
+            </RefreshLayout>
         </div>
     )
 
@@ -280,4 +299,10 @@ class VoteListTabPage extends React.Component{
     }
 }
 
-export  default VoteListTabPage;
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo},
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(VoteListTabPage)

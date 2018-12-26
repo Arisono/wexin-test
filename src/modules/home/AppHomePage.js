@@ -157,12 +157,13 @@ class AppHomePage extends React.Component {
         document.title = "智慧校园";
 
         console.log("componentDidMount()",this.props.userInfo);
-
+        Toast.loading("");
         //获取首页接口
         fetchGet(API.homeIndex,{
                       userOpenid: isObjEmpty(this.props.userInfo.userOpenid)?"1":this.props.userInfo.userOpenid,
                       userPhone:isObjEmpty(this.props.userInfo.userPhone)?"1":this.props.userInfo.userPhone
                   }).then((response)=>{
+                      Toast.hide();
                       console.log("response:"+JSON.stringify(response));
                       this.state.userId=  response.data.userId;
                       this.state.userName= response.data.userName;
@@ -188,6 +189,7 @@ class AppHomePage extends React.Component {
                       }
 
                       switchUser({
+                            stuName:response.data.students[0].stuName,
                             userId: this.state.userId,
                             userName: this.state.userName,
                             userOpenid: this.state.userOpenid,
@@ -205,9 +207,8 @@ class AppHomePage extends React.Component {
                         roles:this.state.roles,
                         students:this.state.students
                     })
-
-
                   }).catch((error)=>{
+                       Toast.hide();
                       console.log("error:"+JSON.stringify(error));
                   })
 
@@ -231,7 +232,8 @@ class AppHomePage extends React.Component {
                           this.state.students[i].isSelected=true;
                           //更改全局状态
                           switchUser({
-                              stuId:this.state.students[i].stuId
+                              stuId:this.state.students[i].stuId,
+                              stuName:this.state.students[i].stuName
                           })()
                           //刷新相册和视频
                          this.state.studentIndex=i;
@@ -506,7 +508,6 @@ class AppHomePage extends React.Component {
                                     <Carousel autoplay={true} dots={false}>
                                         {this.spliceArrayPicture(this.state.students[this.state.studentIndex].albums).map((item,index)=>(
                                             <div>{
-
                                                     item.data.map((model,index)=>{
                                                         console.log("imageUrl():",_baseURL+model.picUrl);
                                                         let image_url=_baseURL+model.picUrl;

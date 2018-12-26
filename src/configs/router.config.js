@@ -50,6 +50,8 @@ import LeaveAddCPage from "../modules/leave/LeaveAddCPage";
 import VoteListTabPage from "../modules/vote/VoteListTabPage";
 import TestImagesViewer from "../modules/demo/TestImagesViewer";
 import ImageGrid from "../components/image/ImageGrid";
+import MobileUpload from "../components/upload/MobileUpload";
+import MobileUploadDemo from "../modules/demo/MobileUploadDemo";
 
 
 export default class RouteConfig extends Component {
@@ -87,10 +89,13 @@ export default class RouteConfig extends Component {
                     <Route path='/classRechargeDetail/:payId' component={ClassRechargeDetail}/>
 
                     {/*刘杰*/}
+
+                    <Route path={"/MobileUploadDemo"} component={MobileUploadDemo}/>
+                    <Route path={"/MobileUpload"} component={MobileUpload}/>
                     <Route path={"/ImageGrid"} component={ImageGrid}/>
                     <Route path={"/TestImagesViewer"} component={TestImagesViewer}/>
                     <Route path={'/picturesWall'} component={PicturesWallItem}/>
-                    <Route path="/voteDetail/:voteState/:id" component={VoteDetailPage}/>
+                    <Route path="/voteDetail/:id" component={VoteDetailPage}/>
                     <Route path="/homePage" component={AppHomePage}/>
                     <Route path='/voteList' component={VoteListPage}/>
                     <Route path='/voteListTab' component={VoteListTabPage}/>
@@ -114,6 +119,7 @@ export default class RouteConfig extends Component {
                     <Route path='/approvel' component={Approvel}/>{/*审批*/}
                     <Route path='/approvel-detail/:approveId/:isMyApply' component={ApprovelDetail}/> {/*审批详情*/}
                     <Route path='/meet-detail/:meetId' component={MeetDetail}/> {/*会议签到详情*/}
+
 
                     {/*刘金龙*/}
                     {/*1:消费记录 2.充值记录*/}

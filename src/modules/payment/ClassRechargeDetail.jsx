@@ -139,9 +139,15 @@ class ClassRechargeDetail extends Component {
                 if (rechargeBean.statusCode === 1) {
                     rechargeBean.status = '草稿'
                 } else if (rechargeBean.statusCode === 2) {
-                    rechargeBean.status = '收款中'
+                    rechargeBean.status = '已发布'
                 } else if (rechargeBean.statusCode === 3) {
+                    rechargeBean.status = '收款中'
+                } else if (rechargeBean.statusCode === 4) {
                     rechargeBean.status = '已结束'
+                } else if (rechargeBean.statusCode === 5) {
+                    rechargeBean.status = '已支付'
+                } else if (rechargeBean.statusCode === 6) {
+                    rechargeBean.status = '已退款'
                 } else if (rechargeBean.statusCode === 7) {
                     rechargeBean.status = '已收款'
                 }
@@ -149,13 +155,18 @@ class ClassRechargeDetail extends Component {
                 rechargeBean.percapita = getIntValue(dataObject, 'payTotal')
                 rechargeBean.endTime = getStrValue(dataObject, 'payEndDate')
                 rechargeBean.remarks = getStrValue(dataObject, 'payRemarks')
-                rechargeBean.money = getStrValue(dataObject, 'payTotal')
                 if (dataObject.userPayments) {
                     let userPay = dataObject.userPayments.userPay || []
                     let userUnPay = dataObject.userPayments.userUnPay || []
                     rechargeBean.totalPerson = userPay.concat(userUnPay)
                     rechargeBean.paid = userPay
                     rechargeBean.unPay = userUnPay
+
+                    try {
+                        rechargeBean.money = (getIntValue(dataObject, 'payTotal') * (rechargeBean.totalPerson.length)).toFixed(2)
+                    } catch (e) {
+                        rechargeBean.money = getIntValue(dataObject, 'payTotal') * (rechargeBean.totalPerson.length)
+                    }
                 }
 
                 if (this.props.listState && !isObjEmpty(this.props.listState.listData)) {
@@ -193,7 +204,7 @@ class ClassRechargeDetail extends Component {
                         payId: this.payId
                     }).then(response => {
                         Toast.success(response.data)
-                        this.state.rechargeBean.statusCode = 3
+                        this.state.rechargeBean.statusCode = 4
                         this.state.rechargeBean.status = '已结束'
 
                         this.setState({

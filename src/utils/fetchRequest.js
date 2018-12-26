@@ -20,7 +20,7 @@ export function fetchPost(url, params, header) {
         method: 'POST',
         body: formData,
         mode: 'cors',
-        credentials: 'include',
+        // credentials: 'include',
         // cache: "force-cache",
         headers: new Headers({
             'Accept': 'application/json',
@@ -55,7 +55,7 @@ export function fetchGet(url, params, header) {
     const request = fetch(url, {
         method: 'GET',
         mode: 'cors',
-        credentials: 'include',
+        // credentials: 'include',
         // cache: "force-cache",
         headers: new Headers({
             'Accept': 'application/json',

@@ -5,6 +5,7 @@
 
 import React, {Component} from 'react'
 import 'css/payment.css'
+import {isObjEmpty} from "../utils/common";
 
 export default class ClassRechargeItem extends Component {
 
@@ -42,10 +43,11 @@ export default class ClassRechargeItem extends Component {
                         <div className='class-recharge-detail-caption'>截止日期：</div>
                         <div className='class-recharge-detail-value'>{classRecharge.endTime}</div>
                     </div>
-                    <div className='class-recharge-detail-line'>
+                    {isObjEmpty(classRecharge.remarks) ? "" : <div className='class-recharge-detail-line'>
                         <div className='class-recharge-detail-caption'>备注：</div>
                         <div className='class-recharge-detail-value'>{classRecharge.remarks}</div>
-                    </div>
+                    </div>}
+
                 </div>
                 <div className='class-recharge-detail-menu'>
                     <div className='class-recharge-detail-money'>￥{classRecharge.money}</div>

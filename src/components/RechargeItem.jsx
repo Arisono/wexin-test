@@ -6,6 +6,7 @@
 import React, {Component} from 'react'
 import RechargeBean from 'model/RechargeBean'
 import 'css/payment.css'
+import {isObjEmpty} from "../utils/common";
 
 export default class RechargeItem extends Component {
 
@@ -39,10 +40,10 @@ export default class RechargeItem extends Component {
                         <div className='recharge-item-caption'>截止日期：</div>
                         <div className='recharge-item-value'>{rechargeBean.endTime}</div>
                     </div>
-                    <div className='recharge-item-line'>
+                    {isObjEmpty(rechargeBean.remarks) ? '' : <div className='recharge-item-line'>
                         <div className='recharge-item-caption'>备注：</div>
                         <div className='recharge-item-value'>{rechargeBean.remarks}</div>
-                    </div>
+                    </div>}
 
                     <div className='recharge-item-bottom'>
                         <div className={rechargeBean.status == '去交费' ?

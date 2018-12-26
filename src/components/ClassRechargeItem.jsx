@@ -29,7 +29,7 @@ export default class ClassRechargeItem extends Component {
                             className='class-recharge-detail-person'>({classRecharge.paid.length + '/'
                         + classRecharge.totalPerson.length}人)</span>
                     </div>
-                    <span className={classRecharge.statusCode === 2 ?
+                    <span className={classRecharge.statusCode === 3 ?
                         'class-recharge-detail-status-todo' :
                         'class-recharge-detail-status-done'}>{classRecharge.status}</span>
                 </div>

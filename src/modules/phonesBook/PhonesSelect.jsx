@@ -35,6 +35,7 @@ class PhonesSelect extends Component {
             isPhonesLoading: true,
             isClassLoading: true,
             isRefreshing: false,
+            height: document.documentElement.clientHeight,
         }
     }
 
@@ -193,7 +194,6 @@ class PhonesSelect extends Component {
                     phoneBean.children = ['']
 
                     teacherList.push(phoneBean)
-
                 })
             } else {
                 if (mPageIndex > 1) {

@@ -112,10 +112,16 @@ span.ant-select-selection.ant-select-selection--multiple {
 
 .am-modal-content {
     background: transparent !important;
+    z-index: 1000000!important;
 }
 
 .am-modal-transparent .am-modal-content {
     background: white !important;
+    z-index: 1000000!important;
+}
+
+.am-modal.am-modal-transparent{
+    z-index: 1000000!important;
 }
 
 

@@ -16,6 +16,8 @@ import PictureBean from "../../model/PictureBean";
 import {connect} from 'react-redux'
 import {saveClassData} from "../../redux/actions/classData";
 
+const {alertClose} = VideoItem
+
 class WonderMoment extends Component {
 
     constructor() {
@@ -33,6 +35,11 @@ class WonderMoment extends Component {
         if (this.props.match.params.type) {
             this.mType = this.props.match.params.type
         }
+    }
+
+    componentWillUnmount() {
+        Toast.hide()
+        // alertClose()
     }
 
     componentDidMount() {

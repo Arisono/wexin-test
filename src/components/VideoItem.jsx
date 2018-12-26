@@ -12,6 +12,8 @@ const {alert} = Modal
 
 export default class VideoItem extends Component {
 
+    static alertClose = alert()
+
     constructor() {
         super()
 

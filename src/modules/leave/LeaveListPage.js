@@ -56,15 +56,15 @@ class LeaveListPage extends React.Component{
                 pageSize: this.state.pageSize
             }).then((response) => {
                 this.state.data.length = 0;
-                for (let i = 0; i < response.data.length; i++) {
+                for (let i = 0; i < response.data.leaveNotify.length; i++) {
                     let model = {
-                        lvId:response.data[i].lvId,
-                        title: response.data[i].lvName,
-                        endTime: response.data[i].startDate,
-                        startTime: response.data[i].endDate,
-                        content: response.data[i].lvDetails,
-                        enclosure:response.data[i].enclosure,
-                        leaveMessages:response.data[i].leaveMessages
+                        lvId:response.data.leaveNotify[i].lvId,
+                        title: response.data.leaveNotify[i].lvName,
+                        endTime: response.data.leaveNotify[i].startDate,
+                        startTime: response.data.leaveNotify[i].endDate,
+                        content: response.data.leaveNotify[i].lvDetails,
+                        enclosure:response.data.leaveNotify[i].enclosure,
+                        leaveMessages:response.data.leaveNotify[i].leaveMessages
                     };
                     this.state.data.push(model);
                 }

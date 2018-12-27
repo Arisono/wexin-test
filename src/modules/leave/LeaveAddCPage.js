@@ -39,6 +39,12 @@ class LeaveAddCPage extends Component{
             endValue:null,
         }
     }
+
+
+    componentWillMount(){
+        document.title ="请假申请";
+    }
+
      render(){
         return(
             <div>
@@ -84,7 +90,10 @@ class LeaveAddCPage extends Component{
                 <div className="flex_center margin_top_20">
                     <center><Button type="button" className="btn btn-primary comBtn_sty"  onClick={this.onSubmitClick}>提交</Button></center>
                 </div>
-                <div   onClick={this.clickLeaveList.bind(this)} className="leave-history flex_center text_underline">请假记录</div>
+                {/*<div
+                    onClick={this.clickLeaveList.bind(this)}
+                    className="leave-history flex_center text_underline">
+                    请假记录</div>*/}
             </div>
         )
     }

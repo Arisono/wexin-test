@@ -313,9 +313,9 @@ class LeaveAddPage extends React.Component {
                         {/*  <Icon type="right"/>*/}
                     </div>
                     <div className="row" id="page_block_min"></div>
-                    <div className="row padding_10 span_15 ">
-                        <div><span >附件</span></div>
-                        <div>
+                    <div className="row  span_15 ">
+                        <div className="padding_5"><span   id="page_tile">附件</span></div>
+                        <div id="row_padding_with">
                             <PicturesWallItem
                                 action={API.UPLOAD_FILE}
                                 number={4}

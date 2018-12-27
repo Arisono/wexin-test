@@ -57,6 +57,7 @@ class AssignmentListPage extends React.Component{
             this.state.data.length=0;
             for (let i = 0; i < response.data.creat.length; i++) {
                 let model=response.data.creat[i];
+                model.notifyDetails= model.notifyDetails.replace(/\r\n/g,'<br/>');
                 let item={
                     title: model.notifyName,
                     state: model.isRead==1?'未读':"已读",
@@ -88,6 +89,7 @@ class AssignmentListPage extends React.Component{
                if(response.data.creat.length>0){
                    for (let i = 0; i < response.data.creat.length; i++) {
                        let model=response.data.creat[i];
+                       model.notifyDetails= model.notifyDetails.replace(/\r\n/g,'<br/>');
                        let item={
                            title: model.notifyName,
                            state: model.isRead==1?'未读':"已读",
@@ -147,7 +149,9 @@ class AssignmentListPage extends React.Component{
                                         <div id="page_horizontal_line"></div>
                                         <div className="row" id="padding">
                                             <div className="col-xs-4">内容：</div>
-                                            <div className="col-xs-8"><span id="span_display">{item.content}</span></div>
+                                            <div className="col-xs-8" id="span_display" dangerouslySetInnerHTML={{__html:  item.content}}>
+
+                                            </div>
                                         </div>
                                         <div className="row" id="padding">
                                             <div className="col-xs-4">截止时间：</div>

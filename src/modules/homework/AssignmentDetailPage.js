@@ -36,8 +36,6 @@ class AssignmentDetailPage extends React.Component {
             content: "",
             messageContent:null,
             files: [
-                "https://upload-images.jianshu.io/upload_images/1131704-be7459b6d71b4fcb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240",
-                "https://upload-images.jianshu.io/upload_images/1131704-4ea9451586c1ef07.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"
             ],
             data: [{
                 name: '张山',
@@ -61,6 +59,7 @@ class AssignmentDetailPage extends React.Component {
             for (let i = 0; i < temps.length; i++) {
                 images.push(_baseURL + temps[i]);
             }
+            response.data.notifyDetails= response.data.notifyDetails.replace(/\r\n/g,'<br/>');
             this.setState({
                 teachName: response.data.notifyCreatorName,
                 endTime: response.data.endDate,
@@ -164,7 +163,7 @@ class AssignmentDetailPage extends React.Component {
                         <span className="span_20 text_bold">{this.state.title}</span>
                     </div>
                     <div id="page_horizontal_line"></div>
-                    <div className="margin_top_bottom_15"><span >{this.state.content}</span></div>
+                    <div className="margin_top_bottom_15"  dangerouslySetInnerHTML={{__html:  this.state.content}}></div>
                     <div className="margin_top_bottom_15 flex_center">
                         {this.state.previewVisible ?
                             <ImagesViewer onClose={this.handleCancel} urls={this.state.files}

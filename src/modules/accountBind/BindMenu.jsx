@@ -43,7 +43,7 @@ export default class BindMenu extends Component {
             this.setState({
                 errorMsg: ''
             })
-            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbc1f8607137d3b8a&redirect_uri=https%3a%2f%2fwww.akuiguoshu.com%2fschool%2fuser%2fuserLogin&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect'
+            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbc1f8607137d3b8a&redirect_uri=https%3A%2F%2Ftmobile.ubtob.com%2Fschool%2Fuser%2FuserLogin&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect'
         }
     }
 

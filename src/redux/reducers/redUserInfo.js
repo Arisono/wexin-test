@@ -7,7 +7,7 @@ const redUserInfo = (state = {
     stuName:"",
     userOpenid: '',
     userPhone: '13266699268',
-    stuId:'10003',
+    stuId:'',
     userRole: 0
 }, action) => {
     if (action === undefined) {

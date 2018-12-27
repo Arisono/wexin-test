@@ -219,6 +219,7 @@ class LeaveListPage extends React.Component{
             if(response.success){
                 Toast.info("留言成功！");
                 this.getLeaveListData();
+                this.onModalClose();
             }
         }).catch((error)=>{
             console.log("error:"+JSON.stringify(error));

@@ -11,7 +11,7 @@ import {Toast} from 'antd-mobile'
 import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {switchUser} from 'action/userInfo'
-import {getIntValue, getStrValue} from "../../utils/common";
+import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 
 export default class BindMenu extends Component {
 
@@ -30,20 +30,33 @@ export default class BindMenu extends Component {
 
     componentDidMount() {
         document.title = '账号绑定'
-        if (this.props.match.params.openid) {
+        this.paramType = this.props.match.params.type
+        this.paramId = this.props.match.params.openid
+
+        if (this.paramType === 'app') {
+            if (isObjEmpty(this.paramId)) {
+                this.setState({
+                    errorMsg: '公众号信息获取失败'
+                })
+            } else {
+                this.setState({
+                    errorMsg: ''
+                })
+                window.location.href =
+                    'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
+                    this.paramId + '&redirect_uri=https%3a%2f%2ftmobile.ubtob.com%2fschool%2fuser%2fuserLogin&response_type=code&scope=snsapi_userinfo&state=' +
+                    this.paramId + '&connect_redirect=1#wechat_redirect'
+            }
+
+        } else if (this.paramType === 'open') {
             this.setState({
                 errorMsg: '获取绑定信息中...'
             })
-            this.openid = this.props.match.params.openid
+            this.openid = this.paramId
 
             setTimeout(() => {
                 this.obtainBindStatus()
             }, 1000)
-        } else {
-            this.setState({
-                errorMsg: ''
-            })
-            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbc1f8607137d3b8a&redirect_uri=https%3a%2f%2fwww.akuiguoshu.com%2fschool%2fuser%2fuserLogin&response_type=code&scope=snsapi_userinfo&connect_redirect=1#wechat_redirect'
         }
     }
 
@@ -61,7 +74,7 @@ export default class BindMenu extends Component {
 
     obtainBindStatus = () => {
         fetchGet(API.USER_ISBINDING, {
-            userOpenid: this.openid
+            userOpenid: this.openid,
         }).then(response => {
             if (response.data) {
                 let role = 1//1:家长2:老师

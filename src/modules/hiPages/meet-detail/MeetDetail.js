@@ -116,13 +116,13 @@ class MeetDetail extends Component{
        console.log('meetId',this.props.match.params.meetId)
 
         let meetBean = new MeetingBean()
-        meetBean.createTime = '2018-10-25 10:20'
-        meetBean.title = '三年级全体教师期末动员大会'
-        meetBean.meetStatus = '进行中'
-        meetBean.startTime = '2018-11-25 14:20'
-        meetBean.endTime = '2018-11-25 16:00'
-        meetBean.address = '行政楼6楼办公室'
-        meetBean.sponsor = '吴彦祖'
+        meetBean.createTime = ''
+        meetBean.title = ''
+        meetBean.meetStatus = ''
+        meetBean.startTime = ''
+        meetBean.endTime = ''
+        meetBean.address = ''
+        meetBean.sponsor = ''
         this.setState({
             meetingSignData:meetBean
         })

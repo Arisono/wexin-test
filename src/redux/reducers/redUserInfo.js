@@ -2,12 +2,12 @@ import {USER_INFO} from "../constants/actionTypes";
 import {getVisibleObj} from "../../utils/common";
 
 const redUserInfo = (state = {
-    userId: 0,
+    userId:0 ,
     userName: '',
-    stuName:"",
+    stuName: "",
     userOpenid: '',
     userPhone: '',
-    stuId:'',
+    stuId: '',
     userRole: 0
 }, action) => {
     if (action === undefined) {

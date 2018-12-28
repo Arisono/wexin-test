@@ -10,7 +10,7 @@ import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {Toast} from 'antd-mobile'
-import {Icon} from 'antd'
+import {Icon, Skeleton} from 'antd'
 import RefreshLayout from "../../components/RefreshLayout";
 import {connect} from 'react-redux'
 
@@ -25,6 +25,7 @@ class MeetingSignIn extends Component {
         this.state = {
             meetingSignList: [],
             isRefreshing: false,
+            isLoading: true
         }
     }
 
@@ -38,7 +39,7 @@ class MeetingSignIn extends Component {
     }
 
     render() {
-        const {meetingSignList, isRefreshing} = this.state
+        const {meetingSignList, isRefreshing, isLoading} = this.state
 
         let meetingItems = []
         if (meetingSignList.length > 0) {
@@ -53,10 +54,12 @@ class MeetingSignIn extends Component {
                 }
             }
         } else {
-            meetingItems = <div className='common-column-layout'
-                                style={{height: '100vh', alignItems: 'center', justifyContent: 'center'}}>
-                会议列表为空
-            </div>
+            if (!isLoading) {
+                meetingItems = <div className='common-column-layout'
+                                    style={{height: '100vh', alignItems: 'center', justifyContent: 'center'}}>
+                    会议列表为空
+                </div>
+            }
         }
 
         return (
@@ -125,7 +128,7 @@ class MeetingSignIn extends Component {
                     meetBean.signStatusCode = getIntValue(item, 'signStatus')
                     if (meetBean.signStatusCode === 1) {
                         meetBean.signStatus = '签到'
-                    } else if (meetBean.signStatusCode === 2) {
+                    } else if (meetBean.signStatusCode === 3) {
                         meetBean.signStatus = '已签到'
                     } else {
                         meetBean.signStatusCode = 1
@@ -141,6 +144,7 @@ class MeetingSignIn extends Component {
             this.setState({
                 meetingSignList: meetingSignList,
                 isRefreshing: false,
+                isLoading:false
             })
         }).catch(error => {
             Toast.hide()
@@ -150,6 +154,7 @@ class MeetingSignIn extends Component {
             }
             this.setState({
                 isRefreshing: false,
+                isLoading:false
             })
 
             if (typeof error === 'string') {
@@ -171,7 +176,7 @@ class MeetingSignIn extends Component {
             Toast.hide()
             Toast.success('签到成功')
             meetingSignList[index].signStatus = '已签到'
-            meetingSignList[index].signStatusCode = 2
+            meetingSignList[index].signStatusCode = 3
 
             this.setState({meetingSignList})
         }).catch(error => {

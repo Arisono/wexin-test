@@ -97,7 +97,7 @@ class FieldTrip extends Component{
                 <div className="comhline_sty1"></div>
 
                 <div  className="item_sty">
-                    <div style={{width:150,color:"#333333"}}>时长(h)</div>
+                    <div style={{width:150,color:"#000",fontSize:'12px'}}>时长(h)</div>
                     <div className="text-right" style={{width:"100%",}}>{this.state.tripsHours}
                         {this.state.Tdurntion}<img src={nextArrowimg} className="nextarr_sty"/>
                     </div>

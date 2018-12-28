@@ -173,10 +173,11 @@ class SendVote extends Component{
                 {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
                     : <TargetSelect {...defaultTargetProps}/>}
                 <div className="comhline_sty"></div>
-                <textarea autoFocus="autoFocus" ref='voteTitle' className="form-control textarea_sty" rows="2" placeholder="请填写投票主题…" ></textarea>
+                <textarea autoFocus="autoFocus" ref='voteTitle' className="form-control textarea_sty"
+                          rows="2" placeholder="请填写投票主题…" style={{resize:'none'}} ></textarea>
                 <div className="comhline_sty"></div>
 
-                <div >
+                <div>
                     {this.state.voteOptionss.map((itemata,index) => <SelectItem index={index} itemata = {itemata} handelSItem={this.handelSItem} removeSItem ={this.removeSItem}></SelectItem>)}
                     <div onClick={this.addSelectItem} className="text-center" style={{color:"#0CE11D",fontSize:12,margin:10}}>+ <span >添加选项</span></div>
                 </div>

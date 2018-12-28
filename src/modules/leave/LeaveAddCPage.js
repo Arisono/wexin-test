@@ -130,14 +130,15 @@ class LeaveAddCPage extends Component{
             })
         }
         const params = {
-            lvPro:this.props.userInfo.stuId,
+            lvPro:this.props.userInfo.userId,
             lvName:this.props.userInfo.userName+"的请假条",
 
             // lvNotifier:JSON.stringify(personArrays),
             lvFiles:approveFiles,
             lvDetails:this.state.leaveReason,
             startDate:moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
-            endDate:moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss')
+            endDate:moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
+
         }
         fetchPost(API.oaCreate,params,{}).then((response)=>{
                 console.log('response',response)

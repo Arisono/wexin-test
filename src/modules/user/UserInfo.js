@@ -3,8 +3,10 @@ import 'css/user-info.css'
 import 'css/phones.css'
 import {Icon, Modal, Upload} from "antd";
 
-export default class UserInfo extends Component {
 
+import {connect} from 'react-redux'
+class UserInfo extends Component {
+//老师是1家长是2
     static defaultProps = {
         type: 1,
         userName: '王小明',
@@ -17,20 +19,20 @@ export default class UserInfo extends Component {
         super(props);
         this.state = {
             type: props.type,
-            userName: props.userName,
-            school: props.school,
-            phone: props.phone,
-            id: props.id,
+            userName: this.props.userInfo.userName,
+            school:this.props.userInfo.school,
+            phone: this.props.userInfo.userPhone,
+            id: this.props.userInfo.stuId,
             previewVisible: false,
             previewImage: '',
-            studentName: '陈玉',
+            studentName: this.props.userInfo.stuName,
             fileList: [{
                 uid: '-1',
                 name: 'xxx.png',
                 status: 'done',
                 url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
             }],
-            sex: '男'
+            sex: this.props.userInfo.userSex===1?"男":"女"
         }
     }
     componentWillMount() {
@@ -102,7 +104,7 @@ export default class UserInfo extends Component {
             <div style={{padding: 10}} className='phones-item-top'>
                 <text className='phones-item-name'>手机号码</text>
                 <a href={'tel:' + this.state.phone} style={{display: 'flex', alignItems: 'center'}}>
-                    <div className='phones-item-phone'>{this.state.phone}</div>
+                    <div className='phones-item-phone margin_left_right_10' >{this.state.phone}</div>
                     <div style={{textAlign: 'right'}}>
                         <img width={8} height={15} src={require('../../style/imgs/next_arrow.png')}/>
                     </div>
@@ -157,4 +159,14 @@ export default class UserInfo extends Component {
     passWordClick = (event) => {
         //TODO 点击密码
     }
+
+
 }
+
+let mapStateToProps = (state) => ({
+    userInfo: {...state.redUserInfo},
+})
+
+let mapDispatchToProps = (dispatch) => ({})
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserInfo)

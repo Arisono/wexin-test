@@ -30,13 +30,7 @@ class LeaveListPage extends React.Component{
             listItem:null,
             index:null,
             role:this.props.match.params.role,
-            data:[{
-                title:'黎明的请假单',
-                endTime:'2018-09-08 09:00',
-                startTime:'2018-09-09 08:00',
-                content:"感冒发烧",
-                leaveMessages:[]
-            }]
+            data:[]
         };
     }
 
@@ -49,7 +43,14 @@ class LeaveListPage extends React.Component{
     }
 
     getLeaveListData() {
+        this.state.pageIndex=1;
+        this.state.pageSize=5;
+        this.setState({
+            hasMoreData:true,
+        })
         if (this.state.role === "teacher") {
+            console.log("getLeaveListData()",this.props.userInfo.userId);
+            Toast.show("userId:"+this.props.userInfo.userId);
             fetchGet(API.leaveListTeacher, {
                 userId: this.props.userInfo.userId,
                 pageIndex: this.state.pageIndex,
@@ -60,8 +61,8 @@ class LeaveListPage extends React.Component{
                     let model = {
                         lvId:response.data.leaveNotify[i].lvId,
                         title: response.data.leaveNotify[i].lvName,
-                        endTime: response.data.leaveNotify[i].startDate,
-                        startTime: response.data.leaveNotify[i].endDate,
+                        endTime: response.data.leaveNotify[i].endDate,
+                        startTime: response.data.leaveNotify[i].startDate,
                         content: response.data.leaveNotify[i].lvDetails,
                         enclosure:response.data.leaveNotify[i].enclosure,
                         leaveMessages:response.data.leaveNotify[i].leaveMessages
@@ -91,8 +92,8 @@ class LeaveListPage extends React.Component{
                     let model = {
                         lvId:response.data[i].lvId,
                         title: response.data[i].lvName,
-                        endTime: response.data[i].startDate,
-                        startTime: response.data[i].endDate,
+                        endTime: response.data[i].endDate,
+                        startTime: response.data[i].startDate,
                         content: response.data[i].lvDetails,
                         enclosure:response.data[i].enclosure,
                         leaveMessages:response.data[i].leaveMessages
@@ -115,7 +116,6 @@ class LeaveListPage extends React.Component{
 
     loadMoreAction=()=> {
         setTimeout(() => {
-            console.log("load more()-------加载更多");
             this.state.pageIndex++;
             if (this.state.role === "teacher") {
                 fetchGet(API.leaveListTeacher, {
@@ -123,16 +123,16 @@ class LeaveListPage extends React.Component{
                     pageIndex: this.state.pageIndex,
                     pageSize: this.state.pageSize
                 }).then((response) => {
-                     if(response.data.length>0){
-                         for (let i = 0; i < response.data.length; i++) {
+                     if(response.data.leaveNotify.length>0){
+                         for (let i = 0; i < response.data.leaveNotify.length; i++) {
                              let model = {
-                                 lvId:response.data[i].lvId,
-                                 title: response.data[i].lvName,
-                                 endTime: response.data[i].startDate,
-                                 startTime: response.data[i].endDate,
-                                 content: response.data[i].lvDetails,
-                                 enclosure:response.data[i].enclosure,
-                                 leaveMessages:response.data[i].leaveMessages
+                                 lvId:response.data.leaveNotify[i].lvId,
+                                 title: response.data.leaveNotify[i].lvName,
+                                 endTime: response.data.leaveNotify[i].endDate,
+                                 startTime: response.data.leaveNotify[i].startDate,
+                                 content: response.data.leaveNotify[i].lvDetails,
+                                 enclosure:response.data.leaveNotify[i].enclosure,
+                                 leaveMessages:response.data.leaveNotify[i].leaveMessages
                              };
                              this.state.data.push(model);
                          }
@@ -161,8 +161,8 @@ class LeaveListPage extends React.Component{
                             let model = {
                                 lvId:response.data[i].lvId,
                                 title: response.data[i].lvName,
-                                endTime: response.data[i].startDate,
-                                startTime: response.data[i].endDate,
+                                endTime: response.data[i].endDate,
+                                startTime: response.data[i].startDate,
                                 content: response.data[i].lvDetails,
                                 enclosure:response.data[i].enclosure,
                                 leaveMessages:response.data[i].leaveMessages
@@ -219,6 +219,7 @@ class LeaveListPage extends React.Component{
             if(response.success){
                 Toast.info("留言成功！");
                 this.getLeaveListData();
+                this.onModalClose();
             }
         }).catch((error)=>{
             console.log("error:"+JSON.stringify(error));
@@ -245,9 +246,11 @@ class LeaveListPage extends React.Component{
         let item=this.state.listItem;
 
         if(item!=null&&index!=null){
+            let fileImages=[];
             for (let i = 0; i < item.enclosure.length; i++) {
-                item.enclosure[i]=_baseURL+item.enclosure[i];
+                fileImages.push(_baseURL+item.enclosure[i]);
             }
+            console.log("getDetailModal()",fileImages);
             return <div>
                 <Modal
                     popup
@@ -286,7 +289,7 @@ class LeaveListPage extends React.Component{
                                 <div className="row  margin_bottom_20">
 
                                     {item.enclosure.length!=0?(<div >
-                                        <ImageGrid images={item.enclosure}/>
+                                        <ImageGrid images={fileImages}/>
                                        {/* <img className="margin_top_bottom_10" src={_baseURL+"/"+item.enclosure[0]}  width={"70%"}  />*/}
                                     </div>):("")}
 
@@ -394,7 +397,7 @@ class LeaveListPage extends React.Component{
                                                              item.leaveMessages.map((item)=>(
                                                                  <div className="flex">
                                                                      <span className="text_underline">{item.userName}</span>老师：
-                                                                     <Input  id={index} name={"item."+item.lvId}  disabled={true} size={"small"}
+                                                                     <Input   id={index} name={"item."+item.lvId}  disabled={true} size={"small"}
                                                                       value={item.messContent} className="item_flex_1"
                                                                              onChange={this.onChangeMessage.bind(this)} placeholder="">
                                                                      </Input>
@@ -409,7 +412,7 @@ class LeaveListPage extends React.Component{
                                                      /*教师端*/
                                                      <div className=" bg_white">
                                                      {item.leaveMessages.length===0?(<div className="flex padding_10">
-                                                         <Input id={index} name={"item."+item.lvId}  size={"small"} className="item_flex_1"
+                                                         <Input disabled={true} id={index} name={"item."+item.lvId}  size={"small"} className="item_flex_1"
                                                                 onChange={this.onChangeMessage.bind(this)} placeholder=""  ></Input>
                                                          <Button  id={index} name={"item."+item.lvId}  size={"small"} onClick={this.onMessageSend.bind(this,index)}  type={"primary"} className="margin_left_10">回复</Button>
                                                      </div>):(<div className="flex padding_10">

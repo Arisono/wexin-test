@@ -165,14 +165,27 @@ class AppHomePage extends React.Component {
                       userPhone:isObjEmpty(this.props.userInfo.userPhone)?"1":this.props.userInfo.userPhone
                   }).then((response)=>{
                       Toast.hide();
-                      console.log("response:"+JSON.stringify(response));
                       this.state.userId=  response.data.userId;
                       this.state.userName= response.data.userName;
-                      let student=response.data.students[0];
-                      let student1={isSelected:true,...student};
-                      response.data.students.splice(0,1,student1);
+
                       // response.data.students.splice(1,1,{isSelected:false,...student});
+                      console.log("studId():",this.props.userInfo.stuId);
+                      if(isObjEmpty(this.props.userInfo.stuId)){
+                          let student=response.data.students[0];
+                          let student1={isSelected:true,...student};
+                          response.data.students.splice(0,1,student1);
+                      }else{
+                          for (let i = 0; i < response.data.students.length; i++) {
+                             if( this.props.userInfo.stuId===response.data.students[i].stuId){
+                                 response.data.students[i]={isSelected:true,...response.data.students[i]};
+                                 this.state.studentIndex=i;
+                             }else{
+                                 response.data.students[i]={isSelected:false,...response.data.students[i]};
+                             }
+                          }
+                      }
                       this.state.students=response.data.students ;
+
 
 
                       this.state.pictures=response.data.pictures;
@@ -195,7 +208,7 @@ class AppHomePage extends React.Component {
                             userName: this.state.userName,
                             userOpenid: this.state.userOpenid,
                             userPhone: this.state.userPhone,
-                            stuId:response.data.students[0].stuId,
+                            stuId:isObjEmpty(this.props.userInfo.stuId)?response.data.students[0].stuId:this.props.userInfo.stuId,
                         })();
 
                     this.setState({

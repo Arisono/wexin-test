@@ -2,7 +2,7 @@
  * Created by RaoMeng on 2018/11/21
  * Desc: 项目接口
  */
-export const _baseURL = 'https://tmobile.ubtob.com/school/'
+export const _baseURL = 'https://tmobile.ubtob.com/school'
 //export const _baseURL = 'http://10.1.80.101:8080/school/'
 export const API = {
     //获取验证码

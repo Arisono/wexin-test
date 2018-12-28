@@ -6,7 +6,9 @@ const redUserInfo = (state = {
     userName: '',
     stuName:"",
     userOpenid: '',
-    userPhone: '',
+    userPhone: '13266699268',
+    school:'',
+    userSex:1,
     stuId:'',
     userRole: 0
 }, action) => {

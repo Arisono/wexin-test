@@ -76,7 +76,10 @@ class AppHomePage extends React.Component {
             userPhone:'',
             userOpenid:'',
             isTeacher: false,
-            pictures:{},
+            pictures:{
+                albums:[],
+                videos:[]
+            },
             roles:["家长"],
             studentIndex:0,
             students:[
@@ -162,7 +165,7 @@ class AppHomePage extends React.Component {
         //获取首页接口
         fetchGet(API.homeIndex,{
                       userOpenid: isObjEmpty(this.props.userInfo.userOpenid)?"1":this.props.userInfo.userOpenid,
-                      userPhone:isObjEmpty(this.props.userInfo.userPhone)?"1":this.props.userInfo.userPhone
+                      userPhone:isObjEmpty(this.props.userInfo.userPhone)?"13266699268":this.props.userInfo.userPhone
                   }).then((response)=>{
                       console.log("result():"+JSON.stringify(response));
                       Toast.hide();

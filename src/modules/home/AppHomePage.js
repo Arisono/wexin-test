@@ -209,7 +209,7 @@ class AppHomePage extends React.Component {
                       let stuName= isObjEmpty(response.data.students)?"":response.data.students[0].stuName;
                       let stuId= isObjEmpty(response.data.students)?"":response.data.students[0].stuId;
                       switchUser({
-                            stuName:stuName,
+                            stuName:isObjEmpty(this.props.userInfo.stuName)?stuName:this.props.userInfo.stuName,
                             userId: this.state.userId,
                             userName: this.state.userName,
                             userOpenid: this.state.userOpenid,

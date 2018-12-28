@@ -61,11 +61,11 @@ export default class RouteConfig extends Component {
             <Router basename="/smart-school">
                 <div>
                     <Route exact path='/' render={() => (
-                        <Redirect to='/bindMenu'/>
+                        <Redirect to='/bindMenu/app/'/>
                     )}/>
 
                     {/*饶猛*/}
-                    <Route path='/bindMenu/:openid?' component={BindMenu}/>
+                    <Route path='/bindMenu/:type/:openid?' component={BindMenu}/>
                     <Route path='/accountBind/:type?' component={AccountBind}/>
                     <Route path='/newAlbum/:classId/:name?' component={NewAlbum}/>
                     <Route path='/uploadImage/:albumId' component={UploadImage}/>

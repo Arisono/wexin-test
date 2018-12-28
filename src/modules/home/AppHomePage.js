@@ -154,6 +154,7 @@ class AppHomePage extends React.Component {
         //清除列表缓存数据
         clearListState()()
         clearClassData()()
+
         document.title = "智慧校园";
 
         console.log("componentDidMount()",this.props.userInfo);

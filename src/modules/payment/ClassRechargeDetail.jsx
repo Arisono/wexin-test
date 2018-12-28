@@ -81,7 +81,7 @@ class ClassRechargeDetail extends Component {
                             <span className='class-recharge-detail-title'>{rechargeBean.title}</span>
                             <span className='class-recharge-detail-person'>({payedPerson}/{totalPerson}人)</span>
                         </div>
-                        <span className={rechargeBean.statusCode === 2 ?
+                        <span className={rechargeBean.statusCode === 3 ?
                             'class-recharge-detail-status-todo' : ''}>{rechargeBean.status}</span>
                     </div>
                     <div className='gray-line' style={{height: '1px'}}></div>
@@ -101,7 +101,7 @@ class ClassRechargeDetail extends Component {
                     </div>
                     <div className='class-recharge-detail-menu'>
                         <div className='class-recharge-detail-money'>￥{amount}</div>
-                        {rechargeBean.statusCode === 2 ?
+                        {rechargeBean.statusCode === 3 ?
                             <div className='class-recharge-detail-stop'
                                  onClick={this.onEndPay}>停止收款
                             </div> : ''}

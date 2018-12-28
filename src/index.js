@@ -6,9 +6,13 @@ import HomePages from "./modules/home/HomePages";
 import RouteConfig from "./configs/router.config";
 import {Provider} from 'react-redux'
 import store from './redux/store/store'
+import {persistor} from './redux/store/store'
+import {PersistGate} from 'redux-persist/lib/integration/react';
 
 ReactDOM.render(<Provider store={store}>
-    <RouteConfig/>
+    <PersistGate loading={null} persistor={persistor}>
+        <RouteConfig/>
+    </PersistGate>
 </Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

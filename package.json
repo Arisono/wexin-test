@@ -20,6 +20,7 @@
     "react-slick": "^0.23.2",
     "react-transition-group": "^2.5.0",
     "redux": "^4.0.1",
+    "redux-persist": "^5.10.0",
     "slick-carousel": "^1.8.1",
     "swiper": "^4.4.2",
     "whatwg-fetch": "^3.0.0"
@@ -45,6 +46,7 @@
     "circular-json": "^0.5.9",
     "prop-types": "^15.6.2",
     "raf": "^3.4.1",
-    "react-app-rewired": "^1.6.2"
+    "react-app-rewired": "^1.6.2",
+    "redux-persist": "^5.10.0"
   }
 }

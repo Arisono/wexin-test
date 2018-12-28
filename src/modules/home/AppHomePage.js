@@ -163,30 +163,31 @@ class AppHomePage extends React.Component {
                       userOpenid: isObjEmpty(this.props.userInfo.userOpenid)?"1":this.props.userInfo.userOpenid,
                       userPhone:isObjEmpty(this.props.userInfo.userPhone)?"1":this.props.userInfo.userPhone
                   }).then((response)=>{
+                      console.log("result():"+JSON.stringify(response));
                       Toast.hide();
                       this.state.userId=  response.data.userId;
                       this.state.userName= response.data.userName;
-
                       // response.data.students.splice(1,1,{isSelected:false,...student});
                       console.log("studId():",this.props.userInfo.stuId);
                       if(isObjEmpty(this.props.userInfo.stuId)){
-                          let student=response.data.students[0];
-                          let student1={isSelected:true,...student};
-                          response.data.students.splice(0,1,student1);
+                          if(!isObjEmpty(response.data.students)){
+                              let student=response.data.students[0];
+                              let student1={isSelected:true,...student};
+                              response.data.students.splice(0,1,student1);
+                          }
                       }else{
-                          for (let i = 0; i < response.data.students.length; i++) {
-                             if( this.props.userInfo.stuId===response.data.students[i].stuId){
-                                 response.data.students[i]={isSelected:true,...response.data.students[i]};
-                                 this.state.studentIndex=i;
-                             }else{
-                                 response.data.students[i]={isSelected:false,...response.data.students[i]};
-                             }
+                          if(!isObjEmpty(response.data.students)){
+                              for (let i = 0; i < response.data.students.length; i++) {
+                                  if( this.props.userInfo.stuId===response.data.students[i].stuId){
+                                      response.data.students[i]={isSelected:true,...response.data.students[i]};
+                                      this.state.studentIndex=i;
+                                  }else{
+                                      response.data.students[i]={isSelected:false,...response.data.students[i]};
+                                  }
+                              }
                           }
                       }
                       this.state.students=response.data.students ;
-
-
-
                       this.state.pictures=response.data.pictures;
                       this.state.roles=response.data.roles;
                       this.state.userPhoto=response.data.userPhoto;
@@ -201,13 +202,15 @@ class AppHomePage extends React.Component {
                           }
                       }
 
+                      let stuName= isObjEmpty(response.data.students)?"":response.data.students[0].stuName;
+                      let stuId= isObjEmpty(response.data.students)?"":response.data.students[0].stuId;
                       switchUser({
-                            stuName:response.data.students[0].stuName,
+                            stuName:stuName,
                             userId: this.state.userId,
                             userName: this.state.userName,
                             userOpenid: this.state.userOpenid,
                             userPhone: this.state.userPhone,
-                            stuId:isObjEmpty(this.props.userInfo.stuId)?response.data.students[0].stuId:this.props.userInfo.stuId,
+                            stuId:isObjEmpty(this.props.userInfo.stuId)?stuId:this.props.userInfo.stuId,
                         })();
 
                     this.setState({
@@ -338,6 +341,7 @@ class AppHomePage extends React.Component {
                                     {this.state.isTeacher ? ("") : (<div className="margin_top_10 padding_right_10">
                                         <List
                                             grid={{ gutter: 16, column: 3 }}
+                                            locale={{emptyText: ''}}
                                             dataSource={this.state.students}
                                             renderItem={(item,index) => (
                                                 <List.Item className="flex clear_margin" onClick={this.onItemClick.bind(this,index)}>
@@ -424,51 +428,26 @@ class AppHomePage extends React.Component {
                             <div className="row" style={borderLine}></div>
                             <div className="row">
                                 <div className="col-xs-12" style={{margin: "0px", padding: "0px"}}>
+                                    {isObjEmpty(this.state.pictures.albums)?(""):(
                                     <Carousel autoplay={true} dots={false}>
-                                        <div>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                        </div>
-                                        <div>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                        </div>
-                                        <div>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                            <img
-                                                src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                                style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                width={"31%"}/>
-                                        </div>
+                                        {this.spliceArrayPicture(this.state.pictures.albums).map((item,index)=>(
+                                            <div>{
+                                                item.data.map((model,index)=>{
+                                                    console.log("imageUrl():",_baseURL+model.picUrl);
+                                                    let image_url=_baseURL+model.picUrl;
+                                                    if(model.picUrl===null){
+                                                        image_url="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=54924110,1820388093&fm=173&app=25&f=JPEG?w=218&h=146&s=32809D4D4E6250131F8058B203001012";
+                                                    }
+                                                    return <img
+                                                        src={image_url}
+                                                        style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                        width={"31%"}/>
+                                                })
+                                            }
+                                            </div>
+                                        ))}
                                     </Carousel>
-
+                                        )}
                                 </div>
                             </div>
 
@@ -476,8 +455,6 @@ class AppHomePage extends React.Component {
                             <div className="row" style={{background: "#F3F3F3", height: "10px"}}/>
                         </div>
                     </div>
-
-
                     {/*精彩瞬间*/}
                     <div className="row">
                         <div className="col-sm-12">
@@ -486,21 +463,34 @@ class AppHomePage extends React.Component {
                             </div>
                             <div className="row" id="page_horizontal_line"></div>
 
-                            <div className="row flex_row">
+                            {this.state.pictures.videos.length<3?(""):(
+                                <div className="row flex_row">
+                                    <ReactPlayer
+                                        playing={true}
+                                        className="margin_10 border_normal"
+                                        url={_baseURL+this.state.pictures.videos[0].picUrl}
+                                        controls
+                                        width={'60%'} height={"254px"}/>
 
-                                <img className=" padding_left"
-                                     src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                     width={'60%'} height={"220px"}/>
 
-                                <div style={{width: "40%"}} className="padding_right">
-                                    <div className="margin_bottom_5"><img
-                                        src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                        width={"100%"} height={"92px"}/></div>
-                                    <div><img
-                                        src={"https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"}
-                                        width={"100%"} height={"92px"}/></div>
+                                    <div style={{width: "40%"}} className="padding_right">
+                                        <div className="margin_bottom_10 ">
+                                            <ReactPlayer
+                                                playing={true}
+                                                url={_baseURL+this.state.pictures.videos[1].picUrl}
+                                                className="border_normal padding_left"
+                                                controls
+                                                width={"100%"} height={"120px"}/></div>
+                                        <div>
+                                            <ReactPlayer
+                                                playing={true}
+                                                url={_baseURL+this.state.pictures.videos[2].picUrl}
+                                                className="border_normal padding_left"
+                                                controls
+                                                width={"100%"} height={"120px"}/></div>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
 
                             <div className="row" style={{height: "50px"}}></div>
                         </div>
@@ -517,10 +507,10 @@ class AppHomePage extends React.Component {
                             <div className="row" style={borderLine}></div>
                             <div className="row">
                                 <div className="col-xs-12" style={{margin: "0px", padding: "0px"}}>
-                                    {console.log("spliceArrayPicture:",this.spliceArrayPicture(this.state.students[0].albums))}
-                                    <Carousel autoplay={true} dots={false}>
-                                        {this.spliceArrayPicture(this.state.students[this.state.studentIndex].albums).map((item,index)=>(
-                                            <div>{
+                                    {isObjEmpty(this.state.students)?(""):(
+                                        <Carousel autoplay={true} dots={false}>
+                                            {this.spliceArrayPicture(this.state.students[this.state.studentIndex].albums).map((item,index)=>(
+                                                <div>{
                                                     item.data.map((model,index)=>{
                                                         console.log("imageUrl():",_baseURL+model.picUrl);
                                                         let image_url=_baseURL+model.picUrl;
@@ -533,9 +523,11 @@ class AppHomePage extends React.Component {
                                                             width={"31%"}/>
                                                     })
                                                 }
-                                            </div>
+                                                </div>
                                             ))}
-                                    </Carousel>
+                                        </Carousel>
+                                    )}
+
 
                                 </div>
                             </div>
@@ -545,7 +537,6 @@ class AppHomePage extends React.Component {
                         </div>
                     </div>
 
-
                     {/*精彩瞬间*/}
                     <div className="row">
                         <div className="col-sm-12">
@@ -554,32 +545,41 @@ class AppHomePage extends React.Component {
                             </div>
                             <div className="row" id="page_horizontal_line"></div>
 
-                            <div className="row flex_row">
-                                <ReactPlayer
-                                    playing={true}
-                                    className="margin_10 border_normal"
-                                    url={"https://www.akuiguoshu.com/school/files/363b63ac-f335-49d2-a484-819a8993ccf6.MOV"}
-                                    controls
-                                    width={'60%'} height={"254px"}/>
+                            {isObjEmpty(this.state.students)?(""):(<div>
+                                {isObjEmpty(this.state.students[this.state.studentIndex].videos)?(""):(
+                                   <div>
+                                       {this.state.students[this.state.studentIndex].videos.length<3?(""):(
+                                           <div className="row flex_row">
+                                               <ReactPlayer
+                                                   playing={true}
+                                                   className="margin_10 border_normal"
+                                                   url={_baseURL+this.state.students[this.state.studentIndex].videos[0].picUrl}
+                                                   controls
+                                                   width={'60%'} height={"254px"}/>
 
 
-                                <div style={{width: "40%"}} className="padding_right">
-                                    <div className="margin_bottom_10 ">
-                                        <ReactPlayer
-                                            playing={true}
-                                        url={"https://media.w3.org/2010/05/sintel/trailer_hd.mp4"}
-                                        className="border_normal padding_left"
-                                        controls
-                                        width={"100%"} height={"120px"}/></div>
-                                    <div>
-                                        <ReactPlayer
-                                            playing={true}
-                                        url={"https://media.w3.org/2010/05/sintel/trailer_hd.mp4"}
-                                        className="border_normal padding_left"
-                                        controls
-                                        width={"100%"} height={"120px"}/></div>
-                                </div>
-                            </div>
+                                               <div style={{width: "40%"}} className="padding_right">
+                                                   <div className="margin_bottom_10 ">
+                                                       <ReactPlayer
+                                                           playing={true}
+                                                           url={_baseURL+this.state.students[this.state.studentIndex].videos[1].picUrl}
+                                                           className="border_normal padding_left"
+                                                           controls
+                                                           width={"100%"} height={"120px"}/></div>
+                                                   <div>
+                                                       <ReactPlayer
+                                                           playing={true}
+                                                           url={_baseURL+this.state.students[this.state.studentIndex].videos[2].picUrl}
+                                                           className="border_normal padding_left"
+                                                           controls
+                                                           width={"100%"} height={"120px"}/></div>
+                                               </div>
+                                           </div>
+                                       )}
+                                   </div>
+                                )}
+
+                            </div>)}
 
                             <div className="row" style={{height: "50px"}}></div>
                         </div>

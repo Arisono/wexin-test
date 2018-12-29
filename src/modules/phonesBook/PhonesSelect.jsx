@@ -188,6 +188,7 @@ class PhonesSelect extends Component {
             if (response && response.data && response.data.length > 0) {
                 response.data.map((item, index) => {
                     let phoneBean = new PhonesBean()
+                    phoneBean.icon = require('imgs/ic_head' + (index % 15 + 1)+'.png')
                     phoneBean.name = getStrValue(item, 'userName')
                     phoneBean.phone = getStrValue(item, 'userPhone')
                     phoneBean.claName = getStrValue(item, 'schName')

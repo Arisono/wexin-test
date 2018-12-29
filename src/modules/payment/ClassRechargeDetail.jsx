@@ -63,6 +63,7 @@ class ClassRechargeDetail extends Component {
             unpayPerson.forEach((item, index) => {
                 const phoneBean = new PhonesBean()
 
+                phoneBean.icon = require('imgs/ic_head' + (index % 15 + 1)+'.png')
                 phoneBean.claName = ''
                 phoneBean.claId = ''
                 phoneBean.name = getStrValue(item, 'userName')

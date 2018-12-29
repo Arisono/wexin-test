@@ -27,9 +27,12 @@ export default class PhonesItem extends Component {
 
     render() {
         const {phonesBean} = this.state
+        console.log(phonesBean.icon)
         return (
             <div className='common-flex-row-10' style={{padding: '0', width: '100%'}}>
-                <Avatar size={40} icon='user' style={{marginLeft: '12px'}}/>
+                {isObjEmpty(phonesBean.icon) ? <Avatar size={40} icon='user' style={{marginLeft: '12px'}}/> :
+                    <Avatar size={40} src={phonesBean.icon} style={{marginLeft: '12px'}}/>}
+
                 <div className='phones-item-root'>
                     <div className='phones-item-top'>
                         <div className='phones-item-name'>{phonesBean.name}</div>

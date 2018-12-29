@@ -69,7 +69,7 @@ import {connect} from 'react-redux';
                <div className="headerDiv">
                    <img className="headerImg" src={hi_img} alt=""/>
                    <div style={{marginTop:10}}>
-                       <div style={{color:"#000000",fontSize:15}}>{this.state.docModel.proposer.value}</div>
+                       {/*<div style={{color:"#000000",fontSize:15}}>{this.state.docModel.proposer.value}</div>*/}
                        <div style={{color:"#666666",fontSize:12,marginTop:10}}>{this.state.docModel.oaApprove.creatDate}</div>
                    </div>
                </div>
@@ -193,13 +193,6 @@ import {connect} from 'react-redux';
     }
     componentDidMount() {
 
-        // let pictures = [
-        //     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543289918586&di=a22036279c9e4a86f03cdd9996a8a0f5&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D0645f21b46086e067ea537086a611181%2F1c950a7b02087bf4b40d39c3f8d3572c11dfcf33.jpg',
-        //     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543289918584&di=beb8b53a7e5544a0f9f4c24b6c992a4b&imgtype=0&src=http%3A%2F%2Fpic34.photophoto.cn%2F20150311%2F0005018318132246_b.jpg',
-        //     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543289918579&di=d579d076328b42dac2924ce2a2524bc8&imgtype=0&src=http%3A%2F%2Fpic25.photophoto.cn%2F20121230%2F0010023534858256_b.jpg',
-        //     'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1543289918576&di=33bc85167aca41998561827abee641c7&imgtype=0&src=http%3A%2F%2Fpic25.photophoto.cn%2F20121230%2F0044040929574945_b.jpg'
-        // ]
-
         this.setState({
            // pictureList: this.state.pictureList.concat(pictures, pictures),
             approveId:this.props.match.params.approveId,
@@ -211,15 +204,17 @@ import {connect} from 'react-redux';
                 fetchGet(API.oaDetails,{
                     approveId:this.state.approveId
                 },{}).then((response)=>{
+                    console.log('response',response)
+
                     if(response.success && response.data){
                         var approveStatus = response.data.oaApprove.approveStatus
                         var showbutton = false
                         if(approveStatus == 1 && this.state.isMyApply== 'false'){
                             showbutton = true
-                            // console.log('showbutton1',1)
+                            console.log('showbutton1',1)
                         }else {
                             showbutton = false
-                            // console.log('showbutton2',2)
+                            console.log('showbutton2',2)
                         }
                         let approveFiles = response.data.approveFiles.value
                         const pictureList = []

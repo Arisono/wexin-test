@@ -7,6 +7,7 @@ import React, {Component} from 'react'
 import RechargeBean from 'model/RechargeBean'
 import 'css/payment.css'
 import {isObjEmpty} from "../utils/common";
+import {Toast} from 'antd-mobile'
 
 export default class RechargeItem extends Component {
 
@@ -46,15 +47,21 @@ export default class RechargeItem extends Component {
                     </div>}
 
                     <div className='recharge-item-bottom'>
-                        <div className={rechargeBean.status == '去交费' ?
+                        <div className={rechargeBean.statusCode === 4 ?
                             'recharge-item-amount-todo' :
                             'recharge-item-amount-done'}>{'￥:' + rechargeBean.amount}</div>
                         <div className={rechargeBean.statusCode === 4 ?
                             'recharge-item-btn-todo' :
-                            'recharge-item-btn-done'}>{rechargeBean.status}</div>
+                            'recharge-item-btn-done'}
+                             onClick={rechargeBean.statusCode === 4 ?
+                                 this.onRechargeClick : null}>{rechargeBean.status}</div>
                     </div>
                 </div>
             </div>
         )
+    }
+
+    onRechargeClick = () => {
+        Toast.fail('暂未对接支付功能，敬请期待！', 2)
     }
 }

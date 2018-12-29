@@ -40,7 +40,7 @@ class RechargeRelease extends Component {
 
     componentDidMount() {
         document.title = '收费发布'
-        getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
+        getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, true)
             .then(organization => {
                 this.setState({
                     targetData: organization.students,
@@ -90,7 +90,7 @@ class RechargeRelease extends Component {
             targetCount: targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this),
-            multiple: false,
+            multiple: true,
         }
         const defaultTargetProps = {
             targetData: [],
@@ -99,7 +99,7 @@ class RechargeRelease extends Component {
             targetCount: targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this),
-            multiple: false,
+            multiple: true,
         }
 
         return (
@@ -217,7 +217,7 @@ class RechargeRelease extends Component {
 
     onTargetFocus = (e) => {
         if (isObjEmpty(this.state.targetData)) {
-            getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
+            getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, true)
                 .then(organization => {
                     this.setState({
                         targetData: organization.students,

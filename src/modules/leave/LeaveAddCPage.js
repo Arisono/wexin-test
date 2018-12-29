@@ -22,7 +22,7 @@ import {ORGANIZATION_TEACHER} from "../../utils/api.constants";
 
 class LeaveAddCPage extends Component {
     componentDidMount() {
-        getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, true)
+        getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
             .then(organization => {
                 this.setState({
                     targetData: organization.teachers,
@@ -74,7 +74,7 @@ class LeaveAddCPage extends Component {
             targetCount: this.state.targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this),
-            multiple: true,
+            multiple: false,
         }
 
         const defaultTargetProps = {
@@ -84,7 +84,7 @@ class LeaveAddCPage extends Component {
             targetCount: this.state.targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this),
-            multiple: true,
+            multiple: false,
         }
         return (
             <div>
@@ -183,8 +183,9 @@ class LeaveAddCPage extends Component {
             })
         }
         const params = {
-            lvName: "",
-            lvType: "",
+            lvStatus:2,
+            lvName: this.state.leaveName,
+            lvType: this.state.leaveType,
             lvDetails: this.props.userInfo.userName + "的请假条",
             lvPro: this.props.userInfo.userId,
             lvProposer: JSON.stringify(this.state.votePerson[0]),
@@ -231,6 +232,7 @@ class LeaveAddCPage extends Component {
             })
         }
     }
+
 
     onTargetChange = (value, label, checkNodes, count) => {
         this.checkNodes = checkNodes
@@ -283,55 +285,7 @@ class LeaveAddCPage extends Component {
             leaveReason: leaveReason,
         })
     }
-    getOrganization = () => {
-        Toast.loading('', 0)
 
-        fetchGet(API.USER_GETOBJECT, {
-            // userId:10008,
-            stuId: this.props.userInfo.userId
-        }).then(response => {
-            Toast.hide()
-            const {targetData} = this.state
-            targetData.length = 0
-            if (response && response.data) {
-                const schoolArray = response.data.schools
-                const teacherArray = response.data.teachers
-                if (!isObjEmpty(teacherArray)) {
-                    const teacherData = []
-                    teacherArray.forEach((teacherObj, index) => {
-                        if (teacherObj) {
-                            teacherData.push({
-                                title: getStrValue(teacherObj, 'userName'),
-                                userId: getIntValue(teacherObj, 'userId'),
-                                userPhone: getStrValue(teacherObj, 'userPhone'),
-                                value: getStrValue(teacherObj, 'userName') + `-1-${index}`,
-                                key: `1-${index}`,
-                            })
-                        }
-                    })
-
-                    targetData.push({
-                        title: `全体老师`,
-                        value: `1`,
-                        key: `1`,
-                        children: teacherData,
-                    })
-                }
-            }
-            console.log('targetData', targetData)
-            this.setState({
-                targetData,
-            })
-        }).catch(error => {
-            Toast.hide()
-
-            if (typeof error === 'string') {
-                Toast.fail(error, 2)
-            } else {
-                Toast.fail('请求异常', 2)
-            }
-        })
-    }
 }
 
 

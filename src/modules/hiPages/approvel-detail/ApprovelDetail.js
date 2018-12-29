@@ -69,7 +69,7 @@ import {connect} from 'react-redux';
                <div className="headerDiv">
                    <img className="headerImg" src={hi_img} alt=""/>
                    <div style={{marginTop:10}}>
-                       {/*<div style={{color:"#000000",fontSize:15}}>{this.state.docModel.proposer.value}</div>*/}
+                       <div style={{color:"#000000",fontSize:15}}>{this.state.docModel.proposer.value}</div>
                        <div style={{color:"#666666",fontSize:12,marginTop:10}}>{this.state.docModel.oaApprove.creatDate}</div>
                    </div>
                </div>

@@ -227,10 +227,10 @@ class LeaveAddCPage extends Component{
     handleSelectChange =(value) =>{
         console.log('value',value)
         this.setState({
-           leaveType:value
+           leaveType:value[0]
         },function () {
             var ln = null;
-            switch (value){
+            switch (value[0]){
                 case "1":
                     ln = "事假"
                     break;
@@ -243,6 +243,7 @@ class LeaveAddCPage extends Component{
                 case "4":
                     ln = "陪产假"
                     break;
+                default:break;
             }
             this.setState({
                 leaveName:ln

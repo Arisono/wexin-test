@@ -122,11 +122,14 @@ class AppHomePage extends React.Component {
                      items.length=0;
                  }
              }
-             let model={
-                 index:arrays.length+1,
-                 data:[...items]
-             };
-             newArrays.push(model);
+             if(items.length!=0){
+                 let model={
+                     index:arrays.length+1,
+                     data:[...items]
+                 };
+                 newArrays.push(model);
+             }
+
          }
         return newArrays;
     }
@@ -505,6 +508,7 @@ class AppHomePage extends React.Component {
                                 <div className="col-xs-12" style={{margin: "0px", padding: "0px"}}>
                                     {isObjEmpty(this.state.students)?(""):(
                                         <Carousel autoplay={true} dots={false}>
+                                            {console.log("相册 render()",this.spliceArrayPicture(this.state.students[this.state.studentIndex].albums))}
                                             {this.spliceArrayPicture(this.state.students[this.state.studentIndex].albums).map((item,index)=>(
                                                 <div>{
                                                     item.data.map((model,index)=>{

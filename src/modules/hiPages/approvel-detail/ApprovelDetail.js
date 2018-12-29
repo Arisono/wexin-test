@@ -65,7 +65,7 @@ import {connect} from 'react-redux';
              }
          }
         return(
-            <div>
+            <div ref={node => this.node = node}>
                <div className="headerDiv">
                    <img className="headerImg" src={hi_img} alt=""/>
                    <div style={{marginTop:10}}>
@@ -190,6 +190,7 @@ import {connect} from 'react-redux';
         clearTimeout(this.backTask)
     }
     componentDidMount() {
+        this.node.scrollIntoView();
         this.setState({
            // pictureList: this.state.pictureList.concat(pictures, pictures),
             approveId:this.props.match.params.approveId,

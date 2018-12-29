@@ -131,11 +131,11 @@ class LeaveAddCPage extends Component {
                     <center><Button type="button" className="btn btn-primary comBtn_sty"
                                     onClick={this.onSubmitClick}>提交</Button></center>
                 </div>
-                <div
-                    onClick={this.clickLeaveList.bind(this)}
-                    className="leave-history flex_center text_underline">
-                    请假记录
-                </div>
+                {/*<div*/}
+                    {/*onClick={this.clickLeaveList.bind(this)}*/}
+                    {/*className="leave-history flex_center text_underline">*/}
+                    {/*请假记录*/}
+                {/*</div>*/}
             </div>
         )
     }
@@ -181,7 +181,6 @@ class LeaveAddCPage extends Component {
                 approveFiles.push(value.picUrl)
             })
         }
-
         const params = {
             lvStatus:2,
             lvName: this.state.leaveName,
@@ -204,9 +203,9 @@ class LeaveAddCPage extends Component {
                 Toast.show(response.data, 1)
                 // this.props.history.push("/leaveList/" + this.props.match.params.role)
                 // this.props.history.push("/homePage")
-                this.backTask = setTimeout(() => {
-                    this.props.history.goBack()
-                }, 2000)
+                // this.backTask = setTimeout(() => {
+                //     this.props.history.goBack()
+                // }, 2000)
             }
         }).catch((error) => {
             console.log('error', error)

@@ -14,6 +14,8 @@ import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 import {regExpConfig} from "../../configs/regexp.config";
 import {connect} from 'react-redux'
 import {clearListState} from "../../redux/actions/listState";
+import {getOrganization} from "../../utils/api.request";
+import {ORGANIZATION_TEACHER} from "../../utils/api.constants";
 
 const {TextArea} = Input
 const nowTimeStamp = Date.now();
@@ -38,8 +40,15 @@ class RechargeRelease extends Component {
 
     componentDidMount() {
         document.title = '收费发布'
+        getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
+            .then(organization => {
+                this.setState({
+                    targetData: organization.students,
+                })
+            }).catch(error => {
 
-        this.getOrganization()
+        })
+
         const {typeList} = this.state
 
         typeList.push({
@@ -80,7 +89,8 @@ class RechargeRelease extends Component {
             title: '收款对象',
             targetCount: targetCount,
             onTargetChange: this.onTargetChange.bind(this),
-            onTargetFocus: this.onTargetFocus.bind(this)
+            onTargetFocus: this.onTargetFocus.bind(this),
+            multiple:false,
         }
         const defaultTargetProps = {
             targetData: [],
@@ -88,7 +98,8 @@ class RechargeRelease extends Component {
             title: '收款对象',
             targetCount: targetCount,
             onTargetChange: this.onTargetChange.bind(this),
-            onTargetFocus: this.onTargetFocus.bind(this)
+            onTargetFocus: this.onTargetFocus.bind(this),
+            multiple:false,
         }
 
         return (
@@ -131,71 +142,6 @@ class RechargeRelease extends Component {
                         onClick={this.onRechargeRelease}>发起收款</Button>
             </div>
         )
-    }
-
-    getOrganization = () => {
-        Toast.loading('', 0)
-
-        fetchGet(API.USER_GETOBJECT, {
-            userId: this.props.userInfo.userId
-        }).then(response => {
-            Toast.hide()
-            const {targetData} = this.state
-            targetData.length = 0
-            if (response && response.data) {
-                const schoolArray = response.data.schools
-
-                if (!isObjEmpty(schoolArray)) {
-                    const classData = []
-
-                    schoolArray.forEach((schoolObj, sIndex) => {
-                        if (schoolObj) {
-                            const studentArray = schoolObj.students
-
-                            const studentData = []
-                            if (!isObjEmpty(studentArray)) {
-                                studentArray.forEach((studentObj, pIndex) => {
-                                    studentData.push({
-                                        title: getStrValue(studentObj, 'stuName'),
-                                        userId: getIntValue(studentObj, 'stuId'),
-                                        userPhone: getStrValue(studentObj, 'userPhone'),
-                                        value: getStrValue(studentObj, 'stuName') + `-0-${sIndex}-${pIndex}`,
-                                        key: `0-${sIndex}-${pIndex}`,
-                                    })
-                                })
-
-                                classData.push({
-                                    title: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName'),
-                                    value: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName') + `-0-${sIndex}`,
-                                    key: `0-${sIndex}`,
-                                    children: studentData,
-                                })
-                            }
-                        }
-                    })
-
-                    targetData.push({
-                        title: `全体学生`,
-                        value: `0`,
-                        key: `0`,
-                        children: classData,
-                    })
-                }
-            }
-
-            console.log('targetData', targetData)
-            this.setState({
-                targetData,
-            })
-        }).catch(error => {
-            Toast.hide()
-
-            if (typeof error === 'string') {
-                Toast.fail(error, 2)
-            } else {
-                Toast.fail('请求异常', 2)
-            }
-        })
     }
 
     onRechargeRelease = () => {

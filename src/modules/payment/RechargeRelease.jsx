@@ -90,7 +90,7 @@ class RechargeRelease extends Component {
             targetCount: targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this),
-            multiple: true,
+            multiple: false,
         }
         const defaultTargetProps = {
             targetData: [],
@@ -99,7 +99,7 @@ class RechargeRelease extends Component {
             targetCount: targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this),
-            multiple: true,
+            multiple: false,
         }
 
         return (

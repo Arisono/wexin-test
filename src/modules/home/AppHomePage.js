@@ -1040,7 +1040,7 @@ function ParentMenu() {
                      </span></div>
                      </Link>
                      </div>*/}
-                    <div className="col-xs-3" style={{
+                  {/*  <div className="col-xs-3" style={{
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "center",
@@ -1050,7 +1050,7 @@ function ParentMenu() {
                                   height={20}/></div>
                         <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
                             style={{fontSize: "12px"}}>入校登记</span></div>
-                    </div>
+                    </div>*/}
                     <div className="col-xs-3" style={{
                         display: "flex",
                         flexDirection: "column",
@@ -1095,10 +1095,6 @@ function ParentMenu() {
                         </span></div>
                         </Link>
                     </div>
-
-                </div>
-
-                <div className="row">
                     <div className="col-xs-3" style={{
                         display: "flex",
                         flexDirection: "column",
@@ -1113,6 +1109,10 @@ function ParentMenu() {
                         </span></div>
                     </Link>
                     </div>
+                </div>
+
+                <div className="row">
+
 
                     <div className="col-xs-3" id="row_center_align">
                         <div><img src={icon_home_menu_34} style={{margin: "20px 20px 8px 20px"}} width={20}

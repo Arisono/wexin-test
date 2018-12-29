@@ -31,7 +31,7 @@ class SendVote extends Component{
         Toast.loading('', 0)
 
         fetchGet(API.USER_GETOBJECT, {
-            userId:this.props.userInfo.userId,
+           userId:this.props.userInfo.userId,
             stuId:this.props.userInfo.userId
         }).then(response => {
             Toast.hide()

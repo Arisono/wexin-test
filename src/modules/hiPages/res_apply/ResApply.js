@@ -8,10 +8,13 @@ import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import { Select,Upload,Modal,Icon } from 'antd';
 import UserItem from './UserItem';
 import {Toast,Picker,List} from 'antd-mobile';
-import {isObjEmpty} from "../../../utils/common";
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
 import {connect} from 'react-redux';
+import {getIntValue, getStrValue, isObjEmpty} from "../../../utils/common";
+import TargetSelect from '../../../components/TargetSelect';
+
+
 const Option = Select.Option;
 
 
@@ -22,6 +25,8 @@ class ResApply extends Component{
     constructor(){
         super();
         this.state = {
+            votePerson:[],
+            targetData: [],
             resUser:null, //物品用途
             receivingSays:null, //领取说明
             Receiver:null, //接收人
@@ -49,6 +54,23 @@ class ResApply extends Component{
     }
 
     render(){
+        const targetProps = {
+            targetData: this.state.targetData,
+            targetValues: this.state.targetList,
+            title: '接受人',
+            targetCount: this.state.targetCount,
+            onTargetChange: this.onTargetChange.bind(this),
+            onTargetFocus: this.onTargetFocus.bind(this)
+        }
+
+        const defaultTargetProps = {
+            targetData: [],
+            targetValues: this.state.targetList,
+            title: '接受人',
+            targetCount: this.state.targetCount,
+            onTargetChange: this.onTargetChange.bind(this),
+            onTargetFocus: this.onTargetFocus.bind(this)
+        }
         //添加附件按钮
         const uploadButton = (
             <div>
@@ -73,16 +95,17 @@ class ResApply extends Component{
                 <div className="comhline_sty1"></div>
 
 
-                <div className="common-column-layout">
-                    <Picker
-                        data={this.state.receiverPerson} title='接收人' extra='请选择'
-                        value={this.state.Receiver}
-                        onChange={this.handleSelectChange}
-                        onOk={this.handleSelectChange} cols={1}>
-                        <List.Item arrow="horizontal" >接收人</List.Item>
-                    </Picker>
-                </div>
-
+                {/*<div className="common-column-layout">*/}
+                    {/*<Picker*/}
+                        {/*data={this.state.receiverPerson} title='接收人' extra='请选择'*/}
+                        {/*value={this.state.Receiver}*/}
+                        {/*onChange={this.handleSelectChange}*/}
+                        {/*onOk={this.handleSelectChange} cols={1}>*/}
+                        {/*<List.Item arrow="horizontal" >接收人</List.Item>*/}
+                    {/*</Picker>*/}
+                {/*</div>*/}
+                {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
+                    : <TargetSelect {...defaultTargetProps}/>}
                 <div className="comhline_sty"></div>
 
                 <div  className="item_sty">
@@ -109,7 +132,19 @@ class ResApply extends Component{
             </div>
         )
     }
+    onTargetFocus = (e) => {
+        if (isObjEmpty(this.state.targetData)) {
+            this.getOrganization()
+        }
+    }
 
+    onTargetChange = (value, label, checkNodes, count) => {
+        this.checkNodes = checkNodes
+        this.setState({
+            targetList: value,
+            targetCount: count
+        });
+    }
     //提交
     doSaveClick =() =>{
         console.log('state',this.state)
@@ -125,8 +160,12 @@ class ResApply extends Component{
             Toast.show('请输入领取说明',1)
             return
         }
-        if(this.state.Receiver == null || this.state.Receiver == ''){
-            Toast.show('请选择接收人',1)
+        if (!isObjEmpty(this.checkNodes)) {
+            this.checkNodes.forEach((node, index) => {
+                this.state.votePerson.push(node.userId)
+            })
+        }else {
+            Toast.fail('请选择接收人')
             return
         }
         var approveFiles = []
@@ -147,7 +186,7 @@ class ResApply extends Component{
             approveType: 2,
             appType:1,
             proposer: this.props.userInfo.userId,
-            // approver: 10007,
+            approver: this.state.votePerson[0],
             approveFiles:approveFiles,
             articles:this.state.selectContentArray
         }
@@ -221,6 +260,59 @@ class ResApply extends Component{
         });
     }
     handleCancel = () => this.setState({ previewVisible: false })
+    componentDidMount() {
+        this.getOrganization()
+    }
+    getOrganization = () => {
+        Toast.loading('', 0)
+
+        fetchGet(API.USER_GETOBJECT, {
+            userId:this.props.userInfo.userId,
+            stuId:this.props.userInfo.userId
+        }).then(response => {
+            Toast.hide()
+            const {targetData} = this.state
+            targetData.length = 0
+            if (response && response.data) {
+                const schoolArray = response.data.schools
+                const teacherArray = response.data.teachers
+                if (!isObjEmpty(teacherArray)) {
+                    const teacherData = []
+                    teacherArray.forEach((teacherObj, index) => {
+                        if (teacherObj) {
+                            teacherData.push({
+                                title: getStrValue(teacherObj, 'userName'),
+                                userId: getIntValue(teacherObj, 'userId'),
+                                userPhone: getStrValue(teacherObj, 'userPhone'),
+                                value: getStrValue(teacherObj, 'userName') + `-1-${index}`,
+                                key: `1-${index}`,
+                            })
+                        }
+                    })
+
+                    targetData.push({
+                        title: `全体老师`,
+                        value: `1`,
+                        key: `1`,
+                        children: teacherData,
+                    })
+                }
+            }
+
+            console.log('targetData', targetData)
+            this.setState({
+                targetData,
+            })
+        }).catch(error => {
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
+        })
+    }
 }
 let mapStateToProps = (state) => ({
     userInfo: {...state.redUserInfo}

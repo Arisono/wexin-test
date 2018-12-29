@@ -297,13 +297,12 @@ export function getDirFiles(directory, useSubdirectories, regExp) {
 }
 
 export const getCheckedNodes = (extra) => {
-    let checkedNodes = extra.allCheckedNodes
+    let checkedNodes = extra.allCheckedNodes || [extra.triggerNode]
     let count = getCheckedCount(checkedNodes)
     if (isObjEmpty(checkedNodes)) {
         checkedNodes = []
     }
     checkedNodes = getNodes(checkedNodes)
-    console.log('childNodes', checkedNodes)
     return {checkedNodes, count}
 }
 

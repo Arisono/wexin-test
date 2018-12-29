@@ -40,7 +40,7 @@ class RechargeRelease extends Component {
 
     componentDidMount() {
         document.title = '收费发布'
-        getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
+        getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, true)
             .then(organization => {
                 this.setState({
                     targetData: organization.students,
@@ -217,7 +217,14 @@ class RechargeRelease extends Component {
 
     onTargetFocus = (e) => {
         if (isObjEmpty(this.state.targetData)) {
-            this.getOrganization()
+            getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, true)
+                .then(organization => {
+                    this.setState({
+                        targetData: organization.students,
+                    })
+                }).catch(error => {
+
+            })
         }
     }
 

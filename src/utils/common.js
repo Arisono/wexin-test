@@ -303,6 +303,7 @@ export const getCheckedNodes = (extra) => {
         checkedNodes = []
     }
     checkedNodes = getNodes(checkedNodes)
+    console.log('checkNodes',checkedNodes)
     return {checkedNodes, count}
 }
 

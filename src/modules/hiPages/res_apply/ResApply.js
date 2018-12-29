@@ -13,7 +13,8 @@ import {API} from '../../../configs/api.config';
 import {connect} from 'react-redux';
 import {getIntValue, getStrValue, isObjEmpty} from "../../../utils/common";
 import TargetSelect from '../../../components/TargetSelect';
-
+import {getOrganization} from "../../../utils/api.request";
+import {ORGANIZATION_TEACHER} from "../../../utils/api.constants";
 
 const Option = Select.Option;
 
@@ -60,7 +61,8 @@ class ResApply extends Component{
             title: '接受人',
             targetCount: this.state.targetCount,
             onTargetChange: this.onTargetChange.bind(this),
-            onTargetFocus: this.onTargetFocus.bind(this)
+            onTargetFocus: this.onTargetFocus.bind(this),
+            multiple: false,
         }
 
         const defaultTargetProps = {
@@ -69,7 +71,8 @@ class ResApply extends Component{
             title: '接受人',
             targetCount: this.state.targetCount,
             onTargetChange: this.onTargetChange.bind(this),
-            onTargetFocus: this.onTargetFocus.bind(this)
+            onTargetFocus: this.onTargetFocus.bind(this),
+            multiple: false,
         }
         //添加附件按钮
         const uploadButton = (
@@ -134,7 +137,14 @@ class ResApply extends Component{
     }
     onTargetFocus = (e) => {
         if (isObjEmpty(this.state.targetData)) {
-            this.getOrganization()
+            getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
+                .then(organization => {
+                    this.setState({
+                        targetData: organization.teachers,
+                    })
+                }).catch(error => {
+
+            })
         }
     }
 
@@ -261,56 +271,13 @@ class ResApply extends Component{
     }
     handleCancel = () => this.setState({ previewVisible: false })
     componentDidMount() {
-        this.getOrganization()
-    }
-    getOrganization = () => {
-        Toast.loading('', 0)
+        getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
+            .then(organization => {
+                this.setState({
+                    targetData: organization.teachers,
+                })
+            }).catch(error => {
 
-        fetchGet(API.USER_GETOBJECT, {
-            userId:this.props.userInfo.userId,
-            stuId:this.props.userInfo.userId
-        }).then(response => {
-            Toast.hide()
-            const {targetData} = this.state
-            targetData.length = 0
-            if (response && response.data) {
-                const schoolArray = response.data.schools
-                const teacherArray = response.data.teachers
-                if (!isObjEmpty(teacherArray)) {
-                    const teacherData = []
-                    teacherArray.forEach((teacherObj, index) => {
-                        if (teacherObj) {
-                            teacherData.push({
-                                title: getStrValue(teacherObj, 'userName'),
-                                userId: getIntValue(teacherObj, 'userId'),
-                                userPhone: getStrValue(teacherObj, 'userPhone'),
-                                value: getStrValue(teacherObj, 'userName') + `-1-${index}`,
-                                key: `1-${index}`,
-                            })
-                        }
-                    })
-
-                    targetData.push({
-                        title: `全体老师`,
-                        value: `1`,
-                        key: `1`,
-                        children: teacherData,
-                    })
-                }
-            }
-
-            console.log('targetData', targetData)
-            this.setState({
-                targetData,
-            })
-        }).catch(error => {
-            Toast.hide()
-
-            if (typeof error === 'string') {
-                Toast.fail(error, 2)
-            } else {
-                Toast.fail('请求异常', 2)
-            }
         })
     }
 }

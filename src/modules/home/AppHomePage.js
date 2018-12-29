@@ -863,12 +863,14 @@ function TeacherMenu() {
                         </span></div>
                         </Link>
                     </div>
-                    <div className="col-xs-3 flex_center flex_column">
-                        <div><img src={icon_home_menu_15} style={{margin: "20px 20px 8px 20px"}} width={20}
+                    <Link className="flex_column flex_center" to="/class-schedule" id="menu_span_normal">
+                        <div><img src={icon_home_menu_30} style={{margin: "20px 20px 8px 20px"}} width={20}
                                   height={20}/></div>
-                        <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
-                            style={{fontSize: "12px"}}>课表查询</span></div>
-                    </div>
+                        <div style={{paddingBottom: "20px"}}><span style={{fontSize: "12px"}}>
+
+                           课表查询
+                        </span></div>
+                    </Link>
 
                     {/*</div>*/}
                 </div>

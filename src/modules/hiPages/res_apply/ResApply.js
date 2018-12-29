@@ -268,7 +268,7 @@ class ResApply extends Component{
 
         fetchGet(API.USER_GETOBJECT, {
             userId:this.props.userInfo.userId,
-            stuId:this.props.userInfo.userId
+            // stuId:this.props.userInfo.userId
         }).then(response => {
             Toast.hide()
             const {targetData} = this.state

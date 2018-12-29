@@ -110,12 +110,12 @@ class UserInfo extends Component {
                     </div>
                 </a>
             </div>
-            <div onClick={this.passWordClick} style={{padding: 10}} className='phones-item-top'>
+     {/*       <div onClick={this.passWordClick} style={{padding: 10}} className='phones-item-top'>
                 <text className='phones-item-name'>登陆密码</text>
                 <div style={{textAlign: 'right'}}>
                     <img width={8} height={15} src={require('../../style/imgs/next_arrow.png')}/>
                 </div>
-            </div>
+            </div>*/}
             <div style={{padding: 10}} className='phones-item-top'>
                 <text className='phones-item-name'>人脸照</text>
             </div>

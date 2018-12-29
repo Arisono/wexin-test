@@ -271,14 +271,6 @@ class AppHomePage extends React.Component {
         let borderLine = {
             border: "1px solid #f4f4f4"
         };
-        var settings = {
-            className: "center",
-            centerMode: true,
-            infinite: false,
-            centerPadding: "20px",
-            slidesToShow: 3,
-            speed: 500
-        };
 
         let   roleMenu = (
             <Menu onClick={this.onChangeRole.bind(this)}>
@@ -524,7 +516,9 @@ class AppHomePage extends React.Component {
                                                         return <img
                                                             src={image_url}
                                                             style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                            width={"31%"}/>
+                                                            width={"31%"}
+                                                            height={100}
+                                                          />
                                                     })
                                                 }
                                                 </div>

@@ -87,7 +87,6 @@ export default class RouteConfig extends Component {
                     <Route path='/announceRelease' component={AnnounceRelease}/>
                     <Route path='/classRechargeList' component={ClassRechargeList}/>
                     <Route path='/classRechargeDetail/:payId' component={ClassRechargeDetail}/>
-
                     {/*刘杰*/}
 
                     <Route path={"/MobileUploadDemo"} component={MobileUploadDemo}/>

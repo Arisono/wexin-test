@@ -320,7 +320,7 @@ class SendVote extends Component{
                 console.log('response',response)
                 if(response.success){
                     Toast.show('提交成功',1)
-                    setTimeout(()=>{
+                    this.backTask = setTimeout(()=>{
                         this.props.history.push("/voteListTab")
                     },3000)
                 }
@@ -334,7 +334,10 @@ class SendVote extends Component{
                 }
             })
     }
-
+    componentWillUnmount() {
+        Toast.hide()
+        clearTimeout(this.backTask)
+    }
     removeSItem = (index)=>{
         if(this.state.voteOptionss.length == 2){
             return

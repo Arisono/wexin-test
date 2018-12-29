@@ -81,7 +81,9 @@ import {connect} from 'react-redux';
                     )}
                 </div>
                 <div className="comhline_sty1" style={{marginTop:10}}></div>
-                <div style={{textAlign:'left',color:'#666666',marginLeft:10,marginTop:10}}>附件</div>
+                {
+                    pictureList.length > 0 ?  <div style={{textAlign:'left',color:'#666666',marginLeft:10,marginTop:10}}>附件</div> : ""
+                }
 
                 <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
                     <div style={{flex: '1', overflow: 'scroll', padding: '5px', webkitOverflowScrolling: 'touch'}}>
@@ -113,12 +115,7 @@ import {connect} from 'react-redux';
                     okText={'确认'}
                     onOk={this.doApprovel.bind(this,1)}
                     cancelText={'取消'}
-                    onCancel={this.doApprovel.bind(this,0)}
-                    // footer={[
-                    //     <Button key="back" onClick={this.handleCancel}>取消</Button>,
-                    //     <Button key="submit" type="primary" onClick={this.handleSubmit}>提交</Button>,
-                    // ]}
-                >
+                    onCancel={this.doApprovel.bind(this,0)}>
                    <div onChange={this.handelValueCom}>
                        <textarea autoFocus="autoFocus" ref='approveOpinion' className="form-control" rows="5" placeholder="填写意见说明（非必填）" ></textarea>
                    </div>
@@ -134,7 +131,6 @@ import {connect} from 'react-redux';
              statusTitle = '不同意'
          }
         // console.log('您点击了',statusTitle)
-
         this.setState({
             AMvisible:true,
             AMTitle:statusTitle,
@@ -159,9 +155,9 @@ import {connect} from 'react-redux';
                 this.setState({
                     showButton:false
                 })
-                setTimeout(()=>{
+                this.backTask = setTimeout(()=>{
                     this.props.history.push("/approvel")
-                },3000)
+                },2000)
             }
         }).catch((error) =>{
             if (typeof error === 'string') {
@@ -190,9 +186,10 @@ import {connect} from 'react-redux';
     componentDidUpdate(prevProps, prevState) {
     }
     componentWillUnmount() {
+        Toast.hide()
+        clearTimeout(this.backTask)
     }
     componentDidMount() {
-
         this.setState({
            // pictureList: this.state.pictureList.concat(pictures, pictures),
             approveId:this.props.match.params.approveId,

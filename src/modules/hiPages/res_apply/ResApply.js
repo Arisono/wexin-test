@@ -58,7 +58,7 @@ class ResApply extends Component{
         const targetProps = {
             targetData: this.state.targetData,
             targetValues: this.state.targetList,
-            title: '接受人',
+            title: '接收人',
             targetCount: this.state.targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this),
@@ -68,7 +68,7 @@ class ResApply extends Component{
         const defaultTargetProps = {
             targetData: [],
             targetValues: this.state.targetList,
-            title: '接受人',
+            title: '接收人',
             targetCount: this.state.targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this),
@@ -131,7 +131,7 @@ class ResApply extends Component{
                     </Modal>
                 </div>
 
-                <center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSaveClick}>发布</button></center>
+                <center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSaveClick}>提交</button></center>
             </div>
         )
     }
@@ -147,7 +147,10 @@ class ResApply extends Component{
             })
         }
     }
-
+    componentWillUnmount() {
+        Toast.hide()
+        clearTimeout(this.backTask)
+    }
     onTargetChange = (value, label, checkNodes, count) => {
         this.checkNodes = checkNodes
         this.setState({
@@ -210,6 +213,9 @@ class ResApply extends Component{
                 console.log('response',response)
                 if(response.success){
                     Toast.show(response.data,1)
+                    this.backTask = setTimeout(() => {
+                        this.props.history.goBack()
+                    }, 2000)
                 }
             })
             .catch((error) =>{

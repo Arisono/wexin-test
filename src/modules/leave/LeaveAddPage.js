@@ -323,10 +323,13 @@ class LeaveAddPage extends React.Component {
                                 handleRemove={this.handleRemove.bind(this)}
                             </PicturesWallItem>
                         </div>
+                        {/*<div className="flex_center margin_top_20">*/}
+                            {/*<Button ref={ref=>this.btn_commit=ref}  onClick={this.onClickEvent.bind(this)}  type={'primary'} block> 提交</Button>*/}
+                        {/*</div>*/}
                         <div className="flex_center margin_top_20">
-                            <Button ref={ref=>this.btn_commit=ref}  onClick={this.onClickEvent.bind(this)}  type={'primary'} block> 提交</Button>
+                            <center><Button type="button" className="btn btn-primary comBtn_sty"
+                                            ref={ref=>this.btn_commit=ref}  onClick={this.onClickEvent.bind(this)}  >提交</Button></center>
                         </div>
-
                         <div onClick={this.clickLeaveList.bind(this)}
                              className="leave-history flex_center text_underline">请假记录
                         </div>

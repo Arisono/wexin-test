@@ -65,10 +65,6 @@ class LeaveAddCPage extends Component {
     componentWillMount() {
         document.title = "请假申请";
     }
-    componentWillUnmount() {
-        Toast.hide()
-        clearTimeout(this.backTask)
-    }
     render() {
         const targetProps = {
             targetData: this.state.targetData,

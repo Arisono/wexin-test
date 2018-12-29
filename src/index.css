@@ -100,6 +100,14 @@ i.anticon.anticon-delete svg {
     max-height: 260px !important;
 }
 
+.ant-select-dropdown.ant-select-tree-dropdown.ant-select-dropdown--single.ant-select-dropdown-placement-bottomLeft{
+    max-height: 260px !important;
+}
+
+.ant-select-dropdown.ant-select-tree-dropdown.ant-select-dropdown--single.ant-select-dropdown-placement-topLeft {
+    max-height: 260px !important;
+}
+
 .ant-select-selection--multiple {
     max-height: 100px;
     overflow-y: scroll;

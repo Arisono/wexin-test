@@ -6,10 +6,27 @@
 import React, {Component} from 'react'
 import {TreeSelect, Icon} from 'antd'
 import {getCheckedNodes} from "../utils/common";
+import PropTypes from 'prop-types';
 
 const SHOW_PARENT = TreeSelect.SHOW_PARENT
+const SHOW_CHILD = TreeSelect.SHOW_CHILD
 
 export default class TargetSelect extends Component {
+
+
+    static propTypes = {
+        targetData: PropTypes.array.isRequired, //数据源
+        targetValues: PropTypes.array.isRequired,//被选中的数据
+        title: PropTypes.string,//标题
+        targetCount: PropTypes.number, //被选中的数量
+        multiple: PropTypes.bool
+    }
+
+    static defaultProps = {
+        title: '选择对象',//标题
+        targetCount: 0, //被选中的数量
+        multiple: true
+    }
 
     constructor() {
         super()
@@ -40,21 +57,23 @@ export default class TargetSelect extends Component {
             targetData, //数据源
             targetValues,//被选中的数据
             title,//标题
-            targetCount //被选中的数量
+            targetCount, //被选中的数量
+            multiple
         } = this.props
 
         const targetProps = {
             treeData: targetData,
             value: targetValues,
             onChange: this.onTargetChange,
-            treeCheckable: true,
+            multiple: multiple,
+            treeCheckable: multiple,
             showCheckedStrategy: SHOW_PARENT,
             searchPlaceholder: `请选择${title}`,
             style: {
                 width: '100%',
             },
-            allowClear: true,
-            suffixIcon: (<Icon type="plus-circle" style={{color: '#4197FC', fontSize: '20px'}}/>)
+            allowClear: multiple,
+            suffixIcon: (<Icon type="plus-circle" style={{color: '#4197FC', fontSize: '20px', marginTop: '-10px'}}/>)
         }
         return (
             <div>

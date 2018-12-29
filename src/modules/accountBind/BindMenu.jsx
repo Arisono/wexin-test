@@ -57,9 +57,7 @@ export default class BindMenu extends Component {
 
             //清除用户信息
             clearUserInfo()()
-            setTimeout(() => {
-                this.obtainBindStatus()
-            }, 500)
+            this.obtainBindStatus()
         }
     }
 

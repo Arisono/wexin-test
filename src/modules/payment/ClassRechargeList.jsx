@@ -126,9 +126,9 @@ class ClassRechargeList extends Component {
                         } else if (rechargeBean.statusCode === 2) {
                             rechargeBean.status = '已发布'
                         } else if (rechargeBean.statusCode === 3) {
-                            rechargeBean.status = '收款中'
-                        } else if (rechargeBean.statusCode === 4) {
                             rechargeBean.status = '已结束'
+                        } else if (rechargeBean.statusCode === 4) {
+                            rechargeBean.status = '收款中'
                         } else if (rechargeBean.statusCode === 5) {
                             rechargeBean.status = '已支付'
                         } else if (rechargeBean.statusCode === 6) {

@@ -12,6 +12,7 @@ import {fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {switchUser} from 'action/userInfo'
 import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
+import {clearUserInfo} from "../../redux/actions/userInfo";
 
 export default class BindMenu extends Component {
 
@@ -54,9 +55,11 @@ export default class BindMenu extends Component {
             })
             this.openid = this.paramId
 
+            //清除用户信息
+            clearUserInfo()()
             setTimeout(() => {
                 this.obtainBindStatus()
-            }, 1000)
+            }, 500)
         }
     }
 
@@ -77,19 +80,19 @@ export default class BindMenu extends Component {
             userOpenid: this.openid,
         }).then(response => {
             if (response.data) {
-                let role = 1//1:家长2:老师
+                /*let role = 1//1:家长2:老师
                 const userStation = getStrValue(response.data, 'userStation')
                 if (userStation === '家长') {
                     role = 1
                 } else {
                     role = 2
-                }
+                }*/
                 switchUser({
                     userId: getIntValue(response.data, 'userId'),
                     userName: getStrValue(response.data, 'userName'),
                     userOpenid: getStrValue(response.data, 'userOpenid'),
                     userPhone: getStrValue(response.data, 'userPhone'),
-                    userRole: role
+                    // userRole: role
                 })()
 
                 this.setState({

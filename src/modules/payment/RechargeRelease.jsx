@@ -217,7 +217,14 @@ class RechargeRelease extends Component {
 
     onTargetFocus = (e) => {
         if (isObjEmpty(this.state.targetData)) {
-            this.getOrganization()
+            getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
+                .then(organization => {
+                    this.setState({
+                        targetData: organization.students,
+                    })
+                }).catch(error => {
+
+            })
         }
     }
 

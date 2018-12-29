@@ -65,7 +65,10 @@ class LeaveAddCPage extends Component {
     componentWillMount() {
         document.title = "请假申请";
     }
-
+    componentWillUnmount() {
+        Toast.hide()
+        clearTimeout(this.backTask)
+    }
     render() {
         const targetProps = {
             targetData: this.state.targetData,
@@ -204,7 +207,10 @@ class LeaveAddCPage extends Component {
             if (response.success) {
                 Toast.show(response.data, 1)
                 // this.props.history.push("/leaveList/" + this.props.match.params.role)
-                this.props.history.push("/homePage")
+                // this.props.history.push("/homePage")
+                this.backTask = setTimeout(() => {
+                    this.props.history.goBack()
+                }, 2000)
             }
         }).catch((error) => {
             console.log('error', error)

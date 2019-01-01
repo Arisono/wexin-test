@@ -25,6 +25,7 @@ import ImagesViewer from '../../../components/imagesVIewer/index'
             showButton:false,
             AMvisible: false,
             AMTitle:null,
+            pictureList:[],
             detailList:[],
             previewVisible: false,
             previewImage: '',
@@ -138,6 +139,7 @@ import ImagesViewer from '../../../components/imagesVIewer/index'
             </div>
         )
     }
+     handleCancel = () => this.setState({previewVisible: false})
      handlePreview = (url, index) => {
          this.setState({
              previewImage: url,

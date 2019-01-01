@@ -233,8 +233,8 @@ class FieldTrip extends Component {
         }
 
         var params = {
-            appType: this.state.tripType,
-            approveName: this.state.tripType==1 ? "外出申请":"出差申请",
+            appType: this.state.tripType[0],
+            approveName: this.state.tripType[0] == 1 ? "外出申请":"出差申请",
             approveDetails: this.state.tripsReason,
             approveType: 1,
             proposer: this.props.userInfo.userId,

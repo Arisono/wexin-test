@@ -322,7 +322,7 @@ class SendVote extends Component{
                     Toast.show('提交成功',1)
                     this.backTask = setTimeout(()=>{
                         this.props.history.push("/voteListTab")
-                    },3000)
+                    },2000)
                 }
             })
             .catch((error) =>{

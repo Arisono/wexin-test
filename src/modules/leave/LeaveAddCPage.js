@@ -22,6 +22,7 @@ import {ORGANIZATION_TEACHER} from "../../utils/api.constants";
 
 class LeaveAddCPage extends Component {
     componentDidMount() {
+        this.node.scrollIntoView();
         getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
             .then(organization => {
                 this.setState({
@@ -86,7 +87,7 @@ class LeaveAddCPage extends Component {
             multiple: false,
         }
         return (
-            <div>
+            <div ref={node => this.node = node}>
                 <Picker
                     data={this.state.typeLeave} title='请假类型' extra='请选择'
                     value={this.state.leaveType}
@@ -111,7 +112,7 @@ class LeaveAddCPage extends Component {
 
                 <div className="comhline_sty"></div>
                 <div onChange={this.handelValueCom}>
-                    <textarea autoFocus="autoFocus" ref='leaveReason' className="form-control textarea_sty" rows="4"
+                    <textarea  ref='leaveReason' className="form-control textarea_sty" rows="4"
                               placeholder="请填写请假理由…"></textarea>
                 </div>
                 <div className="comhline_sty"></div>
@@ -182,21 +183,20 @@ class LeaveAddCPage extends Component {
             })
         }
         const params = {
-            lvStatus:2,
-            lvName: this.state.leaveName,
-            lvType: this.state.leaveType[0],
-            lvDetails: this.props.userInfo.userName + "的请假条",
-            lvPro: this.props.userInfo.userId,
-            lvApprover: JSON.stringify(this.state.votePerson[0]),
-            lvFiles: approveFiles,
-            lvRemarks: this.state.leaveReason,
+            approveType:4,
+            approveName: this.state.leaveName,
+            appType: this.state.leaveType[0],
+            approveDetails: this.props.userInfo.userName + "的请假条",
+            proposer: this.props.userInfo.userId,
+            approver: JSON.stringify(this.state.votePerson[0]),
+            approveFiles: approveFiles,
             startDate: moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
             endDate: moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
 
         }
         console.log('param', params)
-        fetchPost(API.leaveCreate, {
-            leaveString:JSON.stringify(params)
+        fetchPost(API.oaCreate, {
+            oaString:JSON.stringify(params)
         }, {}).then((response) => {
             console.log('response', response)
             if (response.success) {
@@ -204,7 +204,7 @@ class LeaveAddCPage extends Component {
                 // this.props.history.push("/leaveList/" + this.props.match.params.role)
                 // this.props.history.push("/homePage")
                 this.backTask = setTimeout(() => {
-                    this.props.history.goBack()
+                    // this.props.history.goBack()
                 }, 2000)
             }
         }).catch((error) => {

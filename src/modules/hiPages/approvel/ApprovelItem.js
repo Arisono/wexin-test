@@ -29,7 +29,7 @@ export default class ApprovelItem extends Component{
                     </div>
                     <div style={{width:'65%'}}>
                         <div style={{color:"#333333",fontSize:15,marginTop:10}}>
-                            {this.props.itemata.approveType == 1 ? '出差申请' :  (this.props.itemata.approveType == 2 ? '用品申请' : '外出申请' )}
+                            {this.props.itemata.approveType == 1 ? '出差申请' :  (this.props.itemata.approveType == 2 ? '用品申请' : '请假申请' )}
                         </div>
                         <div style={{color:"#666666",fontSize:12,marginTop:15}}>{this.props.itemata.creatDate}</div>
                     </div>

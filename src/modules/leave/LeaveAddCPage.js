@@ -183,21 +183,20 @@ class LeaveAddCPage extends Component {
             })
         }
         const params = {
-            lvStatus:2,
-            lvName: this.state.leaveName,
-            lvType: this.state.leaveType[0],
-            lvDetails: this.props.userInfo.userName + "的请假条",
-            lvPro: this.props.userInfo.userId,
-            lvApprover: JSON.stringify(this.state.votePerson[0]),
-            lvFiles: approveFiles,
-            lvRemarks: this.state.leaveReason,
+            approveType:4,
+            approveName: this.state.leaveName,
+            appType: this.state.leaveType[0],
+            approveDetails: this.props.userInfo.userName + "的请假条",
+            proposer: this.props.userInfo.userId,
+            approver: JSON.stringify(this.state.votePerson[0]),
+            approveFiles: approveFiles,
             startDate: moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
             endDate: moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
 
         }
         console.log('param', params)
-        fetchPost(API.leaveCreate, {
-            leaveString:JSON.stringify(params)
+        fetchPost(API.oaCreate, {
+            oaString:JSON.stringify(params)
         }, {}).then((response) => {
             console.log('response', response)
             if (response.success) {
@@ -205,7 +204,7 @@ class LeaveAddCPage extends Component {
                 // this.props.history.push("/leaveList/" + this.props.match.params.role)
                 // this.props.history.push("/homePage")
                 this.backTask = setTimeout(() => {
-                    this.props.history.goBack()
+                    // this.props.history.goBack()
                 }, 2000)
             }
         }).catch((error) => {

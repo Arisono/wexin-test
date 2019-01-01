@@ -30,6 +30,7 @@ class AccountBind extends Component {
         } else if (mType == 'teacher') {
             document.title = '教职工端绑定'
         }
+
     }
 
     constructor() {
@@ -38,12 +39,13 @@ class AccountBind extends Component {
             account: '',
             phone: '',
             code: '',
-            obtainText: '获取验证码'
+            obtainText: '获取验证码',
+            userHead: 'http://d.hiphotos.baidu.com/zhidao/wh%3D450%2C600/sign=1be47219c1fdfc03e52debbce10faba2/b8389b504fc2d562562d540ae51190ef76c66c34.jpg'
         }
     }
 
     render() {
-        const {account, phone, code, obtainText} = this.state
+        const {account, phone, code, obtainText, userHead} = this.state
 
         const idClear = account ?
             <Icon type="close-circle" onClick={this.accountEmpty} style={{color: 'white'}}/>
@@ -62,7 +64,9 @@ class AccountBind extends Component {
 
         return (
             <div className='bindParent' style={{height: this.bodyHeight + 'px'}}>
-                <Avatar icon='user' size={65}/>
+                {isObjEmpty(userHead) ?
+                    <Avatar icon='user' size={65}/> :
+                    <Avatar src={userHead} size={65}/>}
                 <Input placeholder={mType == 'parents' ? '学号' : '工号'}
                        prefix={idIcon} suffix={idClear}
                        ref={input => this.accountInput = input} onChange={this.accountChange}
@@ -181,7 +185,7 @@ class AccountBind extends Component {
 
     bindEvent = () => {
         Toast.loading('信息绑定中...')
-        const {account, phone, code} = this.state
+        const {account, phone, code, userHead} = this.state
         if (isObjEmpty(account, phone, code)) {
             Toast.fail('请完善所有输入项！')
             return
@@ -191,7 +195,8 @@ class AccountBind extends Component {
                 stuId: account,
                 userPhone: phone,
                 vcode: code,
-                openid: this.props.userInfo.userOpenid
+                openid: this.props.userInfo.userOpenid,
+                userPhoto: userHead
             }).then(response => {
                 Toast.hide()
                 switchUser({
@@ -199,6 +204,7 @@ class AccountBind extends Component {
                     userName: getStrValue(response.data, 'userName'),
                     userOpenid: getStrValue(response.data, 'userOpenid'),
                     userPhone: getStrValue(response.data, 'userPhone'),
+                    userAvatar: userHead
                 })()
                 this.props.history.push('/homePage?role=parent')
             }).catch(error => {
@@ -215,7 +221,8 @@ class AccountBind extends Component {
                 userId: account,
                 userPhone: phone,
                 vcode: code,
-                openid: this.props.userInfo.userOpenid
+                openid: this.props.userInfo.userOpenid,
+                userPhoto: userHead
             }).then(response => {
                 Toast.hide()
                 switchUser({
@@ -236,6 +243,24 @@ class AccountBind extends Component {
             })
         }
     }
+
+    getUserInfo = () => {
+        fetchGet('https://api.weixin.qq.com/cgi-bin/user/info', {
+            access_token: this.props.userInfo.accessToken,
+            openid: this.props.userInfo.userOpenid,
+            lang: 'zh_CN',
+        }).then(response => {
+            if (!isObjEmpty(response)) {
+                switchUser({
+                    userAvatar: response.headimgurl ? response.headimgurl : this.props.userInfo.userAvatar,
+                    userOpenid: response.openid ? response.openid : this.props.userInfo.userOpenid,
+                })()
+            }
+        }).catch(error => {
+
+        })
+    }
+
 }
 
 let mapStateToProps = (state) => ({

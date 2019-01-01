@@ -8,7 +8,9 @@ const initListState = {
     userOpenid: '',
     userPhone: '',
     stuId: '',
-    userRole: 0
+    userRole: 0,
+    accessToken: '',
+    userAvatar: ''
 }
 
 const redUserInfo = (state = initListState, action) => {

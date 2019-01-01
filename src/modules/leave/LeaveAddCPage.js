@@ -55,7 +55,7 @@ class LeaveAddCPage extends Component {
             ],
             leaveName: null,
             leaveReason: null,
-            leaveType: null,
+            leaveType: [],
             startValue: null,
             endValue: null,
         }
@@ -65,12 +65,11 @@ class LeaveAddCPage extends Component {
     componentWillMount() {
         document.title = "请假申请";
     }
-
     render() {
         const targetProps = {
             targetData: this.state.targetData,
             targetValues: this.state.targetList,
-            title: '接受人',
+            title: '接收人',
             targetCount: this.state.targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this),
@@ -80,7 +79,7 @@ class LeaveAddCPage extends Component {
         const defaultTargetProps = {
             targetData: [],
             targetValues: this.state.targetList,
-            title: '接受人',
+            title: '接收人',
             targetCount: this.state.targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this),
@@ -91,8 +90,7 @@ class LeaveAddCPage extends Component {
                 <Picker
                     data={this.state.typeLeave} title='请假类型' extra='请选择'
                     value={this.state.leaveType}
-                    onChange={this.handleSelectChange}
-                    onOk={this.handleSelectChange} cols={1}>
+                    onChange={this.handleSelectChange} cols={1}>
                     <List.Item arrow="horizontal">请假类型</List.Item>
                 </Picker>
                 <div className="comhline_sty1"></div>
@@ -144,6 +142,7 @@ class LeaveAddCPage extends Component {
 
     onSubmitClick = (event) => {
         console.log('state', this.state)
+        console.log('state', this.state.leaveType)
         if (this.state.leaveType == null || this.state.leaveType == '') {
             Toast.fail('请选择请假类型')
             return
@@ -182,13 +181,14 @@ class LeaveAddCPage extends Component {
                 approveFiles.push(value.picUrl)
             })
         }
+
         const params = {
             lvStatus:2,
             lvName: this.state.leaveName,
-            lvType: this.state.leaveType,
+            lvType: this.state.leaveType[0],
             lvDetails: this.props.userInfo.userName + "的请假条",
             lvPro: this.props.userInfo.userId,
-            lvProposer: JSON.stringify(this.state.votePerson[0]),
+            lvApprover: JSON.stringify(this.state.votePerson[0]),
             lvFiles: approveFiles,
             lvRemarks: this.state.leaveReason,
             startDate: moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
@@ -196,11 +196,17 @@ class LeaveAddCPage extends Component {
 
         }
         console.log('param', params)
-        fetchPost(API.leaveCreate, params, {}).then((response) => {
+        fetchPost(API.leaveCreate, {
+            leaveString:JSON.stringify(params)
+        }, {}).then((response) => {
             console.log('response', response)
             if (response.success) {
                 Toast.show(response.data, 1)
-                this.props.history.push("/leaveList/" + this.props.match.params.role)
+                // this.props.history.push("/leaveList/" + this.props.match.params.role)
+                // this.props.history.push("/homePage")
+                this.backTask = setTimeout(() => {
+                    this.props.history.goBack()
+                }, 2000)
             }
         }).catch((error) => {
             console.log('error', error)
@@ -253,7 +259,7 @@ class LeaveAddCPage extends Component {
     handleSelectChange = (value) => {
         console.log('value', value)
         this.setState({
-            leaveType: value[0]
+            leaveType: value
         }, function () {
             var ln = null;
             switch (value[0]) {

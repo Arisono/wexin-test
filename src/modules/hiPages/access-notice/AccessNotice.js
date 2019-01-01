@@ -4,43 +4,44 @@
 
 import React,{Component} from 'react';
 import './AccessNotice.css';
-import line_img from '../../../style/imgs/line_img.png';
-import enter_img from '../../../style/imgs/ic_enter.png';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
 import LoadingMore from "../../../components/LoadingMore";
 import InfiniteScroll from 'react-infinite-scroller';
 import {Toast} from 'antd-mobile';
 import {connect} from 'react-redux';
+import ItemComp from './ItemComp';
 
-function ItemComp() {
-    return(
-        <div>
-            <img className="lineimg_sty" src={line_img} alt=""/>
-            <div className="timeList_sty">
-                <img className="img-circle out_in" src={enter_img} alt=""/>
-                <div style={{marginLeft:30}}>
-                    <div style={{color:"#666666",fontSize:12}}>2018-10-21 星期天</div>
-                    <div style={{color:"#3333",fontSize:12,marginTop:5}}>17:01:34</div>
-                </div>
-            </div>
-        </div>
-    )
-}
 
 class AccessNotice extends Component{
     componentWillMount() {
         document.title = '进出校通知'
     }
+
+    constructor(){
+        super();
+        this.state = {
+            studentName:'吴彦祖',
+            studentGrade:'三年八班',
+            out_inData:[]
+        }
+    }
     componentDidMount() {
-        // console.log('Component DID MOUNT!',API.RecordOutgoingList)
         fetchGet(API.RecordOutgoingList,{
-            stuId:this.props.userInfo.userId,
+            // stuId:this.props.userInfo.userId,
+            stuId:10002,
             pageIndex:1,
             pageSize:10
         },{})
             .then((response)=>{
                 console.log('response',response)
+                if (response.success && response.data){
+                    this.setState({
+                        out_inData:response.data
+                    })
+                }else {
+                    Toast.info("暂无进出校数据",2)
+                }
             })
             .catch((error) =>{
                 console.log('error',error)
@@ -50,14 +51,6 @@ class AccessNotice extends Component{
                     Toast.fail('请求异常', 2)
                 }
             })
-    }
-    constructor(){
-        super();
-        this.state = {
-            studentName:'吴彦祖',
-            studentGrade:'三年八班',
-            out_inData:[1,2,3,4,5,1,2,3,4,5]
-        }
     }
     render(){
         return(
@@ -82,14 +75,6 @@ class AccessNotice extends Component{
                         {this.state.out_inData.map((itemdata,index) => <ItemComp key ={index} itemdata = {itemdata} handelSItem={this.handelSItem}></ItemComp>)}
                     </div>
                 </div>
-               {/*{ <div className="foot-sty">*/}
-                    {/*<div className="comhline_sty1"></div>*/}
-                   {/*<div className="foot-sty1">*/}
-                       {/*<div onClick={this.previousDataClick} style={{width:"50%"}} className="text-center"><img src={arrowLeft} alt=""  style={{height:32,width:17,marginTop:8}}/></div>*/}
-                       {/*<div onClick={this.nextDataClick} style={{width:"50%"}} className="text-center"><img src={nextArrowimg} alt=""  style={{height:32,width:17,marginTop:8}}/></div>*/}
-                   {/*</div>*/}
-                {/*</div>}*/}
-
             </div>
         )
     }

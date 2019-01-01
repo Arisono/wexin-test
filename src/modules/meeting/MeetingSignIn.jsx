@@ -128,7 +128,7 @@ class MeetingSignIn extends Component {
                     meetBean.signStatusCode = getIntValue(item, 'signStatus')
                     if (meetBean.signStatusCode === 1) {
                         meetBean.signStatus = '签到'
-                    } else if (meetBean.signStatusCode === 3) {
+                    } else if (meetBean.signStatusCode === 5) {
                         meetBean.signStatus = '已签到'
                     } else {
                         meetBean.signStatusCode = 1

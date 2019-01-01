@@ -54,7 +54,7 @@ class ClassRechargeDetail extends Component {
         let amount = 0
         try {
             amount = (percapita * totalPerson).toFixed(2)
-        }catch (e) {
+        } catch (e) {
             amount = (percapita * totalPerson)
         }
 
@@ -63,10 +63,11 @@ class ClassRechargeDetail extends Component {
             unpayPerson.forEach((item, index) => {
                 const phoneBean = new PhonesBean()
 
+                phoneBean.icon = require('imgs/ic_head' + (index % 15 + 1) + '.png')
                 phoneBean.claName = ''
                 phoneBean.claId = ''
-                phoneBean.name = getStrValue(item, 'userName')
-                phoneBean.phone = getStrValue(item, 'phone')
+                phoneBean.name = getStrValue(item, 'stuName')
+                phoneBean.phone = ''
 
                 phonesList.push(phoneBean)
             })
@@ -81,7 +82,7 @@ class ClassRechargeDetail extends Component {
                             <span className='class-recharge-detail-title'>{rechargeBean.title}</span>
                             <span className='class-recharge-detail-person'>({payedPerson}/{totalPerson}人)</span>
                         </div>
-                        <span className={rechargeBean.statusCode === 3 ?
+                        <span className={rechargeBean.statusCode === 4 ?
                             'class-recharge-detail-status-todo' : ''}>{rechargeBean.status}</span>
                     </div>
                     <div className='gray-line' style={{height: '1px'}}></div>
@@ -101,7 +102,7 @@ class ClassRechargeDetail extends Component {
                     </div>
                     <div className='class-recharge-detail-menu'>
                         <div className='class-recharge-detail-money'>￥{amount}</div>
-                        {rechargeBean.statusCode === 3 ?
+                        {rechargeBean.statusCode === 4 ?
                             <div className='class-recharge-detail-stop'
                                  onClick={this.onEndPay}>停止收款
                             </div> : ''}
@@ -141,9 +142,9 @@ class ClassRechargeDetail extends Component {
                 } else if (rechargeBean.statusCode === 2) {
                     rechargeBean.status = '已发布'
                 } else if (rechargeBean.statusCode === 3) {
-                    rechargeBean.status = '收款中'
-                } else if (rechargeBean.statusCode === 4) {
                     rechargeBean.status = '已结束'
+                } else if (rechargeBean.statusCode === 4) {
+                    rechargeBean.status = '收款中'
                 } else if (rechargeBean.statusCode === 5) {
                     rechargeBean.status = '已支付'
                 } else if (rechargeBean.statusCode === 6) {
@@ -201,10 +202,11 @@ class ClassRechargeDetail extends Component {
                 text: '确定', onPress: () => {
                     Toast.loading('正在停止...', 0)
                     fetchGet(API.PAYMENT_ENTPAY, {
+                        userId: this.props.userInfo.userId,
                         payId: this.payId
                     }).then(response => {
                         Toast.success(response.data)
-                        this.state.rechargeBean.statusCode = 4
+                        this.state.rechargeBean.statusCode = 3
                         this.state.rechargeBean.status = '已结束'
 
                         this.setState({
@@ -227,7 +229,8 @@ class ClassRechargeDetail extends Component {
 }
 
 let mapStateToProps = (state) => ({
-    listState: {...state.redListState}
+    listState: {...state.redListState},
+    userInfo: {...state.redUserInfo}
 })
 
 let mapDispatchToProps = (dispatch) => ({})

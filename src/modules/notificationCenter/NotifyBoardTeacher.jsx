@@ -326,7 +326,9 @@ class NotifyBoardTeacher extends Component {
                     notifyBoBean.noContent = getStrValue(item, 'notifyDetails')
                     notifyBoBean.noIssue = getStrValue(item, 'notifyCreatorName')
                     notifyBoBean.noTime = getStrValue(item, 'creatDate')
-                    notifyBoBean.noStatu = '已读'
+                    if (this.selectType === 'receive') {
+                        notifyBoBean.noStatu = '已读'
+                    }
                 }
 
                 this.setState({
@@ -390,11 +392,11 @@ class NotifyBoardTeacher extends Component {
                     notifyBoBean.noIssue = getStrValue(item, 'notifyCreatorName')
                     notifyBoBean.noTime = getStrValue(item, 'creatDate')
 
-                    if (getIntValue(item, 'isRead') == 1) {
+                    /*if (getIntValue(item, 'isRead') == 1) {
                         notifyBoBean.noStatu = '未读'
                     } else {
                         notifyBoBean.noStatu = '已读'
-                    }
+                    }*/
 
                     releaseList.push(notifyBoBean)
                 })

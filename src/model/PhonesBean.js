@@ -4,6 +4,7 @@
  */
 
 export default function PhonesBean() {
+    this.icon = ''
     this.claName = ''
     this.claId = ''
     this.name = ''

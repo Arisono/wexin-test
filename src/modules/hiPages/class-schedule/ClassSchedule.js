@@ -107,7 +107,8 @@ class ClassSchedule extends Component{
     }
     componentDidMount() {
         fetchGet(API.curriculumListByStuId,{
-            stuId:this.props.userInfo.userId,
+            // stuId:this.props.userInfo.userId,
+            stuId:10003,
             curStatus:1
         },{}).then((response)=>{
             if(response.success && response.data){

@@ -4,7 +4,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Menu, Dropdown,message, Icon,Carousel,List} from 'antd';
+import {Menu, Dropdown, message, Icon, Carousel, List} from 'antd';
 import ReactPlayer from 'react-player'
 import "slick-carousel/slick/slick-theme.css"
 import "slick-carousel/slick/slick.css"
@@ -57,8 +57,8 @@ import {switchUser} from '../../redux/actions/userInfo'
 import {connect} from "react-redux";
 import {clearListState} from 'action/listState'
 import {clearClassData} from "../../redux/actions/classData";
-import {fetchPost,fetchGet} from "../../utils/fetchRequest";
-import {API,_baseURL} from "../../configs/api.config";
+import {fetchPost, fetchGet} from "../../utils/fetchRequest";
+import {API, _baseURL} from "../../configs/api.config";
 import {Toast} from 'antd-mobile'
 import {isObjEmpty} from '../../utils/common'
 
@@ -70,34 +70,34 @@ class AppHomePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userPhoto:'',
-            userId:'',
-            userName:'',
-            userPhone:'',
-            userOpenid:'',
+            userPhoto: '',
+            userId: '',
+            userName: '',
+            userPhone: '',
+            userOpenid: '',
             isTeacher: false,
-            pictures:{
-                albums:[],
-                videos:[]
+            pictures: {
+                albums: [],
+                videos: []
             },
-            roles:["家长"],
-            studentIndex:0,
-            students:[
+            roles: ["家长"],
+            studentIndex: 0,
+            students: [
                 {
-                    isSelected:true,
-                    stuId:10000,
-                    stuName:"饶一",
-                    stuPhoto:"",
-                    videos:[],
-                    albums:[]
+                    isSelected: true,
+                    stuId: 10000,
+                    stuName: "饶一",
+                    stuPhoto: "",
+                    videos: [],
+                    albums: []
                 },
                 {
-                    isSelected:false,
-                    stuId:10000,
-                    stuName:"饶一",
-                    stuPhoto:"",
-                    videos:[],
-                    albums:[]
+                    isSelected: false,
+                    stuId: 10000,
+                    stuName: "饶一",
+                    stuPhoto: "",
+                    videos: [],
+                    albums: []
                 }
             ]
         }
@@ -107,30 +107,30 @@ class AppHomePage extends React.Component {
 
     }
 
-    spliceArrayPicture=(arrays)=>{
-         let newArrays=[];
-         if (arrays.length!=0){
-             let items=[];
-             for (let i = 0; i < arrays.length; i++) {
-                 items.push(arrays[i]);
-                 if(i%3===2){
-                     let model={
-                         index:i,
-                         data:[...items]
-                     };
-                     newArrays.push(model);
-                     items.length=0;
-                 }
-             }
-             if(items.length!=0){
-                 let model={
-                     index:arrays.length+1,
-                     data:[...items]
-                 };
-                 newArrays.push(model);
-             }
+    spliceArrayPicture = (arrays) => {
+        let newArrays = [];
+        if (arrays.length != 0) {
+            let items = [];
+            for (let i = 0; i < arrays.length; i++) {
+                items.push(arrays[i]);
+                if (i % 3 === 2) {
+                    let model = {
+                        index: i,
+                        data: [...items]
+                    };
+                    newArrays.push(model);
+                    items.length = 0;
+                }
+            }
+            if (items.length != 0) {
+                let model = {
+                    index: arrays.length + 1,
+                    data: [...items]
+                };
+                newArrays.push(model);
+            }
 
-         }
+        }
         return newArrays;
     }
 
@@ -162,79 +162,79 @@ class AppHomePage extends React.Component {
 
         document.title = "智慧校园";
 
-        console.log("componentDidMount()",this.props.userInfo);
+        console.log("componentDidMount()", this.props.userInfo);
         Toast.loading("");
         //获取首页接口
-        fetchGet(API.homeIndex,{
-                      userOpenid: isObjEmpty(this.props.userInfo.userOpenid)?"1":this.props.userInfo.userOpenid,
-                      userPhone:isObjEmpty(this.props.userInfo.userPhone)?"13266699268":this.props.userInfo.userPhone
-                  }).then((response)=>{
-                      console.log("result():"+JSON.stringify(response));
-                      Toast.hide();
-                      this.state.userId=  response.data.userId;
-                      this.state.userName= response.data.userName;
-                      // response.data.students.splice(1,1,{isSelected:false,...student});
-                      console.log("studId():",this.props.userInfo.stuId);
-                      if(isObjEmpty(this.props.userInfo.stuId)){
-                          if(!isObjEmpty(response.data.students)){
-                              let student=response.data.students[0];
-                              let student1={isSelected:true,...student};
-                              response.data.students.splice(0,1,student1);
-                          }
-                      }else{
-                          if(!isObjEmpty(response.data.students)){
-                              for (let i = 0; i < response.data.students.length; i++) {
-                                  if( this.props.userInfo.stuId===response.data.students[i].stuId){
-                                      response.data.students[i]={isSelected:true,...response.data.students[i]};
-                                      this.state.studentIndex=i;
-                                  }else{
-                                      response.data.students[i]={isSelected:false,...response.data.students[i]};
-                                  }
-                              }
-                          }
-                      }
-                      this.state.students=response.data.students ;
-                      this.state.pictures=response.data.pictures;
-                      this.state.roles=response.data.roles;
-                      this.state.userPhoto=response.data.userPhoto;
-                      this.state.userOpenid=response.data.userOpenid;
-                      this.state.userPhone=response.data.userPhone;
-                      if(response.data.roles.length===1){
-                          if(response.data.roles[0]==="家长"){
-                             this.state.isTeacher=false;
-                          }
-                          if(response.data.roles[0]==="教师"){
-                              this.state.isTeacher=true;
-                          }
-                      }
+        fetchGet(API.homeIndex, {
+            userOpenid: isObjEmpty(this.props.userInfo.userOpenid) ? "1" : this.props.userInfo.userOpenid,
+            userPhone: isObjEmpty(this.props.userInfo.userPhone) ? "13266699268" : this.props.userInfo.userPhone
+        }).then((response) => {
+            console.log("result():" + JSON.stringify(response));
+            Toast.hide();
+            this.state.userId = response.data.userId;
+            this.state.userName = response.data.userName;
+            // response.data.students.splice(1,1,{isSelected:false,...student});
+            console.log("studId():", this.props.userInfo.stuId);
+            if (isObjEmpty(this.props.userInfo.stuId)) {
+                if (!isObjEmpty(response.data.students)) {
+                    let student = response.data.students[0];
+                    let student1 = {isSelected: true, ...student};
+                    response.data.students.splice(0, 1, student1);
+                }
+            } else {
+                if (!isObjEmpty(response.data.students)) {
+                    for (let i = 0; i < response.data.students.length; i++) {
+                        if (this.props.userInfo.stuId === response.data.students[i].stuId) {
+                            response.data.students[i] = {isSelected: true, ...response.data.students[i]};
+                            this.state.studentIndex = i;
+                        } else {
+                            response.data.students[i] = {isSelected: false, ...response.data.students[i]};
+                        }
+                    }
+                }
+            }
+            this.state.students = response.data.students;
+            this.state.pictures = response.data.pictures;
+            this.state.roles = response.data.roles;
+            this.state.userPhoto = response.data.userPhoto;
+            this.state.userOpenid = response.data.userOpenid;
+            this.state.userPhone = response.data.userPhone;
+            if (response.data.roles.length === 1) {
+                if (response.data.roles[0] === "家长") {
+                    this.state.isTeacher = false;
+                }
+                if (response.data.roles[0] === "教师") {
+                    this.state.isTeacher = true;
+                }
+            }
 
-                      let stuName= isObjEmpty(response.data.students)?"":response.data.students[0].stuName;
-                      let stuId= isObjEmpty(response.data.students)?"":response.data.students[0].stuId;
-                      switchUser({
-                            stuName:isObjEmpty(this.props.userInfo.stuName)?stuName:this.props.userInfo.stuName,
-                            userId: this.state.userId,
-                            userName: this.state.userName,
-                            userOpenid: this.state.userOpenid,
-                            userPhone: this.state.userPhone,
-                            stuId:isObjEmpty(this.props.userInfo.stuId)?stuId:this.props.userInfo.stuId,
-                        })();
+            let stuName = isObjEmpty(response.data.students) ? "" : response.data.students[0].stuName;
+            let stuId = isObjEmpty(response.data.students) ? "" : response.data.students[0].stuId;
+            switchUser({
+                stuName: isObjEmpty(this.props.userInfo.stuName) ? stuName : this.props.userInfo.stuName,
+                userId: this.state.userId,
+                userName: this.state.userName,
+                userOpenid: this.state.userOpenid,
+                userPhone: this.state.userPhone,
+                stuId: isObjEmpty(this.props.userInfo.stuId) ? stuId : this.props.userInfo.stuId,
+            })();
 
-                    this.setState({
-                        userPhoto:this.state.userPhone,
-                        userId:this.state.userId,
-                        userName:this.state.userName,
-                        userPhone:this.state.userPhone,
-                        userOpenid:this.state.userOpenid,
-                        pictures:this.state.pictures,
-                        roles:this.state.roles,
-                        students:this.state.students
-                    })
-                  }).catch((error)=>{
-                       Toast.hide();
-                      console.log("error:"+JSON.stringify(error));
-                  })
+            this.setState({
+                userPhoto: this.state.userPhone,
+                userId: this.state.userId,
+                userName: this.state.userName,
+                userPhone: this.state.userPhone,
+                userOpenid: this.state.userOpenid,
+                pictures: this.state.pictures,
+                roles: this.state.roles,
+                students: this.state.students
+            })
+        }).catch((error) => {
+            Toast.hide();
+            console.log("error:" + JSON.stringify(error));
+        })
 
-        if (this.props.userInfo.userRole===2) {//教师
+        if (this.props.userInfo.userRole === 2) {//教师
             this.setState({
                 isTeacher: true
             })
@@ -245,27 +245,27 @@ class AppHomePage extends React.Component {
         }
     }
 
-    onItemClick=(index)=>{
-         console.log("onItemClick()",index);
-         for (let i = 0; i < this.state.students.length; i++) {
-                      if(i!=index){
-                          this.state.students[i].isSelected=false;
-                      }else{
-                          this.state.students[i].isSelected=true;
-                          //更改全局状态
-                          switchUser({
-                              stuId:this.state.students[i].stuId,
-                              stuName:this.state.students[i].stuName
-                          })()
-                          //刷新相册和视频
-                         this.state.studentIndex=i;
-                      }
-         }
-           console.log("onItemClick()",this.props.userInfo);
-         this.setState({
-             students: this.state.students,
-             studentIndex: this.state.studentIndex
-         });
+    onItemClick = (index) => {
+        console.log("onItemClick()", index);
+        for (let i = 0; i < this.state.students.length; i++) {
+            if (i != index) {
+                this.state.students[i].isSelected = false;
+            } else {
+                this.state.students[i].isSelected = true;
+                //更改全局状态
+                switchUser({
+                    stuId: this.state.students[i].stuId,
+                    stuName: this.state.students[i].stuName
+                })()
+                //刷新相册和视频
+                this.state.studentIndex = i;
+            }
+        }
+        console.log("onItemClick()", this.props.userInfo);
+        this.setState({
+            students: this.state.students,
+            studentIndex: this.state.studentIndex
+        });
     }
 
 
@@ -274,7 +274,7 @@ class AppHomePage extends React.Component {
             border: "1px solid #f4f4f4"
         };
 
-        let   roleMenu = (
+        let roleMenu = (
             <Menu onClick={this.onChangeRole.bind(this)}>
                 <Menu.Item key="1" style={{width: "90px", fontSize: "15px"}}>
                     <span>家长</span>
@@ -326,30 +326,33 @@ class AppHomePage extends React.Component {
                                             this.state.isTeacher ? ('老师') : ('家长')
                                         }
                                 </span>
-                                        {this.state.roles.length===2?(<Dropdown overlay={roleMenu} trigger={['click']}>
-                                            <a className="ant-dropdown-link" href="#">
-                                                {/* <Icon type="down" style={{fontSize:"20px"}}/>*/}
-                                                <img style={{marginLeft: "5px"}} src={icon_home_change} width={15}
-                                                     height={15}/>
-                                            </a>
-                                        </Dropdown>):("")}
+                                        {this.state.roles.length === 2 ? (
+                                            <Dropdown overlay={roleMenu} trigger={['click']}>
+                                                <a className="ant-dropdown-link" href="#">
+                                                    {/* <Icon type="down" style={{fontSize:"20px"}}/>*/}
+                                                    <img style={{marginLeft: "5px"}} src={icon_home_change} width={15}
+                                                         height={15}/>
+                                                </a>
+                                            </Dropdown>) : ("")}
                                     </div>
 
                                     {/*孩子列表*/}
                                     {this.state.isTeacher ? ("") : (<div className="margin_top_10 padding_right_10">
                                         <List
-                                            grid={{ gutter: 16, column: 3 }}
+                                            grid={{gutter: 16, column: 3}}
                                             locale={{emptyText: ''}}
                                             dataSource={this.state.students}
-                                            renderItem={(item,index) => (
-                                                <List.Item className="flex clear_margin" onClick={this.onItemClick.bind(this,index)}>
+                                            renderItem={(item, index) => (
+                                                <List.Item className="flex clear_margin"
+                                                           onClick={this.onItemClick.bind(this, index)}>
 
-                                                    {item.isSelected===true?(<div>
+                                                    {item.isSelected === true ? (<div>
                                                         <img className="border-radius-50-blue"
                                                              src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"}
-                                                             width={25} height={25} />
-                                                        <span className="margin_left_5 color_blue text_bold">{item.stuName}</span>
-                                                    </div>):(<div>
+                                                             width={25} height={25}/>
+                                                        <span
+                                                            className="margin_left_5 color_blue text_bold">{item.stuName}</span>
+                                                    </div>) : (<div>
                                                         <img className="border-radius-50"
                                                              src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"}
                                                              width={25} height={25}/>
@@ -426,26 +429,26 @@ class AppHomePage extends React.Component {
                             <div className="row" style={borderLine}></div>
                             <div className="row">
                                 <div className="col-xs-12" style={{margin: "0px", padding: "0px"}}>
-                                    {isObjEmpty(this.state.pictures.albums)?(""):(
-                                    <Carousel autoplay={true} dots={false}>
-                                        {this.spliceArrayPicture(this.state.pictures.albums).map((item,index)=>(
-                                            <div>{
-                                                item.data.map((model,index)=>{
-                                                    console.log("imageUrl():",_baseURL+model.picUrl);
-                                                    let image_url=_baseURL+model.picUrl;
-                                                    if(model.picUrl===null){
-                                                        image_url="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=54924110,1820388093&fm=173&app=25&f=JPEG?w=218&h=146&s=32809D4D4E6250131F8058B203001012";
-                                                    }
-                                                    return <img
-                                                        src={image_url}
-                                                        style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                        width={"31%"}/>
-                                                })
-                                            }
-                                            </div>
-                                        ))}
-                                    </Carousel>
-                                        )}
+                                    {isObjEmpty(this.state.pictures.albums) ? ("") : (
+                                        <Carousel autoplay={true} dots={false}>
+                                            {this.spliceArrayPicture(this.state.pictures.albums).map((item, index) => (
+                                                <div>{
+                                                    item.data.map((model, index) => {
+                                                        console.log("imageUrl():", _baseURL + model.picUrl);
+                                                        let image_url = _baseURL + model.picUrl;
+                                                        if (model.picUrl === null) {
+                                                            image_url = "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=54924110,1820388093&fm=173&app=25&f=JPEG?w=218&h=146&s=32809D4D4E6250131F8058B203001012";
+                                                        }
+                                                        return <img
+                                                            src={image_url}
+                                                            style={{margin: "5px 0px 5px 5px", display: "inline"}}
+                                                            width={"31%"}/>
+                                                    })
+                                                }
+                                                </div>
+                                            ))}
+                                        </Carousel>
+                                    )}
                                 </div>
                             </div>
 
@@ -461,7 +464,7 @@ class AppHomePage extends React.Component {
                             </div>
                             <div className="row" id="page_horizontal_line"></div>
 
-                            {this.state.pictures.videos.length<3?(""):(
+                            {this.state.pictures.videos.length < 3 ? ("") : (
                                 <div className="row flex_row">
                                     <ReactPlayer
                                         playing={false}
@@ -511,23 +514,23 @@ class AppHomePage extends React.Component {
                             <div className="row" style={borderLine}></div>
                             <div className="row">
                                 <div className="col-xs-12" style={{margin: "0px", padding: "0px"}}>
-                                    {isObjEmpty(this.state.students)?(""):(
+                                    {isObjEmpty(this.state.students) ? ("") : (
                                         <Carousel autoplay={true} dots={false}>
-                                            {console.log("相册 render()",this.spliceArrayPicture(this.state.students[this.state.studentIndex].albums))}
-                                            {this.spliceArrayPicture(this.state.students[this.state.studentIndex].albums).map((item,index)=>(
+                                            {console.log("相册 render()", this.spliceArrayPicture(this.state.students[this.state.studentIndex].albums))}
+                                            {this.spliceArrayPicture(this.state.students[this.state.studentIndex].albums).map((item, index) => (
                                                 <div>{
-                                                    item.data.map((model,index)=>{
-                                                        console.log("imageUrl():",_baseURL+model.picUrl);
-                                                        let image_url=_baseURL+model.picUrl;
-                                                        if(model.picUrl===null){
-                                                            image_url="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=54924110,1820388093&fm=173&app=25&f=JPEG?w=218&h=146&s=32809D4D4E6250131F8058B203001012";
+                                                    item.data.map((model, index) => {
+                                                        console.log("imageUrl():", _baseURL + model.picUrl);
+                                                        let image_url = _baseURL + model.picUrl;
+                                                        if (model.picUrl === null) {
+                                                            image_url = "https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=54924110,1820388093&fm=173&app=25&f=JPEG?w=218&h=146&s=32809D4D4E6250131F8058B203001012";
                                                         }
                                                         return <img
                                                             src={image_url}
                                                             style={{margin: "5px 0px 5px 5px", display: "inline"}}
                                                             width={"31%"}
                                                             height={100}
-                                                          />
+                                                        />
                                                     })
                                                 }
                                                 </div>
@@ -1051,17 +1054,17 @@ function ParentMenu() {
                      </span></div>
                      </Link>
                      </div>*/}
-                  {/*  <div className="col-xs-3" style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }}>
-                        <div><img src={icon_home_menu_dengji} style={{margin: "20px 20px 8px 20px"}} width={20}
-                                  height={20}/></div>
-                        <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
-                            style={{fontSize: "12px"}}>入校登记</span></div>
-                    </div>*/}
+                    {/*  <div className="col-xs-3" style={{
+                     display: "flex",
+                     flexDirection: "column",
+                     justifyContent: "center",
+                     alignItems: "center"
+                     }}>
+                     <div><img src={icon_home_menu_dengji} style={{margin: "20px 20px 8px 20px"}} width={20}
+                     height={20}/></div>
+                     <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
+                     style={{fontSize: "12px"}}>入校登记</span></div>
+                     </div>*/}
                     <div className="col-xs-3" style={{
                         display: "flex",
                         flexDirection: "column",

@@ -5,7 +5,7 @@
 
 import React,{Component} from 'react';
 import './ApprovelDetail.css';
-import hi_img from '../../../style/imgs/hiimg.png';
+import hi1_img from '../../../style/imgs/ic_head1.png';
 import DetailItem from './DetailItem';
 import {isObjEmpty} from "../../../utils/common";
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
@@ -16,7 +16,7 @@ import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest'
 import {API,_baseURL} from '../../../configs/api.config';
 import {Toast} from 'antd-mobile';
 import {connect} from 'react-redux';
-
+import ImagesViewer from '../../../components/imagesVIewer/index'
 
  class ApprovelDetail extends Component{
     constructor(){
@@ -26,12 +26,21 @@ import {connect} from 'react-redux';
             AMvisible: false,
             AMTitle:null,
             detailList:[],
-            pictureList:[],
+            previewVisible: false,
+            previewImage: '',
             approvelData:[],
             approveId:null,
             docModel:{
                 approveFiles:{},
-                approver:{},
+                approve:[
+                    {
+                        key:null,
+                        value:null
+                    }, {
+                        key:null,
+                        value:null
+                    }
+                ],
                 basic:[],
                 oaApprove:{},
                 proposer:{}
@@ -42,8 +51,10 @@ import {connect} from 'react-redux';
      render(){
          const {pictureList} = this.state
          let pictureItems = []
+         let pictureUrls = []
          for (let i = 0; i < pictureList.length; i++) {
              const pictureUrl = pictureList[i]
+             pictureUrls.push(pictureUrl)
              if (!isObjEmpty(pictureUrl)) {
                  pictureItems.push(
                      i > 20 ?
@@ -54,12 +65,12 @@ import {connect} from 'react-redux';
                                  appear={true}
                                  key={i}>
                                  <div className='pictureItem'>
-                                     <img src={pictureUrl}/>
+                                     <img src={pictureUrl}  onClick={this.handlePreview.bind(this, pictureUrl, i)}/>
                                  </div>
                              </CSSTransition>
                          </LazyLoad> :
                          <div className='pictureItem'>
-                             <img src={pictureUrl}/>
+                             <img src={pictureUrl}  onClick={this.handlePreview.bind(this, pictureUrl, i)}/>
                          </div>
                  )
              }
@@ -67,7 +78,7 @@ import {connect} from 'react-redux';
         return(
             <div ref={node => this.node = node}>
                <div className="headerDiv">
-                   <img className="headerImg" src={hi_img} alt=""/>
+                   <img className="headerImg" src={hi1_img} alt=""/>
                    <div style={{marginTop:10}}>
                        <div style={{color:"#000000",fontSize:15}}>{this.state.docModel.proposer.value}</div>
                        <div style={{color:"#666666",fontSize:12,marginTop:10}}>{this.state.docModel.oaApprove.creatDate}</div>
@@ -97,7 +108,7 @@ import {connect} from 'react-redux';
 
                 <div style={{marginBottom:50}}>
                     {/*{this.state.docModel.approver.map((itemdata,index) => <ItemApprovel key ={index} itemdata = {itemdata}></ItemApprovel>)}*/}
-                    <ItemApprovel itemdata ={this.state.docModel.approver} approveStatus = {this.state.docModel.oaApprove.approveStatus}
+                    <ItemApprovel itemdata ={this.state.docModel.approve[0]} suggest={this.state.docModel.approve[1]} approveStatus = {this.state.docModel.oaApprove.approveStatus}
                                   approveDate = {this.state.docModel.oaApprove.approveDate}
                     ></ItemApprovel>
                 </div>
@@ -120,9 +131,20 @@ import {connect} from 'react-redux';
                        <textarea autoFocus="autoFocus" ref='approveOpinion' className="form-control" rows="5" placeholder="填写意见说明（非必填）" ></textarea>
                    </div>
                 </Modal>
+                {this.state.previewVisible ?
+                    <ImagesViewer onClose={this.handleCancel} urls={pictureUrls}
+                                  index={this.state.previewIndex}
+                                  needPoint={pictureUrls.length <= 9}/> : ""}
             </div>
         )
     }
+     handlePreview = (url, index) => {
+         this.setState({
+             previewImage: url,
+             previewVisible: true,
+             previewIndex: index
+         });
+     }
     handleStatusClick = (status)=>{
          var statusTitle = null
          if(status == 1){

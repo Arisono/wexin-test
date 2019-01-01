@@ -8,6 +8,7 @@ import './Approvel.css';
 import icon_out from '../../../style/imgs/out_img.png';
 import icon_res from '../../../style/imgs/res_img.png';
 import icon_trip from '../../../style/imgs/trip_img.png';
+import icon_leave from '../../../style/imgs/trip_img.png';
 import {Link} from 'react-router-dom';
 
 export default class ApprovelItem extends Component{
@@ -25,7 +26,7 @@ export default class ApprovelItem extends Component{
             <Link to={"/approvel-detail/" + this.props.itemata.approveId +"/"+this.props.isMyApply}>
                 <div className="item-Style" onClick={this.ItemClick.bind(this,this.state.isMyApply,this.props.itemata)}>
                     <div style={{width:76,height:'100%'}}>
-                        <img src={this.props.itemata.approveType == 1 ? icon_trip : (this.props.itemata.approveType == 2 ? icon_res : icon_out)} className={this.state.isMyApply==true?'img_sty':"img_circle"}/>
+                        <img src={this.props.itemata.approveType == 1 ? icon_trip : (this.props.itemata.approveType == 2 ? icon_res : icon_leave)} className={this.state.isMyApply==true?'img_sty':"img_circle"}/>
                     </div>
                     <div style={{width:'65%'}}>
                         <div style={{color:"#333333",fontSize:15,marginTop:10}}>

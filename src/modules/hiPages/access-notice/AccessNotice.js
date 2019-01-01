@@ -21,15 +21,18 @@ class AccessNotice extends Component{
     constructor(){
         super();
         this.state = {
-            studentName:'吴彦祖',
+            studentName:null,
             studentGrade:'三年八班',
             out_inData:[]
         }
     }
     componentDidMount() {
+        this.setState({
+            studentName:this.props.userInfo.stuName,
+        })
         fetchPost(API.RecordOutgoingList,{
-            // stuId:this.props.userInfo.userId,
-            stuId:10002,
+            stuId:this.props.userInfo.userId,
+            // stuId:10002,
             pageIndex:1,
             pageSize:10
         },{})

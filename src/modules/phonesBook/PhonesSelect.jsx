@@ -133,9 +133,18 @@ class PhonesSelect extends Component {
     getClassList = () => {
         const {parentList} = this.state
 
-        fetchGet(API.GET_CLASS_LIST, {
-            userId: this.props.userInfo.userId,
-        }).then(response => {
+        let userRole = this.props.userInfo.userRole;
+        let params
+        if (userRole == 1) {
+            params = {
+                stuId: this.props.userInfo.stuId
+            }
+        } else {
+            params = {
+                userId: this.props.userInfo.userId
+            }
+        }
+        fetchGet(API.GET_CLASS_LIST, params).then(response => {
             Toast.hide();
 
             if (response && response.data) {
@@ -188,9 +197,9 @@ class PhonesSelect extends Component {
             if (response && response.data && response.data.length > 0) {
                 response.data.map((item, index) => {
                     let phoneBean = new PhonesBean()
-                    phoneBean.icon = require('imgs/ic_head' + (index % 15 + 1)+'.png')
+                    phoneBean.icon = require('imgs/ic_head' + (index % 15 + 1) + '.png')
                     phoneBean.name = getStrValue(item, 'userName')
-                    phoneBean.phone = getStrValue(item, 'userPhone')
+                    phoneBean.phone = [getStrValue(item, 'userPhone')]
                     phoneBean.claName = getStrValue(item, 'schName')
                     phoneBean.children = ['']
 

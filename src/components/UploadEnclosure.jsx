@@ -10,6 +10,7 @@ import {isObjEmpty, isObjNull} from "../utils/common";
 import ImagesViewer from '../components/imagesVIewer/index'
 import PropTypes from 'prop-types';
 
+let uploadFail = false;
 export default class UploadEnclosure extends Component {
 
     static propTypes = {
@@ -101,7 +102,7 @@ export default class UploadEnclosure extends Component {
                         onPreview={this.handlePreview}
                         onChange={this.handleChange}
                         onRemove={this.handleRemove}>
-                        {(fileList.length >= count && limit) ? null : uploadButton}
+                        {(fileList.length >= count && limit) ? '' : uploadButton}
                     </Upload>
                     {this.state.previewVisible ?
                         <ImagesViewer onClose={this.handleCancel} urls={imgs}
@@ -113,9 +114,12 @@ export default class UploadEnclosure extends Component {
     }
 
     beforeUpload = (file, fileList) => {
+        uploadFail = false
         const {count, limit} = this.props
+        console.log('fileListb', fileList)
         if (this.state.fileList.length + fileList.length > count && limit) {
             Toast.fail(`上传失败，附件数量不能超过${count}张`)
+            uploadFail = true
             return false
         } else {
             return this.props.beforeUpload(file, fileList)
@@ -132,6 +136,9 @@ export default class UploadEnclosure extends Component {
     }
 
     handleChange = ({fileList}) => {
+        if (uploadFail) {
+            return
+        }
         if (fileList.length <= this.props.count || !this.props.limit) {
             this.setState({fileList})
             this.props.handleChange(fileList)

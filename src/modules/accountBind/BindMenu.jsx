@@ -125,7 +125,7 @@ export default class BindMenu extends Component {
 
     getLoadingLayout = () => {
         return (
-            <div className='bindParent' style={{justifyContent: 'center'}}>
+            <div className='bindParent' style={{justifyContent: 'center', backgroundImage: 'none'}}>
                 <Icon type="loading" spin style={{fontSize: '50px', color: '#3db1af'}}/>
                 <span style={{marginTop: '14px', color: 'white'}}>{this.state.errorMsg}</span>
             </div>

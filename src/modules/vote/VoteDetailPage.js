@@ -177,15 +177,20 @@ class VoteDetailPage extends React.Component {
                             <List dataSource={this.state.data.votes}
                                   renderItem={(item, index) => (
                                       <List.Item id="flex_row">
-                                          <Checkbox checked={item.checked}
-                                                    onChange={this.onChangeEvent.bind(this, index)}
-                                                    style={{marginLeft: "20px", display: "flex", alignItems: "center"}}>
-                                          </Checkbox>
+                                          {this.state.voteState?(  <Checkbox
+                                                                             checked={item.checked}
+                                                                             onChange={this.onChangeEvent.bind(this, index)}
+                                                                             style={{marginLeft: "20px", display: "flex", alignItems: "center"}}>
+                                          </Checkbox>):(  <Checkbox disabled
+                                                                    checked={item.checked}
+                                                                    onChange={this.onChangeEvent.bind(this, index)}
+                                                                    style={{marginLeft: "20px", display: "flex", alignItems: "center"}}>
+                                          </Checkbox>)}
+
                                           <div style={{
                                               width: "200px",
                                               display: "inline",
-                                              marginRight: "10px"
-                                              ,
+                                              marginRight: "10px",
                                               marginLeft: "10px",
                                               display: "flex",
                                               alignItems: "center",

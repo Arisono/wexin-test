@@ -277,7 +277,7 @@ class ReleaseAssignmentPage extends React.Component{
             <div className="row" id="page_block_min"></div>
             <div className="row">
                     <div className="col-xs-12">
-                        <div className="row"><div className="" id="page_tile">附件</div></div>
+                        <div className="row"><div className="" id="page_tile">附件({this.state.data.notifyFiles.length}/4)</div></div>
                         <div className="row" id="row_padding_with" >
                             <PicturesWallItem
                                 action={API.UPLOAD_FILE}

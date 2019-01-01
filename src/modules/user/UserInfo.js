@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import 'css/user-info.css'
 import 'css/phones.css'
 import {Icon, Modal, Upload} from "antd";
+import  icon_userInfo_upload from "../../style/imgs/icon_userInfo_upload.png"
 
 
 import {connect} from 'react-redux'
@@ -101,26 +102,45 @@ class UserInfo extends Component {
             </div>
         );
         return <div className={'user-column'}>
-            <div style={{padding: 10}} className='phones-item-top'>
-                <text className='phones-item-name'>手机号码</text>
-                <a href={'tel:' + this.state.phone} style={{display: 'flex', alignItems: 'center'}}>
-                    <div className='phones-item-phone margin_left_right_10' >{this.state.phone}</div>
+            <div style={{padding: 10}} className=' flex flex_row_center'>
+                <div>
+                    <text className='phones-item-name'>手机号码</text>
+                    <div className='phones-item-phone ' >{this.state.phone}</div>
+                </div>
+                <div className=" item_flex_1 flex_row_right">|
+                    <text className="margin_left_10" style={{color:"#3680ED"}}>修改</text>
+                </div>
+                {/*<a href={'tel:' + this.state.phone} style={{display: 'flex', alignItems: 'center'}}>
+
                     <div style={{textAlign: 'right'}}>
                         <img width={8} height={15} src={require('../../style/imgs/next_arrow.png')}/>
                     </div>
-                </a>
+                </a>*/}
             </div>
-            <div onClick={this.passWordClick} style={{padding: 10}} className='phones-item-top'>
+     {/*       <div onClick={this.passWordClick} style={{padding: 10}} className='phones-item-top'>
                 <text className='phones-item-name'>登陆密码</text>
                 <div style={{textAlign: 'right'}}>
                     <img width={8} height={15} src={require('../../style/imgs/next_arrow.png')}/>
                 </div>
-            </div>
-            <div style={{padding: 10}} className='phones-item-top'>
+            </div>*/}
+            <div style={{padding: 10}} className='flex phones-item-top margin_bottom_20'>
                 <text className='phones-item-name'>人脸照</text>
+                |
+                <text className="margin_left_10" style={{color:"#3680ED"}}>上传</text>
             </div>
-            <div className='imagesLayout'>
-                <Upload
+            <div className='imagesLayout flex padding_15'>
+                <img style={{marginLeft:"10px"}}
+
+                     src={icon_userInfo_upload}
+                     width={100}
+                     height={130} />
+                <div className="margin_left_20">
+                    <div className="margin_bottom_10"><span className="span_16">• 请按照证件照的样式拍摄正面</span></div>
+                    <div className="margin_bottom_10"><span className="span_16">• 请保证光线充足，没有遮挡物</span></div>
+                    <div className="margin_bottom_10"><span className="span_16">• 请取下您的眼镜帽子保持面部曝光率</span></div>
+                </div>
+
+              {/*  <Upload
                     action="//jsonplaceholder.typicode.com/posts/"
                     listType="picture-card"
                     fileList={fileList}
@@ -128,7 +148,7 @@ class UserInfo extends Component {
                     onPreview={this.handlePreview}
                     onChange={this.handleChange}>
                     {fileList.length >= 1 ? null : uploadButton}
-                </Upload>
+                </Upload>*/}
                 <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                     <img alt="example" style={{width: '100%'}} src={this.state.previewImage}/>
                 </Modal>

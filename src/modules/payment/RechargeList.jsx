@@ -77,7 +77,7 @@ class RechargeList extends Component {
         }
 
         fetchGet(API.PAYMENT_PAYMENTLIST, {
-            stuId: this.props.userInfo.userId,
+            stuId: this.props.userInfo.stuId,
             pageIndex: mPageIndex,
             pageSize: mPageSize
         }).then(response => {

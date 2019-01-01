@@ -8,10 +8,11 @@ import 'css/account-bind.css'
 import {Avatar, Input, Icon, Button} from 'antd'
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
-import {isObjEmpty} from "../../utils/common";
+import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 import {Toast} from 'antd-mobile'
 import {regExpConfig} from "../../configs/regexp.config";
 import {connect} from 'react-redux'
+import {switchUser} from "../../redux/actions/userInfo";
 
 let mType = 'parents'
 let mSeconds = 0
@@ -193,7 +194,12 @@ class AccountBind extends Component {
                 openid: this.props.userInfo.userOpenid
             }).then(response => {
                 Toast.hide()
-
+                switchUser({
+                    userId: getIntValue(response.data, 'userId'),
+                    userName: getStrValue(response.data, 'userName'),
+                    userOpenid: getStrValue(response.data, 'userOpenid'),
+                    userPhone: getStrValue(response.data, 'userPhone'),
+                })()
                 this.props.history.push('/homePage?role=parent')
             }).catch(error => {
                 Toast.hide()
@@ -212,7 +218,12 @@ class AccountBind extends Component {
                 openid: this.props.userInfo.userOpenid
             }).then(response => {
                 Toast.hide()
-
+                switchUser({
+                    userId: getIntValue(response.data, 'userId'),
+                    userName: getStrValue(response.data, 'userName'),
+                    userOpenid: getStrValue(response.data, 'userOpenid'),
+                    userPhone: getStrValue(response.data, 'userPhone'),
+                })()
                 this.props.history.push('/homePage?role=teacher')
             }).catch(error => {
                 Toast.hide()

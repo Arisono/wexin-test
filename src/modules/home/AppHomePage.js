@@ -122,11 +122,14 @@ class AppHomePage extends React.Component {
                     items.length = 0;
                 }
             }
-            let model = {
-                index: arrays.length + 1,
-                data: [...items]
-            };
-            newArrays.push(model);
+            if (items.length != 0) {
+                let model = {
+                    index: arrays.length + 1,
+                    data: [...items]
+                };
+                newArrays.push(model);
+            }
+
         }
         return newArrays;
     }
@@ -269,14 +272,6 @@ class AppHomePage extends React.Component {
     render() {
         let borderLine = {
             border: "1px solid #f4f4f4"
-        };
-        var settings = {
-            className: "center",
-            centerMode: true,
-            infinite: false,
-            centerPadding: "20px",
-            slidesToShow: 3,
-            speed: 500
         };
 
         let roleMenu = (
@@ -521,6 +516,7 @@ class AppHomePage extends React.Component {
                                 <div className="col-xs-12" style={{margin: "0px", padding: "0px"}}>
                                     {isObjEmpty(this.state.students) ? ("") : (
                                         <Carousel autoplay={true} dots={false}>
+                                            {console.log("相册 render()", this.spliceArrayPicture(this.state.students[this.state.studentIndex].albums))}
                                             {this.spliceArrayPicture(this.state.students[this.state.studentIndex].albums).map((item, index) => (
                                                 <div>{
                                                     item.data.map((model, index) => {
@@ -532,7 +528,9 @@ class AppHomePage extends React.Component {
                                                         return <img
                                                             src={image_url}
                                                             style={{margin: "5px 0px 5px 5px", display: "inline"}}
-                                                            width={"31%"}/>
+                                                            width={"31%"}
+                                                            height={100}
+                                                        />
                                                     })
                                                 }
                                                 </div>
@@ -1056,17 +1054,17 @@ function ParentMenu() {
                      </span></div>
                      </Link>
                      </div>*/}
-                    <div className="col-xs-3" style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }}>
-                        <div><img src={icon_home_menu_dengji} style={{margin: "20px 20px 8px 20px"}} width={20}
-                                  height={20}/></div>
-                        <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
-                            style={{fontSize: "12px"}}>入校登记</span></div>
-                    </div>
+                    {/*  <div className="col-xs-3" style={{
+                     display: "flex",
+                     flexDirection: "column",
+                     justifyContent: "center",
+                     alignItems: "center"
+                     }}>
+                     <div><img src={icon_home_menu_dengji} style={{margin: "20px 20px 8px 20px"}} width={20}
+                     height={20}/></div>
+                     <div style={{paddingBottom: "20px", paddingLeft: "0px"}}><span
+                     style={{fontSize: "12px"}}>入校登记</span></div>
+                     </div>*/}
                     <div className="col-xs-3" style={{
                         display: "flex",
                         flexDirection: "column",
@@ -1111,10 +1109,6 @@ function ParentMenu() {
                         </span></div>
                         </Link>
                     </div>
-
-                </div>
-
-                <div className="row">
                     <div className="col-xs-3" style={{
                         display: "flex",
                         flexDirection: "column",
@@ -1129,6 +1123,10 @@ function ParentMenu() {
                         </span></div>
                     </Link>
                     </div>
+                </div>
+
+                <div className="row">
+
 
                     <div className="col-xs-3" id="row_center_align">
                         <div><img src={icon_home_menu_34} style={{margin: "20px 20px 8px 20px"}} width={20}

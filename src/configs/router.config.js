@@ -82,7 +82,7 @@ export default class RouteConfig extends Component {
                     <Route path='/wonderMoment/:type?' component={WonderMoment}/>
                     <Route path='/principalHistory' component={PrincipalHistory}/>
                     <Route path='/campusCardRecharge/:type' component={CampusCardRecharge}/>
-                    <Route path='/rechargeList' component={RechargeList}/>
+                    <Route path='/rechargeList/:userId?' component={RechargeList}/>
                     <Route path='/rechargeRelease' component={RechargeRelease}/>
                     <Route path='/announceRelease' component={AnnounceRelease}/>
                     <Route path='/classRechargeList' component={ClassRechargeList}/>

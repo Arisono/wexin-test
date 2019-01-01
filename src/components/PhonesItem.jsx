@@ -36,11 +36,16 @@ export default class PhonesItem extends Component {
                 <div className='phones-item-root'>
                     <div className='phones-item-top'>
                         <div className='phones-item-name'>{phonesBean.name}</div>
-                        {isObjEmpty(phonesBean.phone) ? '' :
-                            <a href={'tel:' + phonesBean.phone} style={{display: 'flex', alignItems: 'center'}}>
-                                <div className='phones-item-phone'>{phonesBean.phone}</div>
-                                <Icon type="phone" theme="filled"/>
-                            </a>}
+                        {isObjEmpty(phonesBean.phone) ? '' : (
+                            phonesBean.length <= 1 ?
+                                <a href={'tel:' + phonesBean.phone} style={{display: 'flex', alignItems: 'center'}}>
+                                    <div className='phones-item-phone'>{phonesBean.phone}</div>
+                                    <Icon type="phone" theme="filled"/>
+                                </a> :
+                                <div style={{display: 'flex', alignItems: 'center'}} onClick={this.onPhoneSelect}>
+                                    <div className='phones-item-phone'>{phonesBean.phone}</div>
+                                    <Icon type="phone" theme="filled"/>
+                                </div>)}
                     </div>
 
                     <span className='phones-item-child'>{phonesBean.children.map(item => (
@@ -50,5 +55,9 @@ export default class PhonesItem extends Component {
             </div>
 
         )
+    }
+
+    onPhoneSelect = () => {
+
     }
 }

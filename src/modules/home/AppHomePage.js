@@ -472,27 +472,33 @@ class AppHomePage extends React.Component {
                             {this.state.pictures.videos.length < 3 ? ("") : (
                                 <div className="row flex_row">
                                     <ReactPlayer
-                                        playing={true}
+                                        playing={false}
                                         className="margin_10 border_normal"
                                         url={_baseURL + this.state.pictures.videos[0].picUrl}
                                         controls
+                                        light={true}
+                                        pip={true}
                                         width={'60%'} height={"254px"}/>
 
 
                                     <div style={{width: "40%"}} className="padding_right">
                                         <div className="margin_bottom_10 ">
                                             <ReactPlayer
-                                                playing={true}
+                                                playing={false}
                                                 url={_baseURL + this.state.pictures.videos[1].picUrl}
                                                 className="border_normal padding_left"
                                                 controls
+                                                light={true}
+                                                pip={true}
                                                 width={"100%"} height={"120px"}/></div>
                                         <div>
                                             <ReactPlayer
-                                                playing={true}
+                                                playing={false}
                                                 url={_baseURL + this.state.pictures.videos[2].picUrl}
                                                 className="border_normal padding_left"
                                                 controls
+                                                light={true}
+                                                pip={true}
                                                 width={"100%"} height={"120px"}/></div>
                                     </div>
                                 </div>
@@ -557,27 +563,33 @@ class AppHomePage extends React.Component {
                                         {this.state.students[this.state.studentIndex].videos.length < 3 ? ("") : (
                                             <div className="row flex_row">
                                                 <ReactPlayer
-                                                    playing={true}
+                                                    playing={false}
                                                     className="margin_10 border_normal"
                                                     url={_baseURL + this.state.students[this.state.studentIndex].videos[0].picUrl}
                                                     controls
+                                                    light={true}
+                                                    pip={true}
                                                     width={'60%'} height={"254px"}/>
 
 
                                                 <div style={{width: "40%"}} className="padding_right">
                                                     <div className="margin_bottom_10 ">
                                                         <ReactPlayer
-                                                            playing={true}
+                                                            playing={false}
                                                             url={_baseURL + this.state.students[this.state.studentIndex].videos[1].picUrl}
                                                             className="border_normal padding_left"
                                                             controls
+                                                            light={true}
+                                                            pip={true}
                                                             width={"100%"} height={"120px"}/></div>
                                                     <div>
                                                         <ReactPlayer
-                                                            playing={true}
+                                                            playing={false}
                                                             url={_baseURL + this.state.students[this.state.studentIndex].videos[2].picUrl}
                                                             className="border_normal padding_left"
                                                             controls
+                                                            light={true}
+                                                            pip={true}
                                                             width={"100%"} height={"120px"}/></div>
                                                 </div>
                                             </div>

@@ -38,7 +38,7 @@ export default class VideoItem extends Component {
                     controls
                     width='100%'
                     height='200px'
-                    light/>
+                    light={true}/>
             </div>
         )
     }

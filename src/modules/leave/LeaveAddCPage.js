@@ -22,6 +22,7 @@ import {ORGANIZATION_TEACHER} from "../../utils/api.constants";
 
 class LeaveAddCPage extends Component {
     componentDidMount() {
+        this.node.scrollIntoView();
         getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
             .then(organization => {
                 this.setState({
@@ -86,7 +87,7 @@ class LeaveAddCPage extends Component {
             multiple: false,
         }
         return (
-            <div>
+            <div ref={node => this.node = node}>
                 <Picker
                     data={this.state.typeLeave} title='请假类型' extra='请选择'
                     value={this.state.leaveType}
@@ -111,7 +112,7 @@ class LeaveAddCPage extends Component {
 
                 <div className="comhline_sty"></div>
                 <div onChange={this.handelValueCom}>
-                    <textarea autoFocus="autoFocus" ref='leaveReason' className="form-control textarea_sty" rows="4"
+                    <textarea  ref='leaveReason' className="form-control textarea_sty" rows="4"
                               placeholder="请填写请假理由…"></textarea>
                 </div>
                 <div className="comhline_sty"></div>

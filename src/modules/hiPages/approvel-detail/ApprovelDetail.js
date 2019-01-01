@@ -92,7 +92,7 @@ import ImagesViewer from '../../../components/imagesVIewer/index'
                         <DetailItem index = {index} itemdata = {itemdata}></DetailItem>
                     )}
                 </div>
-                <div className="comhline_sty1" style={{marginTop:10}}></div>
+                {/*<div className="comhline_sty1" style={{marginTop:10}}></div>*/}
                 {
                     pictureList.length > 0 ?  <div style={{textAlign:'left',color:'#666666',marginLeft:10,marginTop:10}}>附件</div> : ""
                 }

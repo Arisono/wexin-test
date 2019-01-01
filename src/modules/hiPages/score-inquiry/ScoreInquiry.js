@@ -82,6 +82,7 @@ class ScoreInquiry extends Component{
     getScoreData =(selectClas,selectTime)=>{
         let params = {
             stuId:this.props.userInfo.userId,
+            // stuId:10003,
             scoreType:selectTime,
             scoreName:selectClas
         }
@@ -93,7 +94,7 @@ class ScoreInquiry extends Component{
                         ScoreDataList:response.data
                     })
                 }else {
-                    Toast.fail('请求异常', 2)
+                    Toast.fail('暂无数据', 2)
                 }
             }).catch((error) =>{
                 console.log('error',error)
@@ -126,6 +127,7 @@ class ScoreInquiry extends Component{
     componentDidMount() {
         let params = {
             stuId:this.props.userInfo.userId
+            // stuId:10003,
         }
         fetchGet(API.getCurr,params,{})
             .then((response)=>{

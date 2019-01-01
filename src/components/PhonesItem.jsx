@@ -8,6 +8,9 @@ import PhonesBean from 'model/PhonesBean'
 import {Icon, Avatar} from 'antd'
 import 'css/phones.css'
 import {isObjEmpty} from "../utils/common";
+import {Modal} from 'antd-mobile'
+
+const {alert} = Modal
 
 export default class PhonesItem extends Component {
 
@@ -37,13 +40,13 @@ export default class PhonesItem extends Component {
                     <div className='phones-item-top'>
                         <div className='phones-item-name'>{phonesBean.name}</div>
                         {isObjEmpty(phonesBean.phone) ? '' : (
-                            phonesBean.length <= 1 ?
+                            phonesBean.phone.length <= 1 ?
                                 <a href={'tel:' + phonesBean.phone} style={{display: 'flex', alignItems: 'center'}}>
-                                    <div className='phones-item-phone'>{phonesBean.phone}</div>
+                                    <div className='phones-item-phone'>{phonesBean.phone[0]}</div>
                                     <Icon type="phone" theme="filled"/>
                                 </a> :
                                 <div style={{display: 'flex', alignItems: 'center'}} onClick={this.onPhoneSelect}>
-                                    <div className='phones-item-phone'>{phonesBean.phone}</div>
+                                    <div className='phones-item-phone'>{phonesBean.phone[0]}</div>
                                     <Icon type="phone" theme="filled"/>
                                 </div>)}
                     </div>
@@ -58,6 +61,16 @@ export default class PhonesItem extends Component {
     }
 
     onPhoneSelect = () => {
+        alert('提示', '请选择您要拨打的电话？', [
+            {
+                text: '取消', onPress: () => {
+                }
+            },
+            {
+                text: '确定', onPress: () => {
 
+                }
+            }
+        ])
     }
 }

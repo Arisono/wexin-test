@@ -173,7 +173,7 @@ class RechargeRelease extends Component {
             payTotal: percapita,
             payStartDate: now.format('yyyy-MM-dd hh:mm:ss'),
             payEndDate: endTime.format('yyyy-MM-dd hh:mm:ss'),
-            payStatus: 2,
+            payStatus: 4,
             payRemarks: remarks,
             payType: Number(classText),
             userId: this.props.userInfo.userId,

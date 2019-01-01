@@ -82,24 +82,7 @@ class AppHomePage extends React.Component {
             },
             roles: ["家长"],
             studentIndex: 0,
-            students: [
-                {
-                    isSelected: true,
-                    stuId: 10000,
-                    stuName: "饶一",
-                    stuPhoto: "",
-                    videos: [],
-                    albums: []
-                },
-                {
-                    isSelected: false,
-                    stuId: 10000,
-                    stuName: "饶一",
-                    stuPhoto: "",
-                    videos: [],
-                    albums: []
-                }
-            ]
+            students: []
         }
     }
 
@@ -217,6 +200,7 @@ class AppHomePage extends React.Component {
                 userOpenid: this.state.userOpenid,
                 userPhone: this.state.userPhone,
                 stuId: isObjEmpty(this.props.userInfo.stuId) ? stuId : this.props.userInfo.stuId,
+                userRole: this.state.isTeacher ? 2 : 1
             })();
 
             this.setState({

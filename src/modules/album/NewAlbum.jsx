@@ -88,9 +88,18 @@ class NewAlbum extends Component {
         const {classList} = this.state
         classList.length = 0
 
-        fetchGet(API.GET_CLASS_LIST, {
-            userId: this.props.userInfo.userId,
-        }).then(response => {
+        let userRole = this.props.userInfo.userRole;
+        let params
+        if (userRole == 1) {
+            params = {
+                stuId: this.props.userInfo.stuId
+            }
+        } else {
+            params = {
+                userId: this.props.userInfo.userId
+            }
+        }
+        fetchGet(API.GET_CLASS_LIST, params).then(response => {
             Toast.hide()
 
             this.analysisClassList(response)

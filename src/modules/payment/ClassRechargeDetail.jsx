@@ -67,7 +67,7 @@ class ClassRechargeDetail extends Component {
                 phoneBean.claName = ''
                 phoneBean.claId = ''
                 phoneBean.name = getStrValue(item, 'stuName')
-                phoneBean.phone = ''
+                phoneBean.phone = getStrValue(item,'phones')
 
                 phonesList.push(phoneBean)
             })

@@ -128,12 +128,12 @@ export default class PhonesList extends Component {
                         response.data.teachers.forEach((item, index) => {
                             let phoneBean = new PhonesBean()
 
-                            phoneBean.icon = require('imgs/ic_head' + (index % 15 + 1)+'.png')
+                            phoneBean.icon = require('imgs/ic_head' + (index % 15 + 1) + '.png')
                             phoneBean.name = getStrValue(item, 'userName')
                             phoneBean.claName = this.title
                             phoneBean.children = ['']
 
-                            phoneBean.phone = getStrValue(item, 'UserPhone')
+                            phoneBean.phone = [getStrValue(item, 'userPhone')]
                             phonesList.push(phoneBean)
                         })
                     }
@@ -142,7 +142,7 @@ export default class PhonesList extends Component {
                         response.data.students.forEach((item, index) => {
                             let phoneBean = new PhonesBean()
                             let phones = []
-                            phoneBean.icon = require('imgs/ic_head' + (index % 15 + 1)+'.png')
+                            phoneBean.icon = require('imgs/ic_head' + (index % 15 + 1) + '.png')
                             phoneBean.name = getStrValue(item, 'stuName')
                             phoneBean.claName = this.title
 
@@ -153,9 +153,9 @@ export default class PhonesList extends Component {
                                 })
                             }
 
-                            if (phones.length > 0) {
-                                phoneBean.phone = phones[0]
-                            }
+                            // if (phones.length > 0) {
+                            phoneBean.phone = phones
+                            // }
 
                             phonesList.push(phoneBean)
                         })

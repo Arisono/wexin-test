@@ -7,12 +7,13 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '../../style/css/app-gloal.css'
 import  './LeaveApprovalPage.css'
 import  './LeaveAddPage.css'
-import {Input, Button,Upload, Icon, message,DatePicker} from 'antd';
+import moment from 'moment'
+import {Input, Button,Upload, Icon, message} from 'antd';
 import PicturesWallItem from "../../components/upload/PicturesWallItem";
 import TargetSelect from "../../components/TargetSelect";
 import {fetchPost,fetchGet} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
-import {Toast} from 'antd-mobile'
+import {Toast,DatePicker,List} from 'antd-mobile'
 import {isObjEmpty,getIntValue, getStrValue} from  '../../utils/common';
 import {connect} from 'react-redux'
 
@@ -183,8 +184,8 @@ class LeaveAddPage extends React.Component {
             lvNotifier:JSON.stringify(personArrays),
             lvFiles:this.state.lvFiles,
             lvDetails:this.state.lvDetails,
-            startDate:this.state.startDate,
-            endDate:this.state.endDate
+            startDate: moment(this.state.startDate).format('YYYY-MM-DD HH:mm:ss'),
+            endDate: moment(this.state.endDate).format('YYYY-MM-DD HH:mm:ss'),
         }
         console.log("onClickEvent()",JSON.stringify(param));
         Toast.loading("");
@@ -265,34 +266,30 @@ class LeaveAddPage extends React.Component {
                         <span class="span_17 text_bold " id="row_margin">{this.props.userInfo.stuName}的请假条</span>
                     </div>
                     <div className="row" id="page_block_min"></div>
-                    <div className="row leave-input  flex_row padding_10
-                           flex_center_vertical">
-                        <span>开始时间：</span>
-                        <div class="item_flex  flex_row_right">
-                            <DatePicker
-                                name="date-start"
-                                ref={ref=>this.date_start=ref}
-                                onChange={(date,dateString)=>{
-                                    this.setState({startDate:dateString})
-                                }}
-                                style={{width: "100%"}}
-                                        showTime format="YYYY-MM-DD HH:mm:ss"
-                                        placeholder="请选择开始时间"/>
-                        </div>
+                    <div className="row ">
+                        <DatePicker
+                            showTime
+                            value={this.state.startDate}
+                            defaultValue={this.state.startDate}
+                            onChange={date => this.setState({startDate:date}) }
+                            format="YYYY-MM-DD HH:mm:ss"
+                            onOk={this.changeEndDateOk}
+                            placeholder="">
+                            <List.Item arrow="horizontal" >开始时间</List.Item>
+                        </DatePicker>
                     </div>
                     <div className="row" id="page_horizontal_line"></div>
-                    <div className="row leave-input flex_row padding_10
-                           flex_center_vertical">
-                        <span>结束时间：</span>
-                        <div class="item_flex  flex_row_right">
-                            <DatePicker
-                                style={{width: "100%"}}
-                                onChange={(date,dateString)=>{
-                                    this.setState({endDate:dateString})
-                                }}
-                                showTime
-                                format="YYYY-MM-DD HH:mm:ss"
-                                placeholder="请选择结束时间"/></div>
+                    <div className="row">
+                        <DatePicker
+                            showTime
+                            value={this.state.endDate}
+                            defaultValue={this.state.endDate}
+                            onChange={date => this.setState({endDate:date}) }
+                            format="YYYY-MM-DD HH:mm:ss"
+                            onOk={this.changeEndDateOk}
+                            placeholder="">
+                            <List.Item arrow="horizontal" >结束时间</List.Item>
+                        </DatePicker>
 
                     </div>
                     <div id="page_horizontal_line"></div>

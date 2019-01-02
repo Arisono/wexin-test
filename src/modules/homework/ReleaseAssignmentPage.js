@@ -6,14 +6,15 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import  './ReleaseAssignmentPage.css'
 import '../../style/css/app-gloal.css'
-import { Input,Button , DatePicker,Icon,message } from 'antd';
+import moment from 'moment'
+import { Input,Button ,Icon,message } from 'antd';
 import PicturesWallItem from "../../components/upload/PicturesWallItem";
 import TargetSelect from "../../components/TargetSelect";
 import {fetchPost,fetchGet} from '../../utils/fetchRequest';
 import {API} from '../../configs/api.config';
 import {isObjEmpty,getIntValue, getStrValue} from  '../../utils/common';
 
-import {Toast} from 'antd-mobile'
+import {Toast,DatePicker,List} from 'antd-mobile'
 import {connect} from 'react-redux'
 const { TextArea } = Input;
 
@@ -27,9 +28,11 @@ class ReleaseAssignmentPage extends React.Component{
         this.state = {
             name: 'ReleaseAssignmentPage',
             targetList: [],
-            targetCount: 1,
+            targetCount: 0,
             targetData: [],
             checkNodes:[],
+            startDate:null,//当前时间
+            endDate: null,//截止时间
             data:{
                 notifyName: '',//标题
                 notifyType: '3',//作业发布
@@ -149,7 +152,7 @@ class ReleaseAssignmentPage extends React.Component{
             Toast.fail('请输入作业内容...')
             return;
         }
-        if(isObjEmpty(this.state.data.endDate)){
+        if(isObjEmpty(this.state.endDate)){
             Toast.fail("请输入截止时间");
             return;
         }
@@ -163,7 +166,7 @@ class ReleaseAssignmentPage extends React.Component{
                 personArrays.push(node.userId)
             })
         }
-        console.log("commitAction() personArrays:",personArrays);
+        console.log("commitAction() endDate:",this.state.endDate);
         Toast.loading("");
         console.log("commitAction()",this.state.data.notifyDetails);
         fetchPost(API.homeWorkAdd,{
@@ -172,7 +175,7 @@ class ReleaseAssignmentPage extends React.Component{
             notifyDetails:this.state.data.notifyDetails,//内容
             notifyCreator:this.props.userInfo.userId,//创建者
             notifyStatus:'2',//状态
-            endDate:this.state.data.endDate,
+            endDate: moment(this.state.endDate).format('YYYY-MM-DD HH:mm:ss'),
             userIds: JSON.stringify(personArrays),//通知
             notifyFiles:JSON.stringify(this.state.data.notifyFiles)
         }).then((response)=>{
@@ -236,18 +239,21 @@ class ReleaseAssignmentPage extends React.Component{
             <div className="row">
                 <div className="col-xs-12">
                     <div className="row flex_center_vertical"  >
-                        <div className=""><span   id="page_tile">截止时间</span></div>
+                       {/* <div className=""><span   id="page_tile">截止时间</span></div>*/}
                         <div className="item_flex
-                        flex_row_right
+
                         margin_top_bottom_10
                         margin_left_right_10"  style={{marginRight:"10px"}}>
                             <DatePicker
                                 showTime
-                                defaultValue={this.state.data.endDate}
-                                onChange={this.changeEndDate}
+                                value={this.state.endDate}
+                                defaultValue={this.state.endDate}
+                                onChange={date => this.setState({endDate:date}) }
                                 format="YYYY-MM-DD HH:mm:ss"
                                 onOk={this.changeEndDateOk}
-                                placeholder=""/>
+                                placeholder="">
+                                <List.Item arrow="horizontal" >截止时间</List.Item>
+                            </DatePicker>
                         </div>
                     </div>
                 </div>

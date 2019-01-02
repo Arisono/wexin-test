@@ -52,7 +52,7 @@ export default class MeetingSignItem extends Component {
                         <div className='valueText'>{meetingBean.sponsor}</div>
                     </div>
                     <div className='bottomLayout'>
-                        <span className={meetingBean.signStatusCode === 1 ? 'signBtnActive' : 'signBtnEnable'}
+                        <span className={meetingBean.signStatusCode === 5 ? 'signBtnEnable' : 'signBtnActive'}
                               onClick={this.onMeetingSign}>
                             {meetingBean.signStatus}
                         </span>

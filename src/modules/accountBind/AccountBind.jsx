@@ -64,9 +64,11 @@ class AccountBind extends Component {
 
         return (
             <div className='bindParent' style={{height: this.bodyHeight + 'px'}}>
-                {isObjEmpty(userHead) ?
-                    <Avatar icon='user' size={65}/> :
-                    <Avatar src={userHead} size={65}/>}
+                <div className='bindHeadLayout'>
+                    {isObjEmpty(userHead) ?
+                        <Avatar icon='user' size={65}/> :
+                        <Avatar src={userHead} size={65}/>}
+                </div>
                 <Input placeholder={mType == 'parents' ? '学号' : '工号'}
                        prefix={idIcon} suffix={idClear}
                        ref={input => this.accountInput = input} onChange={this.accountChange}

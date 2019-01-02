@@ -11,7 +11,10 @@
     align-items: center;
 }
 
-.bindParent .ant-avatar {
+.bindHeadLayout{
+
+}
+.bindHeadLayout .ant-avatar {
     margin-top: 70px;
     margin-bottom: 22px;
 }

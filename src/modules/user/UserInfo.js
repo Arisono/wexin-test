@@ -130,7 +130,10 @@ class UserInfo extends Component {
 
                 <span class="fileinput-button margin_left_10" style={{color:"#3680ED"}}>
                     上传
-                  <input type="file" accept="image/*" capture="camera"/>
+                  <input type="file" accept="image/*" capture="camera"  onChange={(e)=>{
+
+                  }}
+                      />
                 </span>
 
             </div>

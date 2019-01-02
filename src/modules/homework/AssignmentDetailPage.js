@@ -147,7 +147,7 @@ class AssignmentDetailPage extends React.Component {
             <div className="row" id="layout_header">
                 <div className="col-xs-4" id="padding10">
                     <img className="img-circle" style={{marginLeft: "10px"}}
-                         src={"http://img5.imgtn.bdimg.com/it/u=1494163297,265276102&fm=26&gp=0.jpg"}
+                         src={this.props.userInfo.userAvatar}
                          width={80} height={80}/>
                 </div>
                 <div className="col-xs-8" id="padding10">
@@ -185,7 +185,10 @@ class AssignmentDetailPage extends React.Component {
                     </span>):(<div></div>)}</div>
                     <div id="page_horizontal_line"></div>
                     <div>
-                        <List dataSource={this.state.data} renderItem={item => (
+                        <List
+                            locale={{emptyText: '暂无留言'}}
+                             dataSource={this.state.data}
+                              renderItem={item => (
                             <List.Item>
                                 <div>
                                     <span className="text_bold margin_left_right_10">{item.name}:</span>

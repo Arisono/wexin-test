@@ -176,7 +176,7 @@ class MeetingSignIn extends Component {
             Toast.hide()
             Toast.success('签到成功')
             meetingSignList[index].signStatus = '已签到'
-            meetingSignList[index].signStatusCode = 3
+            meetingSignList[index].signStatusCode = 5
 
             this.setState({meetingSignList})
         }).catch(error => {

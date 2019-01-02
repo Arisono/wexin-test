@@ -207,6 +207,9 @@ class UserInfo extends Component {
                 console.log("result():",result);
                 let imageUrl=result.data;
                 this.state.imageUrl=imageUrl;
+                this.setState({
+                    imageUrl:imageUrl
+                });
                 this.updateUserInfo(imageUrl)
 
             }
@@ -218,13 +221,12 @@ class UserInfo extends Component {
 
 
     updateUserInfo=(userPhoto)=>{
-        //    let imageUrl=_baseURL+result.data;
         let userInfo={
              userName:this.state.userName,
              userId:this.state.userId,
              userPhoto:userPhoto
         }
-            console.log("updateUserInfo()",JSON.stringify(userInfo));
+        console.log("updateUserInfo()",JSON.stringify(userInfo));
         fetchPost(_baseURL+"/user/updateUser",{
                   userJson:JSON.stringify(userInfo)
                   }).then((response)=>{

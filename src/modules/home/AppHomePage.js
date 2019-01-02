@@ -216,7 +216,7 @@ class AppHomePage extends React.Component {
                 userPhone: this.state.userPhone,
                 stuId: isObjEmpty(this.props.userInfo.stuId) ? stuId : this.props.userInfo.stuId,
                 userRole: this.state.isTeacher ? 2 : 1,
-                userAvatar: this.state.userPhoto
+                userAvatar: _baseURL+this.state.userPhoto
             })();
         }).catch((error) => {
             Toast.hide();

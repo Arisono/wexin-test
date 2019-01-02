@@ -3,9 +3,11 @@ import 'css/user-info.css'
 import 'css/phones.css'
 import {Icon, Modal, Upload} from "antd";
 import  icon_userInfo_upload from "../../style/imgs/icon_userInfo_upload.png"
-import {uploadFile} from  '../../components/upload/MobileUpload';
-
+import {API,_baseURL} from "../../configs/api.config";
+import {Toast} from 'antd-mobile'
 import {connect} from 'react-redux'
+import {fetchPost,fetchGet} from "../../utils/fetchRequest";
+
 class UserInfo extends Component {
 //老师是1家长是2
     static defaultProps = {
@@ -21,9 +23,11 @@ class UserInfo extends Component {
         this.state = {
             type: props.type,
             userName: this.props.userInfo.userName,
+            userId:this.props.userInfo.userId,
             school:this.props.userInfo.school,
             phone: this.props.userInfo.userPhone,
             id: this.props.userInfo.stuId,
+            imageUrl:"",
             previewVisible: false,
             previewImage: '',
             studentName: this.props.userInfo.stuName,
@@ -43,6 +47,14 @@ class UserInfo extends Component {
         }
         document.title = '个人信息'
     }
+
+
+    componentDidMount(){
+       // this.updateUserInfo("");
+    }
+
+
+
 
     render() {
         let identity = this.state.type == 1 ? '教师' : '家长'
@@ -92,6 +104,12 @@ class UserInfo extends Component {
         </div>
     }
 
+    uploadChange=(e)=>{
+            console.log("file():",e.target.files);
+            this.uploadFile(e.target.files[0])
+
+    }
+
     //显示个人联系方式
     showUserContact() {
         const {previewVisible, fileList} = this.state;
@@ -130,23 +148,17 @@ class UserInfo extends Component {
 
                 <span class="fileinput-button margin_left_10" style={{color:"#3680ED"}}>
                     上传
-                  <input type="file" accept="image/*" capture="camera"  onChange={(e)=>{
-
-                  }}
-                      />
+                  <input type="file" accept="image/*" capture="camera"  onChange={this.uploadChange}/>
                 </span>
 
             </div>
             <div className=' flex padding_15'>
-               <span class="fileinput-button " style={{color:"#3680ED"}}>
-                  <input type="file" accept="image/*" capture="camera"/>
                         <img style={{marginLeft:"10px"}}
-                             src={icon_userInfo_upload}
+                             src={this.state.imageUrl===""?icon_userInfo_upload:_baseURL+this.state.imageUrl}
                              width={100}
-                             height={130} >
+                             height={130} />
 
-                </img>
-                </span>
+
 
                 <div className="margin_left_20">
                     <div className="margin_bottom_10"><span className="span_16">• 请按照证件照的样式拍摄正面</span></div>
@@ -168,6 +180,60 @@ class UserInfo extends Component {
                 </Modal>
             </div>
         </div>
+    }
+
+
+    uploadFile=(file)=>{
+        const formData = new FormData();
+        formData.append('file', file);
+        console.log("uploadFile()",file);
+        Toast.loading("")
+        fetch(API.UPLOAD_FILE,{
+            method :"POST",
+            body: formData,
+            mode: 'cors',
+            credentials: 'include'
+        }).then(function(response) {
+            let  result= response.json();
+            if(response.status===200){
+                console.log("text:",result);
+                return result;
+            }else{
+                Toast.success("上传失败！")
+            }
+        }).then(result=>{
+            if(result.success){
+                Toast.success("上传成功！");
+                console.log("result():",result);
+                let imageUrl=result.data;
+                this.state.imageUrl=imageUrl;
+                this.updateUserInfo(imageUrl)
+
+            }
+        }).catch(function(ex) {
+            Toast.success("上传失败！")
+            console.log('parsing failed', ex)
+        })
+    }
+
+
+    updateUserInfo=(userPhoto)=>{
+        //    let imageUrl=_baseURL+result.data;
+        let userInfo={
+             userName:this.state.userName,
+             userId:this.state.userId,
+             userPhoto:userPhoto
+        }
+            console.log("updateUserInfo()",JSON.stringify(userInfo));
+        fetchPost(_baseURL+"/user/updateUser",{
+                  userJson:JSON.stringify(userInfo)
+                  }).then((response)=>{
+                      console.log("response:"+JSON.stringify(response));
+                  }).catch((error)=>{
+                      console.log("error:"+JSON.stringify(error));
+                  })
+
+
     }
 
     handleCancel = () => {

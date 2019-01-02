@@ -423,9 +423,9 @@
 .fileinput-button input{
     position:absolute;
     right: 0px;
-    top:0px;
-    border: 1px solid goldenrod;
-    opacity: 0;
+    top:300px;
+    border: 0px solid goldenrod;
+    opacity:0;
     -ms-filter: 'alpha(opacity=0)';
     font-size: 200px;
 }

@@ -3,7 +3,7 @@ import 'css/user-info.css'
 import 'css/phones.css'
 import {Icon, Modal, Upload} from "antd";
 import  icon_userInfo_upload from "../../style/imgs/icon_userInfo_upload.png"
-
+import {uploadFile} from  '../../components/upload/MobileUpload';
 
 import {connect} from 'react-redux'
 class UserInfo extends Component {

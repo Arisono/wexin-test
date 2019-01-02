@@ -4,7 +4,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Menu, Dropdown, message, Icon, Carousel, List} from 'antd';
+import {Menu, Dropdown, message, Icon, Carousel, List, Avatar} from 'antd';
 import ReactPlayer from 'react-player'
 import "slick-carousel/slick/slick-theme.css"
 import "slick-carousel/slick/slick.css"
@@ -193,6 +193,18 @@ class AppHomePage extends React.Component {
 
             let stuName = isObjEmpty(response.data.students) ? "" : response.data.students[0].stuName;
             let stuId = isObjEmpty(response.data.students) ? "" : response.data.students[0].stuId;
+
+            this.setState({
+                userPhoto: this.state.userPhoto,
+                userId: this.state.userId,
+                userName: this.state.userName,
+                userPhone: this.state.userPhone,
+                userOpenid: this.state.userOpenid,
+                pictures: this.state.pictures,
+                roles: this.state.roles,
+                students: this.state.students,
+            })
+
             switchUser({
                 stuName: isObjEmpty(this.props.userInfo.stuName) ? stuName : this.props.userInfo.stuName,
                 userId: this.state.userId,
@@ -200,19 +212,9 @@ class AppHomePage extends React.Component {
                 userOpenid: this.state.userOpenid,
                 userPhone: this.state.userPhone,
                 stuId: isObjEmpty(this.props.userInfo.stuId) ? stuId : this.props.userInfo.stuId,
-                userRole: this.state.isTeacher ? 2 : 1
+                userRole: this.state.isTeacher ? 2 : 1,
+                userAvatar: this.state.userPhoto
             })();
-
-            this.setState({
-                userPhoto: this.state.userPhone,
-                userId: this.state.userId,
-                userName: this.state.userName,
-                userPhone: this.state.userPhone,
-                userOpenid: this.state.userOpenid,
-                pictures: this.state.pictures,
-                roles: this.state.roles,
-                students: this.state.students
-            })
         }).catch((error) => {
             Toast.hide();
             console.log("error:" + JSON.stringify(error));
@@ -298,10 +300,13 @@ class AppHomePage extends React.Component {
                             <div className="row">
                                 <div className="col-xs-3" id="global_row_right"
                                      style={{marginBottom: "30px", marginTop: "20px"}}>
-                                    <img
-                                        src={"http://img5.imgtn.bdimg.com/it/u=1494163297,265276102&fm=26&gp=0.jpg"}
-                                        width={60} height={60} class="img-circle"
-                                        style={{border: '3px solid #ffffff'}}/>
+                                    {isObjEmpty(this.props.userInfo.userAvatar) ?
+                                        <Avatar size={60} icon='user'/> :
+                                        <img
+                                            src={this.props.userInfo.userAvatar}
+                                            width={60} height={60} className="img-circle"
+                                            style={{border: '3px solid #ffffff'}}/>
+                                    }
                                 </div>
                                 <div className="col-xs-9" id="global-clear">
                                     <div style={{marginTop: "30px", marginLeft: "0px"}}><span

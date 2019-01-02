@@ -303,7 +303,7 @@ export const getCheckedNodes = (extra) => {
         checkedNodes = []
     }
     checkedNodes = getNodes(checkedNodes)
-    console.log('checkNodes',checkedNodes)
+    console.log('checkNodes', checkedNodes)
     return {checkedNodes, count}
 }
 
@@ -382,5 +382,20 @@ export const getFileType = (filePath) => {
 
 export const getVisibleObj = (obj1, obj2) => {
     return isObjNull(obj1) ? obj2 : obj1
+}
+
+//生成从minNum到maxNum的随机数
+export function randomNum(minNum, maxNum) {
+    switch (arguments.length) {
+        case 1:
+            return parseInt(Math.random() * minNum + 1, 10);
+            break;
+        case 2:
+            return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+            break;
+        default:
+            return 0;
+            break;
+    }
 }
 

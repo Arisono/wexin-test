@@ -41,7 +41,7 @@ export default class PhonesItem extends Component {
                         <div className='phones-item-name'>{phonesBean.name}</div>
                         {isObjEmpty(phonesBean.phone) ? '' : (
                             phonesBean.phone.length <= 1 ?
-                                <a href={'tel:' + phonesBean.phone} style={{display: 'flex', alignItems: 'center'}}>
+                                <a href={'tel:' + phonesBean.phone[0]} style={{display: 'flex', alignItems: 'center'}}>
                                     <div className='phones-item-phone'>{phonesBean.phone[0]}</div>
                                     <Icon type="phone" theme="filled"/>
                                 </a> :
@@ -61,16 +61,27 @@ export default class PhonesItem extends Component {
     }
 
     onPhoneSelect = () => {
-        alert('提示', '请选择您要拨打的电话？', [
-            {
-                text: '取消', onPress: () => {
-                }
-            },
-            {
-                text: '确定', onPress: () => {
+        const {phonesBean} = this.state
 
-                }
-            }
-        ])
+        const phonesItems = []
+        phonesBean.phone.forEach((item, index) => {
+            phonesItems.push(
+                <a href={'tel:' + item} style={{display: 'flex', alignItems: 'center', margin: '10px auto'}}
+                   onClick={this.onPhoneClick}>
+                    <div className='phones-item-phone'>{item}</div>
+                    <Icon type="phone" theme="filled"/>
+                </a>
+            )
+        })
+
+        this.alertClose = alert('请选择您要拨打的电话', <div
+            style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+            {phonesItems}
+        </div>)
+    }
+
+    onPhoneClick = () => {
+        // console.log("alert",this.alertClose)
+        this.alertClose.close()
     }
 }

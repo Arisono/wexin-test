@@ -54,6 +54,7 @@ export default class BindMenu extends Component {
                 errorMsg: '获取绑定信息中...'
             })
             this.openid = this.paramId
+            this.token = this.props.match.params.token
 
             //清除用户信息
             clearUserInfo()()
@@ -90,7 +91,8 @@ export default class BindMenu extends Component {
                     userName: getStrValue(response.data, 'userName'),
                     userOpenid: getStrValue(response.data, 'userOpenid'),
                     userPhone: getStrValue(response.data, 'userPhone'),
-                    // userRole: role
+                    // userRole: role,
+                    accessToken: this.token,
                 })()
 
                 this.setState({
@@ -127,7 +129,7 @@ export default class BindMenu extends Component {
         return (
             <div className='bindParent' style={{justifyContent: 'center', backgroundImage: 'none'}}>
                 <Icon type="loading" spin style={{fontSize: '50px', color: '#3db1af'}}/>
-                <span style={{marginTop: '14px', color: 'white'}}>{this.state.errorMsg}</span>
+                <span style={{marginTop: '14px', color: '#666'}}>{this.state.errorMsg}</span>
             </div>
         )
     }

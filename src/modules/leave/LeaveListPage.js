@@ -50,7 +50,6 @@ class LeaveListPage extends React.Component{
         })
         if (this.state.role === "teacher") {
             console.log("getLeaveListData()",this.props.userInfo.userId);
-            Toast.show("userId:"+this.props.userInfo.userId);
             fetchGet(API.leaveListTeacher, {
                 userId: this.props.userInfo.userId,
                 pageIndex: this.state.pageIndex,

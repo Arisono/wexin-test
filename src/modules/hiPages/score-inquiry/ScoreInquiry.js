@@ -81,8 +81,8 @@ class ScoreInquiry extends Component{
     }
     getScoreData =(selectClas,selectTime)=>{
         let params = {
-            stuId:this.props.userInfo.userId,
-            // stuId:10003,
+            // stuId:this.props.userInfo.stuId,
+            stuId:10003,
             scoreType:selectTime,
             scoreName:selectClas
         }
@@ -126,7 +126,7 @@ class ScoreInquiry extends Component{
     }
     componentDidMount() {
         let params = {
-            stuId:this.props.userInfo.userId
+            stuId:this.props.userInfo.stuId
             // stuId:10003,
         }
         fetchGet(API.getCurr,params,{})

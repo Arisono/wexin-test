@@ -204,7 +204,7 @@ class LeaveAddCPage extends Component {
                 // this.props.history.push("/leaveList/" + this.props.match.params.role)
                 // this.props.history.push("/homePage")
                 this.backTask = setTimeout(() => {
-                    // this.props.history.goBack()
+                    this.props.history.goBack()
                 }, 2000)
             }
         }).catch((error) => {

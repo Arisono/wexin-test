@@ -8,7 +8,7 @@ import './Approvel.css';
 import icon_out from '../../../style/imgs/out_img.png';
 import icon_res from '../../../style/imgs/res_img.png';
 import icon_trip from '../../../style/imgs/trip_img.png';
-import icon_leave from '../../../style/imgs/trip_img.png';
+import icon_leave from '../../../style/imgs/leave_img.png';
 import {Link} from 'react-router-dom';
 
 export default class ApprovelItem extends Component{

@@ -186,6 +186,10 @@ class NotifyBoardTeacher extends Component {
 
         return (
             <div>
+                {previewVisible ?
+                    <ImagesViewer onClose={this.handleCancel} urls={pictureUrls}
+                                  index={0}
+                                  needPoint={pictureUrls.length <= 9}/> : ""}
                 <Modal
                     popup
                     visible={this.state.detailVisible}
@@ -232,10 +236,6 @@ class NotifyBoardTeacher extends Component {
                         </div>
                     </div>
                 </Modal>
-                {previewVisible ?
-                    <ImagesViewer onClose={this.handleCancel} urls={pictureUrls}
-                                  index={0}
-                                  needPoint={pictureUrls.length <= 9}/> : ""}
             </div>
 
         )

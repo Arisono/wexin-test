@@ -74,6 +74,7 @@ class AppHomePage extends React.Component {
             userId: '',
             userName: '',
             userPhone: '',
+            school:'',
             userOpenid: '',
             isTeacher: false,
             pictures: {
@@ -156,6 +157,7 @@ class AppHomePage extends React.Component {
             Toast.hide();
             this.state.userId = response.data.userId;
             this.state.userName = response.data.userName;
+            this.state.school=response.data.schoolName;
             // response.data.students.splice(1,1,{isSelected:false,...student});
             console.log("studId():", this.props.userInfo.stuId);
             if (isObjEmpty(this.props.userInfo.stuId)) {
@@ -208,6 +210,7 @@ class AppHomePage extends React.Component {
             switchUser({
                 stuName: isObjEmpty(this.props.userInfo.stuName) ? stuName : this.props.userInfo.stuName,
                 userId: this.state.userId,
+                school:this.state.school,
                 userName: this.state.userName,
                 userOpenid: this.state.userOpenid,
                 userPhone: this.state.userPhone,
@@ -292,7 +295,7 @@ class AppHomePage extends React.Component {
                                             color: "#2C7CF8",
                                             margin: "0px",
                                             fontSize: "13px"
-                                        }}>     宝安区十八中学</span>
+                                        }}>     {this.state.school}</span>
                                     </div>
 
                                 </div>

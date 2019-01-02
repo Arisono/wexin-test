@@ -64,10 +64,10 @@ class UserInfo extends Component {
     showUserInfo() {
         return <div className='user-row'>
             <img style={{borderRadius: 360}} width={50} height={50} onClick={this.onAvatarClick}
-                 src={'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'}/>
-            <div style={{marginLeft: 20, display: "flex", flexDirection: "column"}}>
+                 src={this.props.userInfo.userAvatar}/>
+            <div style={{marginLeft: 20, display: "flex", flexDirection: "column"}} className="flex_row_center">
                 <span>{this.state.userName}</span>
-                <span style={{marginTop: 5}}>{this.state.sex}</span>
+               {/* <span style={{marginTop: 5}}>{this.state.sex}</span>*/}
             </div>
 
         </div>
@@ -126,14 +126,25 @@ class UserInfo extends Component {
             <div style={{padding: 10}} className='flex phones-item-top margin_bottom_20'>
                 <text className='phones-item-name'>人脸照</text>
                 |
-                <text className="margin_left_10" style={{color:"#3680ED"}}>上传</text>
-            </div>
-            <div className='imagesLayout flex padding_15'>
-                <img style={{marginLeft:"10px"}}
+              {/*  <text className="margin_left_10" style={{color:"#3680ED"}}>上传</text>*/}
 
-                     src={icon_userInfo_upload}
-                     width={100}
-                     height={130} />
+                <span class="fileinput-button margin_left_10" style={{color:"#3680ED"}}>
+                    上传
+                  <input type="file" accept="image/*" capture="camera"/>
+                </span>
+
+            </div>
+            <div className=' flex padding_15'>
+               <span class="fileinput-button " style={{color:"#3680ED"}}>
+                  <input type="file" accept="image/*" capture="camera"/>
+                        <img style={{marginLeft:"10px"}}
+                             src={icon_userInfo_upload}
+                             width={100}
+                             height={130} >
+
+                </img>
+                </span>
+
                 <div className="margin_left_20">
                     <div className="margin_bottom_10"><span className="span_16">• 请按照证件照的样式拍摄正面</span></div>
                     <div className="margin_bottom_10"><span className="span_16">• 请保证光线充足，没有遮挡物</span></div>

@@ -31,7 +31,7 @@ class AccessNotice extends Component{
             studentName:this.props.userInfo.stuName,
         })
         fetchPost(API.RecordOutgoingList,{
-            stuId:this.props.userInfo.userId,
+            stuId:this.props.userInfo.stuId,
             // stuId:10002,
             pageIndex:1,
             pageSize:10

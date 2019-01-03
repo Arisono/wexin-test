@@ -52,6 +52,11 @@
     color: red;
 }
 
+#span_header_right2{
+    font-size: 15px;
+    color: lightgrey;
+}
+
 #span_normal{
     font-size: 15px;
 }

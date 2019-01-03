@@ -3,6 +3,7 @@ import {getVisibleObj} from "../../utils/common";
 
 const initListState = {
     userId: 0,
+    school:'',
     userName: '',
     stuName: "",
     userOpenid: '',

@@ -133,7 +133,7 @@ export default class PhonesList extends Component {
                             phoneBean.claName = this.title
                             phoneBean.children = ['']
 
-                            phoneBean.phone = [getStrValue(item, 'userPhone')]
+                            phoneBean.phone = [getStrValue(item, 'UserPhone')]
                             phonesList.push(phoneBean)
                         })
                     }

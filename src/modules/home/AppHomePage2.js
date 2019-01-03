@@ -14,8 +14,6 @@ import {connect} from "react-redux";
 import {CONFIG_TEACHER_MENU, CONFIG_PARENT_MENU} from "../../utils/homePage.constants";
 import {isObjEmpty} from "../../utils/common";
 import 'css/home-page.css'
-import icon_group from "../../style/imgs/icon_group.png";
-
 
 const mTopMenu = [{
     icon: require('imgs/ic_personal_info.png'),
@@ -39,6 +37,8 @@ class AppHomePage2 extends Component {
         this.state = {
             students: [],
             studentIndex: 0,
+            albums: [],
+            videos: []
         }
     }
 
@@ -74,7 +74,7 @@ class AppHomePage2 extends Component {
         return (
             <div className='home-page-root'>
                 <div className='home-top-layout-root'>
-                    <div></div>
+                    <div className='home-top-school-text'>宝安区第一中学{userInfo.school}</div>
                     <div className='home-top-msg-root'>
                         {isObjEmpty(userInfo.userAvatar) ?
                             <Avatar size={60} icon='user'/> :
@@ -94,6 +94,11 @@ class AppHomePage2 extends Component {
                     </div>
                 </div>
                 {userInfo.userRole == 2 ? teacherMenu : parentMenu}
+                <div className='gray-line'></div>
+                <MenuGroup groupIcon={require('imgs/ic_group_album.png')} groupText='班级相册'/>
+
+                <div className='gray-line'></div>
+                <MenuGroup groupIcon={require('imgs/ic_group_moment.png')} groupText='精彩瞬间'/>
             </div>
         )
     }
@@ -109,7 +114,8 @@ class AppHomePage2 extends Component {
                     menuPage = '/userInfoPage/1'
                 }
             }
-            topMenus.push(<TopMenuItem icon={topMenu.icon} text={topMenu.text} page={menuPage}/>)
+            topMenus.push(<TopMenuItem icon={topMenu.icon} text={topMenu.text} page={menuPage}
+                                       onMenuClick={this.onTopFunc}/>)
         })
 
         return topMenus
@@ -153,12 +159,20 @@ class AppHomePage2 extends Component {
                 const funcList = groupItem.funcList
                 if (!isObjEmpty(funcList)) {
                     funcList.forEach((funcItem, funcIndex) => {
-                        parentMenu.push(<FuncItem funcObj={funcItem}/>)
+                        parentMenu.push(<FuncItem funcObj={funcItem} onFuncClick={this.onFuncClick}/>)
                     })
                 }
             })
         }
         return parentMenu
+    }
+
+    onTopFunc = (page) => {
+        this.props.history.push(page)
+    }
+
+    onFuncClick = (page) => {
+        this.props.history.push(page)
     }
 }
 
@@ -190,7 +204,9 @@ class FuncItem extends Component {
     }
 
     onFuncClick = () => {
-        this.props.history.push(this.props.funcObj.funcPage)
+        if (this.props.onFuncClick) {
+            this.props.onFuncClick(this.props.funcObj.funcPage)
+        }
     }
 }
 
@@ -226,7 +242,9 @@ class TopMenuItem extends Component {
     }
 
     onMenuClick = () => {
-        this.props.history.push(this.props.page)
+        if (this.props.onMenuClick) {
+            this.props.onMenuClick(this.props.page)
+        }
     }
 }
 

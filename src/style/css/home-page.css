@@ -3,7 +3,7 @@
 }
 
 .home-group-item-layout {
-    padding: 15px 10px 6px;
+    padding: 15px 10px 8px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -49,6 +49,7 @@
 }
 
 .home-top-layout-root {
+    position: relative;
     background-image: linear-gradient(-180deg, #91CBE6 0%, #FFFFFF 100%, #1686FB 100%);
 }
 
@@ -100,4 +101,18 @@
     flex-direction: row;
     align-items: center;
     height: 36px;
+}
+
+.home-top-school-text {
+    opacity: 0.76;
+    background: #FFFFFF;
+    border-radius: 2px;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #1254FD;
+    letter-spacing: 1.6px;
+    padding: 2px 6px;
+    position: absolute;
+    top:16px;
+    right: 0;
 }

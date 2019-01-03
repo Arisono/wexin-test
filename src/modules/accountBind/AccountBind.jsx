@@ -206,7 +206,8 @@ class AccountBind extends Component {
                     userName: getStrValue(response.data, 'userName'),
                     userOpenid: getStrValue(response.data, 'userOpenid'),
                     userPhone: getStrValue(response.data, 'userPhone'),
-                    userAvatar: userHead
+                    userAvatar: userHead,
+                    userRole: 1,
                 })()
                 this.props.history.push('/homePage?role=parent')
             }).catch(error => {
@@ -232,6 +233,8 @@ class AccountBind extends Component {
                     userName: getStrValue(response.data, 'userName'),
                     userOpenid: getStrValue(response.data, 'userOpenid'),
                     userPhone: getStrValue(response.data, 'userPhone'),
+                    userAvatar: userHead,
+                    userRole: 2,
                 })()
                 this.props.history.push('/homePage?role=teacher')
             }).catch(error => {

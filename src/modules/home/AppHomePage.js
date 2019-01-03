@@ -45,12 +45,11 @@ import icon_home_menu_33 from '../../style/imgs/icon_home_menu33.png'
 import icon_home_menu_34 from '../../style/imgs/icon_home_menu34.png'
 import icon_home_menu_35 from '../../style/imgs/icon_home_menu35.png'
 
-
 import icon_home_help from '../../style/imgs/icon_home_help.png'
 import icon_home_message from '../../style/imgs/icon_home_message.png'
 import icon_home_oa from '../../style/imgs/icon_home_menu_oa.png'
 
-import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import {Link} from "react-router-dom";
 import './AppHomePage.css'
 import '../../style/css/app-gloal.css'
 import {switchUser} from '../../redux/actions/userInfo'

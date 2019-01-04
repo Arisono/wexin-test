@@ -65,6 +65,7 @@ class HomePage extends Component {
         const parentMenu = this.getParentMenu()
         const albumLayout = this.getAlbumLayout()
         const videoLayout = this.getVideoLayout()
+        const topMenus = this.getTopMenus()
 
         const studentList = []
         if (!isObjEmpty(userInfo.students) && userInfo.userRole === 1) {
@@ -74,7 +75,6 @@ class HomePage extends Component {
             })
         }
 
-        const topMenus = this.getTopMenus()
 
         return (
             <div className='home-page-root'>

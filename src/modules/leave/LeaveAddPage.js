@@ -28,7 +28,7 @@ class LeaveAddPage extends React.Component {
         this.state = {
             name: 'LeaveAddPage',
             role: "parent",
-            targetCount: 1,
+            targetCount:0,
             targetList: [],
             targetData: [],
             checkNodes:[],

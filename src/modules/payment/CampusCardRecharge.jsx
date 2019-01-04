@@ -86,7 +86,7 @@ class CampusCardRecharge extends Component {
             }
         } else {
             this.params = {
-                stuId: this.props.userInfo.userId
+                stuId: this.props.userInfo.stuId
             }
         }
         fetchGet(API.CARD_DETAIL, this.params)

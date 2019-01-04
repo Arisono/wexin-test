@@ -34,7 +34,7 @@ export default class RechargeItem extends Component {
                     <div className='recharge-item-type'>{rechargeBean.payName}</div>
                     <div className='gray-line' style={{height: '1px', marginBottom: '10px'}}></div>
                     <div className='recharge-item-line'>
-                        <div className='recharge-item-caption'>交费对象：</div>
+                        <div className='recharge-item-caption'>发起人：</div>
                         <div className='recharge-item-value'>{rechargeBean.userName}</div>
                     </div>
                     <div className='recharge-item-line'>

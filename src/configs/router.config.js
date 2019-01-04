@@ -52,6 +52,7 @@ import TestImagesViewer from "../modules/demo/TestImagesViewer";
 import ImageGrid from "../components/image/ImageGrid";
 import MobileUpload from "../components/upload/MobileUpload";
 import MobileUploadDemo from "../modules/demo/MobileUploadDemo";
+import AppHomePage2 from "../modules/home/AppHomePage2";
 
 
 export default class RouteConfig extends Component {
@@ -65,6 +66,8 @@ export default class RouteConfig extends Component {
                     )}/>
 
                     {/*饶猛*/}
+                    <Route path="/homePage2" component={AppHomePage2}/>
+
                     <Route path='/bindMenu/:type/:openid?/:token?' component={BindMenu}/>
                     <Route path='/accountBind/:type?' component={AccountBind}/>
                     <Route path='/newAlbum/:classId/:name?' component={NewAlbum}/>

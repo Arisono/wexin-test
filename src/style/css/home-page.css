@@ -1,0 +1,118 @@
+.home-page-root {
+    width: 100%;
+}
+
+.home-group-item-layout {
+    padding: 15px 10px 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.home-group-item-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.home-group-item-text {
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #888888;
+    letter-spacing: 2px;
+    padding-left: 6px;
+}
+
+.home-func-item-root {
+    width: 25%;
+    display: inline-block;
+    padding: 10px;
+}
+
+.home-func-item-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-func-item-icon {
+    width: 42px;
+    height: 42px;
+}
+
+.home-func-item-text {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #333333;
+    letter-spacing: 1.6px;
+    padding-top: 6px;
+}
+
+.home-top-layout-root {
+    position: relative;
+    background-image: linear-gradient(-180deg, #91CBE6 0%, #FFFFFF 100%, #1686FB 100%);
+}
+
+.home-top-msg-root {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 24px 24px 0;
+}
+
+.home-top-msg-text {
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #000000;
+    letter-spacing: 2px;
+    padding-left: 6px;
+}
+
+.home-top-menu-root {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 12px 0;
+}
+
+.home-top-menu-item {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-top-menu-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.home-top-menu-text {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #333333;
+    letter-spacing: 1.87px;
+}
+
+.home-student-layout-root {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 36px;
+}
+
+.home-top-school-text {
+    opacity: 0.76;
+    background: #FFFFFF;
+    border-radius: 2px;
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #1254FD;
+    letter-spacing: 1.6px;
+    padding: 2px 6px;
+    position: absolute;
+    top:16px;
+    right: 0;
+}

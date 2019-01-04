@@ -157,14 +157,14 @@ class VoteDetailPage extends React.Component {
                         <div className="flex_row">
                             <img class="img-circle"
                                  style={{marginLeft: "10px", marginTop: '20px', border: "1px solid #e4e4e4"}}
-                                 src={"http://img5.imgtn.bdimg.com/it/u=1494163297,265276102&fm=26&gp=0.jpg"} width={66}
+                                 src={this.props.userInfo.userAvatar} width={66}
                                  height={66}/>
 
-                            <div className="vote-header">
+                            <div className="vote-header ">
                                 {this.state.data.title}
                             </div>
                         </div>
-                        <div className="text_bold" style={{marginLeft: "18px"}}>{this.state.data.voter}</div>
+                        <div className="text_bold" style={{marginLeft: "25px"}}>{this.state.data.voter}</div>
                         <div id="row_right"><span
                             className="text_bold">截止时间：</span><span>{this.state.data.endTime}</span></div>
                     </div>

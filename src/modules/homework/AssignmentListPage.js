@@ -154,7 +154,9 @@ class AssignmentListPage extends React.Component {
                                             <div className="col-xs-6" id="row_left">
                                                 <span id="span_header_left">{item.title}</span></div>
                                             <div className="col-xs-6" id="row_right">
-                                                <span id="span_header_right">{item.state}</span></div>
+                                                {item.state==="已读"?( <span id="span_header_right2">{item.state}</span>):( <span id="span_header_right">{item.state}</span>)}
+
+                                            </div>
                                         </div>
                                         <div id="page_horizontal_line"></div>
                                         <div className="row" id="padding">

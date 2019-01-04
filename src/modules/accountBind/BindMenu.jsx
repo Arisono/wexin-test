@@ -79,19 +79,23 @@ export default class BindMenu extends Component {
             userOpenid: this.openid,
         }).then(response => {
             if (response.data) {
-                /*let role = 1//1:家长2:老师
-                const userStation = getStrValue(response.data, 'userStation')
-                if (userStation === '家长') {
+                let role = 1//1:家长2:老师
+                const roles = getStrValue(response.data, 'roles')
+                if (roles.length > 1) {
                     role = 1
                 } else {
-                    role = 2
-                }*/
+                    if (roles === '教师') {
+                        role = 2
+                    } else if (roles === '家长') {
+                        role = 1
+                    }
+                }
                 switchUser({
                     userId: getIntValue(response.data, 'userId'),
                     userName: getStrValue(response.data, 'userName'),
                     userOpenid: getStrValue(response.data, 'userOpenid'),
                     userPhone: getStrValue(response.data, 'userPhone'),
-                    // userRole: role,
+                    userRole: role,
                     accessToken: this.token,
                 })()
 

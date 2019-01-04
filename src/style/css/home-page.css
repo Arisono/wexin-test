@@ -100,7 +100,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 36px;
+    height: 46px;
+    padding-left: 26px;
 }
 
 .home-top-school-text {
@@ -115,4 +116,16 @@
     position: absolute;
     top:16px;
     right: 0;
+}
+
+.home-top-stu-layout{
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    letter-spacing: 1.6px;
+    padding: 0px 10px;
+}
+
+.am-modal.am-modal-operation .am-modal-content .am-modal-button{
+    text-align: center;
+    padding: 0;
 }

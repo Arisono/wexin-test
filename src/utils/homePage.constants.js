@@ -183,3 +183,17 @@ export const CONFIG_PARENT_MENU = [
         ]
     }
 ]
+
+export const CONFIG_HOME_TOP_MENU = [{
+    icon: require('imgs/ic_personal_info.png'),
+    text: '个人信息',
+    page: '/userInfoPage'
+}, {
+    icon: require('imgs/ic_use_help.png'),
+    text: '使用帮助',
+    page: '/useHelp'
+}, {
+    icon: require('imgs/ic_system_message.png'),
+    text: '系统消息',
+    page: '/systemMessage'
+},]

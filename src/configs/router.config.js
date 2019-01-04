@@ -52,8 +52,7 @@ import TestImagesViewer from "../modules/demo/TestImagesViewer";
 import ImageGrid from "../components/image/ImageGrid";
 import MobileUpload from "../components/upload/MobileUpload";
 import MobileUploadDemo from "../modules/demo/MobileUploadDemo";
-import AppHomePage2 from "../modules/home/AppHomePage2";
-
+import HomePage from "../modules/home/HomePage";
 
 export default class RouteConfig extends Component {
 
@@ -66,7 +65,7 @@ export default class RouteConfig extends Component {
                     )}/>
 
                     {/*饶猛*/}
-                    <Route path="/homePage2" component={AppHomePage2}/>
+                    <Route path="/homePage" component={HomePage}/>
 
                     <Route path='/bindMenu/:type/:openid?/:token?' component={BindMenu}/>
                     <Route path='/accountBind/:type?' component={AccountBind}/>
@@ -98,7 +97,7 @@ export default class RouteConfig extends Component {
                     <Route path={"/TestImagesViewer"} component={TestImagesViewer}/>
                     <Route path={'/picturesWall'} component={PicturesWallItem}/>
                     <Route path="/voteDetail/:id" component={VoteDetailPage}/>
-                    <Route path="/homePage" component={AppHomePage}/>
+                    {/*<Route path="/homePage" component={AppHomePage}/>*/}
                     <Route path='/voteList' component={VoteListPage}/>
                     <Route path='/voteListTab' component={VoteListTabPage}/>
                     <Route path='/leaveAddC' component={LeaveAddCPage}/>

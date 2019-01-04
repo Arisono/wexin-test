@@ -116,7 +116,6 @@ class HomePage extends Component {
         const {userInfo} = this.props
         let {studentIndex} = this.state
 
-        Toast.loading("");
         //获取首页接口
         fetchGet(API.homeIndex, {
             userOpenid: userInfo.userOpenid,
@@ -137,8 +136,8 @@ class HomePage extends Component {
                 }
 
                 this.setState({
-                    albums: homeData.pictures ? [] : homeData.pictures.albums,
-                    videos: homeData.pictures ? [] : homeData.pictures.videos
+                    albums: homeData.pictures ? homeData.pictures.albums : [],
+                    videos: homeData.pictures ? homeData.pictures.videos : []
                 })
 
                 switchUser({
@@ -288,7 +287,9 @@ class HomePage extends Component {
     }
 
     onFuncClick = (page) => {
-        this.props.history.push(page)
+        if (!isObjEmpty(page)) {
+            this.props.history.push(page)
+        }
     }
 }
 

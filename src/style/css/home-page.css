@@ -97,11 +97,10 @@
 }
 
 .home-student-layout-root {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 46px;
-    padding-left: 26px;
+    min-height: 46px;
+    max-height: 80px;
+    overflow-y: scroll;
+    padding: 10px 26px;
 }
 
 .home-top-school-text {
@@ -114,18 +113,19 @@
     letter-spacing: 1.6px;
     padding: 2px 6px;
     position: absolute;
-    top:16px;
+    top: 16px;
     right: 0;
 }
 
-.home-top-stu-layout{
+.home-top-stu-layout {
     font-family: PingFangSC-Regular;
     font-size: 12px;
     letter-spacing: 1.6px;
-    padding: 0px 10px;
+    padding: 5px 10px;
+    float: left;
 }
 
-.am-modal.am-modal-operation .am-modal-content .am-modal-button{
+.am-modal.am-modal-operation .am-modal-content .am-modal-button {
     text-align: center;
     padding: 0;
 }

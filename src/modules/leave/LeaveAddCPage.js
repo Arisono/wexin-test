@@ -186,7 +186,7 @@ class LeaveAddCPage extends Component {
             approveType:4,
             approveName: this.state.leaveName,
             appType: this.state.leaveType[0],
-            approveDetails: this.props.userInfo.userName + "的请假条",
+            approveDetails: this.state.leaveReason,
             proposer: this.props.userInfo.userId,
             approver: JSON.stringify(this.state.votePerson[0]),
             approveFiles: approveFiles,

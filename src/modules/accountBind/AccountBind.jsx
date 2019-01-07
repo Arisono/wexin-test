@@ -209,7 +209,7 @@ class AccountBind extends Component {
                     userAvatar: userHead,
                     userRole: 1,
                 })()
-                this.props.history.push('/homePage?role=parent')
+                this.props.history.push('/homePage')
             }).catch(error => {
                 Toast.hide()
 
@@ -236,7 +236,7 @@ class AccountBind extends Component {
                     userAvatar: userHead,
                     userRole: 2,
                 })()
-                this.props.history.push('/homePage?role=teacher')
+                this.props.history.push('/homePage')
             }).catch(error => {
                 Toast.hide()
 

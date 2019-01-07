@@ -2,14 +2,16 @@ import {USER_INFO, CLEAR_USER_INFO} from "../constants/actionTypes";
 import {getVisibleObj} from "../../utils/common";
 
 const initListState = {
-    userId: 0,
-    school:'',
-    userName: '',
-    stuName: "",
-    userOpenid: '',
-    userPhone: '',
+    userId: 10000,
+    school: '',
+    userName: 'kl',
+    students: [],
+    stuName: '',
     stuId: '',
+    userOpenid: 'o8lZ9uMueMe5ksrphaRmqM0LJCTo',
+    userPhone: '13025449611',
     userRole: 0,
+    userRoles: [],
     accessToken: '',
     userAvatar: ''
 }

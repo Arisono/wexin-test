@@ -8,13 +8,14 @@ const initListState = {
     students: [],
     stuName: '',
     stuId: '',
-    student: {},
+    student: '',
     userOpenid: '',
     userPhone: '',
     userRole: 0,
     userRoles: [],
     accessToken: '',
-    userAvatar: ''
+    userAvatar: '',
+    userSex: 0
 }
 
 const redUserInfo = (state = initListState, action) => {

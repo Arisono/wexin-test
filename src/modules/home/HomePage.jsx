@@ -149,9 +149,11 @@ class HomePage extends Component {
                     userOpenid: homeData.userOpenid,
                     userPhone: homeData.userPhone,
                     stuId: userInfo.stuId || getStrValue(homeData.students, 0).stuId,
+                    student: isObjEmpty(userInfo.student) ? homeData.students[0] : userInfo.student,
                     userRole: userRole,
                     userRoles: homeData.roles,
-                    userAvatar: homeData.userPhoto
+                    userAvatar: homeData.userPhoto,
+                    userSex: homeData.userSex
                 })()
 
                 if (!isObjEmpty(userInfo.students)) {

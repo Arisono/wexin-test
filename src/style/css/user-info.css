@@ -29,3 +29,11 @@
     letter-spacing: 1.88px;
     margin-left: 10px;
 }
+
+.user-info-photo-text{
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #666666;
+    letter-spacing: 0;
+    padding-bottom: 10px;
+}

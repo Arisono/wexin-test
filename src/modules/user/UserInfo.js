@@ -21,25 +21,16 @@ class UserInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            type: props.type,
-            userName: this.props.userInfo.userName,
-            userId: this.props.userInfo.userId,
-            school: this.props.userInfo.school,
-            phone: this.props.userInfo.userPhone,
-            id: this.props.userInfo.stuId,
             imageUrl: "",
             previewVisible: false,
             previewImage: '',
-            studentName: this.props.userInfo.stuName,
             fileList: [],
-            sex: this.props.userInfo.userSex === 1 ? "男" : "女"
         }
     }
 
     componentWillMount() {
         if (this.props.match.params.type) {
-            let type = this.props.match.params.type
-            this.state.type = type;
+            this.type = this.props.match.params.type
         }
         document.title = '个人信息'
     }
@@ -51,15 +42,14 @@ class UserInfo extends Component {
 
 
     render() {
-        let identity = this.state.type == 1 ? '教师' : '家长'
         return <div className={'user-column'}>
             {this.showUserInfo()}
             <span className={'lineMax'}/>
             {this.showLocation()}
             <span className={'lineMax'}/>
-            <div style={{padding: 10}} className='phones-item-top'>
+            <div className='phones-item-top'>
                 <text className='phones-item-name'>身份</text>
-                <text className='phones-item-phone'>{identity}</text>
+                <text className='phones-item-phone'>{this.type == 1 ? '教师' : '家长'}</text>
             </div>
             <span className={'lineMax'}/>
             {this.showUserContact()}
@@ -81,17 +71,16 @@ class UserInfo extends Component {
     //显示个人位置信息
     showLocation() {
         const {userInfo} = this.props
-        const {type} = this.props
-        const idTag = type == 1 ? '工号ID' : '绑定学号ID'
-        const id = (type == 1 ? userInfo.userId : userInfo.student.stuId)
-        // const sex = (type == 1? userInfo.)
+        const idTag = (this.type == 1 ? '工号ID' : '绑定学号ID')
+        const id = (this.type == 1 ? userInfo.userId : userInfo.student.stuId)
+        const sex = (this.type == 1 ? userInfo.userSex : userInfo.student.stuSex)
 
         return <div className={'user-column'}>
             <div className='phones-item-top'>
                 <text className='phones-item-name'>{idTag}</text>
                 <text className='phones-item-phone'>{id}</text>
             </div>
-            {this.state.type == 1 ? '' : <div className='phones-item-top'>
+            {this.type == 1 ? '' : <div className='phones-item-top'>
                 <text className='phones-item-name'>学生姓名</text>
                 <text className='phones-item-phone'>{userInfo.student.stuName}</text>
             </div>}
@@ -99,9 +88,9 @@ class UserInfo extends Component {
                 <text className='phones-item-name'>所在学校</text>
                 <text className='phones-item-phone'>{userInfo.school}</text>
             </div>
-            {this.state.type == 1 ? '' : <div className='phones-item-top'>
+            {this.type == 1 ? '' : <div className='phones-item-top'>
                 <text className='phones-item-name'>性别</text>
-                <text className='phones-item-phone'>{}</text>
+                <text className='phones-item-phone'>{sex === 1 ? '男' : '女'}</text>
             </div>}
         </div>
     }
@@ -115,6 +104,7 @@ class UserInfo extends Component {
     //显示个人联系方式
     showUserContact() {
         const {previewVisible, fileList} = this.state;
+        const {userInfo} = this.props
         const uploadButton = (
             <div>
                 <Icon type="plus"/>
@@ -122,48 +112,37 @@ class UserInfo extends Component {
             </div>
         );
         return <div className={'user-column'}>
-            <div style={{padding: 10}} className=' flex flex_row_center'>
+            <div className='phones-item-top'>
                 <div>
                     <text className='phones-item-name'>手机号码</text>
-                    <div className='phones-item-phone '>{this.state.phone}</div>
+                    <div className='phones-item-phone' style={{marginTop: '8px'}}>{userInfo.userPhone}</div>
                 </div>
-                <div className=" item_flex_1 flex_row_right">|
-                    <text className="margin_left_10" style={{color: "#3680ED"}}>修改</text>
+                <div className="item_flex_1 flex_row_right">
+                    <div className='gray-line'
+                         style={{height: '30px', background: '#CCCCCC', width: '1px'}}></div>
+                    <text className="margin_left_20" style={{color: "#3680ED"}}>修改</text>
                 </div>
-                {/*<a href={'tel:' + this.state.phone} style={{display: 'flex', alignItems: 'center'}}>
-
-                    <div style={{textAlign: 'right'}}>
-                        <img width={8} height={15} src={require('../../style/imgs/next_arrow.png')}/>
-                    </div>
-                </a>*/}
             </div>
-            {/*       <div onClick={this.passWordClick} style={{padding: 10}} className='phones-item-top'>
-                <text className='phones-item-name'>登陆密码</text>
-                <div style={{textAlign: 'right'}}>
-                    <img width={8} height={15} src={require('../../style/imgs/next_arrow.png')}/>
-                </div>
-            </div>*/}
-            <div style={{padding: 10}} className='flex phones-item-top margin_bottom_20'>
+            <div className='gray-line' style={{height: '1px'}}></div>
+            <div className='phones-item-top'>
                 <text className='phones-item-name'>人脸照</text>
-                |
-                {/*  <text className="margin_left_10" style={{color:"#3680ED"}}>上传</text>*/}
-
-                <span class="fileinput-button margin_left_10" style={{color: "#3680ED"}}>
+                <div className='gray-line'
+                     style={{height: '30px', background: '#CCCCCC', width: '1px'}}></div>
+                <span class="fileinput-button margin_left_20" style={{color: "#3680ED"}}>
                     上传
                   <input type="file" accept="image/*" capture="camera" onChange={this.uploadChange}/>
                 </span>
-
             </div>
-            <div className=' flex padding_15'>
+            <div className='flex' style={{marginTop: '8px'}}>
                 <img style={{marginLeft: "10px"}}
                      src={this.state.imageUrl === "" ? icon_userInfo_upload : _baseURL + this.state.imageUrl}
-                     width={100}
-                     height={130}/>
+                     width={80}
+                     height={100}/>
 
                 <div className="margin_left_20">
-                    <div className="margin_bottom_10"><span className="span_16">• 请按照证件照的样式拍摄正面</span></div>
-                    <div className="margin_bottom_10"><span className="span_16">• 请保证光线充足，没有遮挡物</span></div>
-                    <div className="margin_bottom_10"><span className="span_16">• 请取下您的眼镜帽子保持面部曝光率</span></div>
+                    <div className="user-info-photo-text">• 请按照证件照的样式拍摄正面</div>
+                    <div className="user-info-photo-text">• 请保证光线充足，没有遮挡物</div>
+                    <div className="user-info-photo-text">• 请取下您的眼镜帽子保持面部曝光率</div>
                 </div>
 
                 {/*  <Upload
@@ -192,7 +171,6 @@ class UserInfo extends Component {
             method: "POST",
             body: formData,
             mode: 'cors',
-            credentials: 'include'
         }).then(function (response) {
             let result = response.json();
             if (response.status === 200) {
@@ -214,7 +192,7 @@ class UserInfo extends Component {
 
             }
         }).catch(function (ex) {
-            Toast.success("上传失败！")
+            Toast.fail("上传失败！")
             console.log('parsing failed', ex)
         })
     }

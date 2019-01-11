@@ -123,6 +123,7 @@
     letter-spacing: 1.6px;
     padding: 5px 10px;
     float: left;
+    text-align: center;
 }
 
 .am-modal.am-modal-operation .am-modal-content .am-modal-button {

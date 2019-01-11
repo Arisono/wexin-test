@@ -49,6 +49,7 @@
     width: 100%;
     display: flex;
     align-items: center;
+    padding: 12px 20px;
 }
 
 .phones-item-name {

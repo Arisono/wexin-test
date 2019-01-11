@@ -239,6 +239,7 @@ class HomePage extends Component {
         switchUser({
             stuName: this.props.userInfo.students[stuIndex].stuName,
             stuId: this.props.userInfo.students[stuIndex].stuId,
+            student: this.props.userInfo.students[stuIndex]
         })()
     }
 
@@ -331,9 +332,13 @@ class StuItem extends Component {
     render() {
         return (
             <div onClick={this.onStuSwitch} className='home-top-stu-layout'>
-                <img className={this.props.isSelect ? 'border-radius-50-blue' : 'border-radius-50'}
-                     src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"}
-                     width={25} height={25}/>
+                {this.props.stuObj.stuPhoto ?
+                    <img className={this.props.isSelect ? 'border-radius-50-blue' : 'border-radius-50'}
+                         src={_baseURL + this.props.stuObj.stuPhoto}
+                         width={25} height={25}/> :
+                    <Avatar className={this.props.isSelect ? 'border-radius-50-blue' : 'border-radius-50'}
+                            size={23} icon='user'/>}
+
                 <span
                     className={this.props.isSelect ? "margin_left_5 color_blue text_bold"
                         : 'margin_left_5'}>{this.props.stuObj.stuName}</span>

@@ -2,20 +2,20 @@ import React, {Component} from 'react'
 import 'css/user-info.css'
 import 'css/phones.css'
 import {Icon, Modal, Upload} from "antd";
-import  icon_userInfo_upload from "../../style/imgs/icon_userInfo_upload.png"
-import {API,_baseURL} from "../../configs/api.config";
+import icon_userInfo_upload from "../../style/imgs/icon_userInfo_upload.png"
+import {API, _baseURL} from "../../configs/api.config";
 import {Toast} from 'antd-mobile'
 import {connect} from 'react-redux'
-import {fetchPost,fetchGet} from "../../utils/fetchRequest";
+import {fetchPost, fetchGet} from "../../utils/fetchRequest";
 
 class UserInfo extends Component {
-//老师是1家长是2
+    //老师是1家长是2
     static defaultProps = {
         type: 1,
-        userName: '王小明',
-        school: '广西科技大学',
-        phone: '15915408583',
-        id: '1665628',
+        userName: '',
+        school: '',
+        phone: '',
+        id: '',
     }
 
     constructor(props) {
@@ -23,23 +23,19 @@ class UserInfo extends Component {
         this.state = {
             type: props.type,
             userName: this.props.userInfo.userName,
-            userId:this.props.userInfo.userId,
-            school:this.props.userInfo.school,
+            userId: this.props.userInfo.userId,
+            school: this.props.userInfo.school,
             phone: this.props.userInfo.userPhone,
             id: this.props.userInfo.stuId,
-            imageUrl:"",
+            imageUrl: "",
             previewVisible: false,
             previewImage: '',
             studentName: this.props.userInfo.stuName,
-            fileList: [{
-                uid: '-1',
-                name: 'xxx.png',
-                status: 'done',
-                url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            }],
-            sex: this.props.userInfo.userSex===1?"男":"女"
+            fileList: [],
+            sex: this.props.userInfo.userSex === 1 ? "男" : "女"
         }
     }
+
     componentWillMount() {
         if (this.props.match.params.type) {
             let type = this.props.match.params.type
@@ -49,20 +45,18 @@ class UserInfo extends Component {
     }
 
 
-    componentDidMount(){
-       // this.updateUserInfo("");
+    componentDidMount() {
+        // this.updateUserInfo("");
     }
-
-
 
 
     render() {
         let identity = this.state.type == 1 ? '教师' : '家长'
         return <div className={'user-column'}>
             {this.showUserInfo()}
-            <span className={'lineMax'} style={{marginTop: 10}}/>
+            <span className={'lineMax'}/>
             {this.showLocation()}
-            <span className={'lineMax'} style={{marginTop: 10}}/>
+            <span className={'lineMax'}/>
             <div style={{padding: 10}} className='phones-item-top'>
                 <text className='phones-item-name'>身份</text>
                 <text className='phones-item-phone'>{identity}</text>
@@ -75,11 +69,10 @@ class UserInfo extends Component {
     //显示顶部个人信息
     showUserInfo() {
         return <div className='user-row'>
-            <img style={{borderRadius: 360}} width={50} height={50} onClick={this.onAvatarClick}
+            <img className='user-info-avatar' onClick={this.onAvatarClick}
                  src={this.props.userInfo.userAvatar}/>
-            <div style={{marginLeft: 20, display: "flex", flexDirection: "column"}} className="flex_row_center">
-                <span>{this.state.userName}</span>
-               {/* <span style={{marginTop: 5}}>{this.state.sex}</span>*/}
+            <div className="flex_row_center user-info-msg">
+                <span>{this.props.userInfo.userName}</span>
             </div>
 
         </div>
@@ -87,26 +80,35 @@ class UserInfo extends Component {
 
     //显示个人位置信息
     showLocation() {
-        let idTag = this.state.type == 1 ? '工号ID' : '绑定学号ID'
+        const {userInfo} = this.props
+        const {type} = this.props
+        const idTag = type == 1 ? '工号ID' : '绑定学号ID'
+        const id = (type == 1 ? userInfo.userId : userInfo.student.stuId)
+        // const sex = (type == 1? userInfo.)
+
         return <div className={'user-column'}>
-            <div style={{padding: 10}} className='phones-item-top'>
+            <div className='phones-item-top'>
                 <text className='phones-item-name'>{idTag}</text>
-                <text className='phones-item-phone'>{this.state.id}</text>
+                <text className='phones-item-phone'>{id}</text>
             </div>
-            <div style={this.state.type == 1 ? {display: 'none'} : {padding: 10}} className='phones-item-top'>
+            {this.state.type == 1 ? '' : <div className='phones-item-top'>
                 <text className='phones-item-name'>学生姓名</text>
-                <text className='phones-item-phone'>{this.state.studentName}</text>
-            </div>
-            <div style={{padding: 10}} className='phones-item-top'>
+                <text className='phones-item-phone'>{userInfo.student.stuName}</text>
+            </div>}
+            <div className='phones-item-top'>
                 <text className='phones-item-name'>所在学校</text>
-                <text className='phones-item-phone'>{this.state.school}</text>
+                <text className='phones-item-phone'>{userInfo.school}</text>
             </div>
+            {this.state.type == 1 ? '' : <div className='phones-item-top'>
+                <text className='phones-item-name'>性别</text>
+                <text className='phones-item-phone'>{}</text>
+            </div>}
         </div>
     }
 
-    uploadChange=(e)=>{
-            console.log("file():",e.target.files);
-            this.uploadFile(e.target.files[0])
+    uploadChange = (e) => {
+        console.log("file():", e.target.files);
+        this.uploadFile(e.target.files[0])
 
     }
 
@@ -123,10 +125,10 @@ class UserInfo extends Component {
             <div style={{padding: 10}} className=' flex flex_row_center'>
                 <div>
                     <text className='phones-item-name'>手机号码</text>
-                    <div className='phones-item-phone ' >{this.state.phone}</div>
+                    <div className='phones-item-phone '>{this.state.phone}</div>
                 </div>
                 <div className=" item_flex_1 flex_row_right">|
-                    <text className="margin_left_10" style={{color:"#3680ED"}}>修改</text>
+                    <text className="margin_left_10" style={{color: "#3680ED"}}>修改</text>
                 </div>
                 {/*<a href={'tel:' + this.state.phone} style={{display: 'flex', alignItems: 'center'}}>
 
@@ -135,7 +137,7 @@ class UserInfo extends Component {
                     </div>
                 </a>*/}
             </div>
-     {/*       <div onClick={this.passWordClick} style={{padding: 10}} className='phones-item-top'>
+            {/*       <div onClick={this.passWordClick} style={{padding: 10}} className='phones-item-top'>
                 <text className='phones-item-name'>登陆密码</text>
                 <div style={{textAlign: 'right'}}>
                     <img width={8} height={15} src={require('../../style/imgs/next_arrow.png')}/>
@@ -144,21 +146,19 @@ class UserInfo extends Component {
             <div style={{padding: 10}} className='flex phones-item-top margin_bottom_20'>
                 <text className='phones-item-name'>人脸照</text>
                 |
-              {/*  <text className="margin_left_10" style={{color:"#3680ED"}}>上传</text>*/}
+                {/*  <text className="margin_left_10" style={{color:"#3680ED"}}>上传</text>*/}
 
-                <span class="fileinput-button margin_left_10" style={{color:"#3680ED"}}>
+                <span class="fileinput-button margin_left_10" style={{color: "#3680ED"}}>
                     上传
-                  <input type="file" accept="image/*" capture="camera"  onChange={this.uploadChange}/>
+                  <input type="file" accept="image/*" capture="camera" onChange={this.uploadChange}/>
                 </span>
 
             </div>
             <div className=' flex padding_15'>
-                        <img style={{marginLeft:"10px"}}
-                             src={this.state.imageUrl===""?icon_userInfo_upload:_baseURL+this.state.imageUrl}
-                             width={100}
-                             height={130} />
-
-
+                <img style={{marginLeft: "10px"}}
+                     src={this.state.imageUrl === "" ? icon_userInfo_upload : _baseURL + this.state.imageUrl}
+                     width={100}
+                     height={130}/>
 
                 <div className="margin_left_20">
                     <div className="margin_bottom_10"><span className="span_16">• 请按照证件照的样式拍摄正面</span></div>
@@ -166,7 +166,7 @@ class UserInfo extends Component {
                     <div className="margin_bottom_10"><span className="span_16">• 请取下您的眼镜帽子保持面部曝光率</span></div>
                 </div>
 
-              {/*  <Upload
+                {/*  <Upload
                     action="//jsonplaceholder.typicode.com/posts/"
                     listType="picture-card"
                     fileList={fileList}
@@ -183,59 +183,57 @@ class UserInfo extends Component {
     }
 
 
-    uploadFile=(file)=>{
+    uploadFile = (file) => {
         const formData = new FormData();
         formData.append('file', file);
-        console.log("uploadFile()",file);
+        console.log("uploadFile()", file);
         Toast.loading("")
-        fetch(API.UPLOAD_FILE,{
-            method :"POST",
+        fetch(API.UPLOAD_FILE, {
+            method: "POST",
             body: formData,
             mode: 'cors',
             credentials: 'include'
-        }).then(function(response) {
-            let  result= response.json();
-            if(response.status===200){
-                console.log("text:",result);
+        }).then(function (response) {
+            let result = response.json();
+            if (response.status === 200) {
+                console.log("text:", result);
                 return result;
-            }else{
+            } else {
                 Toast.success("上传失败！")
             }
-        }).then(result=>{
-            if(result.success){
+        }).then(result => {
+            if (result.success) {
                 Toast.success("上传成功！");
-                console.log("result():",result);
-                let imageUrl=result.data;
-                this.state.imageUrl=imageUrl;
+                console.log("result():", result);
+                let imageUrl = result.data;
+                this.state.imageUrl = imageUrl;
                 this.setState({
-                    imageUrl:imageUrl
+                    imageUrl: imageUrl
                 });
                 this.updateUserInfo(imageUrl)
 
             }
-        }).catch(function(ex) {
+        }).catch(function (ex) {
             Toast.success("上传失败！")
             console.log('parsing failed', ex)
         })
     }
 
 
-    updateUserInfo=(userPhoto)=>{
-        let userInfo={
-             userName:this.state.userName,
-             userId:this.state.userId,
-             userPhoto:userPhoto
+    updateUserInfo = (userPhoto) => {
+        let userInfo = {
+            userName: this.state.userName,
+            userId: this.state.userId,
+            userPhoto: userPhoto
         }
-        console.log("updateUserInfo()",JSON.stringify(userInfo));
-        fetchPost(_baseURL+"/user/updateUser",{
-                  userJson:JSON.stringify(userInfo)
-                  }).then((response)=>{
-                      console.log("response:"+JSON.stringify(response));
-                  }).catch((error)=>{
-                      console.log("error:"+JSON.stringify(error));
-                  })
+        console.log("updateUserInfo()", JSON.stringify(userInfo));
+        fetchPost(_baseURL + "/user/updateUser", {
+            userJson: JSON.stringify(userInfo)
+        }).then((response) => {
 
+        }).catch((error) => {
 
+        })
     }
 
     handleCancel = () => {
@@ -261,8 +259,6 @@ class UserInfo extends Component {
     passWordClick = (event) => {
         //TODO 点击密码
     }
-
-
 }
 
 let mapStateToProps = (state) => ({

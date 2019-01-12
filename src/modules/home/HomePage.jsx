@@ -43,7 +43,7 @@ class HomePage extends Component {
 
         document.title = "智慧校园";
 
-        this.mSwiper = new Swiper('.swiper-container', {
+        const mySwiper = new Swiper('.swiper-container', {
             effect: 'coverflow',
             grabCursor: true,
             centeredSlides: true,
@@ -53,8 +53,12 @@ class HomePage extends Component {
                 stretch: 0,
                 depth: 100,
                 modifier: 1,
-                slideShadows: true,
+                slideShadows : true,
             },
+            pagination: {
+                el: '.swiper-pagination',
+            },
+
         });
 
         if (!isObjEmpty(this.props.userInfo.students)) {

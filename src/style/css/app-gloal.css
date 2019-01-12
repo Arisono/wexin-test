@@ -1,38 +1,38 @@
 /*全局背景*/
-#global_background{
+#global_background {
     background-color: #F3F3F3;
 }
 
-#global_page_title{
+#global_page_title {
     font-size: 16px;
     font-weight: 600;
     margin: 10px 0px 10px 10px;
 }
 
-#row_background{
+#row_background {
     background-color: #FFFFFF;
     border: 1px solid #F3F3F3;
     margin: 10px 10px 10px 10px;
     padding: 0px;
 }
 
-#row_margin{
+#row_margin {
     margin: 10px;
 }
 
-#margin_top_bottom_20{
-     margin: 20px 0px 20px 0px;
- }
+#margin_top_bottom_20 {
+    margin: 20px 0px 20px 0px;
+}
 
-#margin_top_bottom_15{
+#margin_top_bottom_15 {
     margin: 15px 0px 15px 0px;
 }
 
-#margin_top_bottom_10{
+#margin_top_bottom_10 {
     margin: 10px 0px 10px 0px;
 }
 
-#row_center{
+#row_center {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,57 +40,57 @@
 }
 
 /*居中*/
-#row_center_align{
+#row_center_align {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-#row_left{
+#row_left {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding: 10px;
 }
 
-#global_row_right{
+#global_row_right {
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 
-#row_right{
+#row_right {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding: 10px;
 }
 
-#padding10{
+#padding10 {
     padding: 10px;
 }
 
 /*公共分块*/
-#page_block_min{
+#page_block_min {
     height: 20px;
     background-color: #F3F3F3;
 }
 
 
 /*水平分割线*/
-#page_horizontal_line{
+#page_horizontal_line {
     height: 1px;
     border-top: 1px solid #F3F3F3;
     text-align: center;
 }
 
-#global-clear{
+#global-clear {
     padding: 0px;
     margin: 0px;
 }
 
-#col-clear{
+#col-clear {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -98,7 +98,7 @@
     margin: 0px;
 }
 
-#col-clear-start{
+#col-clear-start {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -106,7 +106,7 @@
     margin: 0px;
 }
 
-#col-clear-end{
+#col-clear-end {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -115,114 +115,121 @@
 }
 
 
-#page_border_lightGreen{
+#page_border_lightGreen {
     border: 1px solid lightgreen;
     padding: 0px;
     margin: 0px;
 }
 
-#page_border_line_red{
+#page_border_line_red {
     border: 1px solid orangered;
     padding: 0px;
     margin: 0px;
 }
 
-#page_border_line{
+#page_border_line {
     border: 1px solid #F3F3F3;
     padding: 0px;
     margin: 0px;
 }
 
-#span_18{
-     font-size: 18px;
- }
-
-#span_15{
+#span_18 {
     font-size: 18px;
 }
 
-#span_13{
+#span_15 {
+    font-size: 18px;
+}
+
+#span_13 {
     font-size: 18px;
 }
 
 
-#list_noBorder{
+#list_noBorder {
     background-color: #FFFFFF;
     border: 1px solid #F3F3F3;
     padding: 0px;
 }
 
-.span_15{
+.span_15 {
     font-size: 15px;
 }
-.span_16{
+
+.span_16 {
     font-size: 16px;
 }
-.span_17{
+
+.span_17 {
     font-size: 17px;
 }
 
-.span_18{
+.span_18 {
     font-size: 18px;
 }
-.span_19{
+
+.span_19 {
     font-size: 19px;
 }
-.span_20{
+
+.span_20 {
     font-size: 20px;
 }
-.color_black{
-    color:black ;
+
+.color_black {
+    color: black;
 }
 
-.border-radius-50{
+.border-radius-50 {
     border: 1px solid white;
-    border-radius:50%
+    border-radius: 50%
 }
 
-.border-radius-50-blue{
+.border-radius-50-blue {
     border: 1px solid #0098FD;
-    border-radius:50%
+    border-radius: 50%
 }
 
-.color_blue{
+.color_blue {
     color: #0098FD;
 }
 
-.text_underline{
+.text_underline {
     color: #0098FD;
     text-decoration: underline;
 }
 
-.text_bold{
+.text_bold {
     font-weight: 600;
 }
+
 /* flex相关全局设置*/
-.flex{
+.flex {
     display: flex;
 }
 
-.flex_row_stretch{
-    align-items:stretch
+.flex_row_stretch {
+    align-items: stretch
 }
 
-.flex_row{
+.flex_row {
     display: flex;
     flex-direction: row;
 }
-.flex_column{
+
+.flex_column {
     display: flex;
     flex-direction: column;
 }
 
-.flex_row_center{
+.flex_row_center {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
 
-.flex_row_right{
+.flex_row_right {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -231,182 +238,185 @@
     padding: 0px;
 }
 
-.flex_column_center{
+.flex_column_center {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.flex_column_bottom{
+.flex_column_bottom {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
 }
 
-.flex_center{
+.flex_center {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.flex_center_vertical{
+.flex_center_vertical {
     display: flex;
     align-items: center;
 }
 
-.item_flex{
+.item_flex {
     flex: 1 0 auto;
 }
 
-.item_flex2{
+.item_flex2 {
     flex: 2 0 auto;
 }
 
-.item_flex_1{
+.item_flex_1 {
     flex: 1;
 }
 
-.item_flex_3{
+.item_flex_3 {
     flex: 0 0 33.3333%;
 }
 
 
 /*全局边距设置*/
-.padding_10{
+.padding_10 {
     padding: 10px;
 }
 
-.margin_10{
+.margin_10 {
     margin: 10px;
 }
 
-.padding_5{
+.padding_5 {
     padding: 5px;
 }
 
-.padding_15{
+.padding_15 {
     padding: 15px;
 }
 
-.padding_left{
+.padding_left {
     padding: 10px 5px 5px 5px;
 }
 
-.padding_right{
+.padding_right {
     padding: 10px 5px 5px 5px;
 }
-.padding_right_10{
+
+.padding_right_10 {
     padding: 0px 10px 0px 0px;
 }
 
-.padding_20{
+.padding_20 {
     padding: 20px;
 }
 
-.border_normal{
+.border_normal {
     border: 1px solid #f3f3f3;
 }
 
-.border_red{
-   border: 1px solid red;
+.border_red {
+    border: 1px solid red;
 }
 
-.border_lightGreen{
-     border: 1px solid lightgreen;
- }
+.border_lightGreen {
+    border: 1px solid lightgreen;
+}
 
-.clear_margin{
+.clear_margin {
     margin: 0px;
     padding: 0px;
 }
 
-.no-border{
+.no-border {
     border: 0px;
 }
+
 /*左右边距*/
-.margin_left_right_20{
+.margin_left_right_20 {
     margin: 0px 20px 0px 20px;
 }
 
-.margin_left_right_15{
+.margin_left_right_15 {
     margin: 0px 15px 0px 15px;
 }
 
-.margin_left_right_10{
-     margin: 0px 10px 0px 10px;
- }
+.margin_left_right_10 {
+    margin: 0px 10px 0px 10px;
+}
 
-.margin_right_5{
-      margin: 0px 5px 0px 0px;
-  }
+.margin_right_5 {
+    margin: 0px 5px 0px 0px;
+}
 
-.margin_right_15{
+.margin_right_15 {
     margin: 0px 15px 0px 0px;
 }
 
-.margin_left_5{
+.margin_left_5 {
     margin: 0px 0px 0px 5px;
 }
 
-.margin_left_10{
+.margin_left_10 {
     margin: 0px 0px 0px 10px;
 }
 
 
-.margin_left_20{
+.margin_left_20 {
     margin: 0px 0px 0px 20px;
 }
 
-.margin_top_bottom_10{
+.margin_top_bottom_10 {
     margin: 10px 0px 10px 0px;
 }
-.margin_top_bottom_15{
+
+.margin_top_bottom_15 {
     margin: 15px 0px 15px 0px;
 }
 
-.margin_top_bottom_20{
+.margin_top_bottom_20 {
     margin: 20px 0px 20px 0px;
 }
 
-.margin_top_20{
+.margin_top_20 {
     margin: 20px 0px 0px 0px;
 }
 
-.margin_top_15{
+.margin_top_15 {
     margin: 15px 0px 0px 0px;
 }
 
-.margin_top_10{
+.margin_top_10 {
     margin: 10px 0px 0px 0px;
 }
 
-.margin_bottom_10{
+.margin_bottom_10 {
     margin: 0px 0px 10px 0px;
 }
 
-.margin_bottom_15{
+.margin_bottom_15 {
     margin: 0px 0px 15px 0px;
 }
 
-.margin_bottom_20{
+.margin_bottom_20 {
     margin: 0px 0px 20px 0px;
 }
 
-.margin_bottom_30{
+.margin_bottom_30 {
     margin: 0px 0px 30px 0px;
 }
 
-.margin_bottom_50{
+.margin_bottom_50 {
     margin: 0px 0px 50px 0px;
 }
 
-.margin_bottom_5{
+.margin_bottom_5 {
     margin: 0px 0px 5px 0px;
 }
 
-.bg_white{
+.bg_white {
     background: white;
 }
 
@@ -420,12 +430,16 @@
     z-index: 9999;
 }
 
-.fileinput-button input{
-    position:absolute;
+.fileinput-button {
+    position: relative;
+}
+
+.fileinput-button input {
+    position: absolute;
     right: 0px;
-    top:300px;
-    border: 0px solid goldenrod;
-    opacity:0;
+    top: -10px;
+    bottom: -10px;
+    left: -20px;
+    opacity: 0;
     -ms-filter: 'alpha(opacity=0)';
-    font-size: 200px;
 }

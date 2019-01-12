@@ -47,9 +47,9 @@ class UserInfo extends Component {
             <span className={'lineMax'}/>
             {this.showLocation()}
             <span className={'lineMax'}/>
-            <div className='phones-item-top'>
-                <text className='phones-item-name'>身份</text>
-                <text className='phones-item-phone'>{this.type == 1 ? '教师' : '家长'}</text>
+            <div className='user-info-item-top'>
+                <text className='user-info-item-name'>身份</text>
+                <text className='user-info-item-phone'>{this.type == 1 ? '教师' : '家长'}</text>
             </div>
             <span className={'lineMax'}/>
             {this.showUserContact()}
@@ -76,21 +76,21 @@ class UserInfo extends Component {
         const sex = (this.type == 1 ? userInfo.userSex : userInfo.student.stuSex)
 
         return <div className={'user-column'}>
-            <div className='phones-item-top'>
-                <text className='phones-item-name'>{idTag}</text>
-                <text className='phones-item-phone'>{id}</text>
+            <div className='user-info-item-top'>
+                <text className='user-info-item-name'>{idTag}</text>
+                <text className='user-info-item-phone'>{id}</text>
             </div>
-            {this.type == 1 ? '' : <div className='phones-item-top'>
-                <text className='phones-item-name'>学生姓名</text>
-                <text className='phones-item-phone'>{userInfo.student.stuName}</text>
+            {this.type == 1 ? '' : <div className='user-info-item-top'>
+                <text className='user-info-item-name'>学生姓名</text>
+                <text className='user-info-item-phone'>{userInfo.student.stuName}</text>
             </div>}
-            <div className='phones-item-top'>
-                <text className='phones-item-name'>所在学校</text>
-                <text className='phones-item-phone'>{userInfo.school}</text>
+            <div className='user-info-item-top'>
+                <text className='user-info-item-name'>所在学校</text>
+                <text className='user-info-item-phone'>{userInfo.school}</text>
             </div>
-            {this.type == 1 ? '' : <div className='phones-item-top'>
-                <text className='phones-item-name'>性别</text>
-                <text className='phones-item-phone'>{sex === 1 ? '男' : '女'}</text>
+            {this.type == 1 ? '' : <div className='user-info-item-top'>
+                <text className='user-info-item-name'>性别</text>
+                <text className='user-info-item-phone'>{sex === 1 ? '男' : '女'}</text>
             </div>}
         </div>
     }
@@ -112,22 +112,22 @@ class UserInfo extends Component {
             </div>
         );
         return <div className={'user-column'}>
-            <div className='phones-item-top'>
+            <div className='user-info-item-top'>
                 <div>
-                    <text className='phones-item-name'>手机号码</text>
-                    <div className='phones-item-phone' style={{marginTop: '8px'}}>{userInfo.userPhone}</div>
+                    <text className='user-info-item-name'>手机号码</text>
+                    <div className='user-info-item-phone' style={{marginTop: '8px'}}>{userInfo.userPhone}</div>
                 </div>
                 <div className="item_flex_1 flex_row_right">
                     <div className='gray-line'
-                         style={{height: '30px', background: '#CCCCCC', width: '1px'}}></div>
+                         style={{height: '34px', background: '#CCCCCC', width: '1px'}}></div>
                     <text className="margin_left_20" style={{color: "#3680ED"}}>修改</text>
                 </div>
             </div>
             <div className='gray-line' style={{height: '1px'}}></div>
-            <div className='phones-item-top'>
-                <text className='phones-item-name'>人脸照</text>
+            <div className='user-info-item-top'>
+                <text className='user-info-item-name'>人脸照</text>
                 <div className='gray-line'
-                     style={{height: '30px', background: '#CCCCCC', width: '1px'}}></div>
+                     style={{height: '34px', background: '#CCCCCC', width: '1px'}}></div>
                 <span class="fileinput-button margin_left_20" style={{color: "#3680ED"}}>
                     上传
                   <input type="file" accept="image/*" capture="camera" onChange={this.uploadChange}/>

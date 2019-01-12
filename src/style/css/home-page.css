@@ -1,5 +1,6 @@
 .home-page-root {
-    width: 100%;
+    /*width: 100%;*/
+    overflow-x: hidden;
 }
 
 .home-group-item-layout {
@@ -126,6 +127,10 @@
     text-align: center;
 }
 
+.home-top-stu-layout i.anticon.anticon-user {
+    line-height: 23px;
+}
+
 .am-modal.am-modal-operation .am-modal-content .am-modal-button {
     text-align: center;
     padding: 0;
@@ -135,7 +140,8 @@
     height: 120px;
     width: 100%;
     background: rgba(60, 130, 214, 0.17);
-    padding: 4px;
+    padding: 8px 4px;
+    display: flex;
 }
 
 .home-albums-img {
@@ -143,16 +149,18 @@
     width: 100%;
 }
 
-.home-albums-layout .swiper-container {
+.home-swiper-container {
+    height: 140px;
     width: 100%;
-    height: 100%;
-    background: transparent;
+    background: rgba(60, 130, 214, 0.17);
+    padding: 8px 4px;
 }
 
-.home-albums-layout .swiper-slide {
+.home-swiper-container .swiper-slide {
     height: 100%;
-    width: 128px;
+    width: 140px;
     background-position: center;
     background-size: cover;
-    margin: 4px;
+    overflow: hidden;
 }
+

@@ -190,9 +190,9 @@ span.ant-select-selection.ant-select-selection--multiple {
     background: white;
 }
 
-/*.swiper-wrapper {
-    !*background: red;*!
-}*/
+/*.swiper-wrapper {*/
+    /*!*background: red;*!*/
+/*}*/
 
 .swiper-slide {
     overflow-y: scroll;

@@ -35,6 +35,10 @@ class HomePage extends Component {
         }
     }
 
+    componentWillMount() {
+
+    }
+
     componentDidMount() {
         //清除列表缓存数据
         clearListState()()
@@ -43,23 +47,23 @@ class HomePage extends Component {
 
         document.title = "智慧校园";
 
-        const mySwiper = new Swiper('.swiper-container', {
+        this.mySwiper = new Swiper('.home-swiper-container', {
             effect: 'coverflow',
             grabCursor: true,
             centeredSlides: true,
             slidesPerView: 'auto',
+            init: false,
+            speed: 200,
+            freeMode: true,
+            freeModeSticky: true,
             coverflowEffect: {
                 rotate: 50,
                 stretch: 0,
                 depth: 100,
                 modifier: 1,
-                slideShadows : true,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-            },
-
-        });
+                slideShadows: false,
+            }
+        })
 
         if (!isObjEmpty(this.props.userInfo.students)) {
             this.props.userInfo.students.forEach((item, index) => {
@@ -79,22 +83,31 @@ class HomePage extends Component {
 
     render() {
         const {userInfo} = this.props
-        let {studentIndex} = this.state
+        let {studentIndex, albums} = this.state
 
         const teacherMenu = this.getTeacherMenu()
         const parentMenu = this.getParentMenu()
-        const albumLayout = this.getAlbumLayout()
         const videoLayout = this.getVideoLayout()
         const topMenus = this.getTopMenus()
 
+        const albumItems = []
+        if (!isObjEmpty(albums)) {
+            albums.forEach((item, index) => {
+                albumItems.push(<div className="swiper-slide"
+                                     style={{backgroundImage: 'url(' + _baseURL + item.picUrl + ')'}}>
+                    {/*<img className='home-albums-img' src={_baseURL + item.picUrl}/>*/}
+                </div>)
+            })
+        }
+
         const studentList = []
+
         if (!isObjEmpty(userInfo.students) && userInfo.userRole === 1) {
             userInfo.students.forEach((item, index) => {
                 studentList.push(<StuItem isSelect={studentIndex === index} stuObj={item}
                                           stuIndex={index} onStuSwitch={this.onStuSwitch}/>)
             })
         }
-
 
         return (
             <div className='home-page-root'>
@@ -125,7 +138,13 @@ class HomePage extends Component {
                 {/*功能菜单*/}
                 {userInfo.userRole == 1 ? parentMenu : teacherMenu}
                 {/*班级相册*/}
-                {albumLayout}
+                <div className='gray-line'></div>
+                <MenuGroup groupIcon={require('imgs/ic_group_album.png')} groupText='班级相册'/>
+                <div className="home-swiper-container">
+                    <div className="swiper-wrapper">
+                        {albumItems}
+                    </div>
+                </div>
                 {/*精彩瞬间*/}
                 {videoLayout}
             </div>
@@ -185,6 +204,8 @@ class HomePage extends Component {
 
                     this.setState({studentIndex})
                 }
+
+                this.mySwiper.init()
             }
         }).catch((error) => {
             Toast.hide();
@@ -218,15 +239,16 @@ class HomePage extends Component {
         } else {
             const albumItems = []
             albums.forEach((item, index) => {
-                albumItems.push(<div className="swiper-slide">
-                    <img className='home-albums-img' src={_baseURL + item.picUrl}/>
+                albumItems.push(<div className="swiper-slide"
+                                     style={{backgroundImage: 'url(' + _baseURL + item.picUrl + ')'}}>
+                    {/*<img className='home-albums-img' src={_baseURL + item.picUrl}/>*/}
                 </div>)
             })
             return <div>
                 <div className='gray-line'></div>
                 <MenuGroup groupIcon={require('imgs/ic_group_album.png')} groupText='班级相册'/>
                 <div className='home-albums-layout'>
-                    <div className="swiper-container">
+                    <div className="home-swiper-container">
                         <div className="swiper-wrapper">
                             {albumItems}
                         </div>

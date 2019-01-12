@@ -57,7 +57,7 @@ class NotifyBoardTeacher extends Component {
         this.mySwiper = new Swiper('.swiper-container', {
             autoplay: false,
             loop: false,
-            noSwiping: true,
+            noSwiping: false,
             initialSlide: that.state.selectIndex,
             on: {
                 slideChangeTransitionEnd: function () {

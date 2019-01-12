@@ -249,23 +249,6 @@ class AccountBind extends Component {
         }
     }
 
-    getUserInfo = () => {
-        fetchGet('https://api.weixin.qq.com/cgi-bin/user/info', {
-            access_token: this.props.userInfo.accessToken,
-            openid: this.props.userInfo.userOpenid,
-            lang: 'zh_CN',
-        }).then(response => {
-            if (!isObjEmpty(response)) {
-                switchUser({
-                    userAvatar: response.headimgurl ? response.headimgurl : this.props.userInfo.userAvatar,
-                    userOpenid: response.openid ? response.openid : this.props.userInfo.userOpenid,
-                })()
-            }
-        }).catch(error => {
-
-        })
-    }
-
 }
 
 let mapStateToProps = (state) => ({

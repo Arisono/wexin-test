@@ -2,18 +2,20 @@ import {USER_INFO, CLEAR_USER_INFO} from "../constants/actionTypes";
 import {getVisibleObj} from "../../utils/common";
 
 const initListState = {
-    userId: 10000,
+    userId: 0,
     school: '',
-    userName: 'kl',
+    userName: '',
     students: [],
     stuName: '',
     stuId: '',
-    userOpenid: 'o8lZ9uMueMe5ksrphaRmqM0LJCTo',
-    userPhone: '13025449611',
+    student: '',
+    userOpenid: '',
+    userPhone: '',
     userRole: 0,
     userRoles: [],
     accessToken: '',
-    userAvatar: ''
+    userAvatar: '',
+    userSex: 0
 }
 
 const redUserInfo = (state = initListState, action) => {

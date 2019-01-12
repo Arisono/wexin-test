@@ -7,6 +7,8 @@ import React, {Component} from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {switchUser} from "../../redux/actions/userInfo";
+import Swiper from 'swiper/dist/js/swiper'
+import 'swiper/dist/css/swiper.min.css'
 import {Avatar} from 'antd'
 import {Toast, Modal} from 'antd-mobile'
 import {clearListState} from 'action/listState'
@@ -40,6 +42,20 @@ class HomePage extends Component {
         clearClassData()()
 
         document.title = "智慧校园";
+
+        this.mSwiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+        });
 
         if (!isObjEmpty(this.props.userInfo.students)) {
             this.props.userInfo.students.forEach((item, index) => {
@@ -194,9 +210,23 @@ class HomePage extends Component {
         if (isObjEmpty(albums)) {
             return <div></div>
         } else {
+            const albumItems = []
+            albums.forEach((item, index) => {
+                albumItems.push(<div className="swiper-slide">
+                    <img className='home-albums-img' src={_baseURL + item.picUrl}/>
+                </div>)
+            })
             return <div>
                 <div className='gray-line'></div>
                 <MenuGroup groupIcon={require('imgs/ic_group_album.png')} groupText='班级相册'/>
+                <div className='home-albums-layout'>
+                    <div className="swiper-container">
+                        <div className="swiper-wrapper">
+                            {albumItems}
+                        </div>
+                    </div>
+                </div>
+
             </div>
         }
     }

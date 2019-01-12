@@ -129,3 +129,29 @@
     text-align: center;
     padding: 0;
 }
+
+.home-albums-layout {
+    height: 120px;
+    width: 100%;
+    background: rgba(60, 130, 214, 0.17);
+    padding: 4px;
+}
+
+.home-albums-img {
+    height: 100%;
+    width: 100%;
+}
+
+.home-albums-layout .swiper-container {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+}
+
+.home-albums-layout .swiper-slide {
+    height: 100%;
+    width: 128px;
+    background-position: center;
+    background-size: cover;
+    margin: 4px;
+}

@@ -13,6 +13,7 @@ import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
 import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 import {connect} from 'react-redux'
+import {clearListState} from 'action/listState'
 
 const {TextArea} = Input
 
@@ -222,6 +223,7 @@ class AnnounceRelease extends Component {
         }).then(response => {
             Toast.hide()
             Toast.success('发布成功')
+            clearListState()()
 
             this.setState({
                 announceTitle: '',

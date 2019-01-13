@@ -100,7 +100,7 @@ i.anticon.anticon-delete svg {
     max-height: 260px !important;
 }
 
-.ant-select-dropdown.ant-select-tree-dropdown.ant-select-dropdown--single.ant-select-dropdown-placement-bottomLeft{
+.ant-select-dropdown.ant-select-tree-dropdown.ant-select-dropdown--single.ant-select-dropdown-placement-bottomLeft {
     max-height: 260px !important;
 }
 
@@ -125,7 +125,6 @@ span.ant-select-selection.ant-select-selection--multiple {
 .am-modal-transparent .am-modal-content {
     background: white !important;
 }
-
 
 
 /***************************公共样式****************************************/
@@ -191,7 +190,7 @@ span.ant-select-selection.ant-select-selection--multiple {
 }
 
 /*.swiper-wrapper {*/
-    /*!*background: red;*!*/
+/*!*background: red;*!*/
 /*}*/
 
 .swiper-slide {
@@ -232,11 +231,42 @@ span.ant-select-selection.ant-select-selection--multiple {
     border-bottom: 1px solid #4197FC;
 }
 
+.common-flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .common-flex-row-10 {
     display: flex;
     flex-direction: row;
     padding: 10px;
     align-items: center;
+}
+
+.common-flex-row-12 {
+    display: flex;
+    flex-direction: row;
+    padding: 12px;
+    align-items: center;
+}
+
+.common-flex-row-16 {
+    display: flex;
+    flex-direction: row;
+    padding: 16px;
+    align-items: center;
+}
+
+.common-flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.common-flex-column-y-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .common-font-family {

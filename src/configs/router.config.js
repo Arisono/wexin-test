@@ -53,6 +53,8 @@ import ImageGrid from "../components/image/ImageGrid";
 import MobileUpload from "../components/upload/MobileUpload";
 import MobileUploadDemo from "../modules/demo/MobileUploadDemo";
 import HomePage from "../modules/home/HomePage";
+import VoteListParent from "../modules/vote/VoteListParent";
+import VoteListTeacher from "../modules/vote/VoteListTeacher";
 
 export default class RouteConfig extends Component {
 
@@ -98,8 +100,8 @@ export default class RouteConfig extends Component {
                     <Route path={'/picturesWall'} component={PicturesWallItem}/>
                     <Route path="/voteDetail/:id" component={VoteDetailPage}/>
                     {/*<Route path="/homePage" component={AppHomePage}/>*/}
-                    <Route path='/voteList' component={VoteListPage}/>
-                    <Route path='/voteListTab' component={VoteListTabPage}/>
+                    <Route path='/voteList' component={VoteListParent}/>
+                    <Route path='/voteListTab' component={VoteListTeacher}/>
                     <Route path='/leaveAddC' component={LeaveAddCPage}/>
                     <Route path='/leaveAdd' component={LeaveAddPage}/>
                     <Route path='/leaveApproval' component={LeaveApprovalPage}/>

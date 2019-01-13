@@ -48,6 +48,11 @@ class HomePage extends Component {
         document.title = "智慧校园";
 
         this.mySwiper = new Swiper('.home-swiper-container', {
+            autoplay: {
+                disableOnInteraction: false,
+            },
+            loop: true,
+            touchRatio: 2,
             effect: 'coverflow',
             grabCursor: true,
             centeredSlides: true,

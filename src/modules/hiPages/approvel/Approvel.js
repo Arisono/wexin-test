@@ -72,26 +72,10 @@ class Approvel extends Component{
                     <div className="swiper-wrapper">
 
                         <div className="swiper-slide">
-                            {/*<InfiniteScroll*/}
-                                {/*pageStart={0}*/}
-                                {/*loadMore={this.loadMoreAction}*/}
-                                {/*hasMore={this.state.hasMoreData}*/}
-                                {/*loader={<LoadingMore/>}>*/}
-                                {/*<Link to={"/approvel-detail"}>*/}
                                     {this.state.applyList.map((itemdata,index) => <ApprovelItem isMyApply={true} type={1} index={index} itemata = {itemdata} clickApplyItem ={this.clickApplyItem} ></ApprovelItem>)}
-                                {/*</Link>*/}
-                            {/*</InfiniteScroll>*/}
                         </div>
                         <div className="swiper-slide">
-                            {/*<InfiniteScroll*/}
-                                {/*pageStart={0}*/}
-                                {/*loadMore={this.loadMoreAction}*/}
-                                {/*hasMore={this.state.hasMoreData}*/}
-                                {/*loader={<LoadingMore/>}>*/}
-                                {/*<Link to="/approvel-detail">*/}
                                     {this.state.approvelList.map((itemdata,index) => <ApprovelItem isMyApply={false}  type={2} index={index} itemata = {itemdata} clickApprovelItem ={this.clickApprovelItem} ></ApprovelItem>)}
-                                {/*</Link>*/}
-                            {/*</InfiniteScroll>*/}
                         </div>
                     </div>
                 </div>

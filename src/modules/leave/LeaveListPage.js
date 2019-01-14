@@ -35,7 +35,7 @@ class LeaveListPage extends React.Component{
     }
 
     componentWillMount(){
-              document.title ="学生请假";
+        document.title ="学生请假";
     }
     
     componentDidMount(){
@@ -227,12 +227,15 @@ class LeaveListPage extends React.Component{
     }
 
     onItemOnClick=(index,item)=>{
-       console.log("onItemOnClick()",index);
+       console.log("onItemOnClick()",JSON.stringify(item));
+        this.props.history.push('/leavedetail/' +item.lvId)
+       return;
         this.setState({
             detailVisible: true,
             listItem:item,
             index:index
         })
+
     }
     onModalClose = () => {
         this.setState({
@@ -269,20 +272,20 @@ class LeaveListPage extends React.Component{
                         <div className='container-fluid notify-detail-modal-content-layout' style={{height:"350px"}}>
                             <div className="col-xs-12 " >
                                 <div className="row flex" >
-                                    <div id="global_page_title">  {item.title}</div>
+                                    <div id="global_page_title" style={{fontSize:15,color:"#333333"}}>  {item.title}</div>
                                     <div className="item_flex_1  flex_row_right margin_left_right_10">
                                         {this.state.role==="parent"?(""):(<div>
-                                            {item.leaveMessages.length===0?("未查阅"):("已查阅")}
+                                            {item.leaveMessages.length===0? <div style={{fontSize:12,color:"#FA5200"}}>未查阅</div>: <div style={{fontSize:12,color:"##686868"}}>已查阅</div> }
                                         </div>)}
                                     </div>
                                 </div>
                                 <div className="row ">
-                                    <div  className="col-xs-3" id="col-clear">请假时间：</div>
-                                    <div  className="col-xs-9" id="col-clear-start">{item.startTime}—{item.endTime}</div>
+                                    <div  className="col-xs-3" id="col-clear" style={{fontSize:12,color:"#666666"}}>请假时间：</div>
+                                    <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{item.startTime}—{item.endTime}</div>
                                 </div>
                                 <div className="row  " >
-                                    <div  className="col-xs-3" id="col-clear">请假事由：</div>
-                                    <div  className="col-xs-9" id="col-clear-start">{item.content}</div>
+                                    <div  className="col-xs-3" id="col-clear"  style={{fontSize:12,color:"#666666"}}>请假事由：</div>
+                                    <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{item.content}</div>
                                 </div>
 
                                 <div className="row  margin_bottom_20">
@@ -297,7 +300,6 @@ class LeaveListPage extends React.Component{
 
                                 <div className="row ">
                                     <div  className="col-xs-12 clear_margin" >
-                                        {/*    <Button type={"primary"}  size={"small"} id="button_ok">批准</Button>*/}
                                         {this.state.role==="parent"?(
                                             /*家长端*/
                                             <div className="bg_white">
@@ -315,9 +317,6 @@ class LeaveListPage extends React.Component{
                                                             </div>
                                                         })}
 
-                                                    {/*<Input  id={index} name={"item."+item.lvId}  disabled={true} size={"small"} value={item.leaveMessages[0].messContent} className="item_flex_1"*/}
-                                                            {/*onChange={this.onChangeMessage.bind(this)} placeholder=""  ></Input>*/}
-                                                    {/*<Button  style={{backgroundColor:"#C9C9C9",border:"0px"}} size={"small"}    type={"primary"} className="margin_left_10">已回复</Button>*/}
                                                    </div>
 
                                                 )}
@@ -370,7 +369,7 @@ class LeaveListPage extends React.Component{
                                              <div id="global_page_title">  {item.title}</div>
                                              <div className="item_flex_1  flex_row_right margin_left_right_10">
                                                  {this.state.role==="parent"?(""):(<div>
-                                                     {item.leaveMessages.length===0?("未查阅"):("已查阅")}
+                                                     {item.leaveMessages.length===0?<div style={{fontSize:12,color:"#FA5200"}}>未查阅</div>: <div style={{fontSize:12,color:"##686868"}}>已查阅</div>}
                                                  </div>)}
                                              </div>
                                          </div>
@@ -384,8 +383,7 @@ class LeaveListPage extends React.Component{
                                          </div>
 
                                          <div className="row">
-                                             <div  className="col-xs-12" >
-                                             {/*    <Button type={"primary"}  size={"small"} id="button_ok">批准</Button>*/}
+                                             <div   >
                                                  {this.state.role==="parent"?(
                                                      /*家长端*/
                                                      <div className=" bg_white">
@@ -404,21 +402,16 @@ class LeaveListPage extends React.Component{
                                                              ))
                                                          }
 
-                                                         {/*<Button  style={{backgroundColor:"#C9C9C9",border:"0px"}} size={"small"}    type={"primary"} className="margin_left_10">已回复</Button>*/}
                                                      </div>)}
                                                  </div>
                                                  ):(
                                                      /*教师端*/
-                                                     <div className=" bg_white">
-                                                     {item.leaveMessages.length===0?(<div className="flex padding_10">
-                                                         <Input disabled={true} id={index} name={"item."+item.lvId}  size={"small"} className="item_flex_1"
-                                                                onChange={this.onChangeMessage.bind(this)} placeholder=""  ></Input>
-                                                         <Button  id={index} name={"item."+item.lvId}  size={"small"} onClick={this.onMessageSend.bind(this,index)}  type={"primary"} className="margin_left_10">回复</Button>
-                                                     </div>):(<div className="flex padding_10">
+                                                     <div className="bg_white">
+                                                     {item.leaveMessages.length===0?"":(<div className="flex" style={{margin:10}}>回复内容：
                                                          <Input  id={index} name={"item."+item.lvId}  disabled={true} size={"small"} value={item.leaveMessages[0].messContent} className="item_flex_1"
                                                                  onChange={this.onChangeMessage.bind(this)} placeholder=""  ></Input>
-                                                         <Button  style={{backgroundColor:"#C9C9C9",border:"0px"}} size={"small"}    type={"primary"} className="margin_left_10">已回复</Button>
-                                                     </div>)}
+                                                     </div>
+                                                     )}
                                                  </div>)}
                                              </div>
                                          </div>

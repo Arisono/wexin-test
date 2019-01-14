@@ -1,0 +1,24 @@
+.foot_input_view{
+    min-height: 50px;width: 100%;position: fixed;bottom: 0;background-color: #F2F2F2;
+}
+.comH_view{
+    display: flex;flex-direction: row;margin-right: 10px;
+}
+.send_btn{
+    width:80px;
+    height: 36px;
+    background: #4197Fc;
+    color: white;
+    border-radius: 9px;
+    font-size: 15px;
+    text-align: center;
+    margin: 12px 10px;
+}
+.textarea_sty {
+    border: none;
+    color: #333333;
+    padding: 10px 20px;
+    font-family: PingFangSC-Regular;
+    letter-spacing: 1.5px;
+    font-size: 15px;
+}

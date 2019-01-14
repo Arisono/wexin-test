@@ -57,7 +57,7 @@ class NotifyBoardTeacher extends Component {
         this.mySwiper = new Swiper('.swiper-container', {
             autoplay: false,
             loop: false,
-            noSwiping: true,
+            noSwiping: false,
             initialSlide: that.state.selectIndex,
             on: {
                 slideChangeTransitionEnd: function () {
@@ -134,10 +134,10 @@ class NotifyBoardTeacher extends Component {
                          this.contain = el
                      }}>
                     <div className="swiper-wrapper">
-                        <div className="swiper-slide swiper-no-swiping">
+                        <div className="swiper-slide">
                             {releaseItems}
                         </div>
-                        <div className="swiper-slide swiper-no-swiping">
+                        <div className="swiper-slide">
                             {receiveItems}
                         </div>
                     </div>

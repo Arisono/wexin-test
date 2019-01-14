@@ -9,6 +9,7 @@ import {Toast} from 'antd-mobile'
 import {isObjEmpty, isObjNull} from "../utils/common";
 import ImagesViewer from '../components/imagesVIewer/index'
 import PropTypes from 'prop-types';
+import 'css/upload.css'
 
 let uploadFail = false;
 export default class UploadEnclosure extends Component {
@@ -86,7 +87,7 @@ export default class UploadEnclosure extends Component {
         );
 
         return (
-            <div style={{width: '100%'}}>
+            <div style={{width: '100%'}} className='upload-enclosure-root'>
                 <div className='chooseLayout'>
                     <span className='annexText'>{title}</span>
                     {limit ? <span className='annexCount'>（{fileList.length}/{count}）张</span> : ''}

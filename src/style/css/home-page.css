@@ -1,5 +1,6 @@
 .home-page-root {
-    width: 100%;
+    /*width: 100%;*/
+    overflow-x: hidden;
 }
 
 .home-group-item-layout {
@@ -123,9 +124,43 @@
     letter-spacing: 1.6px;
     padding: 5px 10px;
     float: left;
+    text-align: center;
+}
+
+.home-top-stu-layout i.anticon.anticon-user {
+    line-height: 23px;
 }
 
 .am-modal.am-modal-operation .am-modal-content .am-modal-button {
     text-align: center;
     padding: 0;
 }
+
+.home-albums-layout {
+    height: 120px;
+    width: 100%;
+    background: rgba(60, 130, 214, 0.17);
+    padding: 8px 4px;
+    display: flex;
+}
+
+.home-albums-img {
+    height: 100%;
+    width: 100%;
+}
+
+.home-swiper-container {
+    height: 140px;
+    width: 100%;
+    background: rgba(60, 130, 214, 0.17);
+    padding: 8px 4px;
+}
+
+.home-swiper-container .swiper-slide {
+    height: 100%;
+    width: 140px;
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
+}
+

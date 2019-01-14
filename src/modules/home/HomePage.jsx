@@ -7,6 +7,8 @@ import React, {Component} from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {switchUser} from "../../redux/actions/userInfo";
+import Swiper from 'swiper/dist/js/swiper'
+import 'swiper/dist/css/swiper.min.css'
 import {Avatar} from 'antd'
 import {Toast, Modal} from 'antd-mobile'
 import {clearListState} from 'action/listState'
@@ -33,6 +35,10 @@ class HomePage extends Component {
         }
     }
 
+    componentWillMount() {
+
+    }
+
     componentDidMount() {
         //清除列表缓存数据
         clearListState()()
@@ -40,6 +46,29 @@ class HomePage extends Component {
         clearClassData()()
 
         document.title = "智慧校园";
+
+        this.mySwiper = new Swiper('.home-swiper-container', {
+            autoplay: {
+                disableOnInteraction: false,
+            },
+            loop: true,
+            touchRatio: 2,
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            init: false,
+            speed: 200,
+            freeMode: true,
+            freeModeSticky: true,
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: false,
+            }
+        })
 
         if (!isObjEmpty(this.props.userInfo.students)) {
             this.props.userInfo.students.forEach((item, index) => {
@@ -59,22 +88,31 @@ class HomePage extends Component {
 
     render() {
         const {userInfo} = this.props
-        let {studentIndex} = this.state
+        let {studentIndex, albums} = this.state
 
         const teacherMenu = this.getTeacherMenu()
         const parentMenu = this.getParentMenu()
-        const albumLayout = this.getAlbumLayout()
         const videoLayout = this.getVideoLayout()
         const topMenus = this.getTopMenus()
 
+        const albumItems = []
+        if (!isObjEmpty(albums)) {
+            albums.forEach((item, index) => {
+                albumItems.push(<div className="swiper-slide"
+                                     style={{backgroundImage: 'url(' + _baseURL + item.picUrl + ')'}}>
+                    {/*<img className='home-albums-img' src={_baseURL + item.picUrl}/>*/}
+                </div>)
+            })
+        }
+
         const studentList = []
+
         if (!isObjEmpty(userInfo.students) && userInfo.userRole === 1) {
             userInfo.students.forEach((item, index) => {
                 studentList.push(<StuItem isSelect={studentIndex === index} stuObj={item}
                                           stuIndex={index} onStuSwitch={this.onStuSwitch}/>)
             })
         }
-
 
         return (
             <div className='home-page-root'>
@@ -105,7 +143,13 @@ class HomePage extends Component {
                 {/*功能菜单*/}
                 {userInfo.userRole == 1 ? parentMenu : teacherMenu}
                 {/*班级相册*/}
-                {albumLayout}
+                <div className='gray-line'></div>
+                <MenuGroup groupIcon={require('imgs/ic_group_album.png')} groupText='班级相册'/>
+                <div className="home-swiper-container">
+                    <div className="swiper-wrapper">
+                        {albumItems}
+                    </div>
+                </div>
                 {/*精彩瞬间*/}
                 {videoLayout}
             </div>
@@ -149,9 +193,11 @@ class HomePage extends Component {
                     userOpenid: homeData.userOpenid,
                     userPhone: homeData.userPhone,
                     stuId: userInfo.stuId || getStrValue(homeData.students, 0).stuId,
+                    student: isObjEmpty(userInfo.student) ? homeData.students[0] : userInfo.student,
                     userRole: userRole,
                     userRoles: homeData.roles,
-                    userAvatar: homeData.userPhoto
+                    userAvatar: homeData.userPhoto,
+                    userSex: homeData.userSex
                 })()
 
                 if (!isObjEmpty(userInfo.students)) {
@@ -163,6 +209,8 @@ class HomePage extends Component {
 
                     this.setState({studentIndex})
                 }
+
+                this.mySwiper.init()
             }
         }).catch((error) => {
             Toast.hide();
@@ -194,9 +242,24 @@ class HomePage extends Component {
         if (isObjEmpty(albums)) {
             return <div></div>
         } else {
+            const albumItems = []
+            albums.forEach((item, index) => {
+                albumItems.push(<div className="swiper-slide"
+                                     style={{backgroundImage: 'url(' + _baseURL + item.picUrl + ')'}}>
+                    {/*<img className='home-albums-img' src={_baseURL + item.picUrl}/>*/}
+                </div>)
+            })
             return <div>
                 <div className='gray-line'></div>
                 <MenuGroup groupIcon={require('imgs/ic_group_album.png')} groupText='班级相册'/>
+                <div className='home-albums-layout'>
+                    <div className="home-swiper-container">
+                        <div className="swiper-wrapper">
+                            {albumItems}
+                        </div>
+                    </div>
+                </div>
+
             </div>
         }
     }
@@ -239,6 +302,7 @@ class HomePage extends Component {
         switchUser({
             stuName: this.props.userInfo.students[stuIndex].stuName,
             stuId: this.props.userInfo.students[stuIndex].stuId,
+            student: this.props.userInfo.students[stuIndex]
         })()
     }
 
@@ -331,9 +395,13 @@ class StuItem extends Component {
     render() {
         return (
             <div onClick={this.onStuSwitch} className='home-top-stu-layout'>
-                <img className={this.props.isSelect ? 'border-radius-50-blue' : 'border-radius-50'}
-                     src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"}
-                     width={25} height={25}/>
+                {this.props.stuObj.stuPhoto ?
+                    <img className={this.props.isSelect ? 'border-radius-50-blue' : 'border-radius-50'}
+                         src={_baseURL + this.props.stuObj.stuPhoto}
+                         width={25} height={25}/> :
+                    <Avatar className={this.props.isSelect ? 'border-radius-50-blue' : 'border-radius-50'}
+                            size={23} icon='user'/>}
+
                 <span
                     className={this.props.isSelect ? "margin_left_5 color_blue text_bold"
                         : 'margin_left_5'}>{this.props.stuObj.stuName}</span>

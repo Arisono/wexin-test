@@ -18,7 +18,6 @@ module.exports = function override(config, env) {
         config
     );
 
-
     config = injectBabelPlugin(
         ['import',
             {
@@ -29,7 +28,6 @@ module.exports = function override(config, env) {
         ],
         config
     );
-
 
     config = rewireLess.withLoaderOptions({
         modifyVars: {"@primary-color": "#4197FC"},

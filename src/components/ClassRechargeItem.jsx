@@ -58,6 +58,8 @@ export default class ClassRechargeItem extends Component {
     }
 
     onItemClick = () => {
-        this.props.onItemClick(this.props.index)
+        if (this.props.onItemClick) {
+            this.props.onItemClick(this.props.index)
+        }
     }
 }

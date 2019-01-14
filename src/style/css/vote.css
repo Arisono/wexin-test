@@ -1,0 +1,64 @@
+.vote-item-root {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 18px;
+    background: #FFFFFF;
+    border-radius: 6px;
+    margin: 12px 10px;
+}
+
+.vote-item-title {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #333333;
+    letter-spacing: 0;
+    flex: 1;
+}
+
+.vote-item-status-doing, .vote-item-status-done {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    letter-spacing: 0;
+    padding-right: 6px;
+}
+
+.vote-item-status-doing {
+    color: #FA5200;
+}
+
+.vote-item-status-done {
+    color: #4B4B4A;
+}
+
+.vote-item-endData-capiton {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #333333;
+    letter-spacing: 0;
+}
+
+.vote-item-endData-value {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #666666;
+    letter-spacing: 0;
+    margin-left: 4px;
+}
+
+.vote-item-option-circle {
+    width: 10px;
+    height: 10px;
+    border: 1px solid #979797;
+    border-radius: 50%;
+}
+
+.vote-item-option-text {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    color: #666666;
+    letter-spacing: 0;
+    padding-left: 6px;
+}
+
+
+

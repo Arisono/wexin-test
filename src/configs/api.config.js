@@ -1,3 +1,8 @@
+import {fetchGet} from "../utils/fetchRequest";
+import {isObjEmpty} from "../utils/common";
+import {switchUser} from "../redux/actions/userInfo";
+import store from './../redux/store/store'
+
 /**
  * Created by RaoMeng on 2018/11/21
  * Desc: 项目接口
@@ -80,7 +85,7 @@ export const API = {
 
 
     //首页接口
-    homeIndex:_baseURL+"/user/homePage",
+    homeIndex: _baseURL + "/user/homePage",
     //创建投票单
     voteCreate: _baseURL + '/vote/voteCreate',//投票创建
     voteList: _baseURL + "/vote/voteList",//家长端
@@ -113,9 +118,35 @@ export const API = {
     //审批单详情
     oaDetails: _baseURL + '/oaApprove/oaDetails',
     //结束会议
-    endMeeting:_baseURL+'/notify/endMeeting',
+    endMeeting: _baseURL + '/notify/endMeeting',
     //获取分值条件
-    getCurr : _baseURL + '/score/getCurr',
+    getCurr: _baseURL + '/score/getCurr',
+}
+
+/**
+ * Created by RaoMeng on 2019/1/11
+ * Desc: 公共请求
+ */
+export const REQUEST = {
+    //获取微信信息
+    getWeixinInfo: () => {
+        const userInfo = store.getState().redUserInfo
+
+        fetchGet('https://api.weixin.qq.com/cgi-bin/user/info', {
+            access_token: userInfo.accessToken,
+            openid: userInfo.userOpenid,
+            lang: 'zh_CN',
+        }).then(response => {
+            if (!isObjEmpty(response)) {
+                switchUser({
+                    userAvatar: response.headimgurl ? response.headimgurl : userInfo.userAvatar,
+                    userOpenid: response.openid ? response.openid : userInfo.userOpenid,
+                })()
+            }
+        }).catch(error => {
+
+        })
+    }
 }
 
 

@@ -8,7 +8,7 @@ import {List} from 'antd';
 import '../../style/css/app-gloal.css'
 import './VoteListPage.css'
 import {Checkbox, message} from 'antd';
-import icon_vote_items  from "../../style/imgs/icon_vote_items.png";
+import icon_vote_items from "../../style/imgs/icon_vote_items.png";
 import {Link} from "react-router-dom";
 import LoadingMore from "../../components/LoadingMore";
 import InfiniteScroll from 'react-infinite-scroller';
@@ -63,7 +63,7 @@ class VoteListPage extends React.Component {
             });
 
         }).catch((error) => {
-            console.log("error:" + JSON.stringify(error));
+
         });
     }
 
@@ -125,7 +125,7 @@ class VoteListPage extends React.Component {
                             locale={{emptyText: ''}}
                             dataSource={this.state.data}
                             renderItem={item => (
-                                <Link to={"/voteDetail/"+ item.voteId}
+                                <Link to={"/voteDetail/" + item.voteId}
                                       id="menu_span_normal">
                                     <List.Item className="row " id="row_background"
                                                style={{padding: "10px"}}>
@@ -145,7 +145,7 @@ class VoteListPage extends React.Component {
                                                     <List dataSource={item.votes}
                                                           renderItem={item => (
                                                               <List.Item style={{width: "120px"}}>
-                                                                  <Checkbox >{item.optionName}</Checkbox>
+                                                                  <Checkbox>{item.optionName}</Checkbox>
                                                               </List.Item>
                                                           )}/>
                                                     <div className="flex_center item_flex">

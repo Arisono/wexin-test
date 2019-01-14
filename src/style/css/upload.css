@@ -1,0 +1,11 @@
+.upload-enclosure-root {
+}
+
+.upload-enclosure-root .ant-upload-text {
+    display: none;
+}
+
+.upload-enclosure-root i.anticon.anticon-plus svg{
+    width: 3em;
+    height: 3em;
+}

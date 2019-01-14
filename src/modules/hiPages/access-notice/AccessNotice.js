@@ -27,11 +27,15 @@ class AccessNotice extends Component{
         }
     }
     componentDidMount() {
+        let stuId = this.props.match.params.stuId
+        if(stuId == null|| stuId.length == 0){
+            stuId = this.props.userInfo.stuId
+        }
         this.setState({
             studentName:this.props.userInfo.stuName,
         })
         fetchPost(API.RecordOutgoingList,{
-            stuId:this.props.userInfo.stuId,
+            stuId:stuId,
             // stuId:10002,
             pageIndex:1,
             pageSize:10

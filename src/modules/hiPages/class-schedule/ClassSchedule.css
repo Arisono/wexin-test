@@ -4,7 +4,7 @@
 .teach_img{height: 27px;width: 27px;margin-left: 30px;}
 .green_point{height: 25px;width: 25px;background-color:#3DAA4F; border-radius: 100%}
 .sch_time_sty{font-size: 15px;color: #333333;margin: 2px 15px;}
-.sch_class_sty{font-size: 18px;color: #0F1011;margin-left: 20px;}
+.sch_class_sty{font-size: 18px;color: #0F1011;margin-left: 10px;}
 .sch_teacher_sty{font-size: 12px;color: #666666;padding: 5px;}
 .header_days_sty{display: flex;flex-direction: row;}
 .each_day_default{width: 20%;height: 40px;color: #CECECE;font-size: 15px;text-align: center;margin-top:15px;padding: 0px 20px;}

@@ -50,11 +50,11 @@ class ClassSchedule extends Component{
         return(
             <div>
                 <div className="header_days_sty">
-                    <div onClick={this.selectDayClick.bind(this,1)} className="each_day_default" ><div className={this.state.CurDay == 1 ? "isday_click" : ''}>周一</div></div>
-                    <div onClick={this.selectDayClick.bind(this,2)} className="each_day_default"><div className={this.state.CurDay == 2 ? "isday_click" : ''}>周二</div></div>
-                    <div onClick={this.selectDayClick.bind(this,3)} className="each_day_default"><div className={this.state.CurDay == 3 ? "isday_click" : ''}>周三</div></div>
-                    <div onClick={this.selectDayClick.bind(this,4)} className="each_day_default"><div className={this.state.CurDay == 4 ? "isday_click" : ''}>周四</div></div>
-                    <div onClick={this.selectDayClick.bind(this,5)} className="each_day_default"><div className={this.state.CurDay == 5 ? "isday_click" : ''}>周五</div></div>
+                    <div onClick={this.selectDayClick.bind(this,1)} className="each_day_default" ><div className={this.state.CurDay == 1 ? "isday_click" : ''}>一</div></div>
+                    <div onClick={this.selectDayClick.bind(this,2)} className="each_day_default"><div className={this.state.CurDay == 2 ? "isday_click" : ''}>二</div></div>
+                    <div onClick={this.selectDayClick.bind(this,3)} className="each_day_default"><div className={this.state.CurDay == 3 ? "isday_click" : ''}>三</div></div>
+                    <div onClick={this.selectDayClick.bind(this,4)} className="each_day_default"><div className={this.state.CurDay == 4 ? "isday_click" : ''}>四</div></div>
+                    <div onClick={this.selectDayClick.bind(this,5)} className="each_day_default"><div className={this.state.CurDay == 5 ? "isday_click" : ''}>五</div></div>
                 </div>
                 {/*<div className="comhline_sty1"></div>*/}
                 {/*<div style={{fontSize:14,color:"#333333",margin:20}}>11月12日，<span style={{fontSize:12}}>2018年</span></div>*/}

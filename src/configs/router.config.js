@@ -110,7 +110,7 @@ export default class RouteConfig extends Component {
                     <Route path='/assignmentDetail/:role/:id' component={AssignmentDetailPage}/>
 
                     {/*方龙海*/}
-                    <Route path='/access-notice' component={AccessNotice}/> {/*进出校通知*/}
+                    <Route path='/access-notice/:stuId?' component={AccessNotice}/> {/*进出校通知*/}
                     <Route path='/field-trip' component={FieldTrip}/> {/*//外勤出差*/}
                     <Route path='/res_apply' component={ResApply}/>{/*//用品申请*/}
                     <Route path='/send-vote' component={SendVote}/>{/*//发起投票*/}
@@ -119,7 +119,7 @@ export default class RouteConfig extends Component {
                     <Route path='/score-inquiry' component={ScoreInquiry}/> {/*//成绩通知*/}
                     <Route path='/approvel' component={Approvel}/>{/*审批*/}
                     <Route path='/approvel-detail/:approveId/:isMyApply' component={ApprovelDetail}/> {/*审批详情*/}
-                    <Route path='/meet-detail/:meetId' component={MeetDetail}/> {/*会议签到详情*/}
+                    <Route path='/meet-detail/:meetId?' component={MeetDetail}/> {/*会议签到详情*/}
 
 
                     {/*刘金龙*/}

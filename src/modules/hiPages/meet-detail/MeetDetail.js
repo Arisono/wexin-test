@@ -7,12 +7,6 @@ import React,{Component} from 'react';
 import './MeetDetail.css';
 import MeetingBean from "../../../model/MeetingBean";
 import hi0_img from '../../../style/imgs/ic_head1.png';
-import hi1_img from '../../../style/imgs/ic_head2.png';
-import hi2_img from '../../../style/imgs/ic_head3.png';
-import hi3_img from '../../../style/imgs/ic_head4.png';
-import hi4_img from '../../../style/imgs/ic_head5.png';
-import hi5_img from '../../../style/imgs/ic_head6.png';
-import hi6_img from '../../../style/imgs/ic_head7.png';
 import {Button} from 'antd';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API} from '../../../configs/api.config';
@@ -22,7 +16,7 @@ import {connect} from 'react-redux';
 function SignItem(props) {
     return(
         <div style={{display:'flex',flexDirection:'column',margin:8}}>
-            <div> <img src={props.headImg} alt="" style={{width:40,height:40,borderRadius:25}}/></div>
+            <div> <img src={props.itemdata.userPhoto == "" || props.itemdata.userPhoto == null ? hi0_img : props.itemdata.userPhoto} alt="" style={{width:40,height:40,borderRadius:25}}/></div>
             <div  style={{fontSize:12,color:'#333333',marginTop:10,marginLeft:5}}> <span>{props.itemdata.userName}</span></div>
         </div>
     )
@@ -37,9 +31,8 @@ class MeetDetail extends Component{
             meetingSignData:{},
             signList:[],
             unsignList:[],
-            signLImg:[],
-            unsignLImg:[],
             notifyStatus:null,//1是草稿 2是已发布 3是进行中 4结束
+            showEndBtn:true, //是否显示结束会议按钮
         }
     }
      render(){
@@ -78,7 +71,7 @@ class MeetDetail extends Component{
                     <span style={{fontSize:12,color:'#666666',marginLeft:10}}>({this.state.signList.length}/{this.state.signList.length+this.state.unsignList.length}人)</span>
                 </div>
                 <div style={{marginTop:10,marginLeft:20,display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
-                    {this.state.signList.map((itemdata,index)=><SignItem itemdata={itemdata} headImg = {this.state.signLImg[index]}></SignItem>)}
+                    {this.state.signList.map((itemdata,index)=><SignItem itemdata={itemdata} ></SignItem>)}
                 </div>
 
                 <div style={{fontSize:14,color:'#252525',marginTop:10,marginLeft:20}}>未签到
@@ -86,12 +79,12 @@ class MeetDetail extends Component{
                 </div>
                 <div className="comhline_sty1"></div>
                     <div style={{marginTop:10,marginLeft:20,display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
-                    {this.state.unsignList.map((itemdata,index)=><SignItem itemdata={itemdata} headImg = {this.state.unsignLImg[index]}></SignItem>)}
+                    {this.state.unsignList.map((itemdata,index)=><SignItem itemdata={itemdata}></SignItem>)}
                 </div>
                     {this.state.notifyStatus == 4 ? <div style={{textAlign:'center',marginTop:20}}>
                         <Button type="primary"  className='end_sty' style={{color:'#FFFFFF',backgroundColor:'#929292'}}>已结束</Button>
                     </div> : <div style={{textAlign:'center',marginTop:20,marginBottom:20}}>
-                        <Button type="primary"  className='end_sty' onClick={this.EndMeetting}>结束会议</Button>
+                        {this.state.showEndBtn == true ? <Button type="primary"  className='end_sty' onClick={this.EndMeetting}>结束会议</Button> : ""}
                     </div>}
             </div>
         )
@@ -121,6 +114,9 @@ class MeetDetail extends Component{
         if(meetId == null || meetId == ''){
             return
         }
+        this.setState({
+            showEndBtn:this.props.userInfo.stuId == "" ? true : false
+        })
        console.log('meetId',this.props.match.params.meetId)
 
         let meetBean = new MeetingBean()
@@ -164,73 +160,6 @@ class MeetDetail extends Component{
                         signList:response.data.notifyRecords.signs,
                         unsignList:response.data.notifyRecords.unSigns,
                         notifyStatus:response.data.notifyStatus
-                    },function () {
-                        var signL = []
-                        var unsignL =[]
-                        for (var j=0;j<this.state.signList.length;j++){
-                           var i
-                            if(j > 6){
-                                i = j/6
-                            }else {
-                                i = j
-                            }
-                            if(i == 0) {
-                                signL.push(hi0_img)
-                            }
-                            if(i == 1) {
-                                signL.push(hi1_img)
-                            }
-                            if(i == 2) {
-                                signL.push(hi2_img)
-                            }
-                            if(i == 3) {
-                                signL.push(hi3_img)
-                            }
-                            if(i == 4) {
-                                signL.push(hi4_img)
-                            }
-                            if(i == 5) {
-                                signL.push(hi5_img)
-                            }
-                            if(i == 6) {
-                                signL.push(hi6_img)
-                            }
-                        }
-                        for (var j=0;j<this.state.unsignList.length;j++){
-                            var i
-                            if(j > 6){
-                                i = j/6
-                            }else {
-                                i = j
-                            }
-                            if(i == 0) {
-                                unsignL.push(hi0_img)
-                            }
-                            if(i == 1) {
-                                unsignL.push(hi1_img)
-                            }
-                            if(i == 2) {
-                                unsignL.push(hi2_img)
-                            }
-                            if(i == 3) {
-                                unsignL.push(hi3_img)
-                            }
-                            if(i == 4) {
-                                signL.push(hi4_img)
-                            }
-                            if(i == 5) {
-                                unsignL.push(hi5_img)
-                            }
-                            if(i == 6) {
-                                unsignL.push(hi6_img)
-                            }
-                        }
-                        console.log("signl",signL)
-                        console.log("unsignL",unsignL)
-                        this.setState({
-                            signLImg:signL,
-                            unsignLImg:unsignL
-                        })
                     })
                 }
             })

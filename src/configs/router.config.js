@@ -55,6 +55,7 @@ import MobileUploadDemo from "../modules/demo/MobileUploadDemo";
 import HomePage from "../modules/home/HomePage";
 import VoteListParent from "../modules/vote/VoteListParent";
 import VoteListTeacher from "../modules/vote/VoteListTeacher";
+import HomeWorkList from "../modules/homework/HomeWorkList";
 
 export default class RouteConfig extends Component {
 
@@ -91,8 +92,14 @@ export default class RouteConfig extends Component {
                     <Route path='/announceRelease' component={AnnounceRelease}/>
                     <Route path='/classRechargeList' component={ClassRechargeList}/>
                     <Route path='/classRechargeDetail/:payId' component={ClassRechargeDetail}/>
-                    {/*刘杰*/}
 
+                    <Route path='/userInfoPage/:type?' component={UserInfo}/>
+                    <Route path='/releaseAssignment' component={ReleaseAssignmentPage}/>
+                    <Route path='/assignmentList/:role' component={HomeWorkList}/>
+                    <Route path='/assignmentDetail/:role/:id' component={AssignmentDetailPage}/>
+                    <Route path='/voteList' component={VoteListParent}/>
+                    <Route path='/voteListTab' component={VoteListTeacher}/>
+                    {/*刘杰*/}
                     <Route path={"/MobileUploadDemo"} component={MobileUploadDemo}/>
                     <Route path={"/MobileUpload"} component={MobileUpload}/>
                     <Route path={"/ImageGrid"} component={ImageGrid}/>
@@ -100,16 +107,11 @@ export default class RouteConfig extends Component {
                     <Route path={'/picturesWall'} component={PicturesWallItem}/>
                     <Route path="/voteDetail/:id" component={VoteDetailPage}/>
                     {/*<Route path="/homePage" component={AppHomePage}/>*/}
-                    <Route path='/voteList' component={VoteListParent}/>
-                    <Route path='/voteListTab' component={VoteListTeacher}/>
                     <Route path='/leaveAddC' component={LeaveAddCPage}/>
                     <Route path='/leaveAdd' component={LeaveAddPage}/>
                     <Route path='/leaveApproval' component={LeaveApprovalPage}/>
                     <Route path='/leaveList/:role' component={LeaveListPage}/>
 
-                    <Route path='/releaseAssignment' component={ReleaseAssignmentPage}/>
-                    <Route path='/assignmentList/:role' component={AssignmentListPage}/>
-                    <Route path='/assignmentDetail/:role/:id' component={AssignmentDetailPage}/>
 
                     {/*方龙海*/}
                     <Route path='/access-notice/:stuId?' component={AccessNotice}/> {/*进出校通知*/}
@@ -129,9 +131,6 @@ export default class RouteConfig extends Component {
                     <Route path='/consumeRePage/:type/:cardId' component={ConsumeRePage}/>
                     <Route path='/notifyBoard/parent' component={NotifyBoardParent}/>
                     <Route path='/notifyBoard/teacher' component={NotifyBoardTeacher}/>
-                    {/*龚鹏明*/}
-                    {/*type  1:老师  2.家长*/}
-                    <Route path='/userInfoPage/:type?' component={UserInfo}/>
                 </div>
             </Router>
         );

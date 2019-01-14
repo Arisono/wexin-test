@@ -6,14 +6,16 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './AssignmentDetailPage.css'
 import '../../style/css/app-gloal.css'
-import {List,Input,Button} from 'antd';
+import {List, Input, Button} from 'antd';
 import {fetchPost, fetchGet} from '../../utils/fetchRequest';
 import {API, _baseURL} from '../../configs/api.config';
-import {isObjEmpty} from  '../../utils/common';
+import {isObjEmpty} from '../../utils/common';
 import ImagesViewer from "../../components/imagesVIewer/ImagesViewer";
 import {Toast} from 'antd-mobile'
+import {Avatar} from 'antd'
 
 import {connect} from 'react-redux'
+
 /**
  * 作业详情
  * Created by Arison on 17:49.
@@ -34,12 +36,11 @@ class AssignmentDetailPage extends React.Component {
             headerUrl: "",
             title: "",
             content: "",
-            messageContent:null,
-            files: [
-            ],
+            messageContent: null,
+            files: [],
             data: [{
-                name: '张山',
-                content: '陈老师收到'
+                name: '',
+                content: ''
             }]
         };
     }
@@ -59,7 +60,7 @@ class AssignmentDetailPage extends React.Component {
             for (let i = 0; i < temps.length; i++) {
                 images.push(_baseURL + temps[i]);
             }
-            response.data.notifyDetails= response.data.notifyDetails.replace(/\r\n/g,'<br/>');
+            response.data.notifyDetails = response.data.notifyDetails.replace(/\r\n/g, '<br/>');
             this.setState({
                 teachName: response.data.notifyCreatorName,
                 endTime: response.data.endDate,
@@ -82,28 +83,28 @@ class AssignmentDetailPage extends React.Component {
         })
     }
 
-    onMessageSend=()=>{
-        if(isObjEmpty(this.state.messageContent)){
-             Toast.info("请输入留言内容")
+    onMessageSend = () => {
+        if (isObjEmpty(this.state.messageContent)) {
+            Toast.info("请输入留言内容")
             return;
         }
-        fetchPost(API.messageCreate,{
-            messName:'这是留言',
-            messContent:this.state.messageContent,
+        fetchPost(API.messageCreate, {
+            messName: '这是留言',
+            messContent: this.state.messageContent,
             userId: this.props.userInfo.userId,
-            notifyId:this.state.id,
-                  }).then((response)=>{
-                      console.log("response:"+JSON.stringify(response));
-                      if(response.success){
-                         Toast.info("留言成功！");
-                         this.setState({
-                             messageContent:""
-                         });
-                          this.getMessage();
-                      }
-                  }).catch((error)=>{
-                      console.log("error:"+JSON.stringify(error));
-                  })
+            notifyId: this.state.id,
+        }).then((response) => {
+            console.log("response:" + JSON.stringify(response));
+            if (response.success) {
+                Toast.info("留言成功！");
+                this.setState({
+                    messageContent: ""
+                });
+                this.getMessage();
+            }
+        }).catch((error) => {
+            console.log("error:" + JSON.stringify(error));
+        })
 
     }
 
@@ -111,7 +112,7 @@ class AssignmentDetailPage extends React.Component {
         fetchGet(API.messageList, {
             notifyId: this.state.id
         }).then((response) => {
-            this.state.data.length=0;
+            this.state.data.length = 0;
             for (let i = 0; i < response.data.length; i++) {
                 let model = {
                     name: response.data[i].userName,
@@ -129,84 +130,77 @@ class AssignmentDetailPage extends React.Component {
     }
 
 
-    onChangeMessage=(event)=>{
-        let msg= event.target.value;
+    onChangeMessage = (event) => {
+        let msg = event.target.value;
         this.setState({
-            messageContent:msg
+            messageContent: msg
         })
     }
-
-
-
 
 
     handleCancel = () => this.setState({previewVisible: false})
 
     render() {
-        return <div className="container-fluid flex_column">
-            <div className="row" id="layout_header">
-                <div className="col-xs-4" id="padding10">
-                    <img className="img-circle" style={{marginLeft: "10px"}}
-                         src={this.props.userInfo.userAvatar}
-                         width={80} height={80}/>
-                </div>
-                <div className="col-xs-8" id="padding10">
-                    <div className="margin_top_bottom_15"><span className="span_19"
-                                                                style={{color: "#0088DC"}}>{this.state.teachName}</span>
-                    </div>
-                    <div ><span className="span_16">{this.state.endTime}</span></div>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-xs-12">
-                    <div className="margin_top_20">
-                        <span className="span_20 text_bold">{this.state.title}</span>
-                    </div>
-                    <div id="page_horizontal_line"></div>
-                    <div className="margin_top_bottom_15"  dangerouslySetInnerHTML={{__html:  this.state.content}}></div>
-                    <div className="margin_top_bottom_15 flex_center">
-                        {this.state.previewVisible ?
-                            <ImagesViewer onClose={this.handleCancel} urls={this.state.files}
-                                          index={0}
-                                          needPoint={this.state.files.length <= 9}/> : ""}
-                        {this.state.files.length!=0?(<img onClick={this.onClickImage.bind(this)}
-                                                           style={{margin: "0px"}}
-                                                           src={this.state.files[0]}
-                                                           width={290} height={150}/>):("")}
+        const {userInfo} = this.props
 
+        return <div className="class-page-layout">
+            <div style={{flex: '1'}}>
+                <div className="homework-detail-top-layout common-flex-row">
+                    {isObjEmpty(userInfo.userAvatar) ?
+                        <Avatar size={60} icon='user'/> :
+                        <img className="img-circle"
+                             src={userInfo.userAvatar}
+                             width={60} height={60}/>
+                    }
+                    <div className='common-flex-column-y-center' style={{paddingLeft: '14px'}}>
+                        <div className="homework-detail-top-name">{this.state.teachName}老师</div>
+                        <div className='homework-detail-top-time'>{this.state.endTime}</div>
                     </div>
                 </div>
-            </div>
-            <div className="row" id="page_block_min"></div>
-            <div className="row">
-                <div className="col-xs-12 margin_bottom_50">
-                    <div className="margin_top_bottom_15">留言{this.state.data.length!=0?(<span>
+                <div className="homework-detail-title">{this.state.title} </div>
+                <div className="homework-detail-content"
+                     dangerouslySetInnerHTML={{__html: this.state.content}}></div>
+                <div className="margin_top_bottom_15 flex_center">
+                    {this.state.previewVisible ?
+                        <ImagesViewer onClose={this.handleCancel} urls={this.state.files}
+                                      index={0}
+                                      needPoint={this.state.files.length <= 9}/> : ""}
+                    {this.state.files.length != 0 ? (<img onClick={this.onClickImage.bind(this)}
+                                                          style={{margin: "0px"}}
+                                                          src={this.state.files[0]}
+                                                          width={290} height={150}/>) : ("")}
+
+                </div>
+                <div className="margin_top_bottom_10 homework-detail-leave-caption">留言{this.state.data.length != 0 ? (
+                    <span>
                         ({this.state.data.length}条)
-                    </span>):(<div></div>)}</div>
-                    <div id="page_horizontal_line"></div>
-                    <div>
-                        <List
-                            locale={{emptyText: '暂无留言'}}
-                             dataSource={this.state.data}
-                              renderItem={item => (
-                            <List.Item>
-                                <div>
-                                    <span className="text_bold margin_left_right_10">{item.name}:</span>
-                                    <span>{item.content}</span>
-                                </div>
-                            </List.Item>
-                        )}/>
-
-
-                    </div>
-                </div>
+                    </span>) : (<div></div>)}</div>
+                <div id="page_horizontal_line"></div>
             </div>
-            {this.state.role==="teacher"?(""):(<div className="footer bg_white">
-                <div className="flex padding_10">
-                    <Input  ref={ref=>this.input_content=ref} value={this.state.messageContent}  onChange={this.onChangeMessage} placeholder="留言"  ></Input>
-                    <Button  onClick={this.onMessageSend}  type={"primary"} className="margin_left_10">发送</Button>
-                </div>
-            </div>)}
+
+            <div className='homework-detail-leave-layout'
+                 style={{paddingBottom: this.state.role === "teacher" ? '0' : '50px'}}>
+                <List
+                    locale={{emptyText: '暂无留言'}}
+                    dataSource={this.state.data}
+                    renderItem={item => (
+                        <List.Item>
+                            <div>
+                                <span className="text_bold margin_left_right_20">{item.name}:</span>
+                                <span>{item.content}</span>
+                            </div>
+                        </List.Item>
+                    )}/>
+            </div>
+            {this.state.role === "teacher" ? "" :
+                <div className="footer" style={{background: '#F2F2F2'}}>
+                    <div className="flex padding_10">
+                        <input ref={ref => this.input_content = ref} value={this.state.messageContent}
+                               onChange={this.onChangeMessage} placeholder="留言"
+                               className='homework-detail-leave-input'></input>
+                        <Button onClick={this.onMessageSend} type={"primary"} className="margin_left_10">发送</Button>
+                    </div>
+                </div>}
         </div>
     }
 }

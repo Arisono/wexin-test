@@ -111,7 +111,7 @@
 .recharge-item-line {
     width: 100%;
     display: flex;
-    padding: 6px 0 6px 20px;
+    padding: 5px 0 5px 20px;
     align-items: center;
     font-family: PingFangSC-Regular;
     font-size: 13px;
@@ -120,12 +120,15 @@
 
 .recharge-item-caption {
     width: 85px;
-    color: #333333;
+    color: #666666;
 }
 
 .recharge-item-value {
     flex: 1;
-    color: #666666;
+    color: #333333;
+    overflow: hidden;
+    word-wrap: break-word;
+    padding-right: 10px;
 }
 
 .recharge-item-bottom {
@@ -178,7 +181,7 @@
 
 .recharge-release-money-title {
     font-family: PingFangSC-Regular;
-    font-size: 12px;
+    font-size: 14px;
     color: #666666;
     letter-spacing: 1.5px;
     padding: 10px;
@@ -413,7 +416,7 @@
 
 .recharge-modal-money-mark-text {
     color: white;
-    transform: scale(0.5,0.4);
+    transform: scale(0.5, 0.4);
     margin: 0;
     padding: 0;
 }

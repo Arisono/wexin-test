@@ -4,25 +4,26 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import  './ReleaseAssignmentPage.css'
+import './ReleaseAssignmentPage.css'
 import '../../style/css/app-gloal.css'
 import moment from 'moment'
-import { Input,Button ,Icon,message } from 'antd';
-import PicturesWallItem from "../../components/upload/PicturesWallItem";
+import {Input, Button, Icon, message} from 'antd';
 import TargetSelect from "../../components/TargetSelect";
-import {fetchPost,fetchGet} from '../../utils/fetchRequest';
-import {API} from '../../configs/api.config';
-import {isObjEmpty,getIntValue, getStrValue} from  '../../utils/common';
+import {fetchPost, fetchGet} from '../../utils/fetchRequest';
+import {_baseURL, API} from '../../configs/api.config';
+import {isObjEmpty, getIntValue, getStrValue} from '../../utils/common';
+import UploadEnclosure from 'components/UploadEnclosure'
 
-import {Toast,DatePicker,List} from 'antd-mobile'
+import {Toast, DatePicker, List} from 'antd-mobile'
 import {connect} from 'react-redux'
-const { TextArea } = Input;
+
+const {TextArea} = Input;
 
 /**
  * 发布作业
  * Created by Arison on 17:47.
  */
-class ReleaseAssignmentPage extends React.Component{
+class ReleaseAssignmentPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,16 +31,16 @@ class ReleaseAssignmentPage extends React.Component{
             targetList: [],
             targetCount: 0,
             targetData: [],
-            checkNodes:[],
-            startDate:null,//当前时间
+            checkNodes: [],
+            startDate: null,//当前时间
             endDate: null,//截止时间
-            data:{
+            data: {
                 notifyName: '',//标题
                 notifyType: '3',//作业发布
                 notifyDetails: '',//内容
-                notifyCreator: '10000',//创建者
+                notifyCreator: '',//创建者
                 notifyStatus: '2',//状态  2发布  1草稿
-                userIds: ['10001','10000','10002','10003'],//通知
+                userIds: [],//通知
                 notifyFiles: [],
                 startDate: '',//当前时间
                 endDate: null//截止时间
@@ -48,81 +49,94 @@ class ReleaseAssignmentPage extends React.Component{
         }
     }
 
-    componentWillMount(){
-          document.title ="发布作业";
-     }
+    componentWillMount() {
+        document.title = "发布作业";
+    }
 
-    callback=(file,fileList)=>{
-        this.state.data.notifyFiles.length=0;
-        for (let i = 0; i < fileList.length; i++) {
-            if(fileList[i].status==="done"){
-                this.state.data.notifyFiles.push(fileList[i].response.data)
-            }
+    componentWillUnmount() {
+        Toast.hide()
+
+        clearTimeout(this.backTask)
+    }
+
+    handleChange = (file, fileList) => {
+        if (fileList) {
+            fileList.forEach((value, index) => {
+                value.url = value.response ? (_baseURL + value.response.data) : value.url
+                value.picUrl = value.response ? value.response.data : value.picUrl
+            })
+
+            this.setState({
+                data: {
+                    notifyFiles: fileList
+                }
+            })
         }
+
+        /* this.state.data.notifyFiles.length = 0;
+         for (let i = 0; i < fileList.length; i++) {
+             if (fileList[i].status === "done") {
+                 this.state.data.notifyFiles.push(fileList[i].response.data)
+             }
+         }*/
     }
 
-    handleRemove=(file)=>{
+    handleRemove = (file) => {
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getOrganization();
     }
 
 
-    changeName=(value)=>{
-                console.log("changeName():"+value.target.value);
-                this.setState({
-                    data:{
-                        notifyName: value.target.value,//标题
-                        notifyType: '3',//作业发布
-                        notifyDetails: this.state.data.notifyDetails,//内容
-                        notifyCreator: '10000',//创建者
-                        notifyStatus: '2',//状态  2发布  1草稿
-                        userIds: ['10001','10000','10002','10003'],//通知
-                        notifyFiles: [],
-                        startDate: '',//当前时间
-                        endDate: this.state.data.endDate//截止时间
-                    }
-                })
+    changeName = (value) => {
+        this.setState({
+            data: {
+                notifyName: value.target.value,//标题
+                notifyType: '3',//作业发布
+                notifyDetails: this.state.data.notifyDetails,//内容
+                notifyCreator: '',//创建者
+                notifyStatus: '2',//状态  2发布  1草稿
+                userIds: ['10001', '10000', '10002', '10003'],//通知
+                notifyFiles: [],
+                startDate: '',//当前时间
+                endDate: this.state.data.endDate//截止时间
+            }
+        })
 
-                console.log("changeName():"+JSON.stringify(this.state.targetList));
     }
 
-    changeContent=(value)=>{
-        console.log("changeName():"+value.target.value);
+    changeContent = (value) => {
         this.setState({
-            data:{
+            data: {
                 notifyDetails: value.target.value,//标题
                 notifyName: this.state.data.notifyName,//标题
                 notifyType: '3',//作业发布
                 notifyCreator: '10000',//创建者
                 notifyStatus: '2',//状态  2发布  1草稿
-                userIds: ['10001','10000','10002','10003'],//通知
+                userIds: ['10001', '10000', '10002', '10003'],//通知
                 notifyFiles: [],
                 startDate: '',//当前时间
                 endDate: this.state.data.endDate//截止时间
             }
         })
     }
-    changeEndDateOk=(value)=>{
-        console.log("changeName():"+value);
-        if(isObjEmpty(value)){
+    changeEndDateOk = (value) => {
+        if (isObjEmpty(value)) {
             message.info("请选择日期");
             return
         }
     }
 
-    changeEndDate=(value,dateString)=>{
-        console.log("changeName():"+value);
-        console.log("changeName():"+dateString);
+    changeEndDate = (value, dateString) => {
         this.setState({
-            data:{
+            data: {
                 notifyDetails: this.state.data.notifyDetails,//标题
                 notifyName: this.state.data.notifyName,//标题
                 notifyType: '3',//作业发布
                 notifyCreator: '10000',//创建者
                 notifyStatus: '2',//状态  2发布  1草稿
-                userIds: JSON.stringify([10001,10000,10002,10003]),//通知
+                userIds: JSON.stringify([10001, 10000, 10002, 10003]),//通知
                 notifyFiles: [],
                 startDate: '',//当前时间
                 endDate: dateString,//标题
@@ -134,65 +148,66 @@ class ReleaseAssignmentPage extends React.Component{
         this.setState({
             targetList: value,
             targetCount: count,
-            checkNodes:checkNodes
+            checkNodes: checkNodes
         });
     }
 
-    commitAction=()=>{
-        console.log("commitAction()"+this.state.data.notifyName);
-        console.log("commitAction()"+this.state.data.notifyDetails);
-        console.log("commitAction()"+this.state.data.endDate);
-        console.log("commitAction() targetList:",this.state.targetList);
-        console.log("commitAction() checkNodes:",this.state.checkNodes);
-         if(isObjEmpty(this.state.data.notifyName)){
-             Toast.fail("请输入作业名称");
-             return;
-         }
-        if(isObjEmpty(this.state.data.notifyDetails)){
+    commitAction = () => {
+        if (isObjEmpty(this.state.data.notifyName)) {
+            Toast.fail("请输入作业名称");
+            return;
+        }
+        if (isObjEmpty(this.state.data.notifyDetails)) {
             Toast.fail('请输入作业内容...')
             return;
         }
-        if(isObjEmpty(this.state.endDate)){
+        if (isObjEmpty(this.state.endDate)) {
             Toast.fail("请输入截止时间");
             return;
         }
-        if(isObjEmpty(this.state.targetList)){
+        if (isObjEmpty(this.state.targetList)) {
             Toast.fail("请选择抄送对象");
             return;
         }
-        let personArrays=[];
+        let personArrays = [];
         if (!isObjEmpty(this.state.checkNodes)) {
             this.state.checkNodes.forEach((node) => {
                 personArrays.push(node.userId)
             })
         }
-        console.log("commitAction() endDate:",this.state.endDate);
-        Toast.loading("");
-        console.log("commitAction()",this.state.data.notifyDetails);
-        fetchPost(API.homeWorkAdd,{
-            notifyName:this.state.data.notifyName,//标题
-            notifyType:'3',//作业发布
-            notifyDetails:this.state.data.notifyDetails,//内容
-            notifyCreator:this.props.userInfo.userId,//创建者
-            notifyStatus:'2',//状态
+        Toast.loading('正在发布...', 0)
+        fetchPost(API.homeWorkAdd, {
+            notifyName: this.state.data.notifyName,//标题
+            notifyType: '3',//作业发布
+            notifyDetails: this.state.data.notifyDetails,//内容
+            notifyCreator: this.props.userInfo.userId,//创建者
+            notifyStatus: '2',//状态
             endDate: moment(this.state.endDate).format('YYYY-MM-DD HH:mm:ss'),
             userIds: JSON.stringify(personArrays),//通知
-            notifyFiles:JSON.stringify(this.state.data.notifyFiles)
-        }).then((response)=>{
+            notifyFiles: JSON.stringify(this.state.data.notifyFiles)
+        }).then((response) => {
             Toast.hide();
-            console.log("response:"+JSON.stringify(response));
-            if (response.success){
+            if (response.success) {
                 Toast.success("发布成功！")
-                this.props.history.goBack();
+                this.initPageData()
+
+                this.backTask = setTimeout(() => {
+                    this.props.history.goBack()
+                }, 2000)
             }
-        }).catch((error)=>{
-            Toast.fail("系统异常！")
-            console.log("error:"+JSON.stringify(error));
+        }).catch((error) => {
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
         })
     }
 
-    goListAction=()=>{
-      //  this.props.history.push("/assignmentList/teacher");
+    goListAction = () => {
+        //  this.props.history.push("/assignmentList/teacher");
         this.props.history.goBack();
     }
 
@@ -203,9 +218,9 @@ class ReleaseAssignmentPage extends React.Component{
     }
 
 
-    render(){
-        const { targetCount, targetList,targetData} = this.state
-        console.log("render()",targetData);
+    render() {
+        const {targetCount, targetList, targetData, data} = this.state
+        console.log("render()", targetData);
         const targetProps = {
             placeholder: '请选择抄送对象',
             targetData: targetData,
@@ -219,104 +234,76 @@ class ReleaseAssignmentPage extends React.Component{
         const defaultTargetProps = {
             targetData: [],
             targetValues: this.state.targetList,
-            title: '发布对象',
+            title: '抄送对象',
             targetCount: this.state.targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this)
         }
 
-        return <div className="container-fluid">
-            <div className="row">
-                <div className="col-md-12">
-                    <div className="row" id="page_block_min"></div>
-                    <div className="row">
-                        {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
-                            : <TargetSelect {...defaultTargetProps}/>}
-                    </div>
-                </div>
-            </div>
-            <div className="row" id="page_block_max"></div>
-            <div className="row">
-                <div className="col-xs-12">
-                    <div className="row flex_center_vertical"  >
-                       {/* <div className=""><span   id="page_tile">截止时间</span></div>*/}
-                        <div className="item_flex
+        return <div className='common-column-layout' style={{paddingBottom: '40px'}}>
+            <div className='gray-line'></div>
+            {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
+                : <TargetSelect {...defaultTargetProps}/>}
+            <div className='gray-line'></div>
+            <DatePicker
+                value={this.state.endDate}
+                onChange={date => this.setState({endDate: date})}>
+                <List.Item arrow="horizontal">截止时间</List.Item>
+            </DatePicker>
+            <div className='gray-line'></div>
+            <input placeholder="请输入作业名称" defaultValue={this.state.data.notifyName}
+                   onChange={this.changeName}
+                   className='titleInput'/>
+            <div className='gray-line' style={{height: '1px'}}></div>
+            <TextArea autosize={{minRows: 6, maxRows: 12}}
+                      value={this.state.data.notifyDetails}
+                      onChange={this.changeContent}
+                      className='contentInput'
+                      placeholder="请输入作业内容"/>
+            <div className='gray-line'></div>
+            <UploadEnclosure
+                action={API.UPLOAD_FILE}
+                fileList={data.notifyFiles}
+                count={4}
+                multiple={true}
+                beforeUpload={this.beforeUpload.bind(this)}
+                handleChange={this.handleChange.bind(this)}
+            />
 
-                        margin_top_bottom_10
-                        margin_left_right_10"  style={{marginRight:"10px"}}>
-                            <DatePicker
-                                showTime
-                                value={this.state.endDate}
-                                defaultValue={this.state.endDate}
-                                onChange={date => this.setState({endDate:date}) }
-                                format="YYYY-MM-DD HH:mm:ss"
-                                onOk={this.changeEndDateOk}
-                                placeholder="">
-                                <List.Item arrow="horizontal" >截止时间</List.Item>
-                            </DatePicker>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="row" id="page_block_max"></div>
-            <div className="row" id="row_padding_height">
-                <div className="col-xs-12">
-                    <div className="row">
-                    <Input placeholder="请输入作业名称"  defaultValue={this.state.data.notifyName}
-                           style={{paddingLeft:"10px",fontSize:"18px"}}
-                           onChange={this.changeName}
-                           id="input_no_border"/>
-                    </div>
-                    <div className="row">
-                        <div  id="page_horizontal_line"></div>
-                    </div>
-                    <div className="row">
-                        <TextArea rows={4}
-                                  value={this.state.data.notifyDetails}
-                                  onChange={this.changeContent}
-                                  style={{paddingLeft:"10px",paddingTop:"20px"}}
-                                  placeholder="请输入作业内容"
-                                  id="input_no_border"/>
-                    </div>
-                </div>
-            </div>
-            <div className="row" id="page_block_min"></div>
-            <div className="row">
-                    <div className="col-xs-12">
-                        <div className="row"><div className="" id="page_tile">附件({this.state.data.notifyFiles.length}/4)</div></div>
-                        <div className="row" id="row_padding_with" >
-                            <PicturesWallItem
-                                action={API.UPLOAD_FILE}
-                                number={4}
-                                callback = { this.callback.bind(this)}>
-                                handleRemove={this.handleRemove.bind(this)}
-                            </PicturesWallItem>
+            <Button type="primary" onClick={this.commitAction}
+                    style={{margin: '35px 35px 16px'}}
+                    className='commonButton'>发布作业</Button>
 
-
-                        </div>
-                        <div className="row flex_row flex_center margin_top_20" >
-                            <Button type="primary"  onClick={this.commitAction} size="large"  block><span id="span-lager">发 布 作 业</span></Button>
-                        </div>
-                        <div id="row_center" onClick={this.goListAction}><span id="link_href" >历史发布</span></div>
-                        <div id="bottom_height"></div>
-                    </div>
-            </div>
-            <div className="row">
-
-            </div>
-            <div className="row"></div>
-            <div className="row"></div>
-            <div className="row"></div>
+            <span className='announce-release-history' onClick={this.goListAction}>历史发布</span>
         </div>
     }
 
+    beforeUpload = (file, fileList) => {
+
+    }
+
+    initPageData = () => {
+        this.setState({
+            data: {
+                notifyName: '',//标题
+                notifyType: '3',//作业发布
+                notifyDetails: '',//内容
+                notifyCreator: '',//创建者
+                notifyStatus: '2',//状态  2发布  1草稿
+                userIds: [],//通知
+                notifyFiles: [],
+                startDate: '',//当前时间
+                endDate: null//截止时间
+            }
+        })
+    }
 
     getOrganization = () => {
         Toast.loading('', 0)
 
         fetchGet(API.USER_GETOBJECT, {
-            userId:this.props.userInfo.userId,
-            stuId:this.props.userInfo.userId
+            userId: this.props.userInfo.userId,
+            stuId: this.props.userInfo.userId
         }).then(response => {
             Toast.hide()
             const {targetData} = this.state

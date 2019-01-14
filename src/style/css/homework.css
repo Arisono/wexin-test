@@ -1,0 +1,25 @@
+.homework-item-title-layout{
+    padding: 12px 20px 6px;
+}
+
+.homework-item-title {
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #333333;
+    letter-spacing: 0;
+    flex: 1;
+}
+
+.homework-item-todo, .homework-item-done {
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+}
+
+.homework-item-todo {
+    color: #F30000;
+}
+
+.homework-item-done {
+    color: #383838;
+}

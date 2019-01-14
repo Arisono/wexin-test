@@ -349,16 +349,16 @@ class VoteListTeacher extends Component {
     )
 
     onItemClick = (index, voteId) => {
-        this.saveListStatus(false)
+        this.saveListStatus(false, index)
         this.props.history.push('/voteDetail/' + voteId)
     }
 
     onAddVote = () => {
-        this.saveListStatus(true)
+        this.saveListStatus(true, -1)
         this.props.history.push('/send-vote')
     }
 
-    saveListStatus = (pageLimit) => {
+    saveListStatus = (pageLimit, itemIndex) => {
         const {releaseList, receiveList} = this.state
         let releaseScroll = 0, receiveScroll = 0, releaseIndex = 0, receiveIndex = 0
 
@@ -386,6 +386,7 @@ class VoteListTeacher extends Component {
             scrollTop2: receiveScroll,
             listData2: receiveList,
             pageIndex2: receiveIndex,
+            itemIndex: itemIndex
         })()
     }
 }

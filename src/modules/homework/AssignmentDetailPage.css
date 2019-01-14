@@ -13,19 +13,19 @@
 
 .homework-detail-top-layout {
     background: #E7EDF6;
-    padding: 16px 24px;
+    padding: 12px 18px;
 }
 
 .homework-detail-top-name {
     font-family: PingFangSC-Medium;
-    font-size: 18px;
+    font-size: 16px;
     color: #4087DC;
     letter-spacing: 2.25px;
 }
 
 .homework-detail-top-time {
     font-family: PingFangSC-Regular;
-    font-size: 15px;
+    font-size: 14px;
     color: #595959;
     letter-spacing: 1.5px;
     padding-top: 6px;
@@ -36,7 +36,7 @@
     font-size: 18px;
     color: #333333;
     letter-spacing: 2.25px;
-    padding: 20px 0 10px 20px;
+    padding: 14px 0 6px 20px;
     font-weight: bold;
     word-wrap: break-word;
     overflow: hidden;
@@ -47,7 +47,7 @@
     font-size: 14px;
     color: #595959;
     letter-spacing: 2.5px;
-    padding: 0 10px 10px 20px;
+    padding: 0 10px 6px 20px;
     word-wrap: break-word;
     overflow: hidden;
 }

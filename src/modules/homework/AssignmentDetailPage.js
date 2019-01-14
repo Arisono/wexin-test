@@ -71,7 +71,13 @@ class AssignmentDetailPage extends React.Component {
             })
 
         }).catch((error) => {
-            console.log("error:" + JSON.stringify(error));
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
         })
 
         this.getMessage();
@@ -103,7 +109,13 @@ class AssignmentDetailPage extends React.Component {
                 this.getMessage();
             }
         }).catch((error) => {
-            console.log("error:" + JSON.stringify(error));
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
         })
 
     }
@@ -125,7 +137,13 @@ class AssignmentDetailPage extends React.Component {
             })
 
         }).catch((error) => {
-            console.log("error:" + JSON.stringify(error));
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
         })
     }
 
@@ -147,10 +165,10 @@ class AssignmentDetailPage extends React.Component {
             <div style={{flex: '1'}}>
                 <div className="homework-detail-top-layout common-flex-row">
                     {isObjEmpty(userInfo.userAvatar) ?
-                        <Avatar size={60} icon='user'/> :
+                        <Avatar size={55} icon='user'/> :
                         <img className="img-circle"
                              src={userInfo.userAvatar}
-                             width={60} height={60}/>
+                             width={55} height={55}/>
                     }
                     <div className='common-flex-column-y-center' style={{paddingLeft: '14px'}}>
                         <div className="homework-detail-top-name">{this.state.teachName}老师</div>
@@ -160,7 +178,7 @@ class AssignmentDetailPage extends React.Component {
                 <div className="homework-detail-title">{this.state.title} </div>
                 <div className="homework-detail-content"
                      dangerouslySetInnerHTML={{__html: this.state.content}}></div>
-                <div className="margin_top_bottom_15 flex_center">
+                <div className="margin_top_bottom_10 flex_center">
                     {this.state.previewVisible ?
                         <ImagesViewer onClose={this.handleCancel} urls={this.state.files}
                                       index={0}

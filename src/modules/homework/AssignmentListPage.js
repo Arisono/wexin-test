@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './AssignmentListPage.css'
 import {List, Icon} from 'antd';
+import {Toast} from 'antd-mobile'
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
 import {fetchPost, fetchGet} from '../../utils/fetchRequest';
 import {API} from '../../configs/api.config';
@@ -76,7 +77,13 @@ class AssignmentListPage extends React.Component {
                 data: this.state.data
             })
         }).catch((error) => {
-            console.log("error:" + JSON.stringify(error));
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
         })
     }
 
@@ -120,7 +127,13 @@ class AssignmentListPage extends React.Component {
 
 
             }).catch((error) => {
-                console.log("error:" + JSON.stringify(error));
+                Toast.hide()
+
+                if (typeof error === 'string') {
+                    Toast.fail(error, 2)
+                } else {
+                    Toast.fail('请求异常', 2)
+                }
             })
         }, 1000);
     }
@@ -154,7 +167,9 @@ class AssignmentListPage extends React.Component {
                                             <div className="col-xs-6" id="row_left">
                                                 <span id="span_header_left">{item.title}</span></div>
                                             <div className="col-xs-6" id="row_right">
-                                                {item.state==="已读"?( <span id="span_header_right2">{item.state}</span>):( <span id="span_header_right">{item.state}</span>)}
+                                                {item.state === "已读" ? (
+                                                    <span id="span_header_right2">{item.state}</span>) : (
+                                                    <span id="span_header_right">{item.state}</span>)}
 
                                             </div>
                                         </div>

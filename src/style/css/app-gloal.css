@@ -73,7 +73,7 @@
 
 /*公共分块*/
 #page_block_min {
-    height: 20px;
+    height: 12px;
     background-color: #F3F3F3;
 }
 
@@ -81,7 +81,7 @@
 /*水平分割线*/
 #page_horizontal_line {
     height: 1px;
-    border-top: 1px solid #F3F3F3;
+    border-top: 1px solid #F2F2F2;
     text-align: center;
 }
 

@@ -1,78 +1,93 @@
-#span-normal{
-   font-size: 15px;
+#span-normal {
+    font-size: 15px;
 }
 
-#span-lager{
+#span-lager {
     font-size: 18px;
 }
 
-#span-x-lager{
+#span-x-lager {
     font-size: 20px;
 }
 
-#page_tile{
+#page_tile {
     margin-left: 10px;
     margin-top: 15px;
     margin-bottom: 15px;
     font-size: 16px;
 }
-#page_block_min{
-    height: 20px;
+
+#page_block_min {
+    height: 12px;
     background-color: #F3F3F3;
 }
-#page_block_max{
-    height: 30px;
+
+#page_block_max {
+    height: 16px;
     background-color: #F3F3F3;
 }
-#page_horizontal_line{
+
+#page_horizontal_line {
     height: 1px;
     border-top: 1px solid #F3F3F3;
     text-align: center;
 }
 
-#row_padding{
+#row_padding {
     padding: 20px 15px 20px 15px;
 }
 
-#row_padding_with{
+#row_padding_with {
     padding: 0px 3px 0px 3px;
 }
 
-#row_padding_height{
+#row_padding_height {
     padding: 20px 0px 20px 0px;
 }
 
-#row_center{
+#row_center {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 5px;
 }
 
-#row_right{
+#row_right {
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 
-#list_data_span{
+#list_data_span {
     font-size: 15px;
     margin-left: 10px;
     margin-right: 10px;
 }
 
-#input_no_border{
+#input_no_border {
     border: 0px;
     margin-bottom: 10px;
 }
 
-#bottom_height{
+#bottom_height {
     height: 30px;
 }
 
-#link_href{
+#link_href {
     font-size: 19px;
     margin-top: 10px;
     color: #0098FD;
-    text-decoration:underline;
+    text-decoration: underline;
+}
+
+.release-assign-title-text {
+    font-family: PingFangSC-Regular;
+    color: #333333;
+    letter-spacing: 1.88px;
+    width: 100%;
+    padding: 12px;
+    background: white;
+    border: none;
+    outline: none;
+    font-size: 13px;
 }

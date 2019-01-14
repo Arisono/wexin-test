@@ -11,6 +11,7 @@ import {API, _baseURL} from "../../configs/api.config";
 import {Toast} from 'antd-mobile'
 import ImageGrid from "../../components/image/ImageGrid";
 import {connect} from 'react-redux'
+
 /**
  * Created by Arison on 15:51.
  */
@@ -44,9 +45,9 @@ class VoteDetailPage extends React.Component {
     }
 
     getVoteDetail() {
-        console.log("getVoteDetail() userId:",this.props.userInfo.userId);
-        console.log("getVoteDetail() id:",this.state.id);
-        Toast.loading("",0)
+        console.log("getVoteDetail() userId:", this.props.userInfo.userId);
+        console.log("getVoteDetail() id:", this.state.id);
+        Toast.loading("", 0)
         fetchGet(API.voteDetail, {
             voteId: this.state.id,
             userId: this.props.userInfo.userId
@@ -156,73 +157,81 @@ class VoteDetailPage extends React.Component {
                     <div className="row" id="pager_header">
                         <div className="flex_row">
                             <img class="img-circle"
-                                 style={{marginLeft: "10px", marginTop: '20px', border: "1px solid #e4e4e4"}}
-                                 src={this.props.userInfo.userAvatar} width={66}
-                                 height={66}/>
+                                 style={{marginLeft: "20px", marginTop: '24px', border: "1px solid #e4e4e4"}}
+                                 src={this.props.userInfo.userAvatar} width={54}
+                                 height={54}/>
 
                             <div className="vote-header ">
                                 {this.state.data.title}
                             </div>
                         </div>
-                        <div className="text_bold" style={{marginLeft: "25px"}}>{this.state.data.voter}</div>
-                        <div id="row_right"><span
-                            className="text_bold">截止时间：</span><span>{this.state.data.endTime}</span></div>
+                        <div className="vote-detail-name">{this.state.data.voter}</div>
+                        <div id="row_right">
+                            <span className="vote-detail-time-caption">截止时间：</span>
+                            <span className="vote-detail-time-value">{this.state.data.endTime}</span>
+                        </div>
                     </div>
                     <div className="row">
-                        <div id="padding10">
+                        <div className='common-flex-row vote-detail-type'>
                             {this.state.data.selectState === 0 ? (<span>单选</span>) : (<span>多选</span>)}
+                            <div style={{height: '1px', flex: 1, background: '#EEEEEE', marginLeft: '5px'}}></div>
                         </div>
-                        <div id="page_horizontal_line"></div>
                         <div className="col-xs-12">
                             <List dataSource={this.state.data.votes}
                                   renderItem={(item, index) => (
-                                      <List.Item id="flex_row">
-                                          {this.state.voteState?(  <Checkbox
-                                                                             checked={item.checked}
-                                                                             onChange={this.onChangeEvent.bind(this, index)}
-                                                                             style={{marginLeft: "20px", display: "flex", alignItems: "center"}}>
-                                          </Checkbox>):(  <Checkbox disabled
-                                                                    checked={item.checked}
-                                                                    onChange={this.onChangeEvent.bind(this, index)}
-                                                                    style={{marginLeft: "20px", display: "flex", alignItems: "center"}}>
-                                          </Checkbox>)}
-
+                                      <div className='common-flex-row vote-detail-option-layout'>
+                                          {this.state.voteState ? (<Checkbox
+                                                  checked={item.checked}
+                                                  onChange={this.onChangeEvent.bind(this, index)}
+                                                  style={{marginLeft: "20px", display: "flex", alignItems: "center"}}>
+                                              </Checkbox>) :
+                                              (<Checkbox disabled
+                                                         checked={item.checked}
+                                                         onChange={this.onChangeEvent.bind(this, index)}
+                                                         style={{
+                                                             marginLeft: "20px",
+                                                             display: "flex",
+                                                             alignItems: "center"
+                                                         }}>
+                                              </Checkbox>)}
                                           <div style={{
-                                              width: "200px",
+                                              flex: 1,
                                               display: "inline",
                                               marginRight: "10px",
                                               marginLeft: "10px",
-                                              display: "flex",
                                               alignItems: "center",
                                               height: "100%"
                                           }}>
                                               <Progress percent={item.percent} size="small"/>
                                           </div>
-                                          {item.name}
-                                      </List.Item>
+                                          <span className='vote-detail-option-text'>{item.name}</span>
+                                      </div>
                                   )}/>
                         </div>
                     </div>
 
                     <div className="row flex_center" id="row_vote">
                         {this.state.voteState == true ? (
-                            <Button onClick={this.onClickEvent.bind(this)} id="button_vote" type={'primary'} block>
+                            <Button onClick={this.onClickEvent.bind(this)} type="primary" block
+                                    style={{margin: '30px 10px'}}
+                                    className='commonButton'>
                                 投票</Button>
                         ) : (
-                            <Button id="button_vote"
-                                    type={'primary'}
+                            <Button className='commonButton'
+                                    block
                                     style={{
                                         backgroundColor: "#9D9D9D",
                                         color: "#ffffff",
                                         borderRadius: "5px 5px",
-                                        border: "1px solid #ffffff"
+                                        border: "1px solid #ffffff",
+                                        margin: '30px 10px'
                                     }} block> 已投票</Button>
                         )
                         }
                     </div>
                     {this.state.data.files.length === 0 ? ("") : (<div>
                         <div className="row" id="page_block_min"></div>
-                        <div className="row margin_left_right_20">
+                        <div className="row margin_left_right_15">
                             <div className="margin_top_20"><span className="span_15">附件</span></div>
                             <ImageGrid images={this.state.data.files}/>
                         </div>

@@ -1,9 +1,9 @@
 .header_sty1{position: fixed;top: 0px;width: 100%;}
 .header_sty{  position: fixed;top: 0px;height: 97px;width: 100%;background-color:#E7EDF6;align-content: center;display: flex;flex-direction: row;  }
 .header{height: 67px;width: 67px;margin: 10px 10px 0 80px;}
-.timeList_sty{height: auto;display: flex;flex-direction: row;}
+.timeList_sty{height: auto;display: flex;flex-direction: row;align-items: center}
 .out_in{height: 38px;width: 38px;padding-top: 0px;border: none;}
-.lineimg_sty{height: 20px;width: 2px;margin-left: 18px;}
+.lineimg_sty{height: 24px;width: 2px;margin-left: 18px;}
 .center_sty{display: flex;flex-direction: row;margin-top:100px;}
 .foot-sty{height:47px;width: 100%;position: fixed;bottom: 0px;}
 .foot-sty1{display: flex;flex-direction: row;}

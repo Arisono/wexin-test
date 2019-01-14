@@ -193,13 +193,12 @@ class AssignmentDetailPage extends React.Component {
                     )}/>
             </div>
             {this.state.role === "teacher" ? "" :
-                <div className="footer" style={{background: '#F2F2F2'}}>
-                    <div className="flex padding_10">
-                        <input ref={ref => this.input_content = ref} value={this.state.messageContent}
-                               onChange={this.onChangeMessage} placeholder="留言"
-                               className='homework-detail-leave-input'></input>
-                        <Button onClick={this.onMessageSend} type={"primary"} className="margin_left_10">发送</Button>
-                    </div>
+                <div className="footer flex padding_10" style={{background: '#F2F2F2', alignItems: 'center'}}>
+                    <img src={require('imgs/ic_edit.png')} width={28} height={28}/>
+                    <input ref={ref => this.input_content = ref} value={this.state.messageContent}
+                           onChange={this.onChangeMessage} placeholder="留言"
+                           className='homework-detail-leave-input'></input>
+                    <span onClick={this.onMessageSend} className="homework-detail-leave-send">发送</span>
                 </div>}
         </div>
     }

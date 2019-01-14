@@ -58,7 +58,7 @@
     flex: 1;
     font-family: PingFangSC-Regular;
     font-size: 14px;
-    color: #333333;
+    color: #666666;
     letter-spacing: 1.38px;
     text-align: left;
 }
@@ -66,6 +66,6 @@
 .user-info-item-phone {
     font-family: PingFangSC-Regular;
     font-size: 14px;
-    color: #666666;
+    color: #333333;
     letter-spacing: 1.38px;
 }

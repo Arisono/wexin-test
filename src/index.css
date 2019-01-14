@@ -83,7 +83,7 @@ i.anticon.anticon-delete svg {
     flex: none;
     font-family: PingFangSC-Regular;
     font-size: 14px !important;
-    color: #333333;
+    color: #333333 !important;
     letter-spacing: 1.88px;
 }
 
@@ -125,7 +125,6 @@ span.ant-select-selection.ant-select-selection--multiple {
 .am-modal-transparent .am-modal-content {
     background: white !important;
 }
-
 
 /***************************公共样式****************************************/
 .common-column-layout {

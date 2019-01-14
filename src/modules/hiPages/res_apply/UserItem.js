@@ -6,7 +6,7 @@
 import React,{Component} from 'react';
 import './ResApply.css';
 import delete_img from '../../../style/imgs/delete.png';
-
+import {Icon} from 'antd';
 
 export default class UserItem extends Component{
     constructor(props){
@@ -18,7 +18,7 @@ export default class UserItem extends Component{
                 <div style={{display:'flex',flexDirection:'row',backgroundColor:'#F2F2F2'}}>
                     <div className="res_detail">物品明细({this.props.index+1})</div>
                     {this.props.index != 0 ?  <div>
-                        <img src={delete_img} alt="" style={{height:20,width:20,marginRight:20}} onClick={this.deleteItem.bind(this,this.props.index)}/>
+                        <Icon type="minus-circle" alt="" style={{height:20,width:20,marginRight:20,color: '#ff0a0a'}} onClick={this.deleteItem.bind(this,this.props.index)}/>
                     </div> : ''}
                 </div>
                 <div className="item_sty">

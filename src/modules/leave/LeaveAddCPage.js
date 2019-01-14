@@ -87,7 +87,7 @@ class LeaveAddCPage extends Component {
             multiple: false,
         }
         return (
-            <div ref={node => this.node = node}>
+            <div ref={node => this.node = node} style={{fontFamily:"PingFangSC-Regular",letterSpacing:2.5}}>
                 <Picker
                     data={this.state.typeLeave} title='请假类型' extra='请选择'
                     value={this.state.leaveType}
@@ -99,7 +99,7 @@ class LeaveAddCPage extends Component {
                 <DatePicker
                     value={this.state.startValue}
                     onChange={date => this.setState({startValue: date})}>
-                    <List.Item arrow="horizontal">开始时间</List.Item>
+                    <List.Item arrow="horizontal">请假开始时间</List.Item>
                 </DatePicker>
 
                 <div className="comhline_sty1"></div>
@@ -107,26 +107,28 @@ class LeaveAddCPage extends Component {
                 <DatePicker
                     value={this.state.endValue}
                     onChange={date => this.setState({endValue: date})}>
-                    <List.Item arrow="horizontal">结束时间</List.Item>
+                    <List.Item arrow="horizontal">请假结束时间</List.Item>
                 </DatePicker>
 
                 <div className="comhline_sty"></div>
                 <div onChange={this.handelValueCom}>
                     <textarea  ref='leaveReason' className="form-control textarea_sty" rows="4"
-                              placeholder="请填写请假理由…"></textarea>
+                              placeholder="请填写请假内容"></textarea>
                 </div>
                 <div className="comhline_sty"></div>
                 {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
                     : <TargetSelect {...defaultTargetProps}/>}
 
-                <UploadEnclosure
-                    action={API.UPLOAD_FILE}
-                    fileList={this.state.fileList}
-                    count={9}
-                    multiple={true}
-                    beforeUpload={this.beforeUpload.bind(this)}
-                    handleChange={this.handleChange.bind(this)}
-                />
+               <div style={{margin:10}}>
+                   <UploadEnclosure
+                       action={API.UPLOAD_FILE}
+                       fileList={this.state.fileList}
+                       count={9}
+                       multiple={true}
+                       beforeUpload={this.beforeUpload.bind(this)}
+                       handleChange={this.handleChange.bind(this)}
+                   />
+               </div>
 
                 <div className="flex_center margin_top_20">
                     <center><Button type="button" className="btn btn-primary comBtn_sty"
@@ -149,11 +151,11 @@ class LeaveAddCPage extends Component {
             return
         }
         if (this.state.startValue == null || this.state.startValue == '') {
-            Toast.fail('请选择开始时间')
+            Toast.fail('请输入请假开始时间')
             return
         }
         if (this.state.endValue == null || this.state.endValue == '') {
-            Toast.fail('请选择结束时间')
+            Toast.fail('请输入请假结束时间！')
             return
         }
         var startT = new Date(this.state.startValue).getTime()

@@ -10,6 +10,7 @@ import {API} from '../../../configs/api.config';
 import {Toast} from 'antd-mobile';
 import moment from 'moment'
 import {connect} from 'react-redux';
+import hi0_img from '../../../style/imgs/ic_head1.png';
 
 function HSItem(props) {
     return(
@@ -19,7 +20,7 @@ function HSItem(props) {
                     <div className="green_point"></div>
                     <div className="sch_time_sty">{moment(props.itemdata.curStartTime).format('HH:mm')}–{moment(props.itemdata.curEndTime).format('HH:mm')}</div>
                     <div className="sch_class_sty">{props.itemdata.curName}</div>
-                    <img className="teach_img" src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"}alt=""/>
+                    <img className="teach_img" src={props.itemdata.userPhoto==""||props.itemdata.userPhoto==null ? hi0_img : props.itemdata.userPhoto}alt=""/>
                     <div className="sch_teacher_sty">{props.itemdata.userName}</div>
                 </div>
                 {/*<img src={line_img} alt="" style={{width:2,height:15,marginLeft:12}}/>*/}
@@ -56,7 +57,7 @@ class ClassSchedule extends Component{
                     <div onClick={this.selectDayClick.bind(this,4)} className="each_day_default"><div className={this.state.CurDay == 4 ? "isday_click" : ''}>四</div></div>
                     <div onClick={this.selectDayClick.bind(this,5)} className="each_day_default"><div className={this.state.CurDay == 5 ? "isday_click" : ''}>五</div></div>
                 </div>
-                {/*<div className="comhline_sty1"></div>*/}
+                <div className="comhline_sty"></div>
                 {/*<div style={{fontSize:14,color:"#333333",margin:20}}>11月12日，<span style={{fontSize:12}}>2018年</span></div>*/}
                 <div className="scheedule_sty1">
                     {/*<div style={{color:"#333333",fontSize:14,marginBottom:10,marginTop:10}}>上午</div>*/}

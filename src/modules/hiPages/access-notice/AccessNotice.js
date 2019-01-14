@@ -61,7 +61,7 @@ class AccessNotice extends Component{
     }
     render(){
         return(
-            <div >
+            <div style={{fontFamily:"PingFangSC-Regular",letterSpacing:2.5}}>
                 {/*<div className="header_sty1">*/}
                     <div className="header_sty">
                         <img className="img-circle header" src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"} alt=""/>
@@ -73,7 +73,7 @@ class AccessNotice extends Component{
                 {/*</div>*/}
                 <div className="center_sty">
                     <div style={{width:95,color:"#4087DC",fontSize:"20px",paddingLeft:30,paddingTop:60,
-                        position:'fixed'}}>
+                        position:'fixed',}}>
                         <div>智</div><div>慧</div><div>校</div><div>园</div>
                         <br/>
                         <div>平</div><div>安</div><div>出</div><div>行</div>

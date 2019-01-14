@@ -179,7 +179,7 @@ class SendVote extends Component{
 
                 <div>
                     {this.state.voteOptionss.map((itemata,index) => <SelectItem index={index} itemata = {itemata} handelSItem={this.handelSItem} removeSItem ={this.removeSItem}></SelectItem>)}
-                    <div onClick={this.addSelectItem} className="text-center" style={{color:"#0CE11D",fontSize:12,margin:10}}>+ <span >添加选项</span></div>
+                    <div onClick={this.addSelectItem} className="text-center" style={{color:"#0CE11D",fontSize:12,margin:10,}}>+ <span style={{borderBottom:"1px #0CE11D solid"}}>添加选项</span></div>
                 </div>
 
                 <div className="comhline_sty"></div>
@@ -214,14 +214,16 @@ class SendVote extends Component{
                 </div>
                 <div className="comhline_sty1"></div>
 
-                <UploadEnclosure
-                    action={API.UPLOAD_FILE}
-                    fileList={this.state.fileList}
-                    count={4}
-                    multiple={true}
-                    beforeUpload={this.beforeUpload.bind(this)}
-                    handleChange={this.handleChange.bind(this)}
-                />
+                <div style={{margin:10}}>
+                    <UploadEnclosure
+                        action={API.UPLOAD_FILE}
+                        fileList={this.state.fileList}
+                        count={4}
+                        multiple={true}
+                        beforeUpload={this.beforeUpload.bind(this)}
+                        handleChange={this.handleChange.bind(this)}
+                    />
+                </div>
 
                 <center><Button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSendVote}>提交</Button></center>
             </div>

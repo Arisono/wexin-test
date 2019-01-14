@@ -82,7 +82,7 @@ class ResApply extends Component{
             </div>
         );
         return(
-            <div onChange={this.handelValueCom}>
+            <div onChange={this.handelValueCom} style={{fontFamily:"PingFangSC-Regular",letterSpacing:2.5}}>
                 <div className="comhline_sty"></div>
                 <div className="item_sty">
                    <div className="left_title">物品用途</div>
@@ -91,7 +91,7 @@ class ResApply extends Component{
 
                 <div >
                     {this.state.selectContentArray.map((itemata,index) => <UserItem index ={index} itemata = {itemata} handelRItem={this.handelRItem} removeSItem={this.removeSItem}></UserItem>)}
-                    <div onClick={this.addUserItem} className="text-center" style={{color:"#0CE11D",fontSize:12,margin:10}}>+ <span style={{color:"#666666"}}>添加物品明细</span></div>
+                    <div onClick={this.addUserItem} className="text-center" style={{color:"#0CE11D",fontSize:12,margin:10}}>+ <span style={{color:"#666666",borderBottom:"1px #000 solid"}}>添加物品明细</span></div>
                 </div>
 
                 <textarea ref='receivingSays' className="form-control textarea_sty" rows="5"  placeholder="领取说明"  value={this.state.receivingSays}></textarea>

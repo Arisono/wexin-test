@@ -196,7 +196,6 @@ class MeetingSignIn extends Component {
 
     onItemClick = index => {
         const {meetingSignList} = this.state
-
         this.props.history.push('/meet-detail/' + meetingSignList[index].meetId)
     }
 }

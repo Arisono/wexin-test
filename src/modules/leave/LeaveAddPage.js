@@ -1,141 +1,187 @@
 /**
- * Created by Arison on 2018/11/12.
- */
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import '../../style/css/app-gloal.css'
-import  './LeaveApprovalPage.css'
-import  './LeaveAddPage.css'
-import moment from 'moment'
-import {Input, Button,Upload, Icon, message} from 'antd';
-import PicturesWallItem from "../../components/upload/PicturesWallItem";
-import TargetSelect from "../../components/TargetSelect";
-import {fetchPost,fetchGet} from "../../utils/fetchRequest";
-import {API} from "../../configs/api.config";
-import {Toast,DatePicker,List} from 'antd-mobile'
-import {isObjEmpty,getIntValue, getStrValue} from  '../../utils/common';
-import {connect} from 'react-redux'
+*   Created by FANGlh on 2019/1/14 15:52.
+*   Desc:
+*/
 
-const {TextArea} = Input;
+import React,{Component} from 'react';
+import './LeaveAddPage.css';
+import {getOrganization} from "../../utils/api.request";
+import {connect} from 'react-redux';
+import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
+import {ORGANIZATION_TEACHER} from "../../utils/api.constants";
+import TargetSelect from '../../components/TargetSelect';
+import {fetchPost, fetchGet, fetchGetNoSession} from '../../utils/fetchRequest';
+import {_baseURL, API} from '../../configs/api.config';
+import {Input, Button} from 'antd';
+import {Toast, Picker, List, DatePicker} from 'antd-mobile';
+import UploadEnclosure from '../../components/UploadEnclosure';
+import moment from 'moment';
 
-/**
- * Created by Arison on 14:39.
- */
-class LeaveAddPage extends React.Component {
-    constructor(props) {
+
+class LeaveAddPage extends Component{
+   constructor(props){
         super(props);
         this.state = {
-            name: 'LeaveAddPage',
-            role: "parent",
-            targetCount:0,
-            targetList: [],
             targetData: [],
-            checkNodes:[],
-            lvNotifier:[],
-            lvFiles:[],
-            lvType:"",
-            lvName:"",
-            lvDetails:"",
-            startDate:"",
-            endDate:""
-        };
+            fileList: [],
+            startValue: null,
+            endValue: null,
+            leaveReason:null,
+            votePerson: [],
+        }
     }
-
-    clickLeaveList() {
-        this.props.history.push("/leaveList/" + this.state.role)
-    }
-
-
     componentWillMount() {
         document.title = "学生请假";
     }
-
     componentDidMount() {
-         this.getOrganization();
-    }
-
-    getOrganization = () => {
-        Toast.loading('', 0)
-
-        fetchGet(API.USER_GETOBJECT, {
-            userId:this.props.userInfo.userId,
-            stuId:this.props.userInfo.userId
-        }).then(response => {
-            Toast.hide()
-            const {targetData} = this.state
-            targetData.length = 0
-            if (response && response.data) {
-                const schoolArray = response.data.schools
-                const teacherArray = response.data.teachers
-
-                if (!isObjEmpty(teacherArray)) {
-                    const teacherData = []
-                    teacherArray.forEach((teacherObj, index) => {
-                        if (teacherObj) {
-                            teacherData.push({
-                                title: getStrValue(teacherObj, 'userName'),
-                                userId: getIntValue(teacherObj, 'userId'),
-                                userPhone: getStrValue(teacherObj, 'userPhone'),
-                                value: getStrValue(teacherObj, 'userName') + `-1-${index}`,
-                                key: `1-${index}`,
-                            })
-                        }
-                    })
-
-                    targetData.push({
-                        title: `全体老师`,
-                        value: `1`,
-                        key: `1`,
-                        children: teacherData,
-                    })
-                }
-
-                if (!isObjEmpty(schoolArray)) {
-                    const classData = []
-
-                    schoolArray.forEach((schoolObj, sIndex) => {
-                        if (schoolObj) {
-                            const parentArray = schoolObj.parents
-
-                            const parentData = []
-                            if (!isObjEmpty(parentArray)) {
-                                parentArray.forEach((parentObj, pIndex) => {
-                                    parentData.push({
-                                        title: getStrValue(parentObj, 'userName'),
-                                        userId: getIntValue(parentObj, 'userId'),
-                                        userPhone: getStrValue(parentObj, 'userPhone'),
-                                        value: getStrValue(parentObj, 'userName') + `-0-${sIndex}-${pIndex}`,
-                                        key: `0-${sIndex}-${pIndex}`,
-                                    })
-                                })
-
-                                classData.push({
-                                    title: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName'),
-                                    value: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName') + `-0-${sIndex}`,
-                                    key: `0-${sIndex}`,
-                                    children: parentData,
-                                })
-                            }
-                        }
-                    })
-
-                    targetData.push({
-                        title: `全体家长`,
-                        value: `0`,
-                        key: `0`,
-                        children: classData,
-                    })
-                }
+        this.node.scrollIntoView();
+        getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.stuId, false)
+            .then(organization => {
+                this.setState({
+                    targetData: organization.teachers,
+                })
+            }).catch(error => {
+            console.log('error', error)
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
             }
+        })
+    }
+     render(){
+         const targetProps = {
+             targetData: this.state.targetData,
+             targetValues: this.state.targetList,
+             title: '接收人',
+             targetCount: this.state.targetCount,
+             onTargetChange: this.onTargetChange.bind(this),
+             onTargetFocus: this.onTargetFocus.bind(this),
+             multiple: false,
+         }
 
-            console.log('targetData', targetData)
-            this.setState({
-                targetData
+         const defaultTargetProps = {
+             targetData: [],
+             targetValues: this.state.targetList,
+             title: '接收人',
+             targetCount: this.state.targetCount,
+             onTargetChange: this.onTargetChange.bind(this),
+             onTargetFocus: this.onTargetFocus.bind(this),
+             multiple: false,
+         }
+
+        return(
+            <div ref={node => this.node = node} style={{fontFamily:"PingFangSC-Regular",letterSpacing:2.5}}>
+                <div id="padding10">
+                    <img class="img-circle" id="margin_top_bottom_15"
+                         src={"http://img5.imgtn.bdimg.com/it/u=1494163297,265276102&fm=26&gp=0.jpg"} width={60}
+                         height={60}/>
+                    <span class="span_17 text_bold " id="row_margin">{this.props.userInfo.stuName}的请假条</span>
+                </div>
+                <div className="comhline_sty"></div>
+
+                <DatePicker
+                    value={this.state.startValue}
+                    onChange={date => this.setState({startValue: date})}>
+                    <List.Item arrow="horizontal">请假开始时间</List.Item>
+                </DatePicker>
+
+                <div className="comhline_sty1"></div>
+
+                <DatePicker
+                    value={this.state.endValue}
+                    onChange={date => this.setState({endValue: date})}>
+                    <List.Item arrow="horizontal">请假结束时间</List.Item>
+                </DatePicker>
+
+                <div className="comhline_sty"></div>
+                <div onChange={this.handelValueCom}>
+                    <textarea  ref='leaveReason' className="form-control textarea_sty" rows="4"
+                               placeholder="请填写请假事由"></textarea>
+                </div>
+                <div className="comhline_sty"></div>
+                {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
+                    : <TargetSelect {...defaultTargetProps}/>}
+
+                <div style={{margin:10}}>
+                    <UploadEnclosure
+                        action={API.UPLOAD_FILE}
+                        fileList={this.state.fileList}
+                        count={9}
+                        multiple={true}
+                        beforeUpload={this.beforeUpload.bind(this)}
+                        handleChange={this.handleChange.bind(this)}
+                    />
+                </div>
+
+                <div className="flex_center margin_top_20">
+                    <center><Button type="button" className="btn btn-primary comBtn_sty"
+                                    onClick={this.onSubmitClick}>提交</Button></center>
+                </div>
+            </div>
+        )
+    }
+    onSubmitClick = (event) => {
+        console.log('state', this.state)
+
+        if (this.state.startValue == null || this.state.startValue == '') {
+            Toast.fail('请输入请假开始时间')
+            return
+        }
+        if (this.state.endValue == null || this.state.endValue == '') {
+            Toast.fail('请输入请假结束时间！')
+            return
+        }
+        var startT = new Date(this.state.startValue).getTime()
+        var endT = new Date(this.state.endValue).getTime()
+        // console.log('startT',startT)
+        if (startT > endT) {
+            Toast.fail('结束时间不可小于开始时间')
+            return
+        }
+        if (this.state.leaveReason == null || this.state.leaveReason == '') {
+            Toast.fail('请填写请假事由')
+            return
+        }
+        if (!isObjEmpty(this.checkNodes)) {
+            this.checkNodes.forEach((node, index) => {
+                this.state.votePerson.push(node.userId)
             })
-        }).catch(error => {
-            Toast.hide()
+        } else {
+            Toast.fail('请选择接收人')
+            return
+        }
 
+        const approveFiles = []
+        if (this.state.fileList) {
+            this.state.fileList.forEach((value, index) => {
+                approveFiles.push(value.picUrl)
+            })
+        }
+        const params = {
+            lvProposer:this.props.userInfo.stuId,
+            lvName:this.props.userInfo.stuName+"的请假条",
+            lvNotifier:JSON.stringify(this.state.votePerson),
+            lvFiles:approveFiles,
+            lvDetails:this.state.leaveReason,
+            startDate: moment(this.state.startDate).format('YYYY-MM-DD HH:mm:ss'),
+            endDate: moment(this.state.endDate).format('YYYY-MM-DD HH:mm:ss'),
+        }
+        console.log('param', params)
+        fetchPost(API.leaveCreate, {
+            leaveString:JSON.stringify(params)
+        }, {}).then((response) => {
+            console.log('response', response)
+            if (response.success) {
+                Toast.show(response.data, 1)
+                // this.props.history.push("/leaveList/" + this.props.match.params.role)
+                // this.props.history.push("/homePage")
+                this.backTask = setTimeout(() => {
+                    this.props.history.goBack();
+                }, 2000)
+            }
+        }).catch((error) => {
+            console.log('error', error)
             if (typeof error === 'string') {
                 Toast.fail(error, 2)
             } else {
@@ -144,201 +190,62 @@ class LeaveAddPage extends React.Component {
         })
     }
 
-
     onTargetFocus = (e) => {
         if (isObjEmpty(this.state.targetData)) {
-            this.getOrganization()
-        }
-    }
+            getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.stuId, false)
+                .then(organization => {
+                    this.setState({
+                        targetData: organization.teachers,
+                    })
+                }).catch(error => {
 
-    onClickEvent(){
-      //let commit=   this.btn_commit;
-      if(isObjEmpty(this.state.lvDetails)){
-          Toast.info("请输入请假理由！")
-          return
-      }
-        if(isObjEmpty(this.state.startDate)){
-            Toast.info("请输入请假开始时间")
-            return
-        }
-        if(isObjEmpty(this.state.endDate)){
-            Toast.info("请输入请假结束时间！")
-            return
-        }
-        if(isObjEmpty(this.state.targetList)){
-            Toast.fail("请选择抄送对象");
-            return;
-        }
-        let personArrays=[];
-        if (!isObjEmpty(this.state.checkNodes)) {
-            this.state.checkNodes.forEach((node) => {
-                personArrays.push(node.userId)
             })
         }
-        let param={
-            lvProposer:this.props.userInfo.stuId,
-            lvName:this.props.userInfo.stuName+"的请假条",
-            // lvRemarks:"",
-            // lvType:2,
-            // lvStatus:2,
-            lvNotifier:JSON.stringify(personArrays),
-            lvFiles:this.state.lvFiles,
-            lvDetails:this.state.lvDetails,
-            startDate: moment(this.state.startDate).format('YYYY-MM-DD HH:mm:ss'),
-            endDate: moment(this.state.endDate).format('YYYY-MM-DD HH:mm:ss'),
-        }
-        console.log("onClickEvent()",JSON.stringify(param));
-        Toast.loading("");
-        fetchPost(API.leaveCreate,{
-                     leaveString:JSON.stringify(param)
-                  }).then((response)=>{
-                      console.log("response:"+JSON.stringify(response));
-                      if(response.success){
-                          Toast.success("提交成功！");
-                          this.props.history.goBack();
-                      }
-                  }).catch((error)=>{
-                      console.log("error:"+JSON.stringify(error));
-                  })
-    }
-
-    onChangeEvent(event){
-        let content=  this.input_content;
-        switch (event.target.name){
-            case "text-content":
-                  this.setState({
-                      lvDetails:event.target.value
-                  })
-                break
-        }
-    }
-
-    callback=(file,fileList)=>{
-        console.log("leaveAddPage:callback：",fileList);
-        this.state.lvFiles.length=0;
-        for (let i = 0; i < fileList.length; i++) {
-            if(fileList[i].status==="done"){
-                this.state.lvFiles.push(fileList[i].response.data)
-            }
-        }
-        console.log("callback()", this.state.lvFiles);
-    }
-
-    handleRemove=(file)=>{
-
     }
     onTargetChange = (value, label, checkNodes, count) => {
+        this.checkNodes = checkNodes
         this.setState({
             targetList: value,
-            targetCount: count,
-            checkNodes:checkNodes
+            targetCount: count
         });
     }
-
-    render() {
-        const { targetCount, targetList,targetData} = this.state
-        console.log("render()",targetData);
-        const targetProps = {
-            placeholder: '请选择抄送对象',
-            targetData: targetData,
-            targetValues: targetList,
-            title: '抄送对象',
-            targetCount: targetCount,
-            onTargetChange: this.onTargetChange.bind(this),
-            onTargetFocus: this.onTargetFocus.bind(this)
+    handleChange = fileList => {
+        if (fileList) {
+            fileList.forEach((value, index) => {
+                value.url = value.response ? (_baseURL + value.response.data) : value.url
+                value.picUrl = value.response ? value.response.data : value.picUrl
+            })
+            this.setState({fileList})
         }
-
-        const defaultTargetProps = {
-            targetData: [],
-            targetValues: this.state.targetList,
-            title: '发布对象',
-            targetCount: this.state.targetCount,
-            onTargetChange: this.onTargetChange.bind(this),
-            onTargetFocus: this.onTargetFocus.bind(this)
-        }
-        return <div className="container-fluid ">
-            <div className="row">
-                <div className="col-xs-12">
-                    <div id="padding10">
-                        <img class="img-circle" id="margin_top_bottom_15"
-                             src={"http://img5.imgtn.bdimg.com/it/u=1494163297,265276102&fm=26&gp=0.jpg"} width={60}
-                             height={60}/>
-                        <span class="span_17 text_bold " id="row_margin">{this.props.userInfo.stuName}的请假条</span>
-                    </div>
-                    <div className="row" id="page_block_min"></div>
-                    <div className="row ">
-                        <DatePicker
-                            showTime
-                            value={this.state.startDate}
-                            defaultValue={this.state.startDate}
-                            onChange={date => this.setState({startDate:date}) }
-                            format="YYYY-MM-DD HH:mm:ss"
-                            onOk={this.changeEndDateOk}
-                            placeholder="">
-                            <List.Item arrow="horizontal" >开始时间</List.Item>
-                        </DatePicker>
-                    </div>
-                    <div className="row" id="page_horizontal_line"></div>
-                    <div className="row">
-                        <DatePicker
-                            showTime
-                            value={this.state.endDate}
-                            defaultValue={this.state.endDate}
-                            onChange={date => this.setState({endDate:date}) }
-                            format="YYYY-MM-DD HH:mm:ss"
-                            onOk={this.changeEndDateOk}
-                            placeholder="">
-                            <List.Item arrow="horizontal" >结束时间</List.Item>
-                        </DatePicker>
-
-                    </div>
-                    <div id="page_horizontal_line"></div>
-                    <div className="row">
-                        <TextArea  name="text-content"
-                                   ref={ref=>this.input_content=ref}
-                                   value={this.state.lvDetails}
-                                   onChange={this.onChangeEvent.bind(this)}
-                                  id="input_no_border" rows={4} placeholder="请填写请假理由"></TextArea>
-                    </div>
-                    <div className="row" id="page_horizontal_line"></div>
-                    <div className="row ">
-                        <div>
-                            {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
-                                : <TargetSelect {...defaultTargetProps}/>}
-
-                        </div>
-                        {/*  <Icon type="right"/>*/}
-                    </div>
-                    <div className="row" id="page_block_min"></div>
-                    <div className="row  span_15 ">
-                        <div className="padding_5"><span   id="page_tile">附件</span></div>
-                        <div id="row_padding_with">
-                            <PicturesWallItem
-                                action={API.UPLOAD_FILE}
-                                number={4}
-                                callback = { this.callback.bind(this)}>
-                                handleRemove={this.handleRemove.bind(this)}
-                            </PicturesWallItem>
-                        </div>
-                        {/*<div className="flex_center margin_top_20">*/}
-                            {/*<Button ref={ref=>this.btn_commit=ref}  onClick={this.onClickEvent.bind(this)}  type={'primary'} block> 提交</Button>*/}
-                        {/*</div>*/}
-                        <div className="flex_center margin_top_20">
-                            <center><Button type="button" className="btn btn-primary comBtn_sty"
-                                            ref={ref=>this.btn_commit=ref}  onClick={this.onClickEvent.bind(this)}  >提交</Button></center>
-                        </div>
-                        <div onClick={this.clickLeaveList.bind(this)}
-                             className="leave-history flex_center text_underline">请假记录
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     }
+    beforeUpload = (file, fileList) => {
+
+    }
+    handelValueCom = (event) => {
+        //获取用户名的值
+        let leaveReason = this.refs.leaveReason.value;
+        //获得内容的值
+        this.setState({
+            leaveReason: leaveReason,
+        })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 let mapStateToProps = (state) => ({
-    userInfo: {...state.redUserInfo},
+    userInfo: {...state.redUserInfo}
 })
 
 let mapDispatchToProps = (dispatch) => ({})

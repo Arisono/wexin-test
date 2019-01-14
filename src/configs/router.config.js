@@ -32,6 +32,7 @@ import ScoreInquiry from '../modules/hiPages/score-inquiry/ScoreInquiry';
 import Approvel from '../modules/hiPages/approvel/Approvel';
 import ApprovelDetail from '../modules/hiPages/approvel-detail/ApprovelDetail';
 import MeetDetail from '../modules/hiPages/meet-detail/MeetDetail';
+import LeaveDetail from '../modules/hiPages/LeaveDetail/LeaveDetail';
 import WonderMoment from "../modules/video/WonderMoment";
 import NotifyBoardParent from "../modules/notificationCenter/NotifyBoardParent";
 import ConsumeRePage from '../modules/consumeManager/ConsumeRePage'
@@ -107,14 +108,12 @@ export default class RouteConfig extends Component {
                     <Route path={'/picturesWall'} component={PicturesWallItem}/>
                     <Route path="/voteDetail/:id" component={VoteDetailPage}/>
                     {/*<Route path="/homePage" component={AppHomePage}/>*/}
-                    <Route path='/leaveAddC' component={LeaveAddCPage}/>
-                    <Route path='/leaveAdd' component={LeaveAddPage}/>
                     <Route path='/leaveApproval' component={LeaveApprovalPage}/>
                     <Route path='/leaveList/:role' component={LeaveListPage}/>
 
 
                     {/*方龙海*/}
-                    <Route path='/access-notice' component={AccessNotice}/> {/*进出校通知*/}
+                    <Route path='/access-notice/:stuId?' component={AccessNotice}/> {/*进出校通知*/}
                     <Route path='/field-trip' component={FieldTrip}/> {/*//外勤出差*/}
                     <Route path='/res_apply' component={ResApply}/>{/*//用品申请*/}
                     <Route path='/send-vote' component={SendVote}/>{/*//发起投票*/}
@@ -123,7 +122,10 @@ export default class RouteConfig extends Component {
                     <Route path='/score-inquiry' component={ScoreInquiry}/> {/*//成绩通知*/}
                     <Route path='/approvel' component={Approvel}/>{/*审批*/}
                     <Route path='/approvel-detail/:approveId/:isMyApply' component={ApprovelDetail}/> {/*审批详情*/}
-                    <Route path='/meet-detail/:meetId' component={MeetDetail}/> {/*会议签到详情*/}
+                    <Route path='/meet-detail/:meetId?' component={MeetDetail}/> {/*会议签到详情*/}
+                    <Route path='/leavedetail/:lvId?' component={LeaveDetail}/> {/*学生请假详情*/}
+                    <Route path='/leaveAddC' component={LeaveAddCPage}/>
+                    <Route path='/leaveAdd' component={LeaveAddPage}/>
 
 
                     {/*刘金龙*/}

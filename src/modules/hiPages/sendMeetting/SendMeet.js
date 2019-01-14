@@ -18,16 +18,6 @@ import {connect} from 'react-redux';
 
 const Option = Select.Option;
 
-function Test() {
-    return (
-        <div>
-            <img className="meet_penson_img img-circle"
-                 src={"https://upload-images.jianshu.io/upload_images/1131704-eb8f2d63ed00682d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"}
-                 alt=""/>
-        </div>
-    )
-}
-
 class SendMeet extends Component {
     componentWillMount() {
         document.title = '发起会议'
@@ -186,7 +176,7 @@ class SendMeet extends Component {
             onTargetFocus: this.onTargetFocus.bind(this)
         }
         return (
-            <div onChange={this.handelValueCom}>
+            <div onChange={this.handelValueCom} style={{fontFamily:"PingFangSC-Regular",letterSpacing:2.5}}>
                 {/*<p>{new Date().getTime()}</p>*/}
                 <textarea autoFocus="autoFocus" ref='meetTitle' className="form-control textarea_sty" rows="2"
                           placeholder="请填写会议主题…"></textarea>
@@ -216,11 +206,6 @@ class SendMeet extends Component {
                 </div>
 
                 <div className="comhline_sty1"></div>
-
-                {/*<span className="item_sty">与会人</span>*/}
-                {/*{this.state.headerArray.map((itemata,index) => <Test key={index} itemata = {itemata}></Test>)}*/}
-                {/*<img onClick={this.addPerson} className="meet_penson_img img-circle" style={{height: 40,width: 40,marginTop:10,marginLeft:5}} src={add_newimg}/>*/}
-                {/*<div> <textarea className="form-control textarea_sty" >ww</textarea></div>*/}
                 {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
                     : <TargetSelect {...defaultTargetProps}/>}
                 <center><Button type="button" className="btn btn-primary comBtn_sty"

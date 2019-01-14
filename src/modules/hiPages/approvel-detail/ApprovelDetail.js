@@ -9,14 +9,14 @@ import hi1_img from '../../../style/imgs/ic_head1.png';
 import DetailItem from './DetailItem';
 import {isObjEmpty} from "../../../utils/common";
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
-import LazyLoad from 'react-lazyload'
+import LazyLoad from 'react-lazyload';
 import ItemApprovel from './ItemApprovel';
 import { Button,Modal } from 'antd';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
 import {API,_baseURL} from '../../../configs/api.config';
 import {Toast} from 'antd-mobile';
 import {connect} from 'react-redux';
-import ImagesViewer from '../../../components/imagesVIewer/index'
+import ImagesViewer from '../../../components/imagesVIewer/index';
 
  class ApprovelDetail extends Component{
     constructor(){

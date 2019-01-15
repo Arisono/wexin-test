@@ -193,6 +193,11 @@ class MeetingSignIn extends Component {
     }
 
     onAddMeet = () => {
+        saveListState({
+            scrollTop: ReactDOM.findDOMNode(this.container).scrollTop,
+            listData: this.state.meetingSignList,
+            pageIndex: mPageIndex,
+        })()
         this.props.history.push('/sendMeetting')
     }
 

@@ -15,6 +15,7 @@ import {Toast, Picker, List, DatePicker} from 'antd-mobile';
 import {getIntValue, getStrValue, isObjEmpty} from "../../../utils/common";
 import TargetSelect from '../../../components/TargetSelect';
 import {connect} from 'react-redux';
+import {clearListState} from "../../../redux/actions/listState";
 
 const Option = Select.Option;
 
@@ -176,7 +177,7 @@ class SendMeet extends Component {
             onTargetFocus: this.onTargetFocus.bind(this)
         }
         return (
-            <div onChange={this.handelValueCom} style={{fontFamily:"PingFangSC-Regular",letterSpacing:2.5}}>
+            <div onChange={this.handelValueCom} style={{fontFamily: "PingFangSC-Regular", letterSpacing: 2.5}}>
                 {/*<p>{new Date().getTime()}</p>*/}
                 <textarea autoFocus="autoFocus" ref='meetTitle' className="form-control textarea_sty" rows="2"
                           placeholder="请填写会议主题…"></textarea>
@@ -293,6 +294,7 @@ class SendMeet extends Component {
                 Toast.hide()
                 console.log('response', response)
                 if (response.success) {
+                    clearListState()()
                     Toast.show('创建成功', 2)
 
                     this.backTask = setTimeout(() => {

@@ -15,9 +15,9 @@ import {connect} from 'react-redux';
 
 function SignItem(props) {
     return(
-        <div style={{display:'flex',flexDirection:'column',margin:8}}>
+        <div style={{display:'flex',flexDirection:'column',margin:8,textAlign:"center"}}>
             <div> <img src={props.itemdata.userPhoto == "" || props.itemdata.userPhoto == null ? hi0_img : props.itemdata.userPhoto} alt="" style={{width:40,height:40,borderRadius:25}}/></div>
-            <div  style={{fontSize:12,color:'#333333',marginTop:10,marginLeft:5}}> <span>{props.itemdata.userName}</span></div>
+            <div  style={{fontSize:12,color:'#333333',marginTop:10}}> <span>{props.itemdata.userName}</span></div>
         </div>
     )
 }
@@ -73,16 +73,16 @@ class MeetDetail extends Component{
                 <div style={{marginTop:10,marginLeft:20,display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
                     {this.state.signList.map((itemdata,index)=><SignItem itemdata={itemdata} ></SignItem>)}
                 </div>
-
+                <div className="comhline_sty1"></div>
                 <div style={{fontSize:14,color:'#252525',marginTop:10,marginLeft:20}}>未签到
-                    <span style={{fontSize:12,color:'#666666',marginLeft:10}}>{this.state.unsignList.length}/{this.state.signList.length+this.state.unsignList.length}人</span>
+                    <span style={{fontSize:12,color:'#666666',marginLeft:10}}>({this.state.unsignList.length}/{this.state.signList.length+this.state.unsignList.length}人)</span>
                 </div>
                 <div className="comhline_sty1"></div>
                     <div style={{marginTop:10,marginLeft:20,display:'flex',flexDirection:'row',flexWrap:'wrap'}}>
                     {this.state.unsignList.map((itemdata,index)=><SignItem itemdata={itemdata}></SignItem>)}
                 </div>
                     {this.state.notifyStatus == 4 ? <div style={{textAlign:'center',marginTop:20}}>
-                        <Button type="primary"  className='end_sty' style={{color:'#FFFFFF',backgroundColor:'#929292'}}>已结束</Button>
+                        <Button  className='end_sty' style={{color:'#FFFFFF',backgroundColor:'#929292'}}>已结束</Button>
                     </div> : <div style={{textAlign:'center',marginTop:20,marginBottom:20}}>
                         {this.state.showEndBtn == true ? <Button type="primary"  className='end_sty' onClick={this.EndMeetting}>结束会议</Button> : ""}
                     </div>}

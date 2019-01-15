@@ -103,6 +103,7 @@ export const API = {
     leaveCreate: _baseURL + "/leave/leaveCreate",
     leaveListParent: _baseURL + "/leave/leaveListByStuId",
     leaveListTeacher: _baseURL + "/leave/leaveListByUserId",
+    //学生请假单详情
     leaveDetail: _baseURL + "/leave/lvDetail",
     //发布通知公告/发布作业/创建会议
     issueNotification: _baseURL + '/notify/issueNotification',
@@ -121,6 +122,8 @@ export const API = {
     endMeeting: _baseURL + '/notify/endMeeting',
     //获取分值条件
     getCurr: _baseURL + '/score/getCurr',
+
+
 }
 
 /**

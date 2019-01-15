@@ -30,7 +30,7 @@ export default class MeetingSignItem extends Component {
         const {meetingBean} = this.state
 
         return (
-            <div className='signItemLayout' onClick={this.onItemClick}>
+            <div className='meet-signItemLayout' onClick={this.onItemClick}>
                 <div className='signCreateTime'>{meetingBean.createTime}</div>
                 <div className='signContentlayout'>
                     <div className='titleLayout'>

@@ -10,6 +10,7 @@ import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
 import ImagesViewer from "../../components/imagesVIewer";
 import {connect} from 'react-redux'
+import {saveListState} from "../../redux/actions/listState";
 
 const mPageSize = 10
 let mPageIndex = 0
@@ -30,7 +31,6 @@ class NotifyBoardParent extends Component {
     }
 
     componentDidMount() {
-        mPageIndex = 0
         const hei = this.state.height - ReactDOM.findDOMNode(this.ptr).offsetTop;
         setTimeout(() =>
                 this.setState({
@@ -38,8 +38,20 @@ class NotifyBoardParent extends Component {
                 })
             , 0);
         document.title = '通知公告'
-        Toast.loading('努力加载中...', 0)
-        this.loadRechargeList()
+
+        if (this.props.listState && !isObjEmpty(this.props.listState.listData)) {
+            this.setState({
+                notifyList: this.props.listState.listData,
+                isLoading: false,
+            }, () => {
+                ReactDOM.findDOMNode(this.ptr).scrollTop = this.props.listState.scrollTop
+            })
+            mPageIndex = this.props.listState.pageIndex
+        } else {
+            Toast.loading('努力加载中...', 0)
+            mPageIndex = 0
+            this.loadRechargeList()
+        }
     }
 
     render() {
@@ -172,7 +184,20 @@ class NotifyBoardParent extends Component {
         const {notifyList} = this.state
         this.selectIndex = index
 
-        Toast.loading('', 0)
+        notifyList[index].noStatu = '已读'
+        this.setState({
+            notifyList
+        })
+
+        saveListState({
+            scrollTop: ReactDOM.findDOMNode(this.ptr).scrollTop,
+            listData: this.state.notifyList,
+            pageIndex: mPageIndex,
+        })()
+
+        this.props.history.push('/notifyDetail/' + notifyList[index].noId)
+
+        /*Toast.loading('', 0)
         fetchGet(API.TASK_DETAIL, {
             notifyId: notifyList[index].noId,
             userId: this.props.userInfo.userId,
@@ -206,7 +231,7 @@ class NotifyBoardParent extends Component {
             if (typeof error === 'string') {
                 Toast.fail(error)
             }
-        })
+        })*/
     }
 
     loadRechargeList = () => {
@@ -293,7 +318,8 @@ class NotifyBoardParent extends Component {
 
 
 let mapStateToProps = (state) => ({
-    userInfo: {...state.redUserInfo}
+    userInfo: {...state.redUserInfo},
+    listState: {...state.redListState}
 })
 
 let mapDispatchToProps = (dispatch) => ({})

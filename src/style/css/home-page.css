@@ -152,7 +152,8 @@
 .home-swiper-container {
     height: 140px;
     width: 100%;
-    background: rgba(60, 130, 214, 0.17);
+    /*background: rgba(60, 130, 214, 0.17);*/
+    background: white;
     padding: 8px 4px;
 }
 

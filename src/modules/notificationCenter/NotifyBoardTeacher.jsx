@@ -301,12 +301,20 @@ class NotifyBoardTeacher extends Component {
             notifyBoBean = releaseList[this.selectIndex]
         } else if (this.selectType === 'receive') {
             notifyBoBean = receiveList[this.selectIndex]
+            notifyBoBean.noStatu = '已读'
+            this.setState({
+                receiveList
+            })
         }
 
-        Toast.loading('', 0)
+        this.saveListStatus(false, index)
+
+        this.props.history.push('/notifyDetail/' + notifyBoBean.noId)
+
+        /*Toast.loading('', 0)
         fetchGet(API.TASK_DETAIL, {
             notifyId: notifyBoBean.noId,
-            userId: '10000',
+            userId: this.props.userInfo.userId,
         }).then(response => {
             Toast.hide()
             if (response && response.data) {
@@ -350,8 +358,10 @@ class NotifyBoardTeacher extends Component {
             Toast.hide()
             if (typeof error === 'string') {
                 Toast.fail(error)
+            }else {
+                Toast.fail('请求异常')
             }
-        })
+        })*/
     }
 
     loadReleaseList = () => {
@@ -421,6 +431,8 @@ class NotifyBoardTeacher extends Component {
             })
             if (typeof error === 'string') {
                 Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常')
             }
         })
     }
@@ -492,6 +504,8 @@ class NotifyBoardTeacher extends Component {
             })
             if (typeof error === 'string') {
                 Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常')
             }
         })
     }
@@ -513,12 +527,15 @@ class NotifyBoardTeacher extends Component {
     }
 
     onAddNotify = () => {
-        console.log('scrolltop1', ReactDOM.findDOMNode(this.releaseTab).scrollTop)
-        console.log('scrolltop2', ReactDOM.findDOMNode(this.receiveTab).scrollTop)
+        this.saveListStatus(true, null)
+        this.props.history.push('/announceRelease')
+    }
+
+    saveListStatus = (pageLimit, itemIndex) => {
         const {releaseList, receiveList} = this.state
         let releaseScroll = 0, receiveScroll = 0, releaseIndex = 0, receiveIndex = 0
 
-        if (releaseList.length <= 10) {
+        if (releaseList.length <= 10 && pageLimit) {
             releaseList.length = 0
             releaseIndex = 0
             releaseScroll = 0
@@ -526,7 +543,7 @@ class NotifyBoardTeacher extends Component {
             releaseIndex = mReleaseIndex
             releaseScroll = ReactDOM.findDOMNode(this.releaseTab).scrollTop
         }
-        if (receiveList.length <= 10) {
+        if (receiveList.length <= 10 && pageLimit) {
             receiveList.length = 0
             receiveIndex = 0
             receiveScroll = 0
@@ -542,8 +559,8 @@ class NotifyBoardTeacher extends Component {
             scrollTop2: receiveScroll,
             listData2: receiveList,
             pageIndex2: receiveIndex,
+            itemIndex: itemIndex || this.props.listState.itemIndex
         })()
-        this.props.history.push('/announceRelease')
     }
 
     handlePreview = () => {

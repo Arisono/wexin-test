@@ -11,7 +11,7 @@ import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
 import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {API} from "../../configs/api.config";
 import {Toast} from 'antd-mobile'
-import {Icon, Skeleton} from 'antd'
+import {List, Icon, Skeleton} from 'antd'
 import RefreshLayout from "../../components/RefreshLayout";
 import {connect} from 'react-redux'
 import {saveListState} from "../../redux/actions/listState";
@@ -33,7 +33,7 @@ class MeetingSignIn extends Component {
 
     componentDidMount() {
         document.title = '会议签到'
-
+        console.log('listState', this.props.listState)
         if (this.props.listState && !isObjEmpty(this.props.listState.listData)) {
             this.setState({
                 meetingSignList: this.props.listState.listData,
@@ -52,36 +52,24 @@ class MeetingSignIn extends Component {
     render() {
         const {meetingSignList, isRefreshing, isLoading} = this.state
 
-        let meetingItems = []
-        if (meetingSignList.length > 0) {
-            for (let i = 0; i < meetingSignList.length; i++) {
-                let meetingSignBean = meetingSignList[i];
-                if (!isObjEmpty(meetingSignBean)) {
-                    meetingItems.push(<MeetingSignItem
-                        meetingBean={meetingSignBean}
-                        index={i}
-                        onMeetingSign={this.onMeetingSign.bind(this)}
-                        onItemClick={this.onItemClick.bind(this)}/>)
-                }
-            }
-        } else {
-            if (!isLoading) {
-                meetingItems = <div className='common-column-layout'
-                                    style={{height: '100vh', alignItems: 'center', justifyContent: 'center'}}>
-                    会议列表为空
-                </div>
-            }
-        }
-
         return (
-            <div style={{background: '#F2F2F2'}}>
+            <div className='recharge-page-layout' style={{background: '#F2F2F2'}}>
                 <RefreshLayout
                     refreshing={isRefreshing}
                     ref={el => {
                         this.container = el
                     }}
                     onRefresh={this.loadMeetList}>
-                    {meetingItems}
+                    <Skeleton loading={isLoading} active paragraph={{rows: 3}}>
+                        <List dataSource={meetingSignList}
+                              renderItem={(item, index) => (
+                                  <MeetingSignItem
+                                      meetingBean={item}
+                                      index={index}
+                                      onMeetingSign={this.onMeetingSign.bind(this)}
+                                      onItemClick={this.onItemClick.bind(this)}/>
+                              )}/>
+                    </Skeleton>
                 </RefreshLayout>
                 <Icon type="plus-circle" theme='filled' className='common-add-icon'
                       onClick={this.onAddMeet}/>
@@ -205,16 +193,23 @@ class MeetingSignIn extends Component {
     }
 
     onAddMeet = () => {
+        saveListState({
+            scrollTop: ReactDOM.findDOMNode(this.container).scrollTop,
+            listData: this.state.meetingSignList,
+            pageIndex: mPageIndex,
+        })()
         this.props.history.push('/sendMeetting')
     }
 
     onItemClick = index => {
+        console.log('listState', ReactDOM.findDOMNode(this.container).scrollTop)
         saveListState({
             scrollTop: ReactDOM.findDOMNode(this.container).scrollTop,
             listData: this.state.meetingSignList,
             pageIndex: mPageIndex,
             itemIndex: index,
         })()
+
         const {meetingSignList} = this.state
         this.props.history.push('/meet-detail/' + meetingSignList[index].meetId)
     }

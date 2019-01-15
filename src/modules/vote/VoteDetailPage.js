@@ -278,10 +278,9 @@ class VoteDetailPage extends React.Component {
                                     style={{
                                         backgroundColor: "#9D9D9D",
                                         color: "#ffffff",
-                                        borderRadius: "5px 5px",
                                         border: "1px solid #ffffff",
                                         margin: '30px 10px'
-                                    }} block> 已投票</Button>
+                                    }} block>已投票</Button>
                         )
                         }
                     </div>

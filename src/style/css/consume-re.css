@@ -207,7 +207,7 @@
 
 .notify-detail-modal-layout {
     display: flex;
-    margin: 0 10px;
+    margin: 0 0px;
     flex-direction: column;
     background: transparent;
 }
@@ -233,15 +233,15 @@
     padding: 12px 16px;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #f2f2f2;
 }
 
 .notify-detail-modal-header-tilte {
     flex: 1;
     font-family: PingFangSC-Regular;
-    font-size: 14px;
+    font-size: 15px;
     color: #333333;
     letter-spacing: 0;
+    font-weight: bold;
 }
 
 .notify-detail-modal-header-status {
@@ -254,9 +254,9 @@
 .notify-detail-modal-content-text {
     font-family: PingFangSC-Regular;
     font-size: 12px;
-    color: #666666;
+    color: #878787;
     letter-spacing: 1.33px;
-    padding: 12px 16px;
+    padding: 12px 18px;
 }
 
 .notify-detail-modal-time {
@@ -268,11 +268,18 @@
     letter-spacing: 0;
 }
 
-.notify-detail-modal-receive {
+.notify-detail-modal-receive, .notify-detail-modal-read, .notify-detail-modal-unread {
     font-family: PingFangSC-Regular;
     font-size: 12px;
-    color: #666666;
     letter-spacing: 1.88px;
     float: left;
     margin: 5px 10px;
+}
+
+.notify-detail-modal-read {
+    color: #b1b1b1;
+}
+
+.notify-detail-modal-unread {
+    color: #333333;
 }

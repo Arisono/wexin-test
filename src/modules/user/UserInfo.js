@@ -47,11 +47,6 @@ class UserInfo extends Component {
             <span className={'lineMax'}/>
             {this.showLocation()}
             <span className={'lineMax'}/>
-            <div className='user-info-item-top'>
-                <text className='user-info-item-name'>身份</text>
-                <text className='user-info-item-phone'>{this.type == 1 ? '教师' : '家长'}</text>
-            </div>
-            <span className={'lineMax'}/>
             {this.showUserContact()}
         </div>
     }
@@ -76,22 +71,33 @@ class UserInfo extends Component {
         const sex = (this.type == 1 ? userInfo.userSex : userInfo.student.stuSex)
 
         return <div className={'user-column'}>
-            <div className='user-info-item-top'>
+            {/*<div className='user-info-item-top'>
                 <text className='user-info-item-name'>{idTag}</text>
                 <text className='user-info-item-phone'>{id}</text>
-            </div>
-            {this.type == 1 ? '' : <div className='user-info-item-top'>
-                <text className='user-info-item-name'>学生姓名</text>
-                <text className='user-info-item-phone'>{userInfo.student.stuName}</text>
+            </div>*/}
+            {this.type == 1 ? '' : <div>
+                <div className='user-info-item-top'>
+                    <text className='user-info-item-name'>学生姓名</text>
+                    <text className='user-info-item-phone'>{userInfo.student.stuName}</text>
+                </div>
+                <div className='gray-line' style={{height: '1px'}}></div>
             </div>}
             <div className='user-info-item-top'>
                 <text className='user-info-item-name'>所在学校</text>
                 <text className='user-info-item-phone'>{userInfo.school}</text>
             </div>
-            {this.type == 1 ? '' : <div className='user-info-item-top'>
-                <text className='user-info-item-name'>性别</text>
-                <text className='user-info-item-phone'>{sex === 1 ? '男' : '女'}</text>
-            </div>}
+            <div className='gray-line' style={{height: '1px'}}></div>
+            {this.type == 1 ? '' : (<div>
+                <div className='user-info-item-top'>
+                    <text className='user-info-item-name'>性别</text>
+                    <text className='user-info-item-phone'>{sex === 1 ? '男' : '女'}</text>
+                </div>
+                <div className='gray-line' style={{height: '1px'}}></div>
+            </div>)}
+            <div className='user-info-item-top'>
+                <text className='user-info-item-name'>身份</text>
+                <text className='user-info-item-phone'>{this.type == 1 ? '教师' : '家长'}</text>
+            </div>
         </div>
     }
 
@@ -120,7 +126,7 @@ class UserInfo extends Component {
                 <div className="item_flex_1 flex_row_right">
                     <div className='gray-line'
                          style={{height: '34px', background: '#CCCCCC', width: '1px'}}></div>
-                    <text className="margin_left_20" style={{color: "#3680ED"}}>修改</text>
+                    <text className="margin_left_20" style={{color: "#3680ED"}}>更换</text>
                 </div>
             </div>
             <div className='gray-line' style={{height: '1px'}}></div>

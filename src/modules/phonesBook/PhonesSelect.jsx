@@ -119,6 +119,7 @@ class PhonesSelect extends Component {
                      }}>
                     <div className="swiper-wrapper">
                         <div className="swiper-slide">
+
                             {teacherItems}
                         </div>
                         <div className="swiper-slide">

@@ -17,11 +17,11 @@ export const CONFIG_TEACHER_MENU = [
                 funcIcon: require('imgs/ic_homework_release.png'),
                 funcPage: '/assignmentList/teacher'
             },
-            {
+            /*{
                 funcText: '班级交费',
                 funcIcon: require('imgs/ic_class_payment.png'),
                 funcPage: '/classRechargeList'
-            },
+            },*/
             {
                 funcText: '投票助手',
                 funcIcon: require('imgs/ic_vote_helper.png'),
@@ -37,14 +37,14 @@ export const CONFIG_TEACHER_MENU = [
                 funcIcon: require('imgs/ic_class_album.png'),
                 funcPage: '/classAlbum/teacher'
             },
-            {
+            /*{
                 funcText: '精彩瞬间',
                 funcIcon: require('imgs/ic_wonder_moment.png'),
                 funcPage: '/wonderMoment/teacher'
-            },
+            },*/
         ]
     }, {
-        groupText: '校园服务',
+        groupText: '校园OA',
         groupIcon: require('imgs/ic_group_campus.png'),
         funcList: [
             {
@@ -77,7 +77,7 @@ export const CONFIG_TEACHER_MENU = [
                 funcIcon: require('imgs/ic_mail_list.png'),
                 funcPage: '/phonesSelect'
             },
-            {
+            /*{
                 funcText: '校园卡',
                 funcIcon: require('imgs/ic_campus_card.png'),
                 funcPage: '/campusCardRecharge/teacher'
@@ -86,7 +86,7 @@ export const CONFIG_TEACHER_MENU = [
                 funcText: '课表查询',
                 funcIcon: require('imgs/ic_timetable_query.png'),
                 funcPage: '/class-schedule'
-            },
+            },*/
         ]
     }
 ]
@@ -120,11 +120,11 @@ export const CONFIG_PARENT_MENU = [
                 funcIcon: require('imgs/ic_homework_release.png'),
                 funcPage: '/assignmentList/parent'
             },
-            {
+            /*{
                 funcText: '交费通知',
                 funcIcon: require('imgs/ic_payment_notice.png'),
                 funcPage: '/rechargeList'
-            },
+            },*/
             {
                 funcText: '学生请假条',
                 funcIcon: require('imgs/ic_student_leave.png'),
@@ -135,46 +135,46 @@ export const CONFIG_PARENT_MENU = [
                 funcIcon: require('imgs/ic_vote_helper.png'),
                 funcPage: '/voteList'
             },
-            {
-                funcText: '老师通讯录',
-                funcIcon: require('imgs/ic_mail_list.png'),
-                funcPage: '/phonesList/parent'
-            },
         ]
     }, {
         groupText: '校园服务',
         groupIcon: require('imgs/ic_group_campus.png'),
         funcList: [
             {
+                funcText: '老师通讯录',
+                funcIcon: require('imgs/ic_mail_list.png'),
+                funcPage: '/phonesList/parent'
+            },
+            /*{
                 funcText: '入校登记',
                 funcIcon: require('imgs/ic_admission_registration.png'),
                 funcPage: ''
-            },
+            },*/
             {
                 funcText: '课表查询',
                 funcIcon: require('imgs/ic_timetable_query.png'),
                 funcPage: '/class-schedule'
             },
-            {
+            /*{
                 funcText: '成绩查询',
                 funcIcon: require('imgs/ic_score_query.png'),
                 funcPage: '/score-inquiry'
-            },
-            {
+            },*/
+            /*{
                 funcText: '校园卡',
                 funcIcon: require('imgs/ic_campus_card.png'),
                 funcPage: '/campusCardRecharge/parent'
-            },
+            },*/
             {
                 funcText: '班级相册',
                 funcIcon: require('imgs/ic_class_album.png'),
                 funcPage: '/classAlbum/parent'
             },
-            {
+            /*{
                 funcText: '精彩瞬间',
                 funcIcon: require('imgs/ic_wonder_moment.png'),
                 funcPage: '/wonderMoment/parent'
-            },
+            },*/
             {
                 funcText: '校长信箱',
                 funcIcon: require('imgs/ic_principal_mailbox.png'),

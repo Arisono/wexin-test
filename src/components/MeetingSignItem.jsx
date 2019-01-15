@@ -30,7 +30,7 @@ export default class MeetingSignItem extends Component {
         const {meetingBean} = this.state
 
         return (
-            <div className='signItemLayout' onClick={this.onItemClick}>
+            <div className='meet-signItemLayout' onClick={this.onItemClick}>
                 <div className='signCreateTime'>{meetingBean.createTime}</div>
                 <div className='signContentlayout'>
                     <div className='titleLayout'>
@@ -52,7 +52,8 @@ export default class MeetingSignItem extends Component {
                         <div className='valueText'>{meetingBean.sponsor}</div>
                     </div>
                     <div className='bottomLayout'>
-                        <span className={meetingBean.signStatusCode === 5 ? 'signBtnEnable' : 'signBtnActive'}
+                        <span className={(meetingBean.signStatusCode === 1
+                            && meetingBean.meetStatusCode === 3) ? 'signBtnActive' : 'signBtnEnable'}
                               onClick={this.onMeetingSign}>
                             {meetingBean.signStatus}
                         </span>

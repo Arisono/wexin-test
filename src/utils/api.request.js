@@ -3,6 +3,8 @@ import {getIntValue, getStrValue, isObjEmpty} from "./common";
 import {Toast} from 'antd-mobile'
 import {API} from 'api'
 import {ORGANIZATION_TEACHER, ORGANIZATION_PARENT} from './api.constants'
+import {switchUser} from "../redux/actions/userInfo";
+import store from './../redux/store/store'
 
 export const getOrganization = (type, paramId, isMultiple) => {
     Toast.loading('', 0)
@@ -124,5 +126,25 @@ export const getOrganization = (type, paramId, isMultiple) => {
             Toast.fail('请求异常', 2)
         }
         return null
+    })
+}
+
+export const getWeixinInfo = () => {
+    const userInfo = store.getState().redUserInfo
+
+    fetchGet('https://api.weixin.qq.com/cgi-bin/user/info', {
+        access_token: userInfo.accessToken,
+        openid: userInfo.userOpenid,
+        lang: 'zh_CN',
+    }).then(response => {
+        if (!isObjEmpty(response)) {
+            alert(response)
+            switchUser({
+                userAvatar: response.headimgurl ? response.headimgurl : userInfo.userAvatar,
+                userOpenid: response.openid ? response.openid : userInfo.userOpenid,
+            })()
+        }
+    }).catch(error => {
+        alert(error)
     })
 }

@@ -33,14 +33,14 @@
 .vote-item-endData-capiton {
     font-family: PingFangSC-Regular;
     font-size: 12px;
-    color: #333333;
+    color: #666666;
     letter-spacing: 0;
 }
 
 .vote-item-endData-value {
     font-family: PingFangSC-Regular;
     font-size: 12px;
-    color: #666666;
+    color: #333333;
     letter-spacing: 0;
     margin-left: 4px;
 }

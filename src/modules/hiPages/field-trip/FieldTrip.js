@@ -116,12 +116,20 @@ class FieldTrip extends Component {
                 <div className="comhline_sty1"></div>
                 <DatePicker
                     value={this.state.startValue}
+                    locale={{
+                        okText: '确定',
+                        dismissText: '取消'
+                    }}
                     onChange={this.setStartDate}>
                     <List.Item arrow="horizontal">开始时间</List.Item>
                 </DatePicker>
                 <div className="comhline_sty1"></div>
                 <DatePicker
                     value={this.state.endValue}
+                    locale={{
+                        okText: '确定',
+                        dismissText: '取消'
+                    }}
                     onChange={this.setEndDate}>
                     <List.Item arrow="horizontal">结束时间</List.Item>
                 </DatePicker>

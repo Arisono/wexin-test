@@ -70,7 +70,7 @@ export default class UploadEnclosure extends Component {
         const imgs = []
         if (!isObjEmpty(fileList) && fileList !== '[]') {
             for (let i = 0; i < fileList.length; i++) {
-                imgs.push(fileList[i].url)
+                imgs.push(fileList[i].url || fileList[i].thumbUrl)
             }
         }
 

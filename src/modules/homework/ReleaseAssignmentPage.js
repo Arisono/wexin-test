@@ -247,6 +247,10 @@ class ReleaseAssignmentPage extends React.Component {
             <div className='gray-line'></div>
             <DatePicker
                 value={this.state.endDate}
+                locale={{
+                    okText: '确定',
+                    dismissText: '取消'
+                }}
                 onChange={date => this.setState({endDate: date})}>
                 <List.Item arrow="horizontal">截止时间</List.Item>
             </DatePicker>

@@ -82,6 +82,10 @@ class LeaveAddPage extends Component{
 
                 <DatePicker
                     value={this.state.startValue}
+                    locale={{
+                        okText: '确定',
+                        dismissText: '取消'
+                    }}
                     onChange={date => this.setState({startValue: date})}>
                     <List.Item arrow="horizontal">请假开始时间</List.Item>
                 </DatePicker>
@@ -90,6 +94,10 @@ class LeaveAddPage extends Component{
 
                 <DatePicker
                     value={this.state.endValue}
+                    locale={{
+                        okText: '确定',
+                        dismissText: '取消'
+                    }}
                     onChange={date => this.setState({endValue: date})}>
                     <List.Item arrow="horizontal">请假结束时间</List.Item>
                 </DatePicker>

@@ -131,6 +131,10 @@ class RechargeRelease extends Component {
                 <div className='gray-line'></div>
                 <DatePicker
                     value={this.state.endTime}
+                    locale={{
+                        okText: '确定',
+                        dismissText: '取消'
+                    }}
                     onChange={this.onDateChange}>
                     <List.Item arrow="horizontal">截止时间</List.Item>
                 </DatePicker>

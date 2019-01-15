@@ -63,7 +63,13 @@ class VoteListPage extends React.Component {
             });
 
         }).catch((error) => {
+            Toast.hide()
 
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
         });
     }
 
@@ -104,8 +110,14 @@ class VoteListPage extends React.Component {
                 }
 
             }).catch((error) => {
-                console.log("error:" + JSON.stringify(error));
                 this.setState({hasMoreData: false})
+                Toast.hide()
+
+                if (typeof error === 'string') {
+                    Toast.fail(error, 2)
+                } else {
+                    Toast.fail('请求异常', 2)
+                }
             });
         }, 1000);
     }

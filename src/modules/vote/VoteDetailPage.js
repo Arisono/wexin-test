@@ -11,6 +11,8 @@ import {API, _baseURL} from "../../configs/api.config";
 import {Toast} from 'antd-mobile'
 import ImageGrid from "../../components/image/ImageGrid";
 import {connect} from 'react-redux'
+import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
+import {saveListState} from "../../redux/actions/listState";
 
 /**
  * Created by Arison on 15:51.
@@ -45,52 +47,101 @@ class VoteDetailPage extends React.Component {
     }
 
     getVoteDetail() {
-        console.log("getVoteDetail() userId:", this.props.userInfo.userId);
-        console.log("getVoteDetail() id:", this.state.id);
         Toast.loading("", 0)
         fetchGet(API.voteDetail, {
             voteId: this.state.id,
             userId: this.props.userInfo.userId
         }).then((response) => {
             Toast.hide();
-            console.log("response:" + JSON.stringify(response));
-            this.state.data.title = response.data.topics[0].topicName;
-            this.state.data.voter = response.data.userName;
+            if (response.data) {
+                this.state.data.title = response.data.topics[0].topicName;
+                this.state.data.voter = response.data.userName;
 
-            this.state.data.files.length = 0;
-            if (response.data.enclosure != null) {
-                for (let i = 0; i < response.data.enclosure.length; i++) {
-                    this.state.data.files.push(_baseURL + response.data.enclosure[i]);
+                this.state.data.files.length = 0;
+                if (response.data.enclosure != null) {
+                    for (let i = 0; i < response.data.enclosure.length; i++) {
+                        this.state.data.files.push(_baseURL + response.data.enclosure[i]);
+                    }
+                }
+
+                this.state.data.endTime = response.data.voteEndDate;
+                this.state.data.voterPhoto = response.data.userPhoto
+                this.state.data.selectState = response.data.voteType === 1 ? 0 : 1
+                this.state.data.state = response.data.voteStatus === 1 ? "进行中" : "已结束"
+                if (this.state.data.state === "进行中") {
+                    this.state.voteState = true;
+                } else {
+                    this.state.voteState = false;
+                }
+                this.state.data.votes.length = 0;
+                for (let i = 0; i < response.data.topics[0].options.length; i++) {
+                    let model = {
+                        optionId: response.data.topics[0].options[i].optionId,
+                        topicId: response.data.topics[0].options[i].topicId,
+                        count: response.data.topics[0].options[i].count,
+                        percent: parseInt(response.data.topics[0].options[i].percent),
+                        name: response.data.topics[0].options[i].optionName,
+                        checked: false
+                    }
+                    this.state.data.votes.push(model);
+                }
+                this.setState({
+                    data: this.state.data
+                })
+
+                console.log(this.props.listState)
+                const item = response.data
+                let voteBean = {}
+
+                voteBean.voteId = getIntValue(item, 'voteId')
+                voteBean.voteName = getStrValue(item, 'voteName')
+                voteBean.voteType = getIntValue(item, 'voteType')
+                voteBean.voteStatusCode = getIntValue(item, 'voteStatus')
+                if (voteBean.voteStatusCode === 1) {
+                    voteBean.voteStatus = '进行中'
+                } else {
+                    voteBean.voteStatus = '已投票'
+                }
+                voteBean.creatDate = getStrValue(item, 'creatDate')
+                voteBean.voteEndDate = getStrValue(item, 'voteEndDate')
+                voteBean.voteRemarks = getStrValue(item, 'voteRemarks')
+
+                const topics = getStrValue(item, 'topics')
+                if (!isObjEmpty(topics)) {
+                    voteBean.options = topics[0].options
+                }
+
+                if (this.props.listState.tabIndex >= 0) {
+                    const tabIndex = this.props.listState.tabIndex
+                    if (tabIndex === 0) {
+                        if (this.props.listState && !isObjEmpty(this.props.listState.listData)) {
+                            if (this.props.listState.itemIndex >= 0) {
+                                this.props.listState.listData[this.props.listState.itemIndex] = voteBean
+                            }
+                            saveListState({
+                                listData: this.props.listState.listData,
+                            })()
+                        }
+                    } else if (tabIndex === 1) {
+                        if (this.props.listState && !isObjEmpty(this.props.listState.listData2)) {
+                            if (this.props.listState.itemIndex >= 0) {
+                                this.props.listState.listData2[this.props.listState.itemIndex] = voteBean
+                            }
+                            saveListState({
+                                listData2: this.props.listState.listData2,
+                            })()
+                        }
+                    }
                 }
             }
-
-            this.state.data.endTime = response.data.voteEndDate;
-            this.state.data.voterPhoto = response.data.userPhoto
-            this.state.data.selectState = response.data.voteType === 1 ? 0 : 1
-            this.state.data.state = response.data.voteStatus === 1 ? "进行中" : "已结束"
-            if (this.state.data.state === "进行中") {
-                this.state.voteState = true;
-            } else {
-                this.state.voteState = false;
-            }
-            this.state.data.votes.length = 0;
-            for (let i = 0; i < response.data.topics[0].options.length; i++) {
-                let model = {
-                    optionId: response.data.topics[0].options[i].optionId,
-                    topicId: response.data.topics[0].options[i].topicId,
-                    count: response.data.topics[0].options[i].count,
-                    percent: parseInt(response.data.topics[0].options[i].percent),
-                    name: response.data.topics[0].options[i].optionName,
-                    checked: false
-                }
-                this.state.data.votes.push(model);
-            }
-            this.setState({
-                data: this.state.data
-            })
-
         }).catch((error) => {
-            console.log("error:" + JSON.stringify(error));
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
         })
     }
 
@@ -138,14 +189,19 @@ class VoteDetailPage extends React.Component {
             voteId: this.state.id,
             userId: this.props.userInfo.userId
         }).then((response) => {
-            console.log("response:" + JSON.stringify(response));
             Toast.info(response.data)
             this.getVoteDetail();
             this.setState({
                 voteState: true
             })
         }).catch((error) => {
-            console.log("error:" + JSON.stringify(error));
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
         })
     }
 
@@ -236,7 +292,6 @@ class VoteDetailPage extends React.Component {
                             <ImageGrid images={this.state.data.files}/>
                         </div>
                     </div>)}
-
                 </div>
             </div>
         </div>
@@ -246,6 +301,7 @@ class VoteDetailPage extends React.Component {
 
 let mapStateToProps = (state) => ({
     userInfo: {...state.redUserInfo},
+    listState: {...state.redListState}
 })
 
 let mapDispatchToProps = (dispatch) => ({})

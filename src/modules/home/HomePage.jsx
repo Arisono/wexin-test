@@ -20,6 +20,7 @@ import 'css/home-page.css'
 import {fetchGet} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
 import icon_home_change from "../../style/imgs/icon_home_change.png";
+import {getWeixinInfo} from '../../utils/api.request'
 
 const operation = Modal.operation;
 
@@ -36,7 +37,7 @@ class HomePage extends Component {
     }
 
     componentWillMount() {
-
+        getWeixinInfo()
     }
 
     componentDidMount() {
@@ -151,7 +152,7 @@ class HomePage extends Component {
                     </div>
                 </div>
                 {/*精彩瞬间*/}
-                {videoLayout}
+                {/*{videoLayout}*/}
             </div>
         )
     }
@@ -177,6 +178,8 @@ class HomePage extends Component {
                     if (homeData.roles[0] === "教师") {
                         userRole = 2
                     }
+                } else if (userRole <= 0) {
+                    userRole = 1
                 }
 
                 this.setState({
@@ -209,7 +212,6 @@ class HomePage extends Component {
 
                     this.setState({studentIndex})
                 }
-
                 this.mySwiper.init()
             }
         }).catch((error) => {
@@ -226,12 +228,24 @@ class HomePage extends Component {
         operation([
             {
                 text: '家长', onPress: () => {
-                    switchUser({userRole: 1})()
+                    if (this.props.userInfo.userRole === 2) {
+                        Toast.loading('身份切换中...', 0)
+                        setTimeout(() => {
+                            Toast.success('切换成功!', 1)
+                            switchUser({userRole: 1})()
+                        }, 1000)
+                    }
                 }
             },
             {
                 text: '教师', onPress: () => {
-                    switchUser({userRole: 2})();
+                    if (this.props.userInfo.userRole === 1) {
+                        Toast.loading('身份切换中...', 0)
+                        setTimeout(() => {
+                            Toast.success('切换成功!', 1)
+                            switchUser({userRole: 2})();
+                        }, 1000)
+                    }
                 }
             },
         ])
@@ -296,14 +310,22 @@ class HomePage extends Component {
     }
 
     onStuSwitch = (stuIndex) => {
-        this.setState({
-            studentIndex: stuIndex
-        })
-        switchUser({
-            stuName: this.props.userInfo.students[stuIndex].stuName,
-            stuId: this.props.userInfo.students[stuIndex].stuId,
-            student: this.props.userInfo.students[stuIndex]
-        })()
+
+        if (this.state.studentIndex !== stuIndex) {
+            Toast.loading('学生切换中...', 0)
+            setTimeout(() => {
+                Toast.success('切换成功!', 1)
+                this.setState({
+                    studentIndex: stuIndex
+                })
+                switchUser({
+                    stuName: this.props.userInfo.students[stuIndex].stuName,
+                    stuId: this.props.userInfo.students[stuIndex].stuId,
+                    student: this.props.userInfo.students[stuIndex]
+                })()
+            }, 1000)
+        }
+
     }
 
     getTeacherMenu = () => {

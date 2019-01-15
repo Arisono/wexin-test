@@ -123,30 +123,5 @@ export const API = {
     getCurr: _baseURL + '/score/getCurr',
 }
 
-/**
- * Created by RaoMeng on 2019/1/11
- * Desc: 公共请求
- */
-export const REQUEST = {
-    //获取微信信息
-    getWeixinInfo: () => {
-        const userInfo = store.getState().redUserInfo
-
-        fetchGet('https://api.weixin.qq.com/cgi-bin/user/info', {
-            access_token: userInfo.accessToken,
-            openid: userInfo.userOpenid,
-            lang: 'zh_CN',
-        }).then(response => {
-            if (!isObjEmpty(response)) {
-                switchUser({
-                    userAvatar: response.headimgurl ? response.headimgurl : userInfo.userAvatar,
-                    userOpenid: response.openid ? response.openid : userInfo.userOpenid,
-                })()
-            }
-        }).catch(error => {
-
-        })
-    }
-}
 
 

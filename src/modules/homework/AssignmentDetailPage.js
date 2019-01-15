@@ -203,9 +203,9 @@ class AssignmentDetailPage extends React.Component {
                     dataSource={this.state.data}
                     renderItem={item => (
                         <List.Item>
-                            <div>
-                                <span className="text_bold margin_left_right_20">{item.name}:</span>
-                                <span>{item.content}</span>
+                            <div style={{display: 'flex'}}>
+                                <div className="homework-detail-leave-name">{item.name}:</div>
+                                <div className='homework-detail-leave-content'>{item.content}</div>
                             </div>
                         </List.Item>
                     )}/>

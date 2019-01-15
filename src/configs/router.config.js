@@ -58,6 +58,7 @@ import VoteListParent from "../modules/vote/VoteListParent";
 import VoteListTeacher from "../modules/vote/VoteListTeacher";
 import HomeWorkList from "../modules/homework/HomeWorkList";
 import NotifyBoardDetail from "../modules/notificationCenter/NotifyBoardDetail";
+import PhonesSearch from "../modules/phonesBook/PhonesSearch";
 
 export default class RouteConfig extends Component {
 
@@ -82,10 +83,12 @@ export default class RouteConfig extends Component {
                     <Route path='/uploadVideo/:classId/:name?' component={UploadVideo}/>{/*视频上传*/}
                     <Route path='/videoPlayer/:title?' component={VideoPlayer}/>{/*视频播放*/}
 
-                    <Route path='/principalMailbox' component={PrincipalMailbox}/>{/*校长信箱*/}
-                    <Route path='/meetingSignIn' component={MeetingSignIn}/>{/*会议列表*/}
                     <Route path='/phonesSelect' component={PhonesSelect}/>{/*教师端通讯录*/}
                     <Route path='/phonesList/:type/:classId?/:classTitle?' component={PhonesList}/>{/*家长端通讯录*/}
+                    <Route path='/phonesSearch/:type' component={PhonesSearch}/>{/*通讯录搜索页面*/}
+
+                    <Route path='/principalMailbox' component={PrincipalMailbox}/>{/*校长信箱*/}
+                    <Route path='/meetingSignIn' component={MeetingSignIn}/>{/*会议列表*/}
                     <Route path='/systemMessage' component={SystemMessage}/>{/*系统消息*/}
                     <Route path='/useHelp' component={UseHelp}/>{/*使用帮助*/}
                     <Route path='/wonderMoment/:type?' component={WonderMoment}/>{/*精彩瞬间*/}

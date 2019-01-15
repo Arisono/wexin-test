@@ -194,6 +194,10 @@ span.ant-select-selection.ant-select-selection--multiple {
 /*}*/
 
 .swiper-slide {
+
+}
+
+.swiper-content {
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
 }
@@ -273,5 +277,25 @@ span.ant-select-selection.ant-select-selection--multiple {
     font-family: PingFangSC-Regular;
     font-size: 14px;
     letter-spacing: 0;
+}
+
+.search-bar-root {
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    background: #F6F6F6;
+}
+
+.search-bar-layout {
+    width: 100%;
+    height: 100%;
+    background: white;
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: #ACACAC;
+    display: flex;
+    align-items: center;
+    padding-left: 16px;
+    border-radius: 4px;
 }
 

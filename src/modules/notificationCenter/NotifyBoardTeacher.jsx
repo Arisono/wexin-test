@@ -135,10 +135,14 @@ class NotifyBoardTeacher extends Component {
                      }}>
                     <div className="swiper-wrapper">
                         <div className="swiper-slide">
-                            {releaseItems}
+                            <div className='swiper-content'>
+                                {releaseItems}
+                            </div>
                         </div>
                         <div className="swiper-slide">
-                            {receiveItems}
+                            <div className='swiper-content'>
+                                {receiveItems}
+                            </div>
                         </div>
                     </div>
                 </div>

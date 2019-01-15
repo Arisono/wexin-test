@@ -119,16 +119,39 @@ class PhonesSelect extends Component {
                      }}>
                     <div className="swiper-wrapper">
                         <div className="swiper-slide">
-
-                            {teacherItems}
+                            <div className='search-bar-root'>
+                                <div className='search-bar-layout' onClick={this.toSearchPage.bind(this, 1)}>
+                                    <Icon type="search"/>
+                                    <span style={{paddingLeft: '10px'}}>搜索联系人</span>
+                                </div>
+                            </div>
+                            <div className='swiper-content'>
+                                {teacherItems}
+                            </div>
                         </div>
                         <div className="swiper-slide">
-                            {parentItems}
+                            <div className='search-bar-root'>
+                                <div className='search-bar-layout' onClick={this.toSearchPage.bind(this, 2)}>
+                                    <Icon type="search"/>
+                                    <span style={{paddingLeft: '10px'}}>搜索联系人</span>
+                                </div>
+                            </div>
+                            <div className='swiper-content'>
+                                {parentItems}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         )
+    }
+
+    toSearchPage = (role) => {
+        if (role === 1) {
+            this.props.history.push('/phonesSearch/teacher')
+        } else if (role === 2) {
+            this.props.history.push('/phonesSearch/parent')
+        }
     }
 
     getClassList = () => {

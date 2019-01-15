@@ -4,6 +4,7 @@
  */
 
 import React, {Component} from 'react'
+import ReactDOM from 'react-dom'
 import MeetingSignItem from 'components/MeetingSignItem'
 import MeetingBean from "model/MeetingBean";
 import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
@@ -13,6 +14,7 @@ import {Toast} from 'antd-mobile'
 import {Icon, Skeleton} from 'antd'
 import RefreshLayout from "../../components/RefreshLayout";
 import {connect} from 'react-redux'
+import {saveListState} from "../../redux/actions/listState";
 
 const mPageSize = 10
 let mPageIndex = 0
@@ -32,10 +34,19 @@ class MeetingSignIn extends Component {
     componentDidMount() {
         document.title = '会议签到'
 
-        Toast.loading('数据加载中...', 0)
-
-        mPageIndex = 0
-        this.loadMeetList()
+        if (this.props.listState && !isObjEmpty(this.props.listState.listData)) {
+            this.setState({
+                meetingSignList: this.props.listState.listData,
+                isLoading: false,
+            }, () => {
+                ReactDOM.findDOMNode(this.container).scrollTop = this.props.listState.scrollTop
+            })
+            mPageIndex = this.props.listState.pageIndex
+        } else {
+            Toast.loading('数据加载中...', 0)
+            mPageIndex = 0
+            this.loadMeetList()
+        }
     }
 
     render() {
@@ -66,6 +77,9 @@ class MeetingSignIn extends Component {
             <div style={{background: '#F2F2F2'}}>
                 <RefreshLayout
                     refreshing={isRefreshing}
+                    ref={el => {
+                        this.container = el
+                    }}
                     onRefresh={this.loadMeetList}>
                     {meetingItems}
                 </RefreshLayout>
@@ -144,7 +158,7 @@ class MeetingSignIn extends Component {
             this.setState({
                 meetingSignList: meetingSignList,
                 isRefreshing: false,
-                isLoading:false
+                isLoading: false
             })
         }).catch(error => {
             Toast.hide()
@@ -154,7 +168,7 @@ class MeetingSignIn extends Component {
             }
             this.setState({
                 isRefreshing: false,
-                isLoading:false
+                isLoading: false
             })
 
             if (typeof error === 'string') {
@@ -195,12 +209,19 @@ class MeetingSignIn extends Component {
     }
 
     onItemClick = index => {
+        saveListState({
+            scrollTop: ReactDOM.findDOMNode(this.container).scrollTop,
+            listData: this.state.meetingSignList,
+            pageIndex: mPageIndex,
+            itemIndex: index,
+        })()
         const {meetingSignList} = this.state
         this.props.history.push('/meet-detail/' + meetingSignList[index].meetId)
     }
 }
 
 let mapStateToProps = (state) => ({
+    listState: {...state.redListState},
     userInfo: {...state.redUserInfo}
 })
 

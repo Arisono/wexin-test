@@ -28,6 +28,8 @@ export default class PhonesSearch extends Component {
     }
 
     componentDidMount() {
+        this.searchInput.focus()
+
         this.mType = this.props.match.params.type
         if (this.mType === 'teacher') {
             this.title = '搜索老师'
@@ -45,8 +47,9 @@ export default class PhonesSearch extends Component {
         const {phonesList, isRefreshing} = this.state
 
         return (
-            <div className='phone-select-root'>
-                <SearchBar placeholder="搜索家长" maxLength={20}/>
+            <div className='phone-select-root' style={{height: '100%'}}>
+                <SearchBar placeholder="搜索家长" maxLength={20}
+                           ref={ref => this.searchInput = ref}/>
 
                 <RefreshLayout
                     refreshing={isRefreshing}

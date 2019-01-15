@@ -233,7 +233,7 @@ class HomePage extends Component {
                         setTimeout(() => {
                             Toast.success('切换成功!', 1)
                             switchUser({userRole: 1})()
-                        }, 1000)
+                        }, 500)
                     }
                 }
             },
@@ -244,7 +244,7 @@ class HomePage extends Component {
                         setTimeout(() => {
                             Toast.success('切换成功!', 1)
                             switchUser({userRole: 2})();
-                        }, 1000)
+                        }, 500)
                     }
                 }
             },
@@ -323,7 +323,7 @@ class HomePage extends Component {
                     stuId: this.props.userInfo.students[stuIndex].stuId,
                     student: this.props.userInfo.students[stuIndex]
                 })()
-            }, 1000)
+            }, 500)
         }
 
     }

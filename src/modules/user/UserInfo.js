@@ -7,6 +7,7 @@ import {API, _baseURL} from "../../configs/api.config";
 import {Toast} from 'antd-mobile'
 import {connect} from 'react-redux'
 import {fetchPost, fetchGet} from "../../utils/fetchRequest";
+import UploadEnclosure from "../../components/UploadEnclosure";
 
 class UserInfo extends Component {
     //老师是1家长是2
@@ -136,7 +137,15 @@ class UserInfo extends Component {
                      style={{height: '34px', background: '#CCCCCC', width: '1px'}}></div>
                 <span class="fileinput-button margin_left_20" style={{color: "#3680ED"}}>
                     上传
-                  <input type="file" accept="image/*" capture="camera" onChange={this.uploadChange}/>
+                  {/*<input type="file" accept="image/*" capture="camera" onChange={this.uploadChange}/>*/}
+                    <UploadEnclosure
+                        action={API.UPLOAD_FILE}
+                        fileList={fileList}
+                        count={9}
+                        multiple={true}
+                        beforeUpload={this.beforeUpload.bind(this)}
+                        handleChange={this.handleChange.bind(this)}
+                    />
                 </span>
             </div>
             <div className='flex' style={{marginTop: '8px'}}>
@@ -166,7 +175,20 @@ class UserInfo extends Component {
             </div>
         </div>
     }
+    beforeUpload = (file, fileList) => {
 
+    }
+
+    handleChange = fileList => {
+        if (fileList) {
+            fileList.forEach((value, index) => {
+                value.url = value.response ? (_baseURL + value.response.data) : value.url
+                value.picUrl = value.response ? value.response.data : value.picUrl
+            })
+
+            this.setState({fileList})
+        }
+    }
 
     uploadFile = (file) => {
         const formData = new FormData();

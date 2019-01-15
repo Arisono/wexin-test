@@ -299,3 +299,8 @@ span.ant-select-selection.ant-select-selection--multiple {
     border-radius: 4px;
 }
 
+.common-fixed-top{
+    /*position: fixed;*/
+    /*top: 0;*/
+}
+

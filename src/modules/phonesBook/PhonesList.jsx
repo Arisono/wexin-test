@@ -57,11 +57,12 @@ export default class PhonesList extends Component {
         const {phonesList, classTitle, isLoading, isRefreshing} = this.state
 
         return (
-            <div className='phone-select-root'>
-                <SearchBar placeholder="搜索家长" maxLength={20}/>
-
-                <div className={isObjEmpty(classTitle) ? 'displayNone' : 'phones-list-header'}>{classTitle}</div>
-                <div className={isObjEmpty(classTitle) ? 'displayNone' : 'gray-line'} style={{height: '1px'}}></div>
+            <div className='phone-select-root' style={{height:'100%',maxHeight:'100vh'}}>
+                <div className='common-fixed-top'>
+                    <SearchBar placeholder="搜索家长" maxLength={20}/>
+                    <div className={isObjEmpty(classTitle) ? 'displayNone' : 'phones-list-header'}>{classTitle}</div>
+                    <div className={isObjEmpty(classTitle) ? 'displayNone' : 'gray-line'} style={{height: '1px'}}></div>
+                </div>
 
                 <RefreshLayout
                     refreshing={isRefreshing}

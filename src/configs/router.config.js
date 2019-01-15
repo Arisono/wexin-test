@@ -119,7 +119,7 @@ export default class RouteConfig extends Component {
                     <Route path='/send-vote' component={SendVote}/>{/*//发起投票*/}
                     <Route path='/sendMeetting' component={SendMeet}/> {/*//发起会议*/}
                     <Route path='/class-schedule' component={ClassSchedule}/> {/*//课程表*/}
-                    <Route path='/score-inquiry' component={ScoreInquiry}/> {/*//成绩通知*/}
+                    <Route path='/score-inquiry' component={ScoreInquiry}/> {/*//成绩查询*/}
                     <Route path='/approvel' component={Approvel}/>{/*审批*/}
                     <Route path='/approvel-detail/:approveId/:isMyApply' component={ApprovelDetail}/> {/*审批详情*/}
                     <Route path='/meet-detail/:meetId?' component={MeetDetail}/> {/*会议签到详情*/}

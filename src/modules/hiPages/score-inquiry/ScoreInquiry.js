@@ -15,7 +15,9 @@ const Option = Select.Option;
 function OptionS(props) {
     return(
         <div>
-            <Option >单科-{props.itemdata}</Option>
+            {
+                props.optionsName!= ""  ?<Option value={props.optionsName} >{props.optionsName}</Option>:""
+            }
         </div>
     )
 }
@@ -37,19 +39,39 @@ class ScoreInquiry extends Component{
             <div className="this_contaior" >
                <div className="header_select_sty">
                    <div style={{width:"50%",}}>
-                       <Select defaultValue="单科查询-请选择" style={{ width:'100%'}} onChange={this.handleSelectClass}>
+                       <Select  defaultValue="单科查询-请选择" style={{ width:'100%'}} onChange={this.handleSelectClass}>
                            <Option value={null} >该项不选</Option>
-                           <Option value={this.state.scoreNames[0]} >{this.state.scoreNames[0]}</Option>
-                           <Option value={this.state.scoreNames[1]} >{this.state.scoreNames[1]}</Option>
-                           <Option value={this.state.scoreNames[2]} >{this.state.scoreNames[2]}</Option>
-                           <Option value={this.state.scoreNames[3]} >{this.state.scoreNames[3]}</Option>
-                           <Option value={this.state.scoreNames[4]} >{this.state.scoreNames[4]}</Option>
-                           <Option value={this.state.scoreNames[5]} >{this.state.scoreNames[5]}</Option>
-                           <Option value={this.state.scoreNames[6]} >{this.state.scoreNames[6]}</Option>
-                           <Option value={this.state.scoreNames[7]} >{this.state.scoreNames[7]}</Option>
-                           <Option value={this.state.scoreNames[8]} >{this.state.scoreNames[8]}</Option>
-                           <Option value={this.state.scoreNames[9]} >{this.state.scoreNames[9]}</Option>
-                           <Option value={this.state.scoreNames[10]} >{this.state.scoreNames[10]}</Option>
+                           {
+                               this.state.scoreNames[0]!= ""   ?<Option value={this.state.scoreNames[0]} >{this.state.scoreNames[0]}</Option>:""
+                           }
+                           {
+                               this.state.scoreNames[1]!= ""   ?<Option value={this.state.scoreNames[1]} >{this.state.scoreNames[1]}</Option>:""
+                           }
+                           {
+                               this.state.scoreNames[2]!= ""  ?<Option value={this.state.scoreNames[2]} >{this.state.scoreNames[2]}</Option>:""
+                           }
+                           {
+                               this.state.scoreNames[3]!= ""  ?<Option value={this.state.scoreNames[3]} >{this.state.scoreNames[3]}</Option>:""
+                           }
+                           {
+                               this.state.scoreNames[4]!= ""  ?<Option value={this.state.scoreNames[4]} >{this.state.scoreNames[4]}</Option>:""
+                           }
+                           {
+                               this.state.scoreNames[5]!= ""  ?<Option value={this.state.scoreNames[5]} >{this.state.scoreNames[5]}</Option>:""
+                           }
+                           {
+                               this.state.scoreNames[6]!= ""  ?<Option value={this.state.scoreNames[6]} >{this.state.scoreNames[6]}</Option>:""
+                           }
+                           {
+                               this.state.scoreNames[7]!= ""  ?<Option value={this.state.scoreNames[7]} >{this.state.scoreNames[7]}</Option>:""
+                           }
+                           {
+                               this.state.scoreNames[8]!= ""  ?<Option value={this.state.scoreNames[8]} >{this.state.scoreNames[8]}</Option>:""
+                           }
+                           {
+                               this.state.scoreNames[9]!= ""  ?<Option value={this.state.scoreNames[9]} >{this.state.scoreNames[9]}</Option>:''
+                           }
+
                        </Select>
                    </div>
                    <div style={{width:"50%"}}>
@@ -65,7 +87,6 @@ class ScoreInquiry extends Component{
                            <Option value={this.state.scoreTypes[7]} >{this.state.scoreTypes[7]}</Option>
                            <Option value={this.state.scoreTypes[8]} >{this.state.scoreTypes[8]}</Option>
                            <Option value={this.state.scoreTypes[9]} >{this.state.scoreTypes[9]}</Option>
-                           <Option value={this.state.scoreTypes[10]} >{this.state.scoreTypes[10]}</Option>
                        </Select>
                    </div>
                </div>
@@ -95,9 +116,15 @@ class ScoreInquiry extends Component{
                     })
                 }else {
                     Toast.fail('暂无数据', 2)
+                    this.setState({
+                        ScoreDataList:[]
+                    })
                 }
             }).catch((error) =>{
                 console.log('error',error)
+                this.setState({
+                    ScoreDataList:[]
+                })
                 if (typeof error === 'string') {
                     Toast.fail(error, 2)
                 } else {

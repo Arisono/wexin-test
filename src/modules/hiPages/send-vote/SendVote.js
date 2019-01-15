@@ -214,7 +214,6 @@ class SendVote extends Component{
                 </div>
                 <div className="comhline_sty1"></div>
 
-                <div style={{margin:10}}>
                     <UploadEnclosure
                         action={API.UPLOAD_FILE}
                         fileList={this.state.fileList}
@@ -223,7 +222,6 @@ class SendVote extends Component{
                         beforeUpload={this.beforeUpload.bind(this)}
                         handleChange={this.handleChange.bind(this)}
                     />
-                </div>
 
                 <center><Button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSendVote}>提交</Button></center>
             </div>

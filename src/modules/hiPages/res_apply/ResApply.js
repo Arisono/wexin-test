@@ -9,12 +9,13 @@ import { Select,Upload,Modal,Icon } from 'antd';
 import UserItem from './UserItem';
 import {Toast,Picker,List} from 'antd-mobile';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
-import {API} from '../../../configs/api.config';
+import {API,_baseURL} from '../../../configs/api.config';
 import {connect} from 'react-redux';
 import {getIntValue, getStrValue, isObjEmpty} from "../../../utils/common";
 import TargetSelect from '../../../components/TargetSelect';
 import {getOrganization} from "../../../utils/api.request";
 import {ORGANIZATION_TEACHER} from "../../../utils/api.constants";
+import UploadEnclosure from '../../../components/UploadEnclosure';
 
 const Option = Select.Option;
 
@@ -111,29 +112,32 @@ class ResApply extends Component{
                     : <TargetSelect {...defaultTargetProps}/>}
                 <div className="comhline_sty"></div>
 
-                <div  className="item_sty">
-                    <div style={{width:150,fontSize:15,color:"#666666"}}>附件</div>
-                </div>
-
-                <div className="clearfix" style={{margin:10}}>
-                    <Upload
+                    <UploadEnclosure
                         action={API.UPLOAD_FILE}
-                        listType="picture-card"
                         fileList={this.state.fileList}
-                        onPreview={this.handlePreview}
-                        onChange={this.handleChange}
+                        count={9}
                         multiple={true}
-                    >
-                        {this.state.fileList.length >= 4 ? null : uploadButton}
-                    </Upload>
-                    <Modal visible={this.state.previewVisible} footer={null} onCancel={this.handleCancel}>
-                        <img alt="example" style={{ width: '100%' }} src={this.state.previewImage} />
-                    </Modal>
-                </div>
+                        beforeUpload={this.beforeUpload.bind(this)}
+                        handleChange={this.handleChange.bind(this)}
+                    />
 
                 <center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSaveClick}>提交</button></center>
             </div>
         )
+    }
+
+    beforeUpload = (file, fileList) => {
+
+    }
+    handleChange = fileList => {
+        if (fileList) {
+            fileList.forEach((value, index) => {
+                value.url = value.response ? (_baseURL + value.response.data) : value.url
+                value.picUrl = value.response ? value.response.data : value.picUrl
+            })
+
+            this.setState({fileList})
+        }
     }
     onTargetFocus = (e) => {
         if (isObjEmpty(this.state.targetData)) {
@@ -206,6 +210,7 @@ class ResApply extends Component{
         console.log('param',{
             oaString:params
         })
+        return
         fetchPost(API.oaCreate,{
             oaString:JSON.stringify(params)
         },{})
@@ -264,11 +269,7 @@ class ResApply extends Component{
             Receiver:value
         })
     }
-    handleChange = ({fileList} ) => {
-        this.setState({
-            fileList:fileList,
-        })
-    }
+
     handlePreview = (file) => {
         this.setState({
             previewImage: file.url || file.thumbUrl,

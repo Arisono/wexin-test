@@ -114,11 +114,7 @@ class MeetDetail extends Component{
         if(meetId == null || meetId == ''){
             return
         }
-        this.setState({
-            showEndBtn:this.props.userInfo.stuId == "" ? true : false
-        })
-       console.log('meetId',this.props.match.params.meetId)
-
+        console.log('meetId',this.props.match.params.meetId)
         let meetBean = new MeetingBean()
         meetBean.createTime = ''
         meetBean.title = ''
@@ -160,6 +156,11 @@ class MeetDetail extends Component{
                         signList:response.data.notifyRecords.signs,
                         unsignList:response.data.notifyRecords.unSigns,
                         notifyStatus:response.data.notifyStatus
+                    })
+                    this.setState({
+                        showEndBtn:this.props.userInfo.userId == ""  ? false : this.props.userInfo.userId==response.data.notifyCreator ? true : false
+                    },function () {
+                        console.log('showEndBtn',this.state.showEndBtn)
                     })
                 }
             })

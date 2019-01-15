@@ -160,7 +160,6 @@ class FieldTrip extends Component {
                 {/*</div>*/}
                 <div className="comhline_sty"></div>
 
-                <div style={{margin:10}}>
                     <UploadEnclosure
                         action={API.UPLOAD_FILE}
                         fileList={this.state.fileList}
@@ -169,7 +168,6 @@ class FieldTrip extends Component {
                         beforeUpload={this.beforeUpload.bind(this)}
                         handleChange={this.handleChange.bind(this)}
                     />
-                </div>
 
                 <center>
                     <button type="button" className="btn btn-primary comBtn_sty" onClick={this.doSaveClick}>提交</button>

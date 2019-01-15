@@ -14,6 +14,8 @@ import {isObjEmpty,getIntValue, getStrValue} from  '../../../utils/common';
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
 import LazyLoad from 'react-lazyload';
 import ImagesViewer from '../../../components/imagesVIewer/index';
+import {Toast} from 'antd-mobile';
+
 
 class LeaveDetail extends Component{
    constructor(props){
@@ -25,6 +27,27 @@ class LeaveDetail extends Component{
             role:'parent',
             previewImage: '',
             previewVisible: false,
+            messageContent: null,
+
+        }
+    }
+    componentWillMount() {
+        document.title = '学生请假'
+    }
+    componentDidMount() {
+        let lvId = this.props.match.params.lvId
+        console.log("lvId",lvId)
+        let pictureList=[];
+        for (let i = 0; i < this.state.item.enclosure.length; i++) {
+            pictureList.push(_baseURL+this.state.item.enclosure[i]);
+        }
+        this.setState({
+            pictureList:pictureList
+        },function () {
+            console.log("pictureList",pictureList)
+        })
+        if (!isObjEmpty(lvId)){
+
         }
     }
      render(){
@@ -89,11 +112,13 @@ class LeaveDetail extends Component{
 
                 <div className="foot_input_view">
                          <div className="comH_view">
-                             <Icon type="form"  style={{height:"28px",width:"28px"}}/>
-
-                             <textarea autoFocus="autoFocus" ref='voteTitle' className="form-control textarea_sty"
-                                       rows="auto" placeholder="请输入回复内容" style={{resize:'none'}} ></textarea>
-                             <Button type="button" className="btn btn-primary send_btn" onClick={this.doSendMsg}>发送</Button>
+                             <div className="footer flex padding_10" style={{background: '#F2F2F2', alignItems: 'center'}}>
+                                 <img src={require('imgs/ic_edit.png')} width={28} height={28}/>
+                                 <input ref={ref => this.input_content = ref} value={this.state.messageContent}
+                                        onChange={this.onChangeMessage} placeholder="留言"
+                                        className='homework-detail-leave-input'></input>
+                                 <span onClick={this.onMessageSend} className="homework-detail-leave-send">发送</span>
+                             </div>
                          </div>
                 </div>
                 {this.state.previewVisible ?
@@ -103,24 +128,34 @@ class LeaveDetail extends Component{
             </div>
         )
     }
-    componentWillMount() {
-        document.title = '学生请假'
-    }
-    componentDidMount() {
-        let lvId = this.props.match.params.lvId
-        console.log("lvId",lvId)
-        let pictureList=[];
-        for (let i = 0; i < this.state.item.enclosure.length; i++) {
-            pictureList.push(_baseURL+this.state.item.enclosure[i]);
+    onMessageSend =() =>{
+        if (isObjEmpty(this.state.messageContent)) {
+            Toast.info("请输入回复内容")
+            return;
         }
-        this.setState({
-            pictureList:pictureList
-        },function () {
-            console.log("pictureList",pictureList)
+        fetchPost(API.messageCreate,{
+            messName:'这是回复',
+            messContent:this.state.messageContent,
+            userId: this.props.userInfo.userId,
+            lvId:this.state.item.lvId,
+        }).then((response)=>{
+            console.log("response:"+JSON.stringify(response));
+            if(response.success){
+                Toast.info("回复成功！");
+                // this.getLeaveListData();
+                this.backTask = setTimeout(() => {
+                    this.props.history.goBack();
+                }, 2000)
+            }
+        }).catch((error)=>{
+            console.log("error:"+JSON.stringify(error));
         })
-        if (!isObjEmpty(lvId)){
-
-        }
+    }
+    onChangeMessage = (event) => {
+        let msg = event.target.value;
+        this.setState({
+            messageContent: msg
+        })
     }
     handleCancel = () => this.setState({previewVisible: false})
     handlePreview = (url, index) => {

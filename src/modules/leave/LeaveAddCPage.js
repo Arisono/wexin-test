@@ -127,7 +127,6 @@ class LeaveAddCPage extends Component {
                 {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
                     : <TargetSelect {...defaultTargetProps}/>}
 
-               <div style={{margin:10}}>
                    <UploadEnclosure
                        action={API.UPLOAD_FILE}
                        fileList={this.state.fileList}
@@ -136,7 +135,6 @@ class LeaveAddCPage extends Component {
                        beforeUpload={this.beforeUpload.bind(this)}
                        handleChange={this.handleChange.bind(this)}
                    />
-               </div>
 
                 <div className="flex_center margin_top_20">
                     <center><Button type="button" className="btn btn-primary comBtn_sty"

@@ -118,7 +118,6 @@ export default class RouteConfig extends Component {
                     <Route path={"/TestImagesViewer"} component={TestImagesViewer}/>
                     <Route path={'/picturesWall'} component={PicturesWallItem}/>
                     <Route path='/leaveApproval' component={LeaveApprovalPage}/>
-                    <Route path='/leaveList/:role' component={LeaveListPage}/>
 
 
                     {/*方龙海*/}
@@ -133,8 +132,10 @@ export default class RouteConfig extends Component {
                     <Route path='/approvel-detail/:approveId/:isMyApply' component={ApprovelDetail}/> {/*审批详情*/}
                     <Route path='/meet-detail/:meetId?' component={MeetDetail}/> {/*会议签到详情*/}
                     <Route path='/leavedetail/:lvId?' component={LeaveDetail}/> {/*学生请假详情*/}
-                    <Route path='/leaveAddC' component={LeaveAddCPage}/>
-                    <Route path='/leaveAdd' component={LeaveAddPage}/>
+
+                    <Route path='/leaveAddC' component={LeaveAddCPage}/>{/*学生请假*/}
+                    <Route path='/leaveAdd' component={LeaveAddPage}/>   {/*老师请假*/}
+                    <Route path='/leaveList/:role' component={LeaveListPage}/>{/*学生请假列表*/}
 
                 </div>
             </Router>

@@ -143,6 +143,9 @@ class LeaveDetail extends Component{
             console.log("response:"+JSON.stringify(response));
             if(response.success){
                 Toast.info("回复成功！");
+                this.setState({
+                    messageContent:""
+                })
                 this.getleaveDetail(this.state.itemdetail.lvId)
                 // this.backTask = setTimeout(() => {
                 //     this.props.history.goBack();

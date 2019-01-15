@@ -22,3 +22,24 @@
     letter-spacing: 1.5px;
     font-size: 15px;
 }
+
+.homework-detail-leave-name {
+    font-family: PingFangSC-Medium;
+    font-size: 15px;
+    color: #333333;
+    font-weight: bold;
+    letter-spacing: 0;
+    width: 80px;
+    padding-left: 20px;
+}
+
+.homework-detail-leave-content {
+    font-family: PingFangSC-Medium;
+    font-size: 14px;
+    color: #666666;
+    letter-spacing: 0;
+    padding-right: 10px;
+    flex: 1;
+    word-break: break-all;
+    overflow: hidden;
+}

@@ -37,7 +37,7 @@ class HomePage extends Component {
     }
 
     componentWillMount() {
-        getWeixinInfo()
+        // getWeixinInfo()
     }
 
     componentDidMount() {

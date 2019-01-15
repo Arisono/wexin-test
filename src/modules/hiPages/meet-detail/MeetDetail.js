@@ -115,9 +115,12 @@ class MeetDetail extends Component{
             return
         }
         this.setState({
-            showEndBtn:this.props.userInfo.stuId == "" ? true : false
+            showEndBtn:this.props.userInfo.userId == "" ? false : true
+        },function () {
+            console.log('meetId',this.props.match.params.meetId)
+            console.log('showEndBtn',this.state.showEndBtn)
+
         })
-       console.log('meetId',this.props.match.params.meetId)
 
         let meetBean = new MeetingBean()
         meetBean.createTime = ''

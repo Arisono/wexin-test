@@ -377,16 +377,16 @@ class LeaveListPage extends React.Component{
                                              <div  className="col-xs-3" id="col-clear"   style={{fontSize:12,color:"#666666"}}>请假时间：</div>
                                              <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{item.startTime}—{item.endTime}</div>
                                          </div>
-                                         <div className="row " style={{marginTop:10}} >
+                                         <div className="row " style={{marginTop:10,marginBottom:10}} >
                                              <div  className="col-xs-3" id="col-clear"  style={{fontSize:12,color:"#666666"}}>请假事由：</div>
                                              <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{item.content}</div>
                                          </div>
 
 
-                                         <div className="row " style={{marginTop:10,marginBottom:10}} >
-                                             <div  className="col-xs-3" id="col-clear"  style={{fontSize:12,color:"#666666"}}>老师回复：</div>
-                                             <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{ item.leaveMessages.length > 0 ? item.leaveMessages[0].messContent : '无'}</div>
-                                         </div>
+                                         {/*<div className="row " style={{marginTop:10,marginBottom:10}} >*/}
+                                             {/*<div  className="col-xs-3" id="col-clear"  style={{fontSize:12,color:"#666666"}}>老师回复：</div>*/}
+                                             {/*<div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{ item.leaveMessages.length > 0 ? item.leaveMessages[0].messContent : '无'}</div>*/}
+                                         {/*</div>*/}
 
                                      </div>
                                  </List.Item>

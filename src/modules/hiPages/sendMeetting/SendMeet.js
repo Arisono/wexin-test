@@ -282,7 +282,7 @@ class SendMeet extends Component {
             notifyAddress: this.state.meetAddress,
             startDate: moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
             endDate: moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
-            reminderDate: new Date(noticeT),
+            reminderDate: moment(new Date(noticeT)).format('YYYY-MM-DD HH:mm:ss'),
             userIds: JSON.stringify(userList)
         }
 

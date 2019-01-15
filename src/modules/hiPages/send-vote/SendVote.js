@@ -231,7 +231,7 @@ class SendVote extends Component {
                     <UploadEnclosure
                         action={API.UPLOAD_FILE}
                         fileList={this.state.fileList}
-                        count={4}
+                        count={9}
                         multiple={true}
                         beforeUpload={this.beforeUpload.bind(this)}
                         handleChange={this.handleChange.bind(this)}

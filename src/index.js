@@ -16,14 +16,13 @@ import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 
 ReactDOM.render(<LocaleProvider locale={zh_CN}>
-    <MoLocaleProvider locale={undefined}>
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <RouteConfig/>
             </PersistGate>
         </Provider>
-    </MoLocaleProvider>
-</LocaleProvider>, document.getElementById('root'));
+    </LocaleProvider>
+    , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -186,12 +186,20 @@ class SendMeet extends Component {
                 <div className="common-column-layout" style={{fontSize: 15}}>
                     <DatePicker
                         value={this.state.startValue}
+                        locale={{
+                            okText: '确定',
+                            dismissText: '取消'
+                        }}
                         onChange={date => this.setState({startValue: date})}>
                         <List.Item arrow="horizontal">会议开始时间</List.Item>
                     </DatePicker>
                     <div className="comhline_sty1"></div>
                     <DatePicker
                         value={this.state.endValue}
+                        locale={{
+                            okText: '确定',
+                            dismissText: '取消'
+                        }}
                         onChange={date => this.setState({endValue: date})}>
                         <List.Item arrow="horizontal">会议结束时间</List.Item>
                     </DatePicker>

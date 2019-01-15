@@ -183,8 +183,12 @@ class SendVote extends Component {
                 <div className="comhline_sty"></div>
 
                 <div>
-                    {this.state.voteOptionss.map((itemata,index) => <SelectItem index={index} itemata = {itemata} handelSItem={this.handelSItem} removeSItem ={this.removeSItem}></SelectItem>)}
-                    <div onClick={this.addSelectItem} className="text-center" style={{color:"#0CE11D",fontSize:12,margin:10,}}>+ <span style={{borderBottom:"1px #0CE11D solid"}}>添加选项</span></div>
+                    {this.state.voteOptionss.map((itemata, index) => <SelectItem index={index} itemata={itemata}
+                                                                                 handelSItem={this.handelSItem}
+                                                                                 removeSItem={this.removeSItem}></SelectItem>)}
+                    <div onClick={this.addSelectItem} className="text-center"
+                         style={{color: "#0CE11D", fontSize: 12, margin: 10,}}>+ <span
+                        style={{borderBottom: "1px #0CE11D solid"}}>添加选项</span></div>
                 </div>
 
                 <div className="comhline_sty"></div>
@@ -204,6 +208,10 @@ class SendVote extends Component {
                     <div className="comhline_sty1"></div>
                     <DatePicker
                         value={this.state.endValue}
+                        locale={{
+                            okText: '确定',
+                            dismissText: '取消'
+                        }}
                         onChange={date => this.setState({endValue: date})}>
                         <List.Item arrow="horizontal">结束时间</List.Item>
                     </DatePicker>
@@ -220,7 +228,7 @@ class SendVote extends Component {
                 </div>
                 <div className="comhline_sty1"></div>
 
-                <div style={{margin:10}}>
+                <div style={{margin: 10}}>
                     <UploadEnclosure
                         action={API.UPLOAD_FILE}
                         fileList={this.state.fileList}

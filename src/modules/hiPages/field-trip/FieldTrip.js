@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react';
-import {Select, Icon, Upload, Modal} from 'antd';
+import {Select, Icon, Upload, Modal,Button} from 'antd';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import './FieldTrip.css';
 import {Toast, Picker, List, DatePicker} from 'antd-mobile';
@@ -103,7 +103,7 @@ class FieldTrip extends Component {
             multiple: false,
         }
         return (
-            <div onChange={this.handelValueCom} ref={node => this.node = node}>
+            <div className='common-column-layout' onChange={this.handelValueCom} ref={node => this.node = node }>
                 <div className="common-column-layout">
                     <Picker
                         data={this.state.typeList} title='出差类型' extra='请选择'
@@ -169,9 +169,12 @@ class FieldTrip extends Component {
                         handleChange={this.handleChange.bind(this)}
                     />
 
-                <center>
-                    <button type="button" className="btn btn-primary comBtn_sty" onClick={this.doSaveClick}>提交</button>
-                </center>
+
+                {/*<center>*/}
+                    <Button className='commonButton' type='primary' style={{margin: '35px'}}
+                            onClick={this.doSaveClick}>提交</Button>
+                    {/*<button type="button" className="btn btn-primary comBtn_sty" onClick={this.doSaveClick}>提交</button>*/}
+                {/*</center>*/}
 
             </div>
         )

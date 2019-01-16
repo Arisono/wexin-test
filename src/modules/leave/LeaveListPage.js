@@ -35,7 +35,7 @@ class LeaveListPage extends React.Component{
     }
 
     componentWillMount(){
-        document.title ="学生请假";
+        document.title ="学生请假条";
     }
     
     componentDidMount(){

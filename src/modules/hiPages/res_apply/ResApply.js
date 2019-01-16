@@ -5,7 +5,7 @@
 import React,{Component} from 'react';
 import './ResApply.css';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
-import { Select,Upload,Modal,Icon } from 'antd';
+import { Select,Upload,Modal,Icon,Button } from 'antd';
 import UserItem from './UserItem';
 import {Toast,Picker,List} from 'antd-mobile';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
@@ -83,7 +83,7 @@ class ResApply extends Component{
             </div>
         );
         return(
-            <div onChange={this.handelValueCom} style={{fontFamily:"PingFangSC-Regular",letterSpacing:2.5}}>
+            <div className='common-column-layout' onChange={this.handelValueCom} style={{fontFamily:"PingFangSC-Regular",letterSpacing:2.5}}>
                 <div className="comhline_sty"></div>
                 <div className="item_sty">
                    <div className="left_title">物品用途</div>
@@ -121,7 +121,9 @@ class ResApply extends Component{
                         handleChange={this.handleChange.bind(this)}
                     />
 
-                <center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSaveClick}>提交</button></center>
+                <Button className='commonButton' type='primary' style={{margin: '35px'}}
+                        onClick={this.doSaveClick}>提交</Button>
+                {/*<center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSaveClick}>提交</button></center>*/}
             </div>
         )
     }

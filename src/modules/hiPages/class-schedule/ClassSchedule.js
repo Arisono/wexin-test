@@ -104,7 +104,7 @@ class ClassSchedule extends Component{
     }
 
     componentWillMount() {
-        document.title = '课程表'
+        document.title = '课表查询'
     }
     componentDidMount() {
         fetchGet(API.curriculumListByStuId,{

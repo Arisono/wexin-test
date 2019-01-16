@@ -174,7 +174,7 @@ class SendVote extends Component {
         }
         return (
 
-            <div onChange={this.handelValueCom}>
+            <div onChange={this.handelValueCom} className='common-column-layout'>
                 {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
                     : <TargetSelect {...defaultTargetProps}/>}
                 <div className="comhline_sty"></div>
@@ -236,9 +236,10 @@ class SendVote extends Component {
                         beforeUpload={this.beforeUpload.bind(this)}
                         handleChange={this.handleChange.bind(this)}
                     />
-
-                <center><Button type="button" className="btn btn-primary comBtn_sty"
-                                onClick={this.doSendVote}>提交</Button></center>
+                <Button className='commonButton' type='primary' style={{margin: '35px'}}
+                        onClick={this.doSendVote}>提交</Button>
+                {/*<center><Button type="button" className="btn btn-primary comBtn_sty"*/}
+                                {/*onClick={this.doSendVote}>提交</Button></center>*/}
             </div>
         )
     }

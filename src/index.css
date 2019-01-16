@@ -267,6 +267,13 @@ span.ant-select-selection.ant-select-selection--multiple {
     flex-direction: column;
 }
 
+.common-flex-row-x-y-center {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
 .common-flex-column-y-center {
     display: flex;
     flex-direction: column;
@@ -299,7 +306,7 @@ span.ant-select-selection.ant-select-selection--multiple {
     border-radius: 4px;
 }
 
-.common-fixed-top{
+.common-fixed-top {
     /*position: fixed;*/
     /*top: 0;*/
 }

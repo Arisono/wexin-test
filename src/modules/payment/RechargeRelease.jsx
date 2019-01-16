@@ -188,7 +188,7 @@ class RechargeRelease extends Component {
         }).then(response => {
             Toast.hide()
 
-            Toast.success('发布成功')
+            Toast.success('发布成功',1)
 
             clearListState()()
 
@@ -201,7 +201,7 @@ class RechargeRelease extends Component {
 
             this.backTask = setTimeout(() => {
                 this.props.history.goBack()
-            }, 2000)
+            }, 1000)
         }).catch(error => {
             Toast.hide()
 

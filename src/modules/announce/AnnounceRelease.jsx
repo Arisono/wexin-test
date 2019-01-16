@@ -222,7 +222,7 @@ class AnnounceRelease extends Component {
             userIds: JSON.stringify(userList)
         }).then(response => {
             Toast.hide()
-            Toast.success('发布成功')
+            Toast.success('发布成功',1)
             clearListState()()
 
             this.setState({
@@ -232,7 +232,7 @@ class AnnounceRelease extends Component {
             })
             this.backTask = setTimeout(() => {
                 this.props.history.goBack()
-            }, 2000)
+            }, 1000)
         }).catch(error => {
             Toast.hide()
             if (typeof error === 'string') {

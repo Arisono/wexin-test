@@ -179,7 +179,6 @@ class VoteDetailPage extends React.Component {
                 }
             }
         }
-        console.log("onClickEvent():", options);
         if (options.length == 0) {
             Toast.info("请选择一个投票项")
             return

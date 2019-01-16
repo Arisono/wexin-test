@@ -228,14 +228,14 @@ class SendVote extends Component {
                 </div>
                 <div className="comhline_sty1"></div>
 
-                    <UploadEnclosure
-                        action={API.UPLOAD_FILE}
-                        fileList={this.state.fileList}
-                        count={9}
-                        multiple={true}
-                        beforeUpload={this.beforeUpload.bind(this)}
-                        handleChange={this.handleChange.bind(this)}
-                    />
+                <UploadEnclosure
+                    action={API.UPLOAD_FILE}
+                    fileList={this.state.fileList}
+                    count={9}
+                    multiple={true}
+                    beforeUpload={this.beforeUpload.bind(this)}
+                    handleChange={this.handleChange.bind(this)}
+                />
 
                 <center><Button type="button" className="btn btn-primary comBtn_sty"
                                 onClick={this.doSendVote}>提交</Button></center>
@@ -334,11 +334,11 @@ class SendVote extends Component {
         }, {})
             .then((response) => {
                 if (response.success) {
-                    Toast.show('提交成功', 1)
+                    Toast.success('发布成功', 1)
                     clearListState()()
                     this.backTask = setTimeout(() => {
-                        this.props.history.push("/voteListTab")
-                    }, 2000)
+                        this.props.history.goBack()
+                    }, 1000)
                 }
             })
             .catch((error) => {

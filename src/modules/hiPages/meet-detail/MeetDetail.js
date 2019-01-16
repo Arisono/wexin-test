@@ -104,7 +104,7 @@ class MeetDetail extends Component {
         }, {}).then((response) => {
             console.log('response', response)
             if (response.success && response.data) {
-                Toast.show(response.data, 2)
+                Toast.show(response.data, 1)
                 if (this.props.listState && !isObjEmpty(this.props.listState.listData)) {
                     this.props.listState.listData[this.props.listState.itemIndex].meetStatusCode = 4
                     this.props.listState.listData[this.props.listState.itemIndex].meetStatus = '已结束'
@@ -116,7 +116,7 @@ class MeetDetail extends Component {
 
                 this.backTask = setTimeout(() => {
                     this.props.history.goBack()
-                }, 2000)
+                }, 1000)
             }
         }).catch((error) => {
             console.log('error', error)

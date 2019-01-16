@@ -184,7 +184,7 @@ class LeaveAddPage extends Component{
                 // this.props.history.push("/homePage")
                 this.backTask = setTimeout(() => {
                     this.props.history.goBack();
-                }, 2000)
+                }, 1000)
             }
         }).catch((error) => {
             console.log('error', error)

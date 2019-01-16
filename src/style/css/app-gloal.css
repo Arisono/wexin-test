@@ -434,12 +434,17 @@
     position: relative;
 }
 
-.fileinput-button input {
+.fileinput-button .imagesLayout {
     position: absolute;
-    right: 0px;
+    right: -20px;
     top: -10px;
     bottom: -10px;
     left: -20px;
     opacity: 0;
     -ms-filter: 'alpha(opacity=0)';
+    padding: 0;
+}
+
+.fileinput-button .chooseLayout{
+    display: none;
 }

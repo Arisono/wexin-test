@@ -265,23 +265,30 @@ class SendVote extends Component {
             })
         }
         console.log('state', this.state)
-        if (this.state.votePerson.length == 0) {
+        if (this.state.votePerson.trim().length == 0) {
             Toast.fail('请选择投票对象...')
             return
         }
-        if (this.state.voteTitle == '' || this.state.voteTitle == null) {
+        if (this.state.voteTitle.trim().length == 0 || this.state.voteTitle == null) {
             Toast.fail('请填写投票主题...', 1)
             return
         }
-        if (this.state.voteOptionss.length < 2) {
-            Toast.show('请输入选项内容...')
-            return
+        for(let i=0;i<this.state.voteOptionss.length;i++){
+            if(this.state.voteOptionss[i] == null ||  this.state.voteOptionss[i].trim().length == 0 ){
+                Toast.fail('存在选项内容为空...')
+                return
+            }
         }
-        if (this.state.voteType == null || this.state.voteType == '') {
+        // console.log("已走出for循环")
+        // if (this.state.voteOptionss.length < 2) {
+        //     Toast.show('请输入选项内容...')
+        //     return
+        // }
+        if (this.state.voteType == null || this.state.voteType.trim().length == 0) {
             Toast.fail('请选择投票类型...')
             return
         }
-        if (this.state.endValue == null || this.state.endValue == '') {
+        if (this.state.endValue == null || this.state.endValue.trim().length == 0) {
             Toast.fail('请选择正确结束时间...')
             return
         }

@@ -228,23 +228,23 @@ class SendMeet extends Component {
 
     doSaveClick = (event) => {
         console.log('state', this.state)
-        if (this.state.titleValue == null || this.state.titleValue == '') {
+        if (this.state.titleValue == null || this.state.titleValue.trim().length == 0) {
             Toast.fail('请填写会议主题...')
             return
         }
-        if (this.state.meetAddress == null || this.state.meetAddress == '') {
+        if (this.state.meetAddress == null || this.state.meetAddress.trim().length == 0) {
             Toast.fail('请填写会议地址...')
             return
         }
-        if (this.state.startValue == null || this.state.startValue == '') {
+        if (this.state.startValue == null || this.state.startValue.trim().length == 0) {
             Toast.fail('请选择开始时间...')
             return
         }
-        if (this.state.endValue == null || this.state.endValue == '') {
+        if (this.state.endValue == null || this.state.endValue.trim().length == 0) {
             Toast.fail('请选择结束时间...')
             return
         }
-        if (this.state.earlyTime == null || this.state.earlyTime ==''){
+        if (this.state.earlyTime == null || this.state.earlyTime.trim().length == 0){
             Toast.fail('请选择提醒时间...')
             return
         }

@@ -167,7 +167,7 @@ class ResApply extends Component{
     //提交
     doSaveClick =() =>{
         console.log('state',this.state)
-        if(this.state.resUser == null || this.state.resUser == ''){
+        if(this.state.resUser == null || this.state.resUser.trim().length == 0){
             Toast.show('请输入物品用途',1)
             return
         }
@@ -175,7 +175,7 @@ class ResApply extends Component{
             Toast.show('物品明细存在未输入项')
             return
         }
-        if(this.state.receivingSays == null || this.state.receivingSays == ''){
+        if(this.state.receivingSays == null || this.state.receivingSays.trim().length == 0){
             Toast.show('请输入领取说明',1)
             return
         }

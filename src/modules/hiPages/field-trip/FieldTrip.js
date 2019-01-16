@@ -204,15 +204,15 @@ class FieldTrip extends Component {
     doSaveClick = () => {
         console.log('state', this.state)
         // console.log('startValue',this.state.startValue)
-        if (this.state.tripType == null || this.state.tripType == '') {
+        if (this.state.tripType == null || this.state.tripType.trim().length == 0) {
             Toast.fail('请选择出差类型')
             return
         }
-        if (this.state.startValue == null || this.state.startValue == '') {
+        if (this.state.startValue == null || this.state.startValue.trim().length == 0) {
             Toast.fail('请选择开始时间')
             return
         }
-        if (this.state.endValue == null || this.state.endValue == '') {
+        if (this.state.endValue == null || this.state.endValue.trim().length == 0) {
             Toast.fail('请选择结束时间')
             return
         }
@@ -223,7 +223,7 @@ class FieldTrip extends Component {
             Toast.fail('结束时间不可小于开始时间')
             return
         }
-        if (this.state.tripsReason == null || this.state.tripsReason == '') {
+        if (this.state.tripsReason == null || this.state.tripsReason.trim().length == 0) {
             Toast.fail('请输入出差事由')
             return
         }

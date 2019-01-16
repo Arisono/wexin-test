@@ -351,7 +351,7 @@ class LeaveListPage extends React.Component{
 
     render(){
         let detailModal=this.getDetailModal();
-        return <div className="container-fluid" id="global_background">
+        return <div className="container-fluid" id="global_background" style={{height:'100vh',backgroundColor:'#F6F6F'}}>
             <div className="row" >
                 <div  className="col-xs-12 clear_margin" >
                      <InfiniteScroll

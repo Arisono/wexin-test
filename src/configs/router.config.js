@@ -60,7 +60,7 @@ import HomeWorkList from "../modules/homework/HomeWorkList";
 import NotifyBoardDetail from "../modules/notificationCenter/NotifyBoardDetail";
 import PhonesSearch from "../modules/phonesBook/PhonesSearch";
 import ChangePhoneNumber from '../modules/hiPages/changephonenumber/ChangePhoneNumber';
-
+import ScoreNotification from '../modules/hiPages/scorenotification/ScoreNotification';
 
 export default class RouteConfig extends Component {
 
@@ -138,6 +138,7 @@ export default class RouteConfig extends Component {
                     <Route path='/meet-detail/:meetId?' component={MeetDetail}/> {/*会议签到详情 meetingSignIn*/}
                     <Route path='/leavedetail/:lvId?' component={LeaveDetail}/> {/*学生请假详情*/}
                     <Route path="/changephonenumber" component={ChangePhoneNumber}/>     {/*更换手机号码*/}
+                    <Route path="/scorenotification" component={ScoreNotification}/>     {/*成绩通知*/}
 
                     <Route path='/leaveAddC' component={LeaveAddCPage}/>{/*学生请假*/}
                     <Route path='/leaveAdd' component={LeaveAddPage}/>   {/*老师请假*/}

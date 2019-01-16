@@ -317,13 +317,13 @@ class SendVote extends Component {
             voteFile: approveFiles,
             voter: JSON.stringify(this.state.votePerson),
             voteEndDate: moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
-            voteType: this.state.voteType[0],
+            voteType:1,
             topics: [
                 {
                     topicName: this.state.voteTitle,
                     topicStatus: 1,
-                    topicType: 1,
-                    options: options
+                    options: options,
+                    topicType: this.state.voteType[0],
                 }
             ]
         }

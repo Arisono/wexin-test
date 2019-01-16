@@ -24,7 +24,7 @@ class Approvel extends Component{
         super();
         this.state = {
             pageIndex:1,
-            pageSize:20,
+            pageSize:100,
             selectIndex: 0,
             hasMoreData:true,
             applyList: [],

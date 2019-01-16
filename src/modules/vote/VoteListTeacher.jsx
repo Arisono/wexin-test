@@ -167,8 +167,8 @@ class VoteListTeacher extends Component {
             pageIndex: mReleaseIndex,
             pageSize: mPageSize
         }).then(response => {
-            if (response && response.data && response.data.creat.length > 0) {
-                response.data.creat.forEach((item, index) => {
+            if (response && response.data && response.data.create.length > 0) {
+                response.data.create.forEach((item, index) => {
                     let voteBean = {}
 
                     voteBean.voteId = getIntValue(item, 'voteId')

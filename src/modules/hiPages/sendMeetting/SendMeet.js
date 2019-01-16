@@ -302,11 +302,11 @@ class SendMeet extends Component {
                 console.log('response', response)
                 if (response.success) {
                     clearListState()()
-                    Toast.show('创建成功', 2)
+                    Toast.show('创建成功', 1)
 
                     this.backTask = setTimeout(() => {
                         this.props.history.goBack()
-                    }, 2000)
+                    }, 1000)
                 }
             })
             .catch((error) => {

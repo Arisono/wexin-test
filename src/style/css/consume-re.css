@@ -103,7 +103,7 @@
 .notify-item-top {
     display: flex;
     align-items: center;
-    padding: 9px 6px 4px;
+    padding: 12px 6px 5px;
 }
 
 .notify-item-title {

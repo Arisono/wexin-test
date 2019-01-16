@@ -190,7 +190,7 @@ class NewAlbum extends Component {
             schId: this.classId
         }).then(response => {
             Toast.hide()
-            Toast.success(`相册【${albumTitle}】新建成功`)
+            Toast.success(`相册【${albumTitle}】新建成功`,1)
             this.setState({
                 albumTitle: '',
                 albumdescription: ''
@@ -198,7 +198,7 @@ class NewAlbum extends Component {
 
             this.backTask = setTimeout(() => {
                 this.props.history.goBack()
-            }, 2000)
+            }, 1000)
         }).catch(error => {
             Toast.hide()
             if (typeof error === 'string') {

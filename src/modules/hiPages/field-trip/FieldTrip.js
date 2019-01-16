@@ -265,7 +265,7 @@ class FieldTrip extends Component {
                     Toast.show(response.data, 1)
                     this.backTask = setTimeout(() => {
                         this.props.history.goBack()
-                    }, 2000)
+                    }, 1000)
                 }
             })
             .catch((error) => {

@@ -153,6 +153,10 @@ class HomePage extends Component {
                 </div>
                 {/*精彩瞬间*/}
                 {/*{videoLayout}*/}
+
+
+                {/*底线标识*/}
+                {this.getBottomLayout()}
             </div>
         )
     }
@@ -249,6 +253,16 @@ class HomePage extends Component {
                 }
             },
         ])
+    }
+
+    getBottomLayout = () => {
+        return (
+            <div className='common-flex-row-x-y-center' style={{padding:28}}>
+                <div style={{background: '#cccccc', width: '60px', height: '1px'}}></div>
+                <span style={{color: '#999999', fontSize: '12px',padding:'6px'}}>已经到底了</span>
+                <div style={{background: '#cccccc', width: '60px', height: '1px'}}></div>
+            </div>
+        )
     }
 
     getAlbumLayout = () => {

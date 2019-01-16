@@ -188,12 +188,12 @@ class ReleaseAssignmentPage extends React.Component {
         }).then((response) => {
             Toast.hide();
             if (response.success) {
-                Toast.success("发布成功！")
+                Toast.success("发布成功！",1)
                 this.initPageData()
 
                 this.backTask = setTimeout(() => {
                     this.props.history.goBack()
-                }, 2000)
+                }, 1000)
             }
         }).catch((error) => {
             Toast.hide()
@@ -268,7 +268,7 @@ class ReleaseAssignmentPage extends React.Component {
             <UploadEnclosure
                 action={API.UPLOAD_FILE}
                 fileList={data.notifyFiles}
-                count={4}
+                count={9}
                 multiple={true}
                 beforeUpload={this.beforeUpload.bind(this)}
                 handleChange={this.handleChange.bind(this)}

@@ -180,9 +180,19 @@ class HomeWorkList extends Component {
 
     onItemClick = (index, notifyId) => {
         const {workList} = this.state
+
+        workList[index].isRead = 2
+        if ("teacher" == this.role) {
+            workList[index].readStatus = ''
+        } else {
+            workList[index].readStatus = '已读'
+        }
+
+        this.setState({workList})
+
         saveListState({
             scrollTop: ReactDOM.findDOMNode(this.container).scrollTop,
-            listData: workList,
+            listData: this.state.workList,
             pageIndex: mPageIndex,
             itemIndex: index,
         })()

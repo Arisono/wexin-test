@@ -342,11 +342,11 @@ class SendVote extends Component {
         }, {})
             .then((response) => {
                 if (response.success) {
-                    Toast.show('提交成功', 1)
+                    Toast.success('发布成功', 1)
                     clearListState()()
                     this.backTask = setTimeout(() => {
-                        this.props.history.push("/voteListTab")
-                    }, 2000)
+                        this.props.history.goBack()
+                    }, 1000)
                 }
             })
             .catch((error) => {

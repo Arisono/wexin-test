@@ -132,7 +132,7 @@ export const getOrganization = (type, paramId, isMultiple) => {
 export const getWeixinInfo = () => {
     const userInfo = store.getState().redUserInfo
 
-    fetchGet('https://api.weixin.qq.com/cgi-bin/user/info', {
+    fetchGet('https://api.weixin.qq.com/sns/userinfo', {
         access_token: userInfo.accessToken,
         openid: userInfo.userOpenid,
         lang: 'zh_CN',

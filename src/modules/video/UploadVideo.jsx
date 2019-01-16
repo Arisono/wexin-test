@@ -252,10 +252,10 @@ class UploadVideo extends Component {
             picRemarks: ''
         }).then(response => {
             Toast.hide()
-            Toast.success('视频发布成功')
+            Toast.success('视频发布成功',1)
             this.backTask = setTimeout(() => {
                 this.props.history.goBack()
-            }, 2000)
+            }, 1000)
         }).catch(error => {
             Toast.hide()
             if (typeof error === 'string') {

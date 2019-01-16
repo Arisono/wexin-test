@@ -112,12 +112,7 @@ class UserInfo extends Component {
     showUserContact() {
         const {previewVisible, fileList} = this.state;
         const {userInfo} = this.props
-        const uploadButton = (
-            <div>
-                <Icon type="plus"/>
-                <div className="ant-upload-text">Upload</div>
-            </div>
-        );
+
         return <div className={'user-column'}>
             <div className='user-info-item-top'>
                 <div>
@@ -137,12 +132,12 @@ class UserInfo extends Component {
                      style={{height: '34px', background: '#CCCCCC', width: '1px'}}></div>
                 <span class="fileinput-button margin_left_20" style={{color: "#3680ED"}}>
                     上传
-                  {/*<input type="file" accept="image/*" capture="camera" onChange={this.uploadChange}/>*/}
+                    {/*<input type="file" accept="image/*" capture="camera" onChange={this.uploadChange}/>*/}
                     <UploadEnclosure
                         action={API.UPLOAD_FILE}
                         fileList={fileList}
-                        count={9}
-                        multiple={true}
+                        count={1}
+                        multiple={false}
                         beforeUpload={this.beforeUpload.bind(this)}
                         handleChange={this.handleChange.bind(this)}
                     />
@@ -160,40 +155,46 @@ class UserInfo extends Component {
                     <div className="user-info-photo-text">• 请取下您的眼镜帽子保持面部曝光率</div>
                 </div>
 
-                {/*  <Upload
-                    action="//jsonplaceholder.typicode.com/posts/"
-                    listType="picture-card"
-                    fileList={fileList}
-                    multiple
-                    onPreview={this.handlePreview}
-                    onChange={this.handleChange}>
-                    {fileList.length >= 1 ? null : uploadButton}
-                </Upload>*/}
                 <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                     <img alt="example" style={{width: '100%'}} src={this.state.previewImage}/>
                 </Modal>
             </div>
         </div>
     }
+
     beforeUpload = (file, fileList) => {
 
     }
 
     handleChange = fileList => {
         if (fileList) {
+            Toast.loading('人脸照上传中...', 0)
             fileList.forEach((value, index) => {
                 value.url = value.response ? (_baseURL + value.response.data) : value.url
                 value.picUrl = value.response ? value.response.data : value.picUrl
             })
 
             this.setState({fileList})
+
+            if (fileList[0].status === 'error') {
+                Toast.fail('人脸照上传失败，请重试！')
+                this.setState({
+                    fileList: []
+                })
+            } else if (fileList[0].status === 'done') {
+                this.setState({
+                    imageUrl: fileList[0].response.data
+                });
+                this.updateUserInfo(this.state.imageUrl)
+            } else {
+                Toast.hide()
+            }
         }
     }
 
     uploadFile = (file) => {
         const formData = new FormData();
         formData.append('file', file);
-        console.log("uploadFile()", file);
         Toast.loading("")
         fetch(API.UPLOAD_FILE, {
             method: "POST",
@@ -255,7 +256,6 @@ class UserInfo extends Component {
         });
         console.log('预览')
     }
-    handleChange = ({fileList}) => this.setState({fileList})
 
     //头像点击事件
     onAvatarClick = (event) => {

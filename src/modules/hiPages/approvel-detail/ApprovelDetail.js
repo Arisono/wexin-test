@@ -181,7 +181,7 @@ import ImagesViewer from '../../../components/imagesVIewer/index';
                 })
                 this.backTask = setTimeout(()=>{
                     this.props.history.push("/approvel")
-                },2000)
+                },1000)
             }
         }).catch((error) =>{
             if (typeof error === 'string') {

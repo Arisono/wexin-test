@@ -154,12 +154,16 @@ class AccountBind extends Component {
             userPhone: phone
         }).then(response => {
             Toast.hide()
-            Toast.success('验证码已发送，请注意查收', 2)
-            mSeconds = 60
-            this.setState({
-                obtainText: '剩余' + mSeconds + '秒'
-            })
-            this.countdown()
+            if(response.success){
+                Toast.success('验证码已发送，请注意查收', 2)
+                mSeconds = 60
+                this.setState({
+                    obtainText: '剩余' + mSeconds + '秒'
+                })
+                this.countdown()
+            }else {
+                Toast.fail(response.data.message, 2)
+            }
         }).catch(error => {
             Toast.hide()
             this.setState({

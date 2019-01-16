@@ -48,7 +48,7 @@ class VoteListTeacher extends Component {
             height: hei
         })
 
-        document.title = '投票'
+        document.title = '投票助手'
         const that = this
         console.log(this.props.listState)
 

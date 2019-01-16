@@ -174,7 +174,7 @@ class SendVote extends Component {
         }
         return (
 
-            <div onChange={this.handelValueCom}>
+            <div onChange={this.handelValueCom} className='common-column-layout'>
                 {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
                     : <TargetSelect {...defaultTargetProps}/>}
                 <div className="comhline_sty"></div>
@@ -228,17 +228,18 @@ class SendVote extends Component {
                 </div>
                 <div className="comhline_sty1"></div>
 
-                <UploadEnclosure
-                    action={API.UPLOAD_FILE}
-                    fileList={this.state.fileList}
-                    count={9}
-                    multiple={true}
-                    beforeUpload={this.beforeUpload.bind(this)}
-                    handleChange={this.handleChange.bind(this)}
-                />
-
-                <center><Button type="button" className="btn btn-primary comBtn_sty"
-                                onClick={this.doSendVote}>提交</Button></center>
+                    <UploadEnclosure
+                        action={API.UPLOAD_FILE}
+                        fileList={this.state.fileList}
+                        count={9}
+                        multiple={true}
+                        beforeUpload={this.beforeUpload.bind(this)}
+                        handleChange={this.handleChange.bind(this)}
+                    />
+                <Button className='commonButton' type='primary' style={{margin: '35px'}}
+                        onClick={this.doSendVote}>提交</Button>
+                {/*<center><Button type="button" className="btn btn-primary comBtn_sty"*/}
+                                {/*onClick={this.doSendVote}>提交</Button></center>*/}
             </div>
         )
     }
@@ -264,23 +265,30 @@ class SendVote extends Component {
             })
         }
         console.log('state', this.state)
-        if (this.state.votePerson.length == 0) {
+        if (this.state.votePerson.trim().length == 0) {
             Toast.fail('请选择投票对象...')
             return
         }
-        if (this.state.voteTitle == '' || this.state.voteTitle == null) {
+        if (this.state.voteTitle.trim().length == 0 || this.state.voteTitle == null) {
             Toast.fail('请填写投票主题...', 1)
             return
         }
-        if (this.state.voteOptionss.length < 2) {
-            Toast.show('请输入选项内容...')
-            return
+        for(let i=0;i<this.state.voteOptionss.length;i++){
+            if(this.state.voteOptionss[i] == null ||  this.state.voteOptionss[i].trim().length == 0 ){
+                Toast.fail('存在选项内容为空...')
+                return
+            }
         }
-        if (this.state.voteType == null || this.state.voteType == '') {
+        // console.log("已走出for循环")
+        // if (this.state.voteOptionss.length < 2) {
+        //     Toast.show('请输入选项内容...')
+        //     return
+        // }
+        if (this.state.voteType == null || this.state.voteType.trim().length == 0) {
             Toast.fail('请选择投票类型...')
             return
         }
-        if (this.state.endValue == null || this.state.endValue == '') {
+        if (this.state.endValue == null || this.state.endValue.trim().length == 0) {
             Toast.fail('请选择正确结束时间...')
             return
         }
@@ -316,13 +324,13 @@ class SendVote extends Component {
             voteFile: approveFiles,
             voter: JSON.stringify(this.state.votePerson),
             voteEndDate: moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
-            voteType: this.state.voteType[0],
+            voteType:1,
             topics: [
                 {
                     topicName: this.state.voteTitle,
                     topicStatus: 1,
-                    topicType: 1,
-                    options: options
+                    options: options,
+                    topicType: this.state.voteType[0],
                 }
             ]
         }

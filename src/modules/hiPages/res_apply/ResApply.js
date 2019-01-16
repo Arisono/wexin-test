@@ -5,7 +5,7 @@
 import React,{Component} from 'react';
 import './ResApply.css';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
-import { Select,Upload,Modal,Icon } from 'antd';
+import { Select,Upload,Modal,Icon,Button } from 'antd';
 import UserItem from './UserItem';
 import {Toast,Picker,List} from 'antd-mobile';
 import {fetchPost,fetchGet,fetchGetNoSession} from '../../../utils/fetchRequest';
@@ -83,7 +83,7 @@ class ResApply extends Component{
             </div>
         );
         return(
-            <div onChange={this.handelValueCom} style={{fontFamily:"PingFangSC-Regular",letterSpacing:2.5}}>
+            <div className='common-column-layout' onChange={this.handelValueCom} style={{fontFamily:"PingFangSC-Regular",letterSpacing:2.5}}>
                 <div className="comhline_sty"></div>
                 <div className="item_sty">
                    <div className="left_title">物品用途</div>
@@ -121,7 +121,9 @@ class ResApply extends Component{
                         handleChange={this.handleChange.bind(this)}
                     />
 
-                <center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSaveClick}>提交</button></center>
+                <Button className='commonButton' type='primary' style={{margin: '35px'}}
+                        onClick={this.doSaveClick}>提交</Button>
+                {/*<center><button type="button" className="btn btn-primary comBtn_sty"  onClick={this.doSaveClick}>提交</button></center>*/}
             </div>
         )
     }
@@ -165,7 +167,7 @@ class ResApply extends Component{
     //提交
     doSaveClick =() =>{
         console.log('state',this.state)
-        if(this.state.resUser == null || this.state.resUser == ''){
+        if(this.state.resUser == null || this.state.resUser.trim().length == 0){
             Toast.show('请输入物品用途',1)
             return
         }
@@ -173,7 +175,7 @@ class ResApply extends Component{
             Toast.show('物品明细存在未输入项')
             return
         }
-        if(this.state.receivingSays == null || this.state.receivingSays == ''){
+        if(this.state.receivingSays == null || this.state.receivingSays.trim().length == 0){
             Toast.show('请输入领取说明',1)
             return
         }

@@ -32,7 +32,7 @@ class MeetingSignIn extends Component {
     }
 
     componentDidMount() {
-        document.title = '会议签到'
+        document.title = '会议管理'
         console.log('listState', this.props.listState)
         if (this.props.listState && !isObjEmpty(this.props.listState.listData)) {
             this.setState({

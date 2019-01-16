@@ -24,7 +24,7 @@ class Approvel extends Component{
         super();
         this.state = {
             pageIndex:1,
-            pageSize:20,
+            pageSize:100,
             selectIndex: 0,
             hasMoreData:true,
             applyList: [],
@@ -32,7 +32,7 @@ class Approvel extends Component{
         }
     }
     componentWillMount() {
-        document.title = '审批'
+        document.title = '我的审批'
     }
     componentDidMount() {
         const that = this

@@ -177,7 +177,7 @@ class SendMeet extends Component {
             onTargetFocus: this.onTargetFocus.bind(this)
         }
         return (
-            <div onChange={this.handelValueCom} style={{fontFamily: "PingFangSC-Regular", letterSpacing: 2.5}}>
+            <div onChange={this.handelValueCom} style={{fontFamily: "PingFangSC-Regular", letterSpacing: 2.5}} className='common-column-layout'>
                 {/*<p>{new Date().getTime()}</p>*/}
                 <textarea autoFocus="autoFocus" ref='meetTitle' className="form-control textarea_sty" rows="2"
                           placeholder="请填写会议主题…"></textarea>
@@ -217,28 +217,35 @@ class SendMeet extends Component {
                 <div className="comhline_sty1"></div>
                 {this.state.targetData.length > 0 ? <TargetSelect {...targetProps}/>
                     : <TargetSelect {...defaultTargetProps}/>}
-                <center><Button type="button" className="btn btn-primary comBtn_sty"
-                                onClick={this.doSaveClick}>创建</Button></center>
+                {/*<center><Button type="button" className="btn btn-primary comBtn_sty"*/}
+                                {/*onClick={this.doSaveClick}>创建</Button></center>*/}
+
+                <Button className='commonButton' type='primary' style={{margin: '35px'}}
+                        onClick={this.doSaveClick}>创建</Button>
             </div>
         )
     }
 
     doSaveClick = (event) => {
         console.log('state', this.state)
-        if (this.state.titleValue == null || this.state.titleValue == '') {
+        if (this.state.titleValue == null || this.state.titleValue.trim().length == 0) {
             Toast.fail('请填写会议主题...')
             return
         }
-        if (this.state.meetAddress == null || this.state.meetAddress == '') {
+        if (this.state.meetAddress == null || this.state.meetAddress.trim().length == 0) {
             Toast.fail('请填写会议地址...')
             return
         }
-        if (this.state.startValue == null || this.state.startValue == '') {
+        if (this.state.startValue == null || this.state.startValue.trim().length == 0) {
             Toast.fail('请选择开始时间...')
             return
         }
-        if (this.state.endValue == null || this.state.endValue == '') {
+        if (this.state.endValue == null || this.state.endValue.trim().length == 0) {
             Toast.fail('请选择结束时间...')
+            return
+        }
+        if (this.state.earlyTime == null || this.state.earlyTime.trim().length == 0){
+            Toast.fail('请选择提醒时间...')
             return
         }
         if (this.state.targetList.length == 0) {

@@ -91,7 +91,7 @@ class MeetDetail extends Component {
                     {this.state.notifyStatus == 4 ? <div style={{textAlign:'center',marginTop:20}}>
                         <Button  className='end_sty' style={{color:'#FFFFFF',backgroundColor:'#929292'}}>已结束</Button>
                     </div> : <div style={{textAlign:'center',marginTop:20,marginBottom:20}}>
-                        {this.state.showEndBtn == true ? <Button type="primary"  className='end_sty' onClick={this.EndMeetting}>结束会议</Button> : ""}
+                        {this.state.showEndBtn == true ? <Button type="primary"  className='end_sty ' onClick={this.EndMeetting}>结束会议</Button> : ""}
                     </div>}
             </div>
         )

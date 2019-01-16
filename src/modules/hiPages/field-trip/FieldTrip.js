@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react';
-import {Select, Icon, Upload, Modal} from 'antd';
+import {Select, Icon, Upload, Modal,Button} from 'antd';
 import nextArrowimg from '../../../style/imgs/next_arrow.png';
 import './FieldTrip.css';
 import {Toast, Picker, List, DatePicker} from 'antd-mobile';
@@ -103,7 +103,7 @@ class FieldTrip extends Component {
             multiple: false,
         }
         return (
-            <div onChange={this.handelValueCom} ref={node => this.node = node}>
+            <div className='common-column-layout' onChange={this.handelValueCom} ref={node => this.node = node }>
                 <div className="common-column-layout">
                     <Picker
                         data={this.state.typeList} title='出差类型' extra='请选择'
@@ -169,9 +169,12 @@ class FieldTrip extends Component {
                         handleChange={this.handleChange.bind(this)}
                     />
 
-                <center>
-                    <button type="button" className="btn btn-primary comBtn_sty" onClick={this.doSaveClick}>提交</button>
-                </center>
+
+                {/*<center>*/}
+                    <Button className='commonButton' type='primary' style={{margin: '35px'}}
+                            onClick={this.doSaveClick}>提交</Button>
+                    {/*<button type="button" className="btn btn-primary comBtn_sty" onClick={this.doSaveClick}>提交</button>*/}
+                {/*</center>*/}
 
             </div>
         )
@@ -201,15 +204,15 @@ class FieldTrip extends Component {
     doSaveClick = () => {
         console.log('state', this.state)
         // console.log('startValue',this.state.startValue)
-        if (this.state.tripType == null || this.state.tripType == '') {
+        if (this.state.tripType == null || this.state.tripType.trim().length == 0) {
             Toast.fail('请选择出差类型')
             return
         }
-        if (this.state.startValue == null || this.state.startValue == '') {
+        if (this.state.startValue == null || this.state.startValue.trim().length == 0) {
             Toast.fail('请选择开始时间')
             return
         }
-        if (this.state.endValue == null || this.state.endValue == '') {
+        if (this.state.endValue == null || this.state.endValue.trim().length == 0) {
             Toast.fail('请选择结束时间')
             return
         }
@@ -220,7 +223,7 @@ class FieldTrip extends Component {
             Toast.fail('结束时间不可小于开始时间')
             return
         }
-        if (this.state.tripsReason == null || this.state.tripsReason == '') {
+        if (this.state.tripsReason == null || this.state.tripsReason.trim().length == 0) {
             Toast.fail('请输入出差事由')
             return
         }

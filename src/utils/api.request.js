@@ -132,11 +132,10 @@ export const getOrganization = (type, paramId, isMultiple) => {
 export const getWeixinInfo = () => {
     const userInfo = store.getState().redUserInfo
 
-    fetchGet('https://api.weixin.qq.com/sns/userinfo', {
-        access_token: userInfo.accessToken,
-        openid: userInfo.userOpenid,
-        lang: 'zh_CN',
-    }).then(response => {
+    const url = 'https://api.weixin.qq.com/sns/userinfo?access_token='
+        + userInfo.accessToken + '&openid=' + userInfo.userOpenid + '&lang=zh_CN'
+
+    fetchGet(url, {},).then(response => {
         if (!isObjEmpty(response)) {
             alert(response)
             switchUser({
@@ -147,4 +146,19 @@ export const getWeixinInfo = () => {
     }).catch(error => {
         alert(error)
     })
+    /*
+        fetch(url, {
+            method: 'GET',
+            mode: 'cors',
+            headers: new Headers({
+                'Accept': 'application/json',
+                "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+            })
+        }).then(response => {
+            alert(url + '//////' + response.json())
+        })
+            .catch(error => {
+            // alert(url + '//////' + error.json())
+                alert(error)
+        })*/
 }

@@ -8,6 +8,9 @@ import {Toast} from 'antd-mobile'
 import {connect} from 'react-redux'
 import {fetchPost, fetchGet} from "../../utils/fetchRequest";
 import UploadEnclosure from "../../components/UploadEnclosure";
+import ImagesViewer from '../../components/imagesVIewer/index'
+import {isObjEmpty} from "../../utils/common";
+import {switchUser} from "../../redux/actions/userInfo";
 
 class UserInfo extends Component {
     //老师是1家长是2
@@ -22,7 +25,6 @@ class UserInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            imageUrl: "",
             previewVisible: false,
             previewImage: '',
             fileList: [],
@@ -41,6 +43,9 @@ class UserInfo extends Component {
         // this.updateUserInfo("");
     }
 
+    componentWillUnmount() {
+        Toast.hide()
+    }
 
     render() {
         return <div className={'user-column'}>
@@ -102,16 +107,15 @@ class UserInfo extends Component {
         </div>
     }
 
-    uploadChange = (e) => {
-        console.log("file():", e.target.files);
-        this.uploadFile(e.target.files[0])
-
-    }
-
     //显示个人联系方式
     showUserContact() {
         const {previewVisible, fileList} = this.state;
         const {userInfo} = this.props
+
+        let pictureUrls = []
+        if (!isObjEmpty(userInfo.student.stuPhoto)) {
+            pictureUrls.push(_baseURL + userInfo.student.stuPhoto)
+        }
 
         return <div className={'user-column'}>
             <div className='user-info-item-top'>
@@ -126,49 +130,64 @@ class UserInfo extends Component {
                 </div>
             </div>
             <div className='gray-line' style={{height: '1px'}}></div>
-            <div className='user-info-item-top'>
-                <text className='user-info-item-name'>人脸照</text>
-                <div className='gray-line'
-                     style={{height: '34px', background: '#CCCCCC', width: '1px'}}></div>
-                <span class="fileinput-button margin_left_20" style={{color: "#3680ED"}}>
-                    上传
-                    {/*<input type="file" accept="image/*" capture="camera" onChange={this.uploadChange}/>*/}
-                    <UploadEnclosure
-                        action={API.UPLOAD_FILE}
-                        fileList={fileList}
-                        count={1}
-                        multiple={false}
-                        beforeUpload={this.beforeUpload.bind(this)}
-                        handleChange={this.handleChange.bind(this)}
-                    />
-                </span>
-            </div>
-            <div className='flex' style={{marginTop: '8px'}}>
-                <img style={{marginLeft: "10px"}}
-                     src={this.state.imageUrl === "" ? icon_userInfo_upload : _baseURL + this.state.imageUrl}
-                     width={80}
-                     height={100}/>
 
-                <div className="margin_left_20">
-                    <div className="user-info-photo-text">• 请按照证件照的样式拍摄正面</div>
-                    <div className="user-info-photo-text">• 请保证光线充足，没有遮挡物</div>
-                    <div className="user-info-photo-text">• 请取下您的眼镜帽子保持面部曝光率</div>
+            {this.type == 1 ? '' : <div>
+                <div className='user-info-item-top'>
+                    <text className='user-info-item-name'>人脸照</text>
+                    <div className='gray-line'
+                         style={{height: '34px', background: '#CCCCCC', width: '1px'}}></div>
+                    <span className="fileinput-button margin_left_20" style={{color: "#3680ED"}}>
+                    上传
+                        {/*<input type="file" accept="image/*" capture="camera" onChange={this.uploadChange}/>*/}
+                        <UploadEnclosure
+                            action={API.UPLOAD_FILE}
+                            fileList={fileList}
+                            count={1}
+                            multiple={false}
+                            handlePreview={this.enclosurePreview.bind(this)}
+                            beforeUpload={this.beforeUpload.bind(this)}
+                            handleChange={this.handleChange.bind(this)}
+                        />
+                </span>
+                </div>
+                <div className='flex' style={{marginTop: '8px'}}>
+                    <img style={{marginLeft: "16px"}}
+                         src={userInfo.student.stuPhoto === "" ? icon_userInfo_upload :
+                             _baseURL + userInfo.student.stuPhoto}
+                         width={86}
+                         height={100}
+                         onClick={this.handlePreview}/>
+
+                    <div style={{marginLeft: '14px'}}>
+                        <div className="user-info-photo-text">• 请按照证件照的样式拍摄正面</div>
+                        <div className="user-info-photo-text">• 请保证光线充足，没有遮挡物</div>
+                        <div className="user-info-photo-text">• 请取下您的眼镜帽子保持面部曝光率</div>
+                    </div>
                 </div>
 
-                <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                    <img alt="example" style={{width: '100%'}} src={this.state.previewImage}/>
-                </Modal>
-            </div>
+                {previewVisible ?
+                    <ImagesViewer onClose={this.handleCancel} urls={pictureUrls}
+                                  index={0}
+                                  needPoint={false}/> : ""}
+            </div>}
+
         </div>
     }
 
-    beforeUpload = (file, fileList) => {
+    handlePreview = () => {
+        this.setState({
+            previewVisible: true,
+        });
+    }
 
+    handleCancel = () => this.setState({previewVisible: false})
+
+    beforeUpload = (file, fileList) => {
+        Toast.loading('人脸照上传中...', 0)
     }
 
     handleChange = fileList => {
         if (fileList) {
-            Toast.loading('人脸照上传中...', 0)
             fileList.forEach((value, index) => {
                 value.url = value.response ? (_baseURL + value.response.data) : value.url
                 value.picUrl = value.response ? value.response.data : value.picUrl
@@ -182,14 +201,53 @@ class UserInfo extends Component {
                     fileList: []
                 })
             } else if (fileList[0].status === 'done') {
-                this.setState({
-                    imageUrl: fileList[0].response.data
-                });
-                this.updateUserInfo(this.state.imageUrl)
+                this.updateUserInfo(fileList[0].response.data)
+            } else if (fileList[0].status === 'uploading') {
+
             } else {
                 Toast.hide()
             }
         }
+    }
+
+    enclosurePreview = () => {
+
+    }
+
+    updateUserInfo = (userPhoto) => {
+        fetchPost(API.UPDATE_STU_PHOTO, {
+            stuId: this.props.userInfo.student.stuId,
+            stuPhoto: userPhoto
+        }).then((response) => {
+            Toast.success('人脸照上传成功！')
+            this.setState({
+                fileList: []
+            });
+
+            switchUser({
+                student: {
+                    ...this.props.userInfo.student,
+                    stuPhoto: userPhoto
+                }
+            })()
+        }).catch((error) => {
+            Toast.hide();
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('人脸照上传异常', 2)
+            }
+        })
+    }
+
+    //头像点击事件
+    onAvatarClick = (event) => {
+        //TODO 点击头像
+    }
+
+
+    uploadChange = (e) => {
+        this.uploadFile(e.target.files[0])
     }
 
     uploadFile = (file) => {
@@ -211,60 +269,18 @@ class UserInfo extends Component {
         }).then(result => {
             if (result.success) {
                 Toast.success("上传成功！");
-                console.log("result():", result);
                 let imageUrl = result.data;
                 this.state.imageUrl = imageUrl;
                 this.setState({
                     imageUrl: imageUrl
                 });
                 this.updateUserInfo(imageUrl)
-
             }
         }).catch(function (ex) {
             Toast.fail("上传失败！")
-            console.log('parsing failed', ex)
         })
     }
 
-
-    updateUserInfo = (userPhoto) => {
-        let userInfo = {
-            userName: this.state.userName,
-            userId: this.state.userId,
-            userPhoto: userPhoto
-        }
-        console.log("updateUserInfo()", JSON.stringify(userInfo));
-        fetchPost(_baseURL + "/user/updateUser", {
-            userJson: JSON.stringify(userInfo)
-        }).then((response) => {
-
-        }).catch((error) => {
-
-        })
-    }
-
-    handleCancel = () => {
-        this.setState({
-            previewImage: '',
-            previewVisible: false,
-        });
-    }
-    handlePreview = (file) => {
-        this.setState({
-            previewImage: file.url || file.thumbUrl,
-            previewVisible: true,
-        });
-        console.log('预览')
-    }
-
-    //头像点击事件
-    onAvatarClick = (event) => {
-        //TODO 点击头像
-    }
-    //点击密码
-    passWordClick = (event) => {
-        //TODO 点击密码
-    }
 }
 
 let mapStateToProps = (state) => ({

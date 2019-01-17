@@ -83,7 +83,7 @@ class AnnounceRelease extends Component {
                 <UploadEnclosure
                     action={API.UPLOAD_FILE}
                     fileList={fileList}
-                    count={4}
+                    count={9}
                     multiple={true}
                     beforeUpload={this.beforeUpload.bind(this)}
                     handleChange={this.handleChange.bind(this)}

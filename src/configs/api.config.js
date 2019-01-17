@@ -74,6 +74,8 @@ export const API = {
     USER_GETOBJECT: _baseURL + '/user/getObject',
     //删除校长信箱历史投递
     NOTIFY_DELETEMAIL: _baseURL + '/notify/deleteMail',
+    //修改学生人脸照
+    UPDATE_STU_PHOTO: _baseURL + '/user/updateStuPhoto',
 
 
     //根据学号取课程表

@@ -141,7 +141,8 @@ export default class RouteConfig extends Component {
                     <Route path='/leavedetail/:lvId/:role' component={LeaveDetail}/> {/*学生请假详情*/}
                     <Route path="/changephonenumber" component={ChangePhoneNumber}/>     {/*更换手机号码*/}
                     <Route path="/scorenotification/:stuId?" component={ScoreNotification}/>     {/*成绩通知*/}
-                    <Route path="/accessnoticedetail/:stuId?" component={AccessNoticeDetail}/>     {/*出入校通知详情*/}
+                    {/*<Route path="/accessnoticedetail/:stuId?" component={AccessNoticeDetail}/>     /!*出入校通知详情*!/*/}
+                    <Route path="/accessnoticedetail" component={AccessNoticeDetail}/>     {/*出入校通知详情*/}
 
                     <Route path='/leaveAddC' component={LeaveAddCPage}/>{/*学生请假*/}
                     <Route path='/leaveAdd' component={LeaveAddPage}/>   {/*老师请假*/}

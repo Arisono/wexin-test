@@ -7,6 +7,7 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import './AccessNoticeDetail.css';
 import {isObjEmpty,getIntValue, getStrValue} from  '../../../utils/common';
+import {getWeixinInfo} from '../../../utils/api.request'
 
 
 class AccessNoticeDetail extends Component{
@@ -28,7 +29,7 @@ class AccessNoticeDetail extends Component{
     }
     componentDidMount() {
         console.log('Component DID MOUNT!')
-
+        getWeixinInfo()
         let stuId = this.props.match.params.stuId
         let role = this.props.match.params.role
         console.log("stuId",stuId)

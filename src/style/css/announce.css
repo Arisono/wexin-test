@@ -23,6 +23,12 @@
     margin-top: -10px !important;
 }
 
+.announce-release-target-layout .ant-select-selection {
+    border: none;
+    border-top: 1px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
+}
+
 .announce-release-target-list {
     font-family: PingFangSC-Regular;
     font-size: 12px;

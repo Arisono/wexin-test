@@ -227,8 +227,8 @@ class LeaveListPage extends React.Component{
     }
 
     onItemOnClick=(index,item)=>{
-       console.log("onItemOnClick()",JSON.stringify(item));
-        this.props.history.push('/leavedetail/' +item.lvId)
+        console.log("onItemOnClick()",JSON.stringify(item));
+        this.props.history.push('/leavedetail/' +item.lvId+'/'+this.state.role)
        return;
         this.setState({
             detailVisible: true,
@@ -356,7 +356,7 @@ class LeaveListPage extends React.Component{
                 <div  className="col-xs-12 clear_margin" >
                      <InfiniteScroll
                          pageStart={0}
-                         initialLoad={false}
+                         initialLoad={true}
                          loadMore={this.loadMoreAction}
                          hasMore={this.state.hasMoreData}
                          loader={<LoadingMore/>}>

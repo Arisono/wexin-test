@@ -61,6 +61,8 @@ import NotifyBoardDetail from "../modules/notificationCenter/NotifyBoardDetail";
 import PhonesSearch from "../modules/phonesBook/PhonesSearch";
 import ChangePhoneNumber from '../modules/hiPages/changephonenumber/ChangePhoneNumber';
 import ScoreNotification from '../modules/hiPages/scorenotification/ScoreNotification';
+import AccessNoticeDetail from '../modules/hiPages/accessnoticedetail/AccessNoticeDetail';
+
 
 export default class RouteConfig extends Component {
 
@@ -136,9 +138,10 @@ export default class RouteConfig extends Component {
                     <Route path='/approvel' component={Approvel}/>{/*我的审批*/}
                     <Route path='/approvel-detail/:approveId/:isMyApply' component={ApprovelDetail}/> {/*审批详情*/}
                     <Route path='/meet-detail/:meetId?' component={MeetDetail}/> {/*会议签到详情 meetingSignIn*/}
-                    <Route path='/leavedetail/:lvId?' component={LeaveDetail}/> {/*学生请假详情*/}
+                    <Route path='/leavedetail/:lvId/:role' component={LeaveDetail}/> {/*学生请假详情*/}
                     <Route path="/changephonenumber" component={ChangePhoneNumber}/>     {/*更换手机号码*/}
-                    <Route path="/scorenotification" component={ScoreNotification}/>     {/*成绩通知*/}
+                    <Route path="/scorenotification/:stuId?" component={ScoreNotification}/>     {/*成绩通知*/}
+                    <Route path="/accessnoticedetail/:stuId?" component={AccessNoticeDetail}/>     {/*出入校通知详情*/}
 
                     <Route path='/leaveAddC' component={LeaveAddCPage}/>{/*学生请假*/}
                     <Route path='/leaveAdd' component={LeaveAddPage}/>   {/*老师请假*/}

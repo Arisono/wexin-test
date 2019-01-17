@@ -28,6 +28,7 @@ class LeaveDetail extends Component{
             previewImage: '',
             previewVisible: false,
             messageContent: null,
+            isShowFoot:true,
 
         }
     }
@@ -36,6 +37,18 @@ class LeaveDetail extends Component{
     }
     componentDidMount() {
         let lvId = this.props.match.params.lvId
+        let role = this.props.match.params.role
+        let isshowfoot = true
+
+        if(role == 'teacher'){
+            isshowfoot = true
+        }else {
+            isshowfoot = false
+        }
+        this.setState({
+            isShowFoot:isshowfoot
+        })
+
         console.log("lvId",lvId)
         if (!isObjEmpty(lvId)){
             this.getleaveDetail(lvId)
@@ -117,17 +130,21 @@ class LeaveDetail extends Component{
                         }
                     </div>
                 </div>
-                <div className="foot_input_view">
-                         <div className="comH_view">
-                             <div className="footer flex padding_10" style={{background: '#F2F2F2', alignItems: 'center'}}>
-                                 <img src={require('imgs/ic_edit.png')} width={28} height={28}/>
-                                 <input ref={ref => this.input_content = ref} value={this.state.messageContent}
-                                        onChange={this.onChangeMessage} placeholder="留言"
-                                        className='homework-detail-leave-input'></input>
-                                 <span onClick={this.onMessageSend} className="homework-detail-leave-send">发送</span>
-                             </div>
-                         </div>
-                </div>
+                {
+                    this.state.isShowFoot == true ?
+                        <div className="foot_input_view">
+                            <div className="comH_view">
+                                <div className="footer flex padding_10" style={{background: '#F2F2F2', alignItems: 'center'}}>
+                                    <img src={require('imgs/ic_edit.png')} width={28} height={28}/>
+                                    <input ref={ref => this.input_content = ref} value={this.state.messageContent}
+                                           onChange={this.onChangeMessage} placeholder="留言"
+                                           className='homework-detail-leave-input'></input>
+                                    <span onClick={this.onMessageSend} className="homework-detail-leave-send">发送</span>
+                                </div>
+                            </div>
+                        </div>:''
+                }
+
                 {this.state.previewVisible ?
                     <ImagesViewer onClose={this.handleCancel} urls={pictureUrls}
                                   index={this.state.previewIndex}

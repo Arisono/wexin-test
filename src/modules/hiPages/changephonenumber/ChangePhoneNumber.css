@@ -1,4 +1,38 @@
-.spe {
-    width: 60px;
-    height: 60px;
+.input_phone_number{
+    display: flex;flex-direction: row;background: #FFFFFF;  border: 1px solid #EDEDED;height: 43px;width: 100%;margin-top: 10px;
+    text-align: center;
+}
+
+.add_86{
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #4197FC;
+    letter-spacing: 1.88px;line-height: 43px;margin-left: 10px;
+}
+.shu_xian{
+    height: 100%;width: 1px;border: 1px solid #F6F6F6;margin: 0px 5px;
+}
+.textarea_sty {
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    letter-spacing: 1.88px;
+    border: none;
+    color: #333333;
+    margin-top: 5px;
+}
+.handle_code{
+    font-family: PingFangSC-Regular;
+    font-size: 15px;
+    color: #4197FC;
+    letter-spacing: 1.88px;
+    width: 40%;
+    text-align: right;
+    line-height: 43px;
+    margin-right: 10px;
+}
+.send_code{
+    color: #4197FC;
+}
+.send_code_again{
+    color: #BEBEBE;
 }

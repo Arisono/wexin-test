@@ -70,7 +70,7 @@ class LeaveAddCPage extends Component {
         const targetProps = {
             targetData: this.state.targetData,
             targetValues: this.state.targetList,
-            title: '接收人',
+            title: '提交对象',
             targetCount: this.state.targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this),
@@ -80,7 +80,7 @@ class LeaveAddCPage extends Component {
         const defaultTargetProps = {
             targetData: [],
             targetValues: this.state.targetList,
-            title: '接收人',
+            title: '提交对象',
             targetCount: this.state.targetCount,
             onTargetChange: this.onTargetChange.bind(this),
             onTargetFocus: this.onTargetFocus.bind(this),

@@ -72,44 +72,50 @@ class LeaveDetail extends Component{
         return(
             <div>
                 <div className="col-xs-12 " >
-                    <div className="row flex" >
-                        <div id="global_page_title" style={{fontSize:15,color:"#333333"}}>  {itemdetail.title}</div>
-                        <div className="item_flex_1  flex_row_right margin_left_right_10">
-                            {this.state.role==="parent"?(""):(<div>
-                                {itemdetail.leaveMessages.length===0? <div style={{fontSize:12,color:"#FA5200"}}>未查阅</div>: <div style={{fontSize:12,color:"##686868"}}>已查阅</div> }
-                            </div>)}
+                    <div className="top_header">
+                        <div className="row flex" >
+                            <div id="global_page_title" style={{fontSize:15,color:"#333333"}}>  {itemdetail.title}</div>
+                            <div className="item_flex_1  flex_row_right margin_left_right_10">
+                                {this.state.role==="parent"?(""):(<div>
+                                    {itemdetail.leaveMessages.length===0? <div style={{fontSize:12,color:"#FA5200"}}>未查阅</div>: <div style={{fontSize:12,color:"##686868"}}>已查阅</div> }
+                                </div>)}
+                            </div>
                         </div>
-                    </div>
-                    <div className="row ">
-                        <div  className="col-xs-3" id="col-clear" style={{fontSize:12,color:"#666666"}}>请假时间：</div>
-                        <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{itemdetail.startTime}—{itemdetail.endTime}</div>
-                    </div>
-                    <div className="row "  style={{marginTop:10}}>
-                        <div  className="col-xs-3" id="col-clear"  style={{fontSize:12,color:"#666666"}}>请假事由：</div>
-                        <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{itemdetail.content}</div>
-                    </div>
-                    <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
-                        <div style={{flex: '1', overflow: 'scroll', padding: '5px', webkitOverflowScrolling: 'touch'}}>
-                            <TransitionGroup>
-                                {pictureItems}
-                            </TransitionGroup>
+                        <div className="row ">
+                            <div  className="col-xs-3" id="col-clear" style={{fontSize:12,color:"#666666"}}>请假时间：</div>
+                            <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{itemdetail.startTime}—{itemdetail.endTime}</div>
                         </div>
+                        <div className="row "  style={{marginTop:10}}>
+                            <div  className="col-xs-3" id="col-clear"  style={{fontSize:12,color:"#666666"}}>请假事由：</div>
+                            <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{itemdetail.content}</div>
+                        </div>
+                        <div style={{display: 'flex', width: '100%', flexDirection: 'column'}}>
+                            <div style={{flex: '1', overflow: 'scroll', padding: '5px', webkitOverflowScrolling: 'touch'}}>
+                                <TransitionGroup>
+                                    {pictureItems}
+                                </TransitionGroup>
+                            </div>
+                        </div>
+
+                        <div style={{fontSize:15,color:"#666666",marginTop:10}}>回复：</div>
+                        <div className="comhline_sty1" style={{marginTop:5}}></div>
                     </div>
 
-                    <div style={{fontSize:15,color:"#666666"}}>回复：</div>
+                    <div style={{marginTop:150}}>
 
-                    { itemdetail.leaveMessages==null || itemdetail.leaveMessages.length==0 ? '' :
-                        <List
-                            dataSource={itemdetail.leaveMessages}
-                            renderItem={item => (
-                                <List.Item>
-                                    <div>
-                                        <span className=" margin_left_right_20">{item.messContent}:</span>
-                                    </div>
-                                </List.Item>
-                            )}
-                        />
-                    }
+                        { itemdetail.leaveMessages==null || itemdetail.leaveMessages.length==0 ? '' :
+                            <List
+                                dataSource={itemdetail.leaveMessages}
+                                renderItem={item => (
+                                    <List.Item>
+                                        <div>
+                                            <span className=" margin_left_right_20" style={{color:'#333333'}}>{item.messContent}</span>
+                                        </div>
+                                    </List.Item>
+                                )}
+                            />
+                        }
+                    </div>
                 </div>
                 <div className="foot_input_view">
                          <div className="comH_view">
@@ -134,6 +140,7 @@ class LeaveDetail extends Component{
             Toast.info("请输入回复内容")
             return;
         }
+        Toast.loading('回复中...', 0)
         fetchPost(API.messageCreate,{
             messName:'这是回复',
             messContent:this.state.messageContent,
@@ -142,6 +149,7 @@ class LeaveDetail extends Component{
         }).then((response)=>{
             console.log("response:"+JSON.stringify(response));
             if(response.success){
+                Toast.hide()
                 Toast.info("回复成功！");
                 this.setState({
                     messageContent:""
@@ -152,6 +160,7 @@ class LeaveDetail extends Component{
                 // }, 2000)
             }
         }).catch((error)=>{
+            Toast.hide()
             console.log("error:"+JSON.stringify(error));
         })
     }

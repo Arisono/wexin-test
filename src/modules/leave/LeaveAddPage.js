@@ -1,6 +1,6 @@
 /**
 *   Created by FANGlh on 2019/1/14 15:52.
-*   Desc:
+*   Desc: 学生请假
 */
 
 import React,{Component} from 'react';

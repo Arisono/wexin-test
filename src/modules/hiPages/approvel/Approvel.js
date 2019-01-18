@@ -38,7 +38,6 @@ class Approvel extends Component {
             isMyapplyding: true,
             isMyapproveding: true,
             height: document.documentElement.clientHeight,
-            previewVisible: false
         }
     }
 

@@ -6,8 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './LeaveListPage.css'
 import '../../style/css/app-gloal.css'
-import {List} from 'antd';
-import {Button,Icon,Input} from 'antd';
+import {Button,Icon,Input,Skeleton, List} from 'antd';
 import InfiniteScroll from 'react-infinite-scroller'
 import LoadingMore from "../../components/LoadingMore";
 import {fetchPost,fetchGet} from "../../utils/fetchRequest";
@@ -15,6 +14,10 @@ import {API,_baseURL} from "../../configs/api.config";
 import {Toast,Modal} from 'antd-mobile'
 import {connect} from 'react-redux'
 import ImageGrid from "../../components/image/ImageGrid";
+import RefreshLayout from "../../components/RefreshLayout";
+import ReactDOM from 'react-dom';
+
+
 /**
  * Created by Arison on 11:22.
  */
@@ -30,7 +33,10 @@ class LeaveListPage extends React.Component{
             listItem:null,
             index:null,
             role:this.props.match.params.role,
-            data:[]
+            data:[],
+            isLeaveRefreshing:true,
+            height: document.documentElement.clientHeight,
+            previewVisible: false
         };
     }
 
@@ -39,7 +45,11 @@ class LeaveListPage extends React.Component{
     }
     
     componentDidMount(){
-        this.getLeaveListData();
+        this.getListData();
+        const hei = this.state.height - ReactDOM.findDOMNode(this.contain).offsetTop;
+        this.setState({
+            height: hei
+        })
     }
 
     getLeaveListData() {
@@ -348,8 +358,57 @@ class LeaveListPage extends React.Component{
         }
 
     }
-
     render(){
+                return <div className="container-fluid" id="global_background" style={{height:'100vh',backgroundColor:'#F6F6F6'}}>
+                <div className="row" >
+                    <div  className="col-xs-12 clear_margin" >
+                        <RefreshLayout
+                            refreshing={this.state.isLeaveRefreshing}
+                            onRefresh={this.getMyApplyData}
+                            height={this.state.height}>
+                            <Skeleton loading={this.state.getListData} active paragraph={{rows: 3}}>
+                                <List dataSource ={this.state.data}
+                                                renderItem={(item,index)=>(
+                                                    <List.Item  onClick={this.onItemOnClick.bind(this,index,item)} key={item.lvId} id="row_background"  >
+                                                        <div className="col-xs-12 " >
+                                                            <div className="row flex" >
+                                                                <div id="global_page_title"  style={{fontSize:15,color:"#333333"}}>  {item.title}</div>
+                                                                <div className="item_flex_1  flex_row_right margin_left_right_10">
+                                                                    {this.state.role==="parent"?(""):(<div>
+                                                                        {item.leaveMessages.length===0?<div style={{fontSize:12,color:"#FA5200"}}>未查阅</div>: <div style={{fontSize:12,color:"##686868"}}>已查阅</div>}
+                                                                    </div>)}
+                                                                </div>
+                                                            </div>
+                                                            <div className="row ">
+                                                                <div  className="col-xs-3" id="col-clear"   style={{fontSize:12,color:"#666666"}}>请假时间：</div>
+                                                                <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{item.startTime}—{item.endTime}</div>
+                                                            </div>
+                                                            <div className="row " style={{marginTop:10,marginBottom:10}} >
+                                                                <div  className="col-xs-3" id="col-clear"  style={{fontSize:12,color:"#666666"}}>请假事由：</div>
+                                                                <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{item.content}</div>
+                                                            </div>
+
+                                                        </div>
+                                                    </List.Item>
+                                                )}/>
+                            </Skeleton>
+                        </RefreshLayout>
+                        {
+                            this.state.role=="teacher"?(""):(<Icon type="plus-circle" theme='filled' className='common-add-icon'
+                                                                   onClick={this.onAddAction} />)
+                        }
+                    </div>
+                </div>
+            </div>
+    }
+    getListData =()=>{
+        if(this.state.pageIndex == 1){
+            this.getLeaveListData()
+        }else {
+            this.loadMoreAction()
+        }
+    }
+  /*  render(){
 
         let detailModal=this.getDetailModal();
         return <div className="container-fluid" id="global_background" style={{height:'100vh',backgroundColor:'#F6F6F'}}>
@@ -395,7 +454,7 @@ class LeaveListPage extends React.Component{
                 </div>
             </div>
         </div>
-    }
+    }*/
 }
 
 let mapStateToProps = (state) => ({

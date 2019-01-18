@@ -6,7 +6,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './LeaveListPage.css'
 import '../../style/css/app-gloal.css'
-import {Button,Icon,Input,Skeleton, List} from 'antd';
+import {List} from 'antd';
+import {Button,Icon,Input} from 'antd';
 import InfiniteScroll from 'react-infinite-scroller'
 import LoadingMore from "../../components/LoadingMore";
 import {fetchPost,fetchGet} from "../../utils/fetchRequest";
@@ -14,10 +15,6 @@ import {API,_baseURL} from "../../configs/api.config";
 import {Toast,Modal} from 'antd-mobile'
 import {connect} from 'react-redux'
 import ImageGrid from "../../components/image/ImageGrid";
-import RefreshLayout from "../../components/RefreshLayout";
-import ReactDOM from 'react-dom';
-
-
 /**
  * Created by Arison on 11:22.
  */
@@ -33,23 +30,16 @@ class LeaveListPage extends React.Component{
             listItem:null,
             index:null,
             role:this.props.match.params.role,
-            data:[],
-            isLeaveRefreshing:true,
-            height: document.documentElement.clientHeight,
-            previewVisible: false
+            data:[]
         };
     }
 
     componentWillMount(){
         document.title ="学生请假条";
     }
-    
+
     componentDidMount(){
-        this.getListData();
-        const hei = this.state.height - ReactDOM.findDOMNode(this.contain).offsetTop;
-        this.setState({
-            height: hei
-        })
+        this.getLeaveListData();
     }
 
     getLeaveListData() {
@@ -132,27 +122,27 @@ class LeaveListPage extends React.Component{
                     pageIndex: this.state.pageIndex,
                     pageSize: this.state.pageSize
                 }).then((response) => {
-                     if(response.data.leaveNotify.length>0){
-                         for (let i = 0; i < response.data.leaveNotify.length; i++) {
-                             let model = {
-                                 lvId:response.data.leaveNotify[i].lvId,
-                                 title: response.data.leaveNotify[i].lvName,
-                                 endTime: response.data.leaveNotify[i].endDate,
-                                 startTime: response.data.leaveNotify[i].startDate,
-                                 content: response.data.leaveNotify[i].lvDetails,
-                                 enclosure:response.data.leaveNotify[i].enclosure,
-                                 leaveMessages:response.data.leaveNotify[i].leaveMessages
-                             };
-                             this.state.data.push(model);
-                         }
-                         this.setState({
-                             data: this.state.data
-                         })
-                     }else{
-                         this.setState({
-                             hasMoreData:false,
-                         })
-                     }
+                    if(response.data.leaveNotify.length>0){
+                        for (let i = 0; i < response.data.leaveNotify.length; i++) {
+                            let model = {
+                                lvId:response.data.leaveNotify[i].lvId,
+                                title: response.data.leaveNotify[i].lvName,
+                                endTime: response.data.leaveNotify[i].endDate,
+                                startTime: response.data.leaveNotify[i].startDate,
+                                content: response.data.leaveNotify[i].lvDetails,
+                                enclosure:response.data.leaveNotify[i].enclosure,
+                                leaveMessages:response.data.leaveNotify[i].leaveMessages
+                            };
+                            this.state.data.push(model);
+                        }
+                        this.setState({
+                            data: this.state.data
+                        })
+                    }else{
+                        this.setState({
+                            hasMoreData:false,
+                        })
+                    }
 
                 }).catch((error) => {
                     console.log("error:" + JSON.stringify(error));
@@ -202,7 +192,7 @@ class LeaveListPage extends React.Component{
         console.log("onChangeMessage()",event.target.value);
         console.log("onChangeMessage()",event.target.name);
         console.log("onChangeMessage()",event.target.id);
-       let model= this.state.data[event.target.id];
+        let model= this.state.data[event.target.id];
         model.leaveMessages.splice(0,1,event.target.value)
         this.state.data.splice(event.target.id,1,model);
         // this.setState({
@@ -239,7 +229,7 @@ class LeaveListPage extends React.Component{
     onItemOnClick=(index,item)=>{
         console.log("onItemOnClick()",JSON.stringify(item));
         this.props.history.push('/leavedetail/' +item.lvId+'/'+this.state.role)
-       return;
+        return;
         this.setState({
             detailVisible: true,
             listItem:item,
@@ -302,7 +292,7 @@ class LeaveListPage extends React.Component{
 
                                     {item.enclosure.length!=0?(<div >
                                         <ImageGrid images={fileImages}/>
-                                       {/* <img className="margin_top_bottom_10" src={_baseURL+"/"+item.enclosure[0]}  width={"70%"}  />*/}
+                                        {/* <img className="margin_top_bottom_10" src={_baseURL+"/"+item.enclosure[0]}  width={"70%"}  />*/}
                                     </div>):("")}
 
 
@@ -327,7 +317,7 @@ class LeaveListPage extends React.Component{
                                                             </div>
                                                         })}
 
-                                                   </div>
+                                                    </div>
 
                                                 )}
                                             </div>
@@ -358,103 +348,59 @@ class LeaveListPage extends React.Component{
         }
 
     }
+
     render(){
-                return <div className="container-fluid" id="global_background" style={{height:'100vh',backgroundColor:'#F6F6F6'}}>
-                <div className="row" >
-                    <div  className="col-xs-12 clear_margin" >
-                        <RefreshLayout
-                            refreshing={this.state.isLeaveRefreshing}
-                            onRefresh={this.getMyApplyData}
-                            height={this.state.height}>
-                            <Skeleton loading={this.state.getListData} active paragraph={{rows: 3}}>
-                                <List dataSource ={this.state.data}
-                                                renderItem={(item,index)=>(
-                                                    <List.Item  onClick={this.onItemOnClick.bind(this,index,item)} key={item.lvId} id="row_background"  >
-                                                        <div className="col-xs-12 " >
-                                                            <div className="row flex" >
-                                                                <div id="global_page_title"  style={{fontSize:15,color:"#333333"}}>  {item.title}</div>
-                                                                <div className="item_flex_1  flex_row_right margin_left_right_10">
-                                                                    {this.state.role==="parent"?(""):(<div>
-                                                                        {item.leaveMessages.length===0?<div style={{fontSize:12,color:"#FA5200"}}>未查阅</div>: <div style={{fontSize:12,color:"##686868"}}>已查阅</div>}
-                                                                    </div>)}
-                                                                </div>
-                                                            </div>
-                                                            <div className="row ">
-                                                                <div  className="col-xs-3" id="col-clear"   style={{fontSize:12,color:"#666666"}}>请假时间：</div>
-                                                                <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{item.startTime}—{item.endTime}</div>
-                                                            </div>
-                                                            <div className="row " style={{marginTop:10,marginBottom:10}} >
-                                                                <div  className="col-xs-3" id="col-clear"  style={{fontSize:12,color:"#666666"}}>请假事由：</div>
-                                                                <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{item.content}</div>
-                                                            </div>
-
-                                                        </div>
-                                                    </List.Item>
-                                                )}/>
-                            </Skeleton>
-                        </RefreshLayout>
-                        {
-                            this.state.role=="teacher"?(""):(<Icon type="plus-circle" theme='filled' className='common-add-icon'
-                                                                   onClick={this.onAddAction} />)
-                        }
-                    </div>
-                </div>
-            </div>
-    }
-    getListData =()=>{
-        if(this.state.pageIndex == 1){
-            this.getLeaveListData()
-        }else {
-            this.loadMoreAction()
-        }
-    }
-  /*  render(){
-
         let detailModal=this.getDetailModal();
         return <div className="container-fluid" id="global_background" style={{height:'100vh',backgroundColor:'#F6F6F'}}>
             <div className="row" >
                 <div  className="col-xs-12 clear_margin" >
-                     <InfiniteScroll
-                         pageStart={0}
-                         initialLoad={true}
-                         loadMore={this.loadMoreAction}
-                         hasMore={this.state.hasMoreData}
-                         loader={<LoadingMore/>}>
-                         <List
-                             dataSource={this.state.data}
-                             renderItem={(item,index)=>(
-                                 <List.Item  onClick={this.onItemOnClick.bind(this,index,item)} key={item.lvId} id="row_background"  >
-                                     <div className="col-xs-12 " >
-                                         <div className="row flex" >
-                                             <div id="global_page_title"  style={{fontSize:15,color:"#333333"}}>  {item.title}</div>
-                                             <div className="item_flex_1  flex_row_right margin_left_right_10">
-                                                 {this.state.role==="parent"?(""):(<div>
-                                                     {item.leaveMessages.length===0?<div style={{fontSize:12,color:"#FA5200"}}>未查阅</div>: <div style={{fontSize:12,color:"##686868"}}>已查阅</div>}
-                                                 </div>)}
-                                             </div>
-                                         </div>
-                                         <div className="row ">
-                                             <div  className="col-xs-3" id="col-clear"   style={{fontSize:12,color:"#666666"}}>请假时间：</div>
-                                             <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{item.startTime}—{item.endTime}</div>
-                                         </div>
-                                         <div className="row " style={{marginTop:10,marginBottom:10}} >
-                                             <div  className="col-xs-3" id="col-clear"  style={{fontSize:12,color:"#666666"}}>请假事由：</div>
-                                             <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{item.content}</div>
-                                         </div>
+                    <InfiniteScroll
+                        pageStart={0}
+                        initialLoad={true}
+                        loadMore={this.loadMoreAction}
+                        hasMore={this.state.hasMoreData}
+                        loader={<LoadingMore/>}>
+                        <List
+                            dataSource={this.state.data}
+                            renderItem={(item,index)=>(
+                                <List.Item  onClick={this.onItemOnClick.bind(this,index,item)} key={item.lvId} id="row_background"  >
+                                    <div className="col-xs-12 " >
+                                        <div className="row flex" >
+                                            <div id="global_page_title"  style={{fontSize:15,color:"#333333"}}>  {item.title}</div>
+                                            <div className="item_flex_1  flex_row_right margin_left_right_10">
+                                                {this.state.role==="parent"?(""):(<div>
+                                                    {item.leaveMessages.length===0?<div style={{fontSize:12,color:"#FA5200"}}>未查阅</div>: <div style={{fontSize:12,color:"##686868"}}>已查阅</div>}
+                                                </div>)}
+                                            </div>
+                                        </div>
+                                        <div className="row ">
+                                            <div  className="col-xs-3" id="col-clear"   style={{fontSize:12,color:"#666666"}}>请假时间：</div>
+                                            <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{item.startTime}—{item.endTime}</div>
+                                        </div>
+                                        <div className="row " style={{marginTop:10,marginBottom:10}} >
+                                            <div  className="col-xs-3" id="col-clear"  style={{fontSize:12,color:"#666666"}}>请假事由：</div>
+                                            <div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{item.content}</div>
+                                        </div>
 
-                                     </div>
-                                 </List.Item>
-                             )}/>
-                       </InfiniteScroll>
+
+                                        {/*<div className="row " style={{marginTop:10,marginBottom:10}} >*/}
+                                        {/*<div  className="col-xs-3" id="col-clear"  style={{fontSize:12,color:"#666666"}}>老师回复：</div>*/}
+                                        {/*<div  className="col-xs-9" id="col-clear-start"  style={{fontSize:12,color:"#333333"}}>{ item.leaveMessages.length > 0 ? item.leaveMessages[0].messContent : '无'}</div>*/}
+                                        {/*</div>*/}
+
+                                    </div>
+                                </List.Item>
+                            )}/>
+                    </InfiniteScroll>
                     {
                         this.state.role=="teacher"?(""):(<Icon type="plus-circle" theme='filled' className='common-add-icon'
-                                                             onClick={this.onAddAction} />)
+                                                               onClick={this.onAddAction} />)
                     }
                     {detailModal}
                 </div>
             </div>
         </div>
-    }*/
+    }
 }
 
 let mapStateToProps = (state) => ({

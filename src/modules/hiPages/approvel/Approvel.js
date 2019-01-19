@@ -135,7 +135,7 @@ class Approvel extends Component {
         myApplypageIndex++
         try {
             this.setState({
-                isMyApproveRefreshing: true
+                isMyApplyRefreshing: true
             })
         } catch (e) {
 

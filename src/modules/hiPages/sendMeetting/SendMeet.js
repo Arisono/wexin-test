@@ -37,9 +37,9 @@ class SendMeet extends Component {
     getOrganization = () => {
         Toast.loading('', 0)
 
-        fetchGet(API.USER_GETOBJECT, {
-            userId: this.props.userInfo.userId,
-            stuId: this.props.userInfo.userId
+        fetchGet(API.getAllTeacher, {
+            // schoolId: this.props.userInfo.schoolId,
+            schoolId:1
         }).then(response => {
             Toast.hide()
             const {targetData} = this.state
@@ -135,7 +135,6 @@ class SendMeet extends Component {
             titleValue: null,
             contentValue: null,
             earlyTime: null,
-            headerArray: [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3],
             meetPerson: [],
             meetAddress: null,
             noticeType: [{
@@ -281,22 +280,21 @@ class SendMeet extends Component {
         console.log('noticeT', noticeT)
         console.log('noticeT', new Date(noticeT))
         let params = {
-            // notifyCreator:this.props.userInfo.userId,
-            notifyCreator: this.props.userInfo.userId,
+            meetingCreator: this.props.userInfo.userId,
             notifyType: 6,
-            notifyStatus: 2,
-            notifyName: this.state.titleValue,
-            notifyAddress: this.state.meetAddress,
+            meetingStatus: 2,
+            meetingName: this.state.titleValue,
+            meetingAddress: this.state.meetAddress,
             startDate: moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
             endDate: moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
             reminderDate: moment(new Date(noticeT)).format('YYYY-MM-DD HH:mm:ss'),
-            userIds: JSON.stringify(userList)
+            meetingNotifier: JSON.stringify(userList)
         }
 
         console.log('params', params)
 
         Toast.loading("会议创建中...", 0)
-        fetchPost(API.issueNotification, params, {})
+        fetchPost(API.createMeeting, params, {})
             .then((response) => {
                 Toast.hide()
                 console.log('response', response)

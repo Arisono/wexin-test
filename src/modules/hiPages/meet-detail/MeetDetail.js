@@ -99,8 +99,8 @@ class MeetDetail extends Component {
 
     EndMeetting = () => {
         fetchGet(API.endMeeting, {
-            userId: this.props.userInfo.userId,
-            notifyId: this.state.notifyId
+            teacherId:this.props.userInfo.userId,
+            meetingId: this.state.meetId
         }, {}).then((response) => {
             console.log('response', response)
             if (response.success && response.data) {
@@ -143,11 +143,13 @@ class MeetDetail extends Component {
         meetBean.address = ''
         meetBean.sponsor = ''
         this.setState({
-            meetingSignData: meetBean
+            meetingSignData: meetBean,
+            meetId:meetId
         })
 
         let params = {
-            notifyId: meetId
+            teacherId:this.props.userInfo.userId,
+            meetingId: this.state.meetId
         }
         fetchGet(API.homeWorkDetail, params, {})
             .then((response) => {

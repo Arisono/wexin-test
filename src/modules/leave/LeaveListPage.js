@@ -79,6 +79,12 @@ class LeaveListPage extends React.Component{
 
 
     getLeaveListData() {
+        try {
+            this.setState({
+                isRefreshing: true
+            })
+        } catch (e) {
+        }
         this.state.pageIndex=1;
         this.state.pageSize=5;
         this.setState({

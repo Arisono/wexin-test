@@ -93,9 +93,9 @@ class MeetingSignIn extends Component {
             meetingSignList.length = 0
         }
 
-        fetchPost(API.GET_MEETING_LIST, {
-            userId: this.props.userInfo.userId,
-            notifyType: 6,
+        fetchPost(API.meetingList, {
+            teacherId: this.props.userInfo.userId,
+            meetingStatus: 1,
             pageIndex: mPageIndex,
             pageSize: mPageSize
         }).then(response => {
@@ -172,8 +172,8 @@ class MeetingSignIn extends Component {
 
         Toast.loading('', 0)
         fetchGet(API.MEETING_SIGN, {
-            userId: this.props.userInfo.userId,
-            notifyId: meetingSignList[index].meetId,
+            teacherId: this.props.userInfo.userId,
+            meetingId: meetingSignList[index].meetId,
         }).then(response => {
             Toast.hide()
             Toast.success('签到成功')

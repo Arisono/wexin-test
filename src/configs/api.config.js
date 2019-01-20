@@ -7,8 +7,9 @@ import store from './../redux/store/store'
  * Created by RaoMeng on 2018/11/21
  * Desc: 项目接口
  */
-export const _baseURL = 'https://tmobile.ubtob.com/school'
+// export const _baseURL = 'https://tmobile.ubtob.com/school'
 // export const _baseURL = 'http://10.1.80.101:8080/school'
+export const _baseURL = 'http://10.1.80.101:9600'
 export const API = {
     //获取验证码
     SEND_CODE: _baseURL + '/user/sendCode',
@@ -58,8 +59,7 @@ export const API = {
     GET_TEACHER_PHONES: _baseURL + '/user/getTeacherPhones',
     //获取班级家长手机号
     GET_PARENT_PHONES: _baseURL + '/user/getParentPhones',
-    //会议签到
-    MEETING_SIGN: _baseURL + '/notify/meetingSign',
+
     //校长信箱提交
     PRINCIPAL_MAILBOX: _baseURL + '/notify/principalMailbox',
     //校园卡充值
@@ -120,12 +120,26 @@ export const API = {
     doapprove: _baseURL + '/oaApprove/approve',
     //审批单详情
     oaDetails: _baseURL + '/oaApprove/oaDetails',
-    //结束会议
-    endMeeting: _baseURL + '/notify/endMeeting',
+
     //获取分值条件
     getCurr: _baseURL + '/score/getCurr',
 
 
+    //TODO 接口修改后的
+    // 获取抄送老师
+    getAllTeacher:_baseURL + '/wxSchool/user/getAllTeacher',
+    //创建会议
+    createMeeting:_baseURL + '/wxSchool/meeting/createMeeting',
+    //会议列表
+    meetingList:_baseURL + '/wxSchool/meeting/meetingList',
+    //会议详情
+    getMeetingDetails:_baseURL + '/wxSchool/meeting/getMeetingDetails',
+    //结束会议
+    endMeeting: _baseURL + '/wxSchool/meeting/endMeeting',
+    //会议签到
+    MEETING_SIGN: _baseURL + '/wxSchool/meeting/meetingSign',
+    //删除会议
+    deleteMeeting:_baseURL + '/wxSchool/meeting/deleteMeeting',
 }
 
 

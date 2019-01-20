@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@antv/f2": "^3.3.4",
     "antd": "^3.10.9",
     "antd-mobile": "^2.2.6",
     "bootstrap": "^3.3.7",

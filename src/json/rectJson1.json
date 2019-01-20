@@ -1,0 +1,42 @@
+[
+  {
+    "year": "考试1",
+    "subject": "语文",
+    "sales": 38
+  },
+  {
+    "year": "考试2",
+    "subject": "语文",
+    "sales": 52
+  },
+  {
+    "year": "考试3",
+    "subject": "语文",
+    "sales": 61
+  },
+  {
+    "year": "考试4",
+    "subject": "语文",
+    "sales": 105
+  },
+  {
+    "year": "考试5",
+    "subject": "语文",
+    "sales": 48
+  },
+  {
+    "year": "考试6",
+    "subject": "语文",
+    "sales": 38
+  },
+  {
+    "year": "考试7",
+    "subject": "语文",
+    "sales": 38
+  },
+  {
+    "year": "考试8",
+    "subject": "语文",
+    "sales": 38
+  }
+]

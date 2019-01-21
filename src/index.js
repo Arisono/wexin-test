@@ -12,12 +12,8 @@ import {LocaleProvider} from 'antd'
 import {LocaleProvider as MoLocaleProvider} from 'antd-mobile'
 import moment from 'moment';
 import 'moment/locale/zh-cn';
-import Bizgoblin from 'bizgoblin'
-
 
 moment.locale('zh-cn');
-// 关闭 F2 的体验改进计划打点请求
-Bizgoblin.track(false)
 
 ReactDOM.render(<LocaleProvider locale={zh_CN}>
         <Provider store={store}>

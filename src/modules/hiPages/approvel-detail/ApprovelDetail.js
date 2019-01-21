@@ -169,7 +169,7 @@ import ImagesViewer from '../../../components/imagesVIewer/index';
             return
         }
         fetchPost(API.doapprove,{
-            userId:this.props.userInfo.userId,
+            teacherId:this.props.userInfo.userId,
             approveId:this.state.approveId,
             status:this.state.handleStatus,
             approveOpinion:this.state.approveOpinion

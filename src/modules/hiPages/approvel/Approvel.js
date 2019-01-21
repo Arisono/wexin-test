@@ -141,7 +141,7 @@ class Approvel extends Component {
 
         }
         fetchGet(API.oaApproveList, {
-            userId: this.props.userInfo.userId,
+            teacherId: this.props.userInfo.userId,
             pageIndex: myApplypageIndex,
             pageSize: mPageSize
         }, {}).then((response) => {
@@ -185,7 +185,7 @@ class Approvel extends Component {
 
         }
         fetchGet(API.oaApproveList, {
-            userId: this.props.userInfo.userId,
+            teacherId: this.props.userInfo.userId,
             pageIndex: myApprovepageIndex,
             pageSize: mPageSize
         }, {}).then((response) => {

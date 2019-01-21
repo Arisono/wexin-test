@@ -16,21 +16,22 @@ import moment from 'moment'
 import {connect} from 'react-redux';
 import TargetSelect from '../../components/TargetSelect';
 import {getIntValue, getStrValue, isObjEmpty} from "../../utils/common";
-import {getOrganization} from "../../utils/api.request";
-import {ORGANIZATION_TEACHER} from "../../utils/api.constants";
+// import {getOrganization} from "../../utils/api.request";
+// import {ORGANIZATION_TEACHER} from "../../utils/api.constants";
 
 
 class LeaveAddCPage extends Component {
     componentDidMount() {
         this.node.scrollIntoView();
-        getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
+        /*getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
             .then(organization => {
                 this.setState({
                     targetData: organization.teachers,
                 })
             }).catch(error => {
 
-        })
+        })*/
+        this.getOrganization()
     }
 
     constructor(props) {
@@ -192,10 +193,11 @@ class LeaveAddCPage extends Component {
         }
         const params = {
             approveType:4,
-            approveName: this.state.leaveName,
+            approveTitle: this.state.leaveName,
             appType: this.state.leaveType[0],
             approveDetails: this.state.leaveReason,
             proposer: this.props.userInfo.userId,
+            approveStatus:1,
             approver: JSON.stringify(this.state.votePerson[0]),
             approveFiles: approveFiles,
             startDate: moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
@@ -224,7 +226,57 @@ class LeaveAddCPage extends Component {
             }
         })
     }
+    getOrganization = () => {
+        Toast.loading('', 0)
 
+        fetchGet(API.getAllTeacher, {
+            // schoolId: this.props.userInfo.schoolId,
+            schoolId:1
+        }).then(response => {
+            Toast.hide()
+            const {targetData} = this.state
+            targetData.length = 0
+            if (response && response.data) {
+                // const schoolArray = response.data.schools
+                const teacherArray = response.data
+
+                if (!isObjEmpty(teacherArray)) {
+                    const teacherData = []
+                    teacherArray.forEach((teacherObj, index) => {
+                        if (teacherObj) {
+                            teacherData.push({
+                                title: getStrValue(teacherObj, 'teacherName'),
+                                userId: getIntValue(teacherObj, 'teacherId'),
+                                userPhone: getStrValue(teacherObj, 'userPhone'),
+                                value: getStrValue(teacherObj, 'teacherName') + `-1-${index}`,
+                                key: `1-${index}`,
+                            })
+                        }
+                    })
+
+                    targetData.push({
+                        title: `全体老师`,
+                        value: `1`,
+                        key: `1`,
+                        children: teacherData,
+                    })
+                }
+            }
+
+            console.log('targetData', targetData)
+            this.setState({
+                targetData,
+            })
+        }).catch(error => {
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
+        })
+    }
     beforeUpload = (file, fileList) => {
 
     }
@@ -235,14 +287,15 @@ class LeaveAddCPage extends Component {
 
     onTargetFocus = (e) => {
         if (isObjEmpty(this.state.targetData)) {
-            getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
+           /* getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
                 .then(organization => {
                     this.setState({
                         targetData: organization.teachers,
                     })
                 }).catch(error => {
 
-            })
+            })*/
+           this.getOrganization()
         }
     }
 

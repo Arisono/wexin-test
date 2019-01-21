@@ -113,13 +113,13 @@ export const API = {
     getScoreByStuId: _baseURL + '/score/getScoreByStuId',
 
     //OA单据创建
-    oaCreate: _baseURL + '/oaApprove/oaCreate',
+    oaCreate: _baseURL + '/wxSchool/oaApprove/oaCreate',
     //审批列表
-    oaApproveList: _baseURL + '/oaApprove/oaList',
+    oaApproveList: _baseURL + '/wxSchool/oaApprove/oaList',
     //审批操作
-    doapprove: _baseURL + '/oaApprove/approve',
+    doapprove: _baseURL + '/wxSchool/oaApprove/approve',
     //审批单详情
-    oaDetails: _baseURL + '/oaApprove/oaDetails',
+    oaDetails: _baseURL + '/wxSchool/oaApprovee/oaDetails',
 
     //获取分值条件
     getCurr: _baseURL + '/score/getCurr',

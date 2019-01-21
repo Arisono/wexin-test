@@ -13,8 +13,8 @@ import {API,_baseURL} from '../../../configs/api.config';
 import {connect} from 'react-redux';
 import {getIntValue, getStrValue, isObjEmpty} from "../../../utils/common";
 import TargetSelect from '../../../components/TargetSelect';
-import {getOrganization} from "../../../utils/api.request";
-import {ORGANIZATION_TEACHER} from "../../../utils/api.constants";
+// import {getOrganization} from "../../../utils/api.request";
+// import {ORGANIZATION_TEACHER} from "../../../utils/api.constants";
 import UploadEnclosure from '../../../components/UploadEnclosure';
 
 const Option = Select.Option;
@@ -143,15 +143,67 @@ class ResApply extends Component{
     }
     onTargetFocus = (e) => {
         if (isObjEmpty(this.state.targetData)) {
-            getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
-                .then(organization => {
-                    this.setState({
-                        targetData: organization.teachers,
-                    })
-                }).catch(error => {
-
-            })
+            // getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
+            //     .then(organization => {
+            //         this.setState({
+            //             targetData: organization.teachers,
+            //         })
+            //     }).catch(error => {
+            //
+            // })
+            this.getOrganization()
         }
+    }
+    getOrganization = () => {
+        Toast.loading('', 0)
+
+        fetchGet(API.getAllTeacher, {
+            // schoolId: this.props.userInfo.schoolId,
+            schoolId:1
+        }).then(response => {
+            Toast.hide()
+            const {targetData} = this.state
+            targetData.length = 0
+            if (response && response.data) {
+                // const schoolArray = response.data.schools
+                const teacherArray = response.data
+
+                if (!isObjEmpty(teacherArray)) {
+                    const teacherData = []
+                    teacherArray.forEach((teacherObj, index) => {
+                        if (teacherObj) {
+                            teacherData.push({
+                                title: getStrValue(teacherObj, 'teacherName'),
+                                userId: getIntValue(teacherObj, 'teacherId'),
+                                userPhone: getStrValue(teacherObj, 'userPhone'),
+                                value: getStrValue(teacherObj, 'teacherName') + `-1-${index}`,
+                                key: `1-${index}`,
+                            })
+                        }
+                    })
+
+                    targetData.push({
+                        title: `全体老师`,
+                        value: `1`,
+                        key: `1`,
+                        children: teacherData,
+                    })
+                }
+            }
+
+            console.log('targetData', targetData)
+            this.setState({
+                targetData,
+            })
+        }).catch(error => {
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
+        })
     }
     componentWillUnmount() {
         Toast.hide()
@@ -200,14 +252,15 @@ class ResApply extends Component{
             }
         }
         var params = {
-            approveName: this.state.resUser,
+            approveTitle: this.state.resUser,
             approveDetails:this.state.receivingSays,
             approveType: 2,
             appType:1,
             proposer: this.props.userInfo.userId,
+            approveStatus:1,
             approver: this.state.votePerson[0],
             approveFiles:approveFiles,
-            articles:this.state.selectContentArray
+            oaArticlesDOS:this.state.selectContentArray
         }
         console.log('param',{
             oaString:params
@@ -280,14 +333,15 @@ class ResApply extends Component{
     }
     handleCancel = () => this.setState({ previewVisible: false })
     componentDidMount() {
-        getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
-            .then(organization => {
-                this.setState({
-                    targetData: organization.teachers,
-                })
-            }).catch(error => {
-
-        })
+        // getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
+        //     .then(organization => {
+        //         this.setState({
+        //             targetData: organization.teachers,
+        //         })
+        //     }).catch(error => {
+        //
+        // })
+        this.getOrganization()
     }
 }
 let mapStateToProps = (state) => ({

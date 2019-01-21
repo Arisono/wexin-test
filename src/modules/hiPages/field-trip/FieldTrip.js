@@ -14,8 +14,8 @@ import moment from 'moment';
 import {connect} from 'react-redux';
 import {getIntValue, getStrValue, isObjEmpty} from "../../../utils/common";
 import TargetSelect from '../../../components/TargetSelect';
-import {getOrganization} from "../../../utils/api.request";
-import {ORGANIZATION_TEACHER} from "../../../utils/api.constants";
+// import {getOrganization} from "../../../utils/api.request";
+// import {ORGANIZATION_TEACHER} from "../../../utils/api.constants";
 
 const nowTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
 const Option = Select.Option;
@@ -65,14 +65,15 @@ class FieldTrip extends Component {
 
     componentDidMount() {
         this.node.scrollIntoView();
-        getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
+        /*getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
             .then(organization => {
                 this.setState({
                     targetData: organization.teachers,
                 })
             }).catch(error => {
 
-        })
+        })*/
+        this.getOrganization()
     }
 
     render() {
@@ -182,14 +183,15 @@ class FieldTrip extends Component {
 
     onTargetFocus = (e) => {
         if (isObjEmpty(this.state.targetData)) {
-            getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
-                .then(organization => {
-                    this.setState({
-                        targetData: organization.teachers,
-                    })
-                }).catch(error => {
-
-            })
+            // getOrganization(ORGANIZATION_TEACHER, this.props.userInfo.userId, false)
+            //     .then(organization => {
+            //         this.setState({
+            //             targetData: organization.teachers,
+            //         })
+            //     }).catch(error => {
+            //
+            // })
+            this.getOrganization()
         }
     }
 
@@ -244,10 +246,11 @@ class FieldTrip extends Component {
 
         var params = {
             appType: this.state.tripType[0],
-            approveName: this.state.tripType[0] == 1 ? "外出申请":"出差申请",
+            approveTitle: this.state.tripType[0] == 1 ? "外出申请":"出差申请",
             approveDetails: this.state.tripsReason,
             approveType: 1,
             proposer: this.props.userInfo.userId,
+            approveStatus:1,
             approver: this.state.votePerson[0],
             startDate: moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
             endDate: moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
@@ -276,6 +279,57 @@ class FieldTrip extends Component {
                     Toast.fail('请求异常', 2)
                 }
             })
+    }
+    getOrganization = () => {
+        Toast.loading('', 0)
+
+        fetchGet(API.getAllTeacher, {
+            // schoolId: this.props.userInfo.schoolId,
+            schoolId:1
+        }).then(response => {
+            Toast.hide()
+            const {targetData} = this.state
+            targetData.length = 0
+            if (response && response.data) {
+                // const schoolArray = response.data.schools
+                const teacherArray = response.data
+
+                if (!isObjEmpty(teacherArray)) {
+                    const teacherData = []
+                    teacherArray.forEach((teacherObj, index) => {
+                        if (teacherObj) {
+                            teacherData.push({
+                                title: getStrValue(teacherObj, 'teacherName'),
+                                userId: getIntValue(teacherObj, 'teacherId'),
+                                userPhone: getStrValue(teacherObj, 'userPhone'),
+                                value: getStrValue(teacherObj, 'teacherName') + `-1-${index}`,
+                                key: `1-${index}`,
+                            })
+                        }
+                    })
+
+                    targetData.push({
+                        title: `全体老师`,
+                        value: `1`,
+                        key: `1`,
+                        children: teacherData,
+                    })
+                }
+            }
+
+            console.log('targetData', targetData)
+            this.setState({
+                targetData,
+            })
+        }).catch(error => {
+            Toast.hide()
+
+            if (typeof error === 'string') {
+                Toast.fail(error, 2)
+            } else {
+                Toast.fail('请求异常', 2)
+            }
+        })
     }
     setStartDate = (value) => {
         this.setthisTime(value, null)

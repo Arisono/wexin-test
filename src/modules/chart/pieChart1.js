@@ -1,6 +1,10 @@
 import pieJson1 from "../../json/pieJson1";
 import F2 from '@antv/f2'
 
+/**
+ * Created by RaoMeng on 2019/1/21
+ * Desc: 基础饼状图
+ */
 export const initPieChart1 = () => {
     let map = {
         '60-70': '40%',
@@ -11,7 +15,7 @@ export const initPieChart1 = () => {
     }
 
     let pieChart = new F2.Chart({
-        id: 'pieChart',
+        id: 'pieChart1',
         pixelRatio: window.devicePixelRatio
     })
 

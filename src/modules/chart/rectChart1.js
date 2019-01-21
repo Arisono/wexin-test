@@ -1,6 +1,10 @@
 import rectJson1 from "../../json/rectJson1";
 import F2 from '@antv/f2'
 
+/**
+ * Created by RaoMeng on 2019/1/21
+ * Desc: 基础柱状图
+ */
 export const initRectChart1 = () => {
     let rectChart1 = new F2.Chart({
         id: 'rectChart1',

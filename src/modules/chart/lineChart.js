@@ -1,6 +1,10 @@
 import lineJson from "../../json/lineJson";
 import F2 from '@antv/f2'
 
+/**
+ * Created by RaoMeng on 2019/1/21
+ * Desc: 折线图
+ */
 export const initLineChart = () => {
     let lineChart = new F2.Chart({
         id: 'lineChart',

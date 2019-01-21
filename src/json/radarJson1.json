@@ -1,0 +1,27 @@
+[
+  {
+    "item": "语文",
+    "score": 90,
+    "img": "https://gw.alipayobjects.com/zos/rmsportal/txPVjdlnLANzxmwZcchu.png"
+  },
+  {
+    "item": "数学",
+    "score": 80,
+    "img": "https://gw.alipayobjects.com/zos/rmsportal/UMqgEqZdEcPhRekNGAdc.png"
+  },
+  {
+    "item": "英语",
+    "score": 70,
+    "img": "https://gw.alipayobjects.com/zos/rmsportal/eBXrRufzPGlOisYGZwnv.png"
+  },
+  {
+    "item": "物理",
+    "score": 75,
+    "img": "https://gw.alipayobjects.com/zos/rmsportal/zqqWMLXrFwnqhySFHVjZ.png"
+  },
+  {
+    "item": "化学",
+    "score": 60,
+    "img": "https://gw.alipayobjects.com/zos/rmsportal/DxcRoUZXpYOzAWKrlRvv.png"
+  }
+]

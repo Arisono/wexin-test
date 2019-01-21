@@ -62,6 +62,7 @@ import PhonesSearch from "../modules/phonesBook/PhonesSearch";
 import ChangePhoneNumber from '../modules/hiPages/changephonenumber/ChangePhoneNumber';
 import ScoreNotification from '../modules/hiPages/scorenotification/ScoreNotification';
 import AccessNoticeDetail from '../modules/hiPages/accessnoticedetail/AccessNoticeDetail';
+import ChartDemo from "../modules/chart/ChartDemo";
 
 
 export default class RouteConfig extends Component {
@@ -118,14 +119,8 @@ export default class RouteConfig extends Component {
                     <Route path='/voteListTab' component={VoteListTeacher}/>{/*教师端投票列表*/}
                     <Route path="/voteDetail/:id" component={VoteDetailPage}/>{/*投票详情*/}
 
-                    {/*刘杰*/}
-                    <Route path={"/MobileUploadDemo"} component={MobileUploadDemo}/>
-                    <Route path={"/MobileUpload"} component={MobileUpload}/>
-                    <Route path={"/ImageGrid"} component={ImageGrid}/>
-                    <Route path={"/TestImagesViewer"} component={TestImagesViewer}/>
-                    <Route path={'/picturesWall'} component={PicturesWallItem}/>
-                    <Route path='/leaveApproval' component={LeaveApprovalPage}/>
-
+                    {/*测试demo*/}
+                    <Route path='/chartDemo' component={ChartDemo}/>{/*图表测试页面*/}
 
                     {/*方龙海*/}
                     <Route path='/access-notice/:stuId?' component={AccessNotice}/> {/*进出校通知*/}
@@ -139,14 +134,23 @@ export default class RouteConfig extends Component {
                     <Route path='/approvel-detail/:approveId/:isMyApply' component={ApprovelDetail}/> {/*审批详情*/}
                     <Route path='/meet-detail/:meetId?' component={MeetDetail}/> {/*会议签到详情 meetingSignIn*/}
                     <Route path='/leavedetail/:lvId/:role' component={LeaveDetail}/> {/*学生请假详情*/}
-                    <Route path="/changephonenumber" component={ChangePhoneNumber}/>     {/*更换手机号码*/}
-                    <Route path="/scorenotification/:stuId?" component={ScoreNotification}/>     {/*成绩通知*/}
+                    <Route path="/changephonenumber" component={ChangePhoneNumber}/> {/*更换手机号码*/}
+                    <Route path="/scorenotification/:stuId?" component={ScoreNotification}/> {/*成绩通知*/}
                     {/*<Route path="/accessnoticedetail/:stuId?" component={AccessNoticeDetail}/>     /!*出入校通知详情*!/*/}
-                    <Route path="/accessnoticedetail" component={AccessNoticeDetail}/>     {/*出入校通知详情*/}
+                    <Route path="/accessnoticedetail" component={AccessNoticeDetail}/> {/*出入校通知详情*/}
 
                     <Route path='/leaveAddC' component={LeaveAddCPage}/>{/*老师请假*/}
                     <Route path='/leaveAdd' component={LeaveAddPage}/>   {/*学生请假*/}
                     <Route path='/leaveList/:role' component={LeaveListPage}/>{/*学生请假列表*/}
+
+
+                    {/*刘杰*/}
+                    <Route path={"/MobileUploadDemo"} component={MobileUploadDemo}/>
+                    <Route path={"/MobileUpload"} component={MobileUpload}/>
+                    <Route path={"/ImageGrid"} component={ImageGrid}/>
+                    <Route path={"/TestImagesViewer"} component={TestImagesViewer}/>
+                    <Route path={'/picturesWall'} component={PicturesWallItem}/>
+                    <Route path='/leaveApproval' component={LeaveApprovalPage}/>
 
                 </div>
             </Router>

@@ -95,12 +95,11 @@ class MeetingSignIn extends Component {
 
         fetchPost(API.meetingList, {
             teacherId: this.props.userInfo.userId,
-            meetingStatus: 1,
+            // meetingStatus: 1,
             pageIndex: mPageIndex,
             pageSize: mPageSize
         }).then(response => {
             Toast.hide()
-
             if (isObjEmpty(response, response.data, response.data.notify)) {
                 if (mPageIndex > 1) {
                     mPageIndex--
@@ -109,9 +108,9 @@ class MeetingSignIn extends Component {
                 response.data.notify.forEach((item, index) => {
                     let meetBean = new MeetingBean()
 
-                    meetBean.meetId = getIntValue(item, 'notifyId')
-                    meetBean.title = getStrValue(item, 'notifyName')
-                    meetBean.meetStatusCode = getIntValue(item, 'notifyStatus')
+                    meetBean.meetId = getIntValue(item, 'meetingId')
+                    meetBean.title = getStrValue(item, 'meetingName')
+                    meetBean.meetStatusCode = getIntValue(item, 'meetingStatus')
                     if (meetBean.meetStatusCode === 2) {
                         meetBean.meetStatus = '未开始'
                     } else if (meetBean.meetStatusCode === 3) {
@@ -119,24 +118,21 @@ class MeetingSignIn extends Component {
                     } else if (meetBean.meetStatusCode === 4) {
                         meetBean.meetStatus = '已结束'
                     }
-                    meetBean.meetDetail = getStrValue(item, 'notifyDetails')
-                    meetBean.createTime = getStrValue(item, 'creatDate')
+                    meetBean.meetDetail = getStrValue(item, 'meetingDetails')
+                    meetBean.createTime = getStrValue(item, 'createDate')
                     meetBean.startTime = getStrValue(item, 'startDate')
                     meetBean.endTime = getStrValue(item, 'endDate')
                     meetBean.remainTime = getStrValue(item, 'reminderDate')
-                    meetBean.address = getStrValue(item, 'notifyAddress')
-                    meetBean.sponsor = getStrValue(item, 'notifyCreatorName')
-                    meetBean.sponsorId = getIntValue(item, 'notifyCreator')
-                    meetBean.signStatusCode = getIntValue(item, 'signStatus')
-                    if (meetBean.signStatusCode === 1) {
+                    meetBean.address = getStrValue(item, 'meetingAddress')
+                    meetBean.sponsor = getStrValue(item, 'teacherName')
+                    meetBean.sponsorId = getIntValue(item, 'meetingCreator')
+                    meetBean.signStatusCode = getIntValue(item, 'meetingSign')
+                    if (meetBean.signStatusCode === 1 || meetBean.signStatusCode === 2) { //3.已签到
                         meetBean.signStatus = '签到'
-                    } else if (meetBean.signStatusCode === 5) {
+                    } else if (meetBean.signStatusCode === 3) {
                         meetBean.signStatus = '已签到'
-                    } else {
-                        meetBean.signStatusCode = 1
-                        meetBean.signStatus = '签到'
                     }
-                    meetBean.remarks = getStrValue(item, 'notifyRemarks')
+                    meetBean.remarks = getStrValue(item, 'meetingRemarks')
 
                     meetingSignList.push(meetBean)
 
@@ -171,7 +167,9 @@ class MeetingSignIn extends Component {
         const {meetingSignList} = this.state
 
         Toast.loading('', 0)
-        fetchGet(API.MEETING_SIGN, {
+        console.log("teacherId:",this.props.userInfo.userId)
+        console.log("meetingId:",meetingSignList[index].meetId)
+        fetchPost(API.MEETING_SIGN, {
             teacherId: this.props.userInfo.userId,
             meetingId: meetingSignList[index].meetId,
         }).then(response => {
@@ -193,6 +191,7 @@ class MeetingSignIn extends Component {
     }
 
     onAddMeet = () => {
+        console.log("onAddMeet")
         saveListState({
             scrollTop: ReactDOM.findDOMNode(this.container).scrollTop,
             listData: this.state.meetingSignList,

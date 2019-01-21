@@ -19,7 +19,7 @@ function SignItem(props) {
     return(
         <div style={{display:'flex',flexDirection:'column',margin:8,textAlign:"center"}}>
             <div> <img src={props.itemdata.userPhoto == "" || props.itemdata.userPhoto == null ? hi0_img : props.itemdata.userPhoto} alt="" style={{width:40,height:40,borderRadius:25}}/></div>
-            <div  style={{fontSize:12,color:'#333333',marginTop:10}}> <span>{props.itemdata.userName}</span></div>
+            <div  style={{fontSize:12,color:'#333333',marginTop:10}}> <span>{props.itemdata.teacherName}</span></div>
         </div>
     )
 }
@@ -88,7 +88,7 @@ class MeetDetail extends Component {
                 <div style={{marginTop: 10, marginLeft: 20, display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
                     {this.state.unsignList.map((itemdata, index) => <SignItem itemdata={itemdata}></SignItem>)}
                 </div>
-                    {this.state.notifyStatus == 4 ? <div style={{textAlign:'center',marginTop:20}}>
+                    {this.state.notifyStatus == 3 ? <div style={{textAlign:'center',marginTop:20}}>
                         <Button  className='end_sty' style={{color:'#FFFFFF',backgroundColor:'#929292'}}>已结束</Button>
                     </div> : <div style={{textAlign:'center',marginTop:20,marginBottom:20}}>
                         {this.state.showEndBtn == true ? <Button type="primary"  className='end_sty ' onClick={this.EndMeetting}>结束会议</Button> : ""}
@@ -98,7 +98,7 @@ class MeetDetail extends Component {
     }
 
     EndMeetting = () => {
-        fetchGet(API.endMeeting, {
+        fetchPost(API.endMeeting, {
             teacherId:this.props.userInfo.userId,
             meetingId: this.state.meetId
         }, {}).then((response) => {
@@ -133,6 +133,7 @@ class MeetDetail extends Component {
         if (meetId == null || meetId == '') {
             return
         }
+        console.log("teacherId:",this.props.userInfo.userId)
         console.log('meetId', this.props.match.params.meetId)
         let meetBean = new MeetingBean()
         meetBean.createTime = ''
@@ -149,36 +150,36 @@ class MeetDetail extends Component {
 
         let params = {
             teacherId:this.props.userInfo.userId,
-            meetingId: this.state.meetId
+            meetingId: meetId
         }
-        fetchGet(API.homeWorkDetail, params, {})
+        fetchPost(API.getMeetingDetails, params, {})
             .then((response) => {
                 if (response.success && response.data) {
                     let meetBean1 = new MeetingBean()
-                    meetBean1.createTime = response.data.creatDate
-                    meetBean1.title = response.data.notifyName
-                    meetBean1.meetStatus = response.data.signStatus
+                    meetBean1.createTime = response.data.createDate
+                    meetBean1.title = response.data.meetingName
+                    meetBean1.meetStatus = response.data.meetingSign
                     meetBean1.startTime = response.data.startDate
                     meetBean1.endTime = response.data.endDate
-                    meetBean1.address = response.data.notifyAddress
-                    meetBean1.sponsor = response.data.notifyCreatorName
-                    let status = response.data.notifyStatus
-                    if (status === 2) {
+                    meetBean1.address = response.data.meetingAddress
+                    meetBean1.sponsor = response.data.teacherName
+                    let status = response.data.meetingStatus
+                    if (status === 1) {
                         meetBean1.meetStatus = '未开始'
-                    } else if (status === 3) {
+                    } else if (status === 2) {
                         meetBean1.meetStatus = '进行中'
-                    } else if (status === 4) {
+                    } else if (status === 3) {
                         meetBean1.meetStatus = '已结束'
                     }
                     this.setState({
-                        notifyId: response.data.notifyId,
+                        notifyId: response.data.meetingId,
                         meetingSignData: meetBean1,
-                        signList: response.data.notifyRecords.signs,
-                        unsignList: response.data.notifyRecords.unSigns,
-                        notifyStatus: response.data.notifyStatus
+                        signList: response.data.sign,
+                        unsignList: response.data.unSign,
+                        notifyStatus: response.data.meetingStatus
                     })
                     this.setState({
-                        showEndBtn: this.props.userInfo.userId == "" ? false : this.props.userInfo.userId == response.data.notifyCreator ? true : false
+                        showEndBtn: this.props.userInfo.userId == "" ? false : this.props.userInfo.userId == response.data.meetingCreator ? true : false
                     }, function () {
                         console.log('showEndBtn', this.state.showEndBtn)
                     })

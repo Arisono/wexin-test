@@ -87,7 +87,7 @@ export const API = {
 
 
     //首页接口
-    homeIndex: _baseURL + "/user/homePage",
+    homeIndex: _baseURL + "/wxSchool/user/homePage",
     //创建投票单
     voteCreate: _baseURL + '/vote/voteCreate',//投票创建
     voteList: _baseURL + "/vote/voteList",//家长端

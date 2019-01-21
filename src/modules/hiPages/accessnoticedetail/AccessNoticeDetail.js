@@ -17,18 +17,9 @@ class AccessNoticeDetail extends Component{
 
         }
     }
-     render(){
-        return(
-            <div>
-                Hello AccessNoticeDetail
-            </div>
-        )
-    }
     componentWillMount() {
-        console.log('Component WILL MOUNT!')
     }
     componentDidMount() {
-        console.log('Component DID MOUNT!')
         getWeixinInfo()
         let stuId = this.props.match.params.stuId
         let role = this.props.match.params.role
@@ -37,7 +28,14 @@ class AccessNoticeDetail extends Component{
             this.getleaveDetail(stuId)
         }
     }
-
+     render(){
+        return(
+            <div>
+                Hello AccessNoticeDetail
+                <div id="c1"></div>
+            </div>
+        )
+    }
 }
 
 

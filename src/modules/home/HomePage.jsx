@@ -17,7 +17,7 @@ import {connect} from "react-redux";
 import {CONFIG_TEACHER_MENU, CONFIG_PARENT_MENU, CONFIG_HOME_TOP_MENU} from "../../utils/homePage.constants";
 import {getStrValue, isObjEmpty} from "../../utils/common";
 import 'css/home-page.css'
-import {fetchGet} from "../../utils/fetchRequest";
+import {fetchGet, fetchPost} from "../../utils/fetchRequest";
 import {_baseURL, API} from "../../configs/api.config";
 import icon_home_change from "../../style/imgs/icon_home_change.png";
 import {getWeixinInfo} from '../../utils/api.request'
@@ -166,9 +166,10 @@ class HomePage extends Component {
         let {studentIndex} = this.state
 
         //获取首页接口
-        fetchGet(API.homeIndex, {
-            userOpenid: userInfo.userOpenid,
-            userPhone: userInfo.userPhone
+        fetchPost(API.homeIndex, {
+            openid: userInfo.userOpenid,
+            // schoolId: userInfo.userPhone
+            schoolId:1
         }).then((response) => {
             Toast.hide();
             if (response && response.data) {

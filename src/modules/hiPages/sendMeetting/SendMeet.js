@@ -30,7 +30,6 @@ class SendMeet extends Component {
 
     componentWillUnmount() {
         Toast.hide()
-
         clearTimeout(this.backTask)
     }
 
@@ -45,18 +44,18 @@ class SendMeet extends Component {
             const {targetData} = this.state
             targetData.length = 0
             if (response && response.data) {
-                const schoolArray = response.data.schools
-                const teacherArray = response.data.teachers
+                // const schoolArray = response.data.schools
+                const teacherArray = response.data
 
                 if (!isObjEmpty(teacherArray)) {
                     const teacherData = []
                     teacherArray.forEach((teacherObj, index) => {
                         if (teacherObj) {
                             teacherData.push({
-                                title: getStrValue(teacherObj, 'userName'),
-                                userId: getIntValue(teacherObj, 'userId'),
+                                title: getStrValue(teacherObj, 'teacherName'),
+                                userId: getIntValue(teacherObj, 'teacherId'),
                                 userPhone: getStrValue(teacherObj, 'userPhone'),
-                                value: getStrValue(teacherObj, 'userName') + `-1-${index}`,
+                                value: getStrValue(teacherObj, 'teacherName') + `-1-${index}`,
                                 key: `1-${index}`,
                             })
                         }
@@ -67,43 +66,6 @@ class SendMeet extends Component {
                         value: `1`,
                         key: `1`,
                         children: teacherData,
-                    })
-                }
-
-                if (!isObjEmpty(schoolArray)) {
-                    const classData = []
-
-                    schoolArray.forEach((schoolObj, sIndex) => {
-                        if (schoolObj) {
-                            const parentArray = schoolObj.parents
-
-                            const parentData = []
-                            if (!isObjEmpty(parentArray)) {
-                                parentArray.forEach((parentObj, pIndex) => {
-                                    parentData.push({
-                                        title: getStrValue(parentObj, 'userName'),
-                                        userId: getIntValue(parentObj, 'userId'),
-                                        userPhone: getStrValue(parentObj, 'userPhone'),
-                                        value: getStrValue(parentObj, 'userName') + `-0-${sIndex}-${pIndex}`,
-                                        key: `0-${sIndex}-${pIndex}`,
-                                    })
-                                })
-
-                                classData.push({
-                                    title: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName'),
-                                    value: getStrValue(schoolObj, 'parentName') + getStrValue(schoolObj, 'schName') + `-0-${sIndex}`,
-                                    key: `0-${sIndex}`,
-                                    children: parentData,
-                                })
-                            }
-                        }
-                    })
-
-                    targetData.push({
-                        title: `全体家长`,
-                        value: `0`,
-                        key: `0`,
-                        children: classData,
                     })
                 }
             }
@@ -235,15 +197,15 @@ class SendMeet extends Component {
             Toast.fail('请填写会议地址...')
             return
         }
-        if (this.state.startValue == null || this.state.startValue.trim().length == 0) {
+        if (this.state.startValue == null ) {
             Toast.fail('请选择开始时间...')
             return
         }
-        if (this.state.endValue == null || this.state.endValue.trim().length == 0) {
+        if (this.state.endValue == null ) {
             Toast.fail('请选择结束时间...')
             return
         }
-        if (this.state.earlyTime == null || this.state.earlyTime.trim().length == 0){
+        if (this.state.earlyTime == null ){
             Toast.fail('请选择提醒时间...')
             return
         }
@@ -276,25 +238,30 @@ class SendMeet extends Component {
             })
         }
         var noticeT = startT - this.state.earlyTime * 1000 * 60
-        // console.log('this.state.earlyTime*1000*60',this.state.earlyTime*1000*60)
         console.log('noticeT', noticeT)
         console.log('noticeT', new Date(noticeT))
+
         let params = {
-            meetingCreator: this.props.userInfo.userId,
-            notifyType: 6,
-            meetingStatus: 2,
+            // meetingCreator: this.props.userInfo.userId,
+            meetingCreator:this.props.userInfo.userId,
+            meetingStatus: 1,
             meetingName: this.state.titleValue,
             meetingAddress: this.state.meetAddress,
             startDate: moment(this.state.startValue).format('YYYY-MM-DD HH:mm:ss'),
             endDate: moment(this.state.endValue).format('YYYY-MM-DD HH:mm:ss'),
             reminderDate: moment(new Date(noticeT)).format('YYYY-MM-DD HH:mm:ss'),
-            meetingNotifier: JSON.stringify(userList)
+            meetingNotifier: JSON.stringify(userList),
+            meetingRemarks: "会议备注",
+            meetingFiles:"[]",
+            meetingDetails: "一定要参加",
         }
 
         console.log('params', params)
 
         Toast.loading("会议创建中...", 0)
-        fetchPost(API.createMeeting, params, {})
+        fetchPost(API.createMeeting, {
+            jsonMeeting:JSON.stringify(params)
+        }, {})
             .then((response) => {
                 Toast.hide()
                 console.log('response', response)

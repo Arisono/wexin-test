@@ -52,8 +52,8 @@ export default class MeetingSignItem extends Component {
                         <div className='valueText'>{meetingBean.sponsor}</div>
                     </div>
                     <div className='bottomLayout'>
-                        <span className={(meetingBean.signStatusCode === 1
-                            && meetingBean.meetStatusCode === 3) ? 'signBtnActive' : 'signBtnEnable'}
+                        <span className={meetingBean.signStatusCode === 3
+                             ? 'signBtnEnable' : 'signBtnActive'}
                               onClick={this.onMeetingSign}>
                             {meetingBean.signStatus}
                         </span>
@@ -67,7 +67,7 @@ export default class MeetingSignItem extends Component {
         e.stopPropagation();
         const {meetingBean} = this.state
 
-        if (meetingBean.signStatusCode === 1) {
+        if (meetingBean.signStatusCode != 3) {
             alert('提示', '确定对该会议签到吗？', [
                 {
                     text: '取消', onPress: () => {
